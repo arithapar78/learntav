@@ -1,0 +1,539 @@
+/* ===================================================================
+   Contact Page Specific Styles
+   =================================================================== */
+
+/* Page Header */
+.learntav-page-header {
+  padding: var(--space-16) 0 var(--space-12);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: var(--text-inverse);
+  text-align: center;
+}
+
+.learntav-page-header__title {
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--text-inverse);
+  margin-bottom: var(--space-6);
+}
+
+.learntav-page-header__subtitle {
+  font-size: var(--font-size-xl);
+  color: rgba(255, 255, 255, 0.9);
+  line-height: var(--line-height-relaxed);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .learntav-page-header {
+    padding: var(--space-12) 0 var(--space-8);
+  }
+
+  .learntav-page-header__title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .learntav-page-header__subtitle {
+    font-size: var(--font-size-lg);
+  }
+}
+
+/* Contact Options */
+.learntav-contact-options {
+  padding: var(--space-16) 0;
+  background: var(--bg-secondary);
+}
+
+.learntav-contact-option {
+  background: var(--bg-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-normal);
+  border: 1px solid var(--gray-200);
+  height: 100%;
+}
+
+.learntav-contact-option:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.learntav-contact-option__icon {
+  font-size: var(--font-size-5xl);
+  margin-bottom: var(--space-6);
+  display: block;
+}
+
+.learntav-contact-option__title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.learntav-contact-option__description {
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--space-6);
+}
+
+.learntav-contact-option__link {
+  color: var(--primary);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.learntav-contact-option__link:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* Contact Forms */
+.learntav-contact-forms {
+  padding: var(--space-20) 0;
+  background: var(--bg-primary);
+}
+
+.learntav-contact-tabs {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.learntav-contact-tabs__nav {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-12);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2);
+  gap: var(--space-2);
+  overflow-x: auto;
+}
+
+.learntav-tab-btn {
+  background: transparent;
+  border: none;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  white-space: nowrap;
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+}
+
+.learntav-tab-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.learntav-tab-btn.active {
+  background: var(--bg-primary);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.learntav-tab-content {
+  display: none;
+}
+
+.learntav-tab-content.active {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .learntav-contact-tabs__nav {
+    flex-wrap: wrap;
+    justify-content: stretch;
+  }
+
+  .learntav-tab-btn {
+    flex: 1;
+    min-width: 0;
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* Form Container */
+.learntav-form-container {
+  background: var(--bg-primary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--gray-200);
+}
+
+.learntav-form-header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.learntav-form-header h2 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.learntav-form-header p {
+  font-size: var(--font-size-lg);
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: 0;
+}
+
+/* Form Styles */
+.learntav-form {
+  max-width: none;
+}
+
+.learntav-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.learntav-form__group {
+  margin-bottom: var(--space-6);
+}
+
+.learntav-form__label {
+  display: block;
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-sm);
+}
+
+.learntav-form__input,
+.learntav-form__select,
+.learntav-form__textarea {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-family: inherit;
+  transition: var(--transition-fast);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.learntav-form__input:focus,
+.learntav-form__select:focus,
+.learntav-form__textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.learntav-form__textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.learntav-form__select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5rem 1.5rem;
+  padding-right: 2.5rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.learntav-form__actions {
+  text-align: center;
+  margin-top: var(--space-8);
+}
+
+.learntav-form__note {
+  margin-top: var(--space-4);
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+  margin-bottom: 0;
+}
+
+.learntav-form__honeypot {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  visibility: hidden;
+}
+
+@media (max-width: 768px) {
+  .learntav-form-container {
+    padding: var(--space-6);
+  }
+
+  .learntav-form-header h2 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .learntav-form-header p {
+    font-size: var(--font-size-base);
+  }
+
+  .learntav-form__row {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  .learntav-form__group {
+    margin-bottom: var(--space-4);
+  }
+}
+
+/* FAQ Section */
+.learntav-faq {
+  padding: var(--space-20) 0;
+  background: var(--bg-secondary);
+}
+
+.learntav-faq-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.learntav-faq-item {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-4);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  overflow: hidden;
+}
+
+.learntav-faq-question {
+  width: 100%;
+  padding: var(--space-6);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  transition: var(--transition-fast);
+}
+
+.learntav-faq-question:hover {
+  background: var(--bg-secondary);
+}
+
+.learntav-faq-question[aria-expanded="true"] {
+  background: var(--bg-secondary);
+}
+
+.learntav-faq-toggle {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--primary);
+  transition: var(--transition-fast);
+  line-height: 1;
+}
+
+.learntav-faq-question[aria-expanded="true"] .learntav-faq-toggle {
+  transform: rotate(45deg);
+}
+
+.learntav-faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.learntav-faq-answer.active {
+  max-height: 500px;
+}
+
+.learntav-faq-answer p {
+  padding: 0 var(--space-6) var(--space-6);
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .learntav-faq-question {
+    padding: var(--space-4);
+    font-size: var(--font-size-base);
+  }
+
+  .learntav-faq-answer p {
+    padding: 0 var(--space-4) var(--space-4);
+  }
+
+  .learntav-faq-toggle {
+    font-size: var(--font-size-xl);
+  }
+}
+
+/* Enhanced Form Validation Styles */
+.learntav-form__input--error,
+.learntav-form__select--error,
+.learntav-form__textarea--error {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.learntav-form__error {
+  color: var(--error);
+  font-size: var(--font-size-sm);
+  margin-top: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.learntav-form__error::before {
+  content: "⚠";
+  font-size: var(--font-size-base);
+}
+
+.learntav-form__success {
+  background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+  color: var(--text-inverse);
+  padding: var(--space-8);
+  border-radius: var(--radius-2xl);
+  text-align: center;
+  margin: var(--space-8) 0;
+  box-shadow: var(--shadow-lg);
+}
+
+.learntav-form__success-content h3 {
+  color: var(--text-inverse);
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-4);
+}
+
+.learntav-form__success-content p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: var(--font-size-lg);
+  margin-bottom: 0;
+}
+
+.learntav-form__success-icon {
+  font-size: var(--font-size-5xl);
+  margin-bottom: var(--space-4);
+  display: block;
+}
+
+.learntav-form__error-global {
+  background: var(--bg-primary);
+  border: 2px solid var(--error);
+  color: var(--error);
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  text-align: center;
+  margin: var(--space-6) 0;
+  box-shadow: var(--shadow-md);
+}
+
+.learntav-form__error-content h3 {
+  color: var(--error);
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-3);
+}
+
+.learntav-form__error-content p {
+  color: var(--text-secondary);
+  margin-bottom: 0;
+}
+
+.learntav-form__error-icon {
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--space-3);
+  display: block;
+}
+
+/* Loading State */
+.learntav-btn--loading {
+  cursor: not-allowed;
+  opacity: 0.7;
+  position: relative;
+}
+
+.learntav-btn--loading::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  margin: auto;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Accessibility Enhancements */
+@media (prefers-reduced-motion: reduce) {
+  .learntav-faq-answer {
+    transition: none;
+  }
+  
+  .learntav-faq-toggle {
+    transition: none;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(0deg); }
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .learntav-form__input,
+  .learntav-form__select,
+  .learntav-form__textarea {
+    border-width: 3px;
+  }
+  
+  .learntav-form__input--error,
+  .learntav-form__select--error,
+  .learntav-form__textarea--error {
+    border-width: 4px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .learntav-contact-tabs__nav,
+  .learntav-faq-toggle {
+    display: none;
+  }
+  
+  .learntav-tab-content,
+  .learntav-faq-answer {
+    display: block !important;
+    max-height: none !important;
+  }
+  
+  .learntav-form {
+    page-break-inside: avoid;
+  }
+}
