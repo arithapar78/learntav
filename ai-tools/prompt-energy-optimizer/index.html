@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PromptEnergyOptimizer Chrome Extension - Optimize AI prompts for energy efficiency. Reduce token usage and carbon footprint across ChatGPT, Claude, Gemini, and more.">
+    <meta name="keywords" content="AI prompt optimizer, energy efficiency, token reduction, ChatGPT optimization, Claude optimization, carbon footprint, sustainable AI">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://learntav.com/ai-tools/prompt-energy-optimizer/">
+    <meta property="og:title" content="PromptEnergyOptimizer - AI Prompt Efficiency Tool | LearnTAV">
+    <meta property="og:description" content="Optimize AI prompts for energy efficiency. Reduce token usage and carbon footprint across ChatGPT, Claude, Gemini, and more.">
+    <meta property="og:image" content="https://learntav.com/assets/images/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://learntav.com/ai-tools/prompt-energy-optimizer/">
+    <meta property="twitter:title" content="PromptEnergyOptimizer - AI Prompt Efficiency Tool | LearnTAV">
+    <meta property="twitter:description" content="Optimize AI prompts for energy efficiency. Reduce token usage and carbon footprint across ChatGPT, Claude, Gemini, and more.">
+    <meta property="twitter:image" content="https://learntav.com/assets/images/og-image.jpg">
+
+    <title>PromptEnergyOptimizer - AI Prompt Efficiency Tool | LearnTAV</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../assets/images/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    
+    <style>
+        .hero-product {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 4rem 0;
+        }
+        
+        .hero-product .learntav-hero__title {
+            color: white;
+        }
+        
+        .hero-product .learntav-hero__subtitle {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .product-icon-large {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            margin: 0 auto 2rem;
+        }
+        
+        .demo-section {
+            background: #f9fafb;
+            padding: 4rem 0;
+        }
+        
+        .demo-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .demo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .demo-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .demo-header h3 {
+            margin: 0;
+            margin-left: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .demo-original {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-optimized {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        
+        .demo-stat {
+            text-align: center;
+        }
+        
+        .demo-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #10b981;
+        }
+        
+        .demo-stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #10b981;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-description {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        
+        .platforms-section {
+            padding: 4rem 0;
+        }
+        
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .platform-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .platform-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .platform-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+        }
+        
+        .platform-name {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .platform-description {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        
+        .pricing-simple {
+            background: #f9fafb;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .price-card {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border: 2px solid #10b981;
+        }
+        
+        .price-value {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #10b981;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price-description {
+            color: #6b7280;
+            margin-bottom: 2rem;
+        }
+        
+        .btn-download {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+        }
+        
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+        }
+        
+        .optimization-levels {
+            background: #f0fdf4;
+            border: 1px solid #10b981;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .optimization-levels h3 {
+            color: #065f46;
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .optimization-levels h3::before {
+            content: "🎛️";
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .level-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .level-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 2px solid #d1fae5;
+        }
+        
+        .level-card h4 {
+            color: #065f46;
+            margin-bottom: 0.5rem;
+        }
+        
+        .level-reduction {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 0.5rem;
+        }
+        
+        .level-description {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="learntav-nav" id="mainNav">
+        <div class="learntav-container">
+            <div class="learntav-nav__container">
+                <a href="../../index.html" class="learntav-nav__logo">
+                    <span class="learntav-nav__logo-text">LearnTAV</span>
+                </a>
+                
+                <div class="learntav-nav__menu" id="navMenu">
+                    <a href="../../education/index.html" class="learntav-nav__link">Education</a>
+                    <a href="../../consulting/index.html" class="learntav-nav__link">Consulting</a>
+                    <a href="../../about/index.html" class="learntav-nav__link">About</a>
+                    <a href="../../resources/index.html" class="learntav-nav__link">Resources</a>
+                    <a href="../index.html" class="learntav-nav__link learntav-nav__link--active">AI Tools</a>
+                    <a href="../../contact/index.html" class="learntav-nav__link">Contact</a>
+                </div>
+                
+                <div class="learntav-nav__actions">
+                    <a href="../../contact/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
+                    <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-product">
+        <div class="learntav-container">
+            <div class="learntav-hero__content">
+                <div class="learntav-hero__text" style="max-width: 100%; text-align: center;">
+                    <div class="product-icon-large">🎯</div>
+                    <h1 class="learntav-hero__title">
+                        PromptEnergyOptimizer
+                        <span class="learntav-hero__title-accent">Chrome Extension</span>
+                    </h1>
+                    <p class="learntav-hero__subtitle">
+                        Optimize your AI prompts for energy efficiency across ChatGPT, Claude, Gemini, and more. 
+                        Reduce token usage, minimize computational overhead, and lower your AI carbon footprint without sacrificing quality.
+                    </p>
+                    <div class="learntav-hero__actions" style="margin-top: 2rem;">
+                        <a href="#download" class="learntav-btn learntav-btn--primary learntav-btn--large" style="background: white; color: #10b981;">
+                            Get Extension - $4.99
+                        </a>
+                        <a href="#demo" class="learntav-btn learntav-btn--secondary learntav-btn--large" style="border-color: white; color: white;">
+                            See Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="demo-section" id="demo">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">See the Optimization in Action</h2>
+                <p class="learntav-section-subtitle">
+                    Real examples showing how PromptEnergyOptimizer reduces tokens while preserving meaning
+                </p>
+            </div>
+            
+            <div class="demo-container">
+                <div class="demo-card">
+                    <div class="demo-header">
+                        <span>📝</span>
+                        <h3>Article Writing Request</h3>
+                    </div>
+                    
+                    <div class="demo-original">
+                        <strong>Original Prompt (67 tokens):</strong><br>
+                        "Please can you help me write a comprehensive article about renewable energy sources, including solar, wind, and hydroelectric power. I would like you to make sure that you include detailed information about each type, their advantages and disadvantages, and please be thorough in your explanation. Thank you in advance for your assistance."
+                    </div>
+                    
+                    <div class="demo-optimized">
+                        <strong>Optimized Prompt (43 tokens):</strong><br>
+                        "Write a comprehensive article about renewable energy: solar, wind, and hydroelectric power. Include detailed information on each type, advantages, disadvantages, and thorough explanations."
+                    </div>
+                    
+                    <div class="demo-stats">
+                        <div class="demo-stat">
+                            <div class="demo-stat-value">36%</div>
+                            <div class="demo-stat-label">Token Reduction</div>
+                        </div>
+                        <div class="demo-stat">
+                            <div class="demo-stat-value">24</div>
+                            <div class="demo-stat-label">Tokens Saved</div>
+                        </div>
+                        <div class="demo-stat">
+                            <div class="demo-stat-value">~40%</div>
+                            <div class="demo-stat-label">Energy Saved</div>
+                        </div>
+                        <div class="demo-stat">
+                            <div class="demo-stat-value">100%</div>
+                            <div class="demo-stat-label">Intent Preserved</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-card">
+                    <div class="demo-header">
+                        <span>💼</span>
+                        <h3>Business Analysis Request</h3>
+                    </div>
+                    
+                    <div class="demo-original">
+                        <strong>Original Prompt (58 tokens):</strong><br>
+                        "Could you please analyze the current market trends in the technology sector and provide me with insights about what companies should focus on in order to stay competitive in the next few years? I would appreciate if you could be detailed and comprehensive in your response."
+                    </div>
+                    
+                    <div class="demo-optimized">
+                        <strong>Optimized Prompt (32 tokens):</strong><br>
+                        "Analyze current technology market trends and provide detailed insights on what companies should focus on to stay competitive over the next few years."
+                    </div>
+                    
+                    <div class="demo-stats">
+                        <div class="demo-stat">
+                            <div class="demo-stat-value">45%</div>
+                            <div class="demo-stat-label">Token Reduction</div>
+                        </div>
+                        <div class="demo-stat">
+                            <div class="demo-stat-value">26</div>
+                            <div class="demo-stat-label">Tokens Saved</div>
+                        </div>
+                        <div class="demo-stat">
+                            <div class="demo-stat-value">~50%</div>
+                            <div class="demo-stat-label">Energy Saved</div>
+                        </div>
+                        <div class="demo-stat">
+                            <div class="demo-stat-value">100%</div>
+                            <div class="demo-stat-label">Intent Preserved</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Optimization Levels -->
+    <section class="learntav-services">
+        <div class="learntav-container">
+            <div class="optimization-levels">
+                <h3>Three Optimization Levels</h3>
+                <p style="color: #065f46; margin-bottom: 1.5rem;">
+                    Choose the right balance between token reduction and original style preservation
+                </p>
+                
+                <div class="level-grid">
+                    <div class="level-card">
+                        <h4>Light</h4>
+                        <div class="level-reduction">5-15%</div>
+                        <p class="level-description">Minor optimizations only. Maintains original tone and style. Safest for complex prompts.</p>
+                    </div>
+                    
+                    <div class="level-card">
+                        <h4>Medium</h4>
+                        <div class="level-reduction">15-25%</div>
+                        <p class="level-description">Balanced optimization. Removes redundant phrases and streamlines structure. Recommended for most use cases.</p>
+                    </div>
+                    
+                    <div class="level-card">
+                        <h4>Aggressive</h4>
+                        <div class="level-reduction">25-45%</div>
+                        <p class="level-description">Maximum token reduction. Restructures for efficiency. Best for simple, direct requests.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="learntav-services">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">Powerful Optimization Features</h2>
+                <p class="learntav-section-subtitle">
+                    Everything you need to make your AI usage more efficient and sustainable
+                </p>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Real-Time Optimization</h3>
+                    <p class="feature-description">
+                        Instantly optimize prompts as you type with live token count updates and energy impact visualization.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Smart Token Reduction</h3>
+                    <p class="feature-description">
+                        Advanced algorithms remove redundant words and phrases while preserving the original intent and meaning.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Energy Impact Metrics</h3>
+                    <p class="feature-description">
+                        Track energy savings, CO₂ reduction, and cost savings with detailed analytics and real-world equivalents.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">Multi-Platform Support</h3>
+                    <p class="feature-description">
+                        Works seamlessly across ChatGPT, Claude, Gemini, Poe, Perplexity, and other popular AI platforms.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎛️</div>
+                    <h3 class="feature-title">Customizable Optimization</h3>
+                    <p class="feature-description">
+                        Choose from Light, Medium, or Aggressive optimization levels based on your specific needs and preferences.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">One-Click Copy</h3>
+                    <p class="feature-description">
+                        Easily copy optimized prompts to your clipboard with full statistics on improvements and energy savings.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supported Platforms -->
+    <section class="platforms-section">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">Works Across All Major AI Platforms</h2>
+                <p class="learntav-section-subtitle">
+                    Seamless integration with the AI tools you already use
+                </p>
+            </div>
+            
+            <div class="platform-grid">
+                <div class="platform-card">
+                    <div class="platform-logo">🤖</div>
+                    <div class="platform-name">ChatGPT</div>
+                    <p class="platform-description">Optimized for GPT-3.5 and GPT-4 models</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-logo">🧠</div>
+                    <div class="platform-name">Claude</div>
+                    <p class="platform-description">Natural language focus optimization</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-logo">💎</div>
+                    <div class="platform-name">Gemini</div>
+                    <p class="platform-description">Structured, precise instruction optimization</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-logo">🎭</div>
+                    <div class="platform-name">Poe</div>
+                    <p class="platform-description">Multi-model platform support</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-logo">🔍</div>
+                    <div class="platform-name">Perplexity</div>
+                    <p class="platform-description">Research-focused optimization</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-logo">🤗</div>
+                    <div class="platform-name">Hugging Face</div>
+                    <p class="platform-description">Open model optimization</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-simple" id="download">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">Simple, One-Time Purchase</h2>
+                <p class="learntav-section-subtitle">
+                    Get lifetime access to PromptEnergyOptimizer with no recurring fees
+                </p>
+            </div>
+            
+            <div class="price-card">
+                <div class="price-value">$4.99</div>
+                <div class="price-description">One-time purchase • Lifetime updates included</div>
+                <a href="#" class="btn-download">Download Extension</a>
+                <p style="font-size: 0.875rem; color: #6b7280; margin-top: 1rem;">
+                    ✓ Works on all supported platforms<br>
+                    ✓ No subscription required<br>
+                    ✓ Free updates for life<br>
+                    ✓ 30-day money-back guarantee
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Guide -->
+    <section class="learntav-services">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">Easy Installation & Setup</h2>
+                <p class="learntav-section-subtitle">
+                    Start optimizing your AI prompts in under 2 minutes
+                </p>
+            </div>
+            
+            <div class="learntav-grid learntav-grid--3-col">
+                <div class="learntav-value-card">
+                    <div class="learntav-value-card__icon">1️⃣</div>
+                    <h3 class="learntav-value-card__title">Download & Install</h3>
+                    <p class="learntav-value-card__description">
+                        Purchase and download the extension from our secure checkout. Install directly from the Chrome Web Store.
+                    </p>
+                </div>
+                
+                <div class="learntav-value-card">
+                    <div class="learntav-value-card__icon">2️⃣</div>
+                    <h3 class="learntav-value-card__title">Visit AI Platform</h3>
+                    <p class="learntav-value-card__description">
+                        Go to ChatGPT, Claude, Gemini, or any supported AI platform. The extension will automatically activate.
+                    </p>
+                </div>
+                
+                <div class="learntav-value-card">
+                    <div class="learntav-value-card__icon">3️⃣</div>
+                    <h3 class="learntav-value-card__title">Start Optimizing</h3>
+                    <p class="learntav-value-card__description">
+                        Type your prompt and watch as the optimizer provides real-time suggestions and energy impact metrics.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="learntav-cta">
+        <div class="learntav-container">
+            <div class="learntav-cta__content">
+                <h2 class="learntav-cta__title">Ready to Optimize Your AI Prompts?</h2>
+                <p class="learntav-cta__description">
+                    Join hundreds of users who are already reducing their AI energy consumption while maintaining prompt quality.
+                </p>
+                <div class="learntav-cta__actions">
+                    <a href="#download" class="learntav-btn learntav-btn--primary learntav-btn--large">
+                        Get PromptEnergyOptimizer - $4.99
+                    </a>
+                    <div class="learntav-cta__contact-info">
+                        <p>Questions? <a href="../../contact/index.html">Contact our support team</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="learntav-footer">
+        <div class="learntav-container">
+            <div class="learntav-footer__main">
+                <div class="learntav-footer__brand">
+                    <div class="learntav-footer__logo">
+                        <span class="learntav-footer__logo-text">LearnTAV</span>
+                    </div>
+                    <p class="learntav-footer__description">
+                        Where Technology Meets Accessibility, Sustainability, and Real-World Impact.
+                    </p>
+                </div>
+
+                <div class="learntav-footer__links">
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">Services</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../../education/index.html">Education</a></li>
+                            <li><a href="../../consulting/index.html">Consulting</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">AI Tools</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../index.html">All Tools</a></li>
+                            <li><a href="../power-tracker/index.html">Power Tracker</a></li>
+                            <li><a href="index.html">PromptEnergyOptimizer</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">Company</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../../about/index.html">About</a></li>
+                            <li><a href="../../contact/index.html">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">Resources</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../../resources/guides/index.html">Free Guides</a></li>
+                            <li><a href="../../resources/tools/index.html">Tools</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="learntav-footer__bottom">
+                <div class="learntav-footer__legal">
+                    <p>&copy; 2024 LearnTAV. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

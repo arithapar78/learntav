@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Power Tracker Chrome Extension - Monitor browser energy consumption in real-time. Pro version includes AI prompt optimization. Reduce your carbon footprint while browsing.">
+    <meta name="keywords" content="power tracker, energy monitoring, Chrome extension, AI prompt optimization, carbon footprint, sustainable browsing">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://learntav.com/ai-tools/power-tracker/">
+    <meta property="og:title" content="Power Tracker - Energy Monitoring Chrome Extension | LearnTAV">
+    <meta property="og:description" content="Monitor browser energy consumption in real-time. Pro version includes AI prompt optimization. Reduce your carbon footprint while browsing.">
+    <meta property="og:image" content="https://learntav.com/assets/images/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://learntav.com/ai-tools/power-tracker/">
+    <meta property="twitter:title" content="Power Tracker - Energy Monitoring Chrome Extension | LearnTAV">
+    <meta property="twitter:description" content="Monitor browser energy consumption in real-time. Pro version includes AI prompt optimization. Reduce your carbon footprint while browsing.">
+    <meta property="twitter:image" content="https://learntav.com/assets/images/og-image.jpg">
+
+    <title>Power Tracker - Energy Monitoring Chrome Extension | LearnTAV</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../assets/images/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    
+    <style>
+        .hero-product {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+        }
+        
+        .hero-product .learntav-hero__title {
+            color: white;
+        }
+        
+        .hero-product .learntav-hero__subtitle {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .product-icon-large {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            margin: 0 auto 2rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-description {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        
+        .pricing-section {
+            background: #f9fafb;
+            padding: 4rem 0;
+        }
+        
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-card.featured {
+            transform: scale(1.05);
+            border: 2px solid #667eea;
+            box-shadow: 0 20px 25px -5px rgba(102, 126, 234, 0.2);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-8px);
+        }
+        
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .pricing-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pricing-period {
+            color: #6b7280;
+            margin-bottom: 2rem;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            color: #374151;
+        }
+        
+        .pricing-features li::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+        
+        .btn-download {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-download.secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .btn-download.secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .screenshots-section {
+            padding: 4rem 0;
+        }
+        
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .screenshot {
+            background: #f3f4f6;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            aspect-ratio: 4/3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #d1d5db;
+        }
+        
+        .screenshot-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .screenshot-title {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+        
+        .screenshot-description {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        .pro-features {
+            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+            border: 1px solid #f59e0b;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .pro-features h3 {
+            color: #92400e;
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .pro-features h3::before {
+            content: "⚡";
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .pro-features p {
+            color: #78350f;
+            margin-bottom: 1rem;
+        }
+        
+        .access-code {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #92400e;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="learntav-nav" id="mainNav">
+        <div class="learntav-container">
+            <div class="learntav-nav__container">
+                <a href="../../index.html" class="learntav-nav__logo">
+                    <span class="learntav-nav__logo-text">LearnTAV</span>
+                </a>
+                
+                <div class="learntav-nav__menu" id="navMenu">
+                    <a href="../../education/index.html" class="learntav-nav__link">Education</a>
+                    <a href="../../consulting/index.html" class="learntav-nav__link">Consulting</a>
+                    <a href="../../about/index.html" class="learntav-nav__link">About</a>
+                    <a href="../../resources/index.html" class="learntav-nav__link">Resources</a>
+                    <a href="../index.html" class="learntav-nav__link learntav-nav__link--active">AI Tools</a>
+                    <a href="../../contact/index.html" class="learntav-nav__link">Contact</a>
+                </div>
+                
+                <div class="learntav-nav__actions">
+                    <a href="../../contact/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
+                    <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-product">
+        <div class="learntav-container">
+            <div class="learntav-hero__content">
+                <div class="learntav-hero__text" style="max-width: 100%; text-align: center;">
+                    <div class="product-icon-large">⚡</div>
+                    <h1 class="learntav-hero__title">
+                        Power Tracker
+                        <span class="learntav-hero__title-accent">Chrome Extension</span>
+                    </h1>
+                    <p class="learntav-hero__subtitle">
+                        Monitor your browser's power consumption in real-time. Track energy usage, get optimization tips, and reduce your carbon footprint while browsing. Pro version includes advanced AI prompt optimization.
+                    </p>
+                    <div class="learntav-hero__actions" style="margin-top: 2rem;">
+                        <a href="#download" class="learntav-btn learntav-btn--primary learntav-btn--large" style="background: white; color: #667eea;">
+                            Download Free
+                        </a>
+                        <a href="#features" class="learntav-btn learntav-btn--secondary learntav-btn--large" style="border-color: white; color: white;">
+                            View Features
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="learntav-services" id="features">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">Comprehensive Energy Monitoring</h2>
+                <p class="learntav-section-subtitle">
+                    Everything you need to understand and optimize your browser's energy consumption
+                </p>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Real-Time Power Monitoring</h3>
+                    <p class="feature-description">
+                        Monitor your browser's power consumption in watts with real-time updates every 5 seconds for active tabs and 30 seconds for background tabs.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Energy Analytics</h3>
+                    <p class="feature-description">
+                        Track historical power consumption, usage patterns, efficiency trends, and get detailed insights into your browsing energy footprint.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Smart Notifications</h3>
+                    <p class="feature-description">
+                        Receive contextual energy tips, power threshold alerts, efficiency achievements, and customizable notification settings.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔋</div>
+                    <h3 class="feature-title">Battery Optimization</h3>
+                    <p class="feature-description">
+                        Get intelligent recommendations to extend battery life, optimize power settings, and identify energy-hungry websites.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">Website Energy Scores</h3>
+                    <p class="feature-description">
+                        See energy impact scores for each website you visit, helping you make more sustainable browsing choices.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3 class="feature-title">Performance Metrics</h3>
+                    <p class="feature-description">
+                        DOM complexity analysis, resource usage tracking, and performance metrics to understand what drives energy consumption.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pro Features Section -->
+    <section class="learntav-services" style="background: #f9fafb;">
+        <div class="learntav-container">
+            <div class="pro-features">
+                <h3>Advanced Pro Features: AI Prompt Optimization</h3>
+                <p>
+                    The Pro version includes our revolutionary PromptEnergyOptimizer built directly into the extension. 
+                    Reduce AI model energy consumption by 20-45% while maintaining prompt quality and effectiveness.
+                </p>
+                <div class="access-code">
+                    <strong>How to Access:</strong> Click the ⚡ button in the extension popup and enter access code: <code>0410</code>
+                </div>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">AI Prompt Optimization</h3>
+                    <p class="feature-description">
+                        Optimize prompts for GPT-4, GPT-3.5, Claude, and Gemini. Reduce token usage by 15-35% while preserving intent and quality.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Energy Impact Tracking</h3>
+                    <p class="feature-description">
+                        Real-time visualization of AI model energy consumption with carbon footprint metrics and cost savings analysis.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎛️</div>
+                    <h3 class="feature-title">Optimization Levels</h3>
+                    <p class="feature-description">
+                        Choose from Conservative (5-15%), Balanced (15-25%), or Aggressive (25-45%) optimization based on your needs.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">One-Click Copy</h3>
+                    <p class="feature-description">
+                        Seamlessly copy optimized prompts to your clipboard with full statistics on tokens saved and energy reduced.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section class="screenshots-section">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">Extension Interface</h2>
+                <p class="learntav-section-subtitle">
+                    Clean, intuitive design that provides powerful insights at a glance
+                </p>
+            </div>
+            
+            <div class="screenshot-grid">
+                <div class="screenshot">
+                    <div class="screenshot-icon">📊</div>
+                    <h3 class="screenshot-title">Real-Time Dashboard</h3>
+                    <p class="screenshot-description">Monitor current power consumption and efficiency metrics</p>
+                </div>
+                
+                <div class="screenshot">
+                    <div class="screenshot-icon">📈</div>
+                    <h3 class="screenshot-title">Historical Analytics</h3>
+                    <p class="screenshot-description">View detailed energy usage patterns and trends</p>
+                </div>
+                
+                <div class="screenshot">
+                    <div class="screenshot-icon">⚙️</div>
+                    <h3 class="screenshot-title">Settings & Controls</h3>
+                    <p class="screenshot-description">Customize thresholds, notifications, and preferences</p>
+                </div>
+                
+                <div class="screenshot">
+                    <div class="screenshot-icon">🤖</div>
+                    <h3 class="screenshot-title">AI Prompt Optimizer (Pro)</h3>
+                    <p class="screenshot-description">Advanced prompt optimization interface with real-time statistics</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="download">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">Choose Your Plan</h2>
+                <p class="learntav-section-subtitle">
+                    Start with our free version or upgrade to Pro for AI optimization features
+                </p>
+            </div>
+            
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3 class="pricing-title">Basic</h3>
+                    <div class="pricing-price">Free</div>
+                    <div class="pricing-period">Forever</div>
+                    <ul class="pricing-features">
+                        <li>Real-time power monitoring</li>
+                        <li>Energy usage analytics</li>
+                        <li>Smart notifications</li>
+                        <li>Website energy scores</li>
+                        <li>Battery optimization tips</li>
+                        <li>Historical data tracking</li>
+                        <li>Customizable thresholds</li>
+                    </ul>
+                    <a href="#" class="btn-download secondary">Download Free</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Most Popular</div>
+                    <h3 class="pricing-title">Pro</h3>
+                    <div class="pricing-price">$9.99</div>
+                    <div class="pricing-period">per month</div>
+                    <ul class="pricing-features">
+                        <li>Everything in Basic</li>
+                        <li><strong>AI Prompt Optimization</strong></li>
+                        <li><strong>Multi-model support (GPT, Claude, Gemini)</strong></li>
+                        <li><strong>Advanced energy analytics</strong></li>
+                        <li><strong>Carbon footprint tracking</strong></li>
+                        <li><strong>Token usage optimization</strong></li>
+                        <li><strong>Cost savings calculator</strong></li>
+                        <li><strong>Priority support</strong></li>
+                    </ul>
+                    <a href="#" class="btn-download">Upgrade to Pro</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Instructions -->
+    <section class="learntav-services">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">Easy Installation</h2>
+                <p class="learntav-section-subtitle">
+                    Get started in just a few clicks
+                </p>
+            </div>
+            
+            <div class="learntav-grid learntav-grid--3-col">
+                <div class="learntav-value-card">
+                    <div class="learntav-value-card__icon">1️⃣</div>
+                    <h3 class="learntav-value-card__title">Download</h3>
+                    <p class="learntav-value-card__description">
+                        Click the download button above or visit the Chrome Web Store to get the extension.
+                    </p>
+                </div>
+                
+                <div class="learntav-value-card">
+                    <div class="learntav-value-card__icon">2️⃣</div>
+                    <h3 class="learntav-value-card__title">Install</h3>
+                    <p class="learntav-value-card__description">
+                        Chrome will guide you through the installation process. Click "Add to Chrome" when prompted.
+                    </p>
+                </div>
+                
+                <div class="learntav-value-card">
+                    <div class="learntav-value-card__icon">3️⃣</div>
+                    <h3 class="learntav-value-card__title">Start Monitoring</h3>
+                    <p class="learntav-value-card__description">
+                        The extension will immediately start tracking your power usage. Click the icon to view your dashboard.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="learntav-cta">
+        <div class="learntav-container">
+            <div class="learntav-cta__content">
+                <h2 class="learntav-cta__title">Ready to Optimize Your Browser's Energy Usage?</h2>
+                <p class="learntav-cta__description">
+                    Join thousands of users who are already reducing their carbon footprint and extending their battery life with Power Tracker.
+                </p>
+                <div class="learntav-cta__actions">
+                    <a href="#download" class="learntav-btn learntav-btn--primary learntav-btn--large">
+                        Download Power Tracker Free
+                    </a>
+                    <div class="learntav-cta__contact-info">
+                        <p>Questions? <a href="../../contact/index.html">Contact our support team</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="learntav-footer">
+        <div class="learntav-container">
+            <div class="learntav-footer__main">
+                <div class="learntav-footer__brand">
+                    <div class="learntav-footer__logo">
+                        <span class="learntav-footer__logo-text">LearnTAV</span>
+                    </div>
+                    <p class="learntav-footer__description">
+                        Where Technology Meets Accessibility, Sustainability, and Real-World Impact.
+                    </p>
+                </div>
+
+                <div class="learntav-footer__links">
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">Services</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../../education/index.html">Education</a></li>
+                            <li><a href="../../consulting/index.html">Consulting</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">AI Tools</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../index.html">All Tools</a></li>
+                            <li><a href="index.html">Power Tracker</a></li>
+                            <li><a href="../prompt-energy-optimizer/index.html">PromptEnergyOptimizer</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">Company</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../../about/index.html">About</a></li>
+                            <li><a href="../../contact/index.html">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">Resources</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../../resources/guides/index.html">Free Guides</a></li>
+                            <li><a href="../../resources/tools/index.html">Tools</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="learntav-footer__bottom">
+                <div class="learntav-footer__legal">
+                    <p>&copy; 2024 LearnTAV. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>
