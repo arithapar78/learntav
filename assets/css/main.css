@@ -293,6 +293,34 @@ li {
   margin-bottom: var(--space-16);
 }
 
+/* Page Header Styling */
+.learntav-page-header {
+  padding-top: var(--space-20);
+  padding-bottom: var(--space-12);
+  background: var(--bg-secondary);
+}
+
+.learntav-page-header__content {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.learntav-page-header__title {
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-6);
+  line-height: var(--line-height-tight);
+}
+
+.learntav-page-header__subtitle {
+  font-size: var(--font-size-xl);
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: 0;
+}
+
 .learntav-section-title {
   font-size: var(--font-size-4xl);
   font-weight: var(--font-weight-extrabold);
