@@ -625,7 +625,7 @@
             <div class="price-card">
                 <div class="price-value">$1.99</div>
                 <div class="price-description">One-time purchase or available in Power Tracker bundle • Lifetime updates included</div>
-                <a href="#" class="btn-download">Download Extension</a>
+                <button onclick="initiateDownload('pro')" class="btn-download">Download Extension</button>
                 <p style="font-size: 0.875rem; color: #6b7280; margin-top: 1rem;">
                     ✓ Works on all supported platforms<br>
                     ✓ No subscription required<br>
@@ -751,7 +751,450 @@
         </div>
     </footer>
 
+    <!-- Download Modal -->
+    <div class="download-modal-overlay" id="downloadModalOverlay" onclick="hideDownloadModal()"></div>
+    <div class="download-modal" id="downloadModal">
+        <button class="download-modal-close" onclick="hideDownloadModal()">&times;</button>
+        <div class="download-modal-content">
+            <h3 id="downloadModalTitle">Verify Access</h3>
+            <p id="downloadModalDescription">Enter the verification code to download the extension:</p>
+            
+            <!-- Verification Code Input -->
+            <div class="verification-section">
+                <div class="verification-input">
+                    <input type="text" id="codeInput1" class="code-digit" maxlength="1" oninput="handleCodeInput(0)" onkeydown="handleKeyDown(0, event)">
+                    <input type="text" id="codeInput2" class="code-digit" maxlength="1" oninput="handleCodeInput(1)" onkeydown="handleKeyDown(1, event)">
+                    <input type="text" id="codeInput3" class="code-digit" maxlength="1" oninput="handleCodeInput(2)" onkeydown="handleKeyDown(2, event)">
+                    <input type="text" id="codeInput4" class="code-digit" maxlength="1" oninput="handleCodeInput(3)" onkeydown="handleKeyDown(3, event)">
+                </div>
+                <div class="verification-example">
+                    ex: <span class="example-code">9 3 6 2</span>
+                </div>
+                
+                <!-- Virtual Keypad -->
+                <div class="virtual-keypad">
+                    <button class="keypad-btn" onclick="addDigit('1')">1</button>
+                    <button class="keypad-btn" onclick="addDigit('2')">2</button>
+                    <button class="keypad-btn" onclick="addDigit('3')">3</button>
+                    <button class="keypad-btn" onclick="addDigit('4')">4</button>
+                    <button class="keypad-btn" onclick="addDigit('5')">5</button>
+                    <button class="keypad-btn" onclick="addDigit('6')">6</button>
+                    <button class="keypad-btn" onclick="addDigit('7')">7</button>
+                    <button class="keypad-btn" onclick="addDigit('8')">8</button>
+                    <button class="keypad-btn" onclick="addDigit('9')">9</button>
+                    <button class="keypad-btn clear" onclick="clearCode()">Clear</button>
+                    <button class="keypad-btn" onclick="addDigit('0')">0</button>
+                    <button class="keypad-btn backspace" onclick="backspace()">⌫</button>
+                </div>
+                
+                <button class="verify-btn" onclick="verifyAndDownload()">Verify & Download</button>
+            </div>
+            
+            <!-- Installation Instructions (hidden initially) -->
+            <div class="installation-instructions" id="installationInstructions" style="display: none;">
+                <h4>📦 Installation Instructions</h4>
+                <ol class="install-steps">
+                    <li><strong>Enable Developer Mode:</strong> Open Chrome → More tools → Extensions → Toggle "Developer mode" (top right)</li>
+                    <li><strong>Unzip the file:</strong> Extract the downloaded zip file to a folder on your computer</li>
+                    <li><strong>Load Extension:</strong> Click "Load unpacked" and select the extracted folder</li>
+                    <li><strong>Pin Extension:</strong> Click the puzzle piece icon in Chrome toolbar and pin Prompt Optimizer</li>
+                    <li><strong>Start Optimizing:</strong> Visit any AI platform and start optimizing your prompts!</li>
+                </ol>
+                <div class="install-help">
+                    <p><strong>Need help?</strong> <a href="../../contact/index.html">Contact our support team</a> for installation assistance.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .download-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1040;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .download-modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .download-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            z-index: 1050;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .download-modal.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .download-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #6b7280;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .download-modal-close:hover {
+            color: #374151;
+            background: #f3f4f6;
+        }
+
+        .download-modal-content h3 {
+            color: #10b981;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .download-modal-content p {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .verification-section {
+            text-align: center;
+        }
+
+        .verification-input {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .code-digit {
+            width: 3rem;
+            height: 3rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .code-digit:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .code-digit.filled {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .verification-example {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .example-code {
+            font-family: monospace;
+            background: #f3f4f6;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .virtual-keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            max-width: 240px;
+            margin: 1.5rem auto;
+        }
+
+        .keypad-btn {
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .keypad-btn:hover {
+            background: #f9fafb;
+            border-color: #10b981;
+        }
+
+        .keypad-btn:active {
+            transform: scale(0.95);
+        }
+
+        .keypad-btn.clear {
+            background: #fef2f2;
+            color: #dc2626;
+            border-color: #fca5a5;
+        }
+
+        .keypad-btn.backspace {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .verify-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .verify-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .verify-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .installation-instructions {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .installation-instructions h4 {
+            color: #374151;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .install-steps {
+            text-align: left;
+            line-height: 1.6;
+            color: #4b5563;
+        }
+
+        .install-steps li {
+            margin-bottom: 0.75rem;
+            padding-left: 0.5rem;
+        }
+
+        .install-steps strong {
+            color: #374151;
+        }
+
+        .install-help {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .install-help p {
+            margin: 0;
+            color: #065f46;
+        }
+
+        .install-help a {
+            color: #10b981;
+            text-decoration: underline;
+        }
+    </style>
+
     <!-- JavaScript -->
     <script src="../../assets/js/main.js"></script>
+    <script>
+        let currentDownloadType = 'pro';
+        let currentPosition = 0;
+        const correctCode = '9362'; // Verification code for Prompt Optimizer
+
+        function initiateDownload(type) {
+            currentDownloadType = type;
+            const modal = document.getElementById('downloadModal');
+            const overlay = document.getElementById('downloadModalOverlay');
+            const title = document.getElementById('downloadModalTitle');
+            const description = document.getElementById('downloadModalDescription');
+            
+            title.textContent = 'Download Prompt Optimizer';
+            description.textContent = 'Enter the verification code to download the Prompt Optimizer extension:';
+            
+            // Reset form
+            clearCode();
+            document.getElementById('installationInstructions').style.display = 'none';
+            
+            // Show modal
+            modal.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Focus first input
+            setTimeout(() => {
+                document.getElementById('codeInput1').focus();
+            }, 100);
+        }
+
+        function hideDownloadModal() {
+            const modal = document.getElementById('downloadModal');
+            const overlay = document.getElementById('downloadModalOverlay');
+            
+            modal.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function handleCodeInput(position) {
+            const input = document.getElementById(`codeInput${position + 1}`);
+            const value = input.value;
+            
+            if (value && position < 3) {
+                // Move to next input
+                document.getElementById(`codeInput${position + 2}`).focus();
+                currentPosition = position + 1;
+            }
+            
+            // Update visual state
+            if (value) {
+                input.classList.add('filled');
+            } else {
+                input.classList.remove('filled');
+            }
+            
+            currentPosition = position;
+        }
+
+        function handleKeyDown(position, event) {
+            if (event.key === 'Backspace' && !event.target.value && position > 0) {
+                // Move to previous input on backspace
+                document.getElementById(`codeInput${position}`).focus();
+                currentPosition = position - 1;
+            }
+        }
+
+        function addDigit(digit) {
+            const inputs = document.querySelectorAll('.code-digit');
+            const emptyInput = Array.from(inputs).find(input => !input.value);
+            
+            if (emptyInput) {
+                emptyInput.value = digit;
+                emptyInput.classList.add('filled');
+                
+                // Move to next input
+                const nextInput = emptyInput.nextElementSibling;
+                if (nextInput && nextInput.classList.contains('code-digit')) {
+                    nextInput.focus();
+                }
+            }
+        }
+
+        function backspace() {
+            const inputs = document.querySelectorAll('.code-digit');
+            const filledInputs = Array.from(inputs).filter(input => input.value);
+            
+            if (filledInputs.length > 0) {
+                const lastFilled = filledInputs[filledInputs.length - 1];
+                lastFilled.value = '';
+                lastFilled.classList.remove('filled');
+                lastFilled.focus();
+            }
+        }
+
+        function clearCode() {
+            const inputs = document.querySelectorAll('.code-digit');
+            inputs.forEach(input => {
+                input.value = '';
+                input.classList.remove('filled');
+            });
+            document.getElementById('codeInput1').focus();
+        }
+
+        function verifyAndDownload() {
+            const inputs = document.querySelectorAll('.code-digit');
+            const enteredCode = Array.from(inputs).map(input => input.value).join('');
+            
+            if (enteredCode.length !== 4) {
+                alert('Please enter all 4 digits of the verification code.');
+                return;
+            }
+            
+            if (enteredCode === correctCode) {
+                // Correct code entered
+                startDownload();
+            } else {
+                // Incorrect code
+                alert('Invalid verification code. Please try again.');
+                clearCode();
+            }
+        }
+
+        function startDownload() {
+            // Create download link
+            const link = document.createElement('a');
+            link.href = '../../assets/extensions/prompt-optimizer-extension.zip';
+            link.download = 'prompt-optimizer-extension.zip';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Show installation instructions
+            document.getElementById('installationInstructions').style.display = 'block';
+            
+            // Update modal content
+            const title = document.getElementById('downloadModalTitle');
+            const description = document.getElementById('downloadModalDescription');
+            title.textContent = '✅ Download Started!';
+            description.textContent = 'Your download should begin automatically. Follow the installation steps below:';
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('downloadModal').classList.contains('active')) {
+                hideDownloadModal();
+            }
+        });
+    </script>
 </body>
 </html>
