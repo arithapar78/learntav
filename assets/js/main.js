@@ -9,23 +9,32 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
 (function() {
     'use strict';
     
-    // Ensure content is visible immediately for GitHub Pages compatibility
-    const ensureContentVisible = function() {
+    // Set up scroll animations with GitHub Pages failsafe
+    const setupScrollAnimations = function() {
         const elements = document.querySelectorAll(
             '.learntav-value-card, .learntav-service-card, .learntav-testimonial-card'
         );
         
+        // Add scroll-animate class for animation
         elements.forEach((el) => {
-            // Remove any initial hiding that might cause issues on GitHub Pages
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
+            el.classList.add('scroll-animate');
         });
+        
+        // Failsafe: if animations haven't triggered after 5 seconds, show all content
+        setTimeout(() => {
+            elements.forEach((el) => {
+                if (!el.classList.contains('animate-in')) {
+                    el.classList.add('animate-in');
+                }
+            });
+        }, 5000);
     };
     
-    // Run immediately and on DOM ready for maximum compatibility
-    ensureContentVisible();
+    // Run setup when DOM is ready
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', ensureContentVisible);
+        document.addEventListener('DOMContentLoaded', setupScrollAnimations);
+    } else {
+        setupScrollAnimations();
     }
 
     // ===================================================================
@@ -471,20 +480,12 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
     // ===================================================================
     
     function initializeAnimations() {
-        console.log('🔍 DEBUG: Initializing animations...');
+        console.log('🔍 DEBUG: Initializing scroll animations...');
         
         // Find all elements that should animate
-        const animatedElements = document.querySelectorAll(
-            '.learntav-value-card, .learntav-service-card, .learntav-testimonial-card'
-        );
+        const animatedElements = document.querySelectorAll('.scroll-animate');
         
         console.log('📊 DEBUG: Found', animatedElements.length, 'elements to animate');
-        
-        // Add animation class to all elements immediately
-        animatedElements.forEach((el, index) => {
-            el.classList.add('scroll-animate');
-            console.log('🎨 DEBUG: Added scroll-animate class to element', index);
-        });
         
         if ('IntersectionObserver' in window) {
             console.log('✅ DEBUG: IntersectionObserver supported');
@@ -496,37 +497,60 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        console.log('👀 DEBUG: Element entering view:', entry.target);
-                        entry.target.classList.add('animate-in');
+                    if (entry.isIntersecting && !entry.target.classList.contains('animate-in')) {
+                        console.log('🎬 DEBUG: Element entering view, animating:', entry.target.classList.toString());
+                        
+                        // Add staggered delay based on element position
+                        const delay = Array.from(animatedElements).indexOf(entry.target) * 100;
+                        
+                        setTimeout(() => {
+                            entry.target.classList.add('animate-in');
+                        }, delay);
+                        
                         observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
 
             // Observe all animated elements
-            animatedElements.forEach(el => {
+            animatedElements.forEach((el, index) => {
                 observer.observe(el);
+                console.log('🎯 DEBUG: Observing element', index, el.classList.toString());
             });
             
         } else {
-            console.warn('⚠️ DEBUG: IntersectionObserver not supported, using fallback');
+            console.warn('⚠️ DEBUG: IntersectionObserver not supported, using scroll fallback');
             
             // Fallback for older browsers
             function checkScroll() {
-                animatedElements.forEach(el => {
-                    const rect = el.getBoundingClientRect();
-                    const isVisible = rect.top < (window.innerHeight - 100);
-                    
-                    if (isVisible && !el.classList.contains('animate-in')) {
-                        el.classList.add('animate-in');
+                animatedElements.forEach((el, index) => {
+                    if (!el.classList.contains('animate-in')) {
+                        const rect = el.getBoundingClientRect();
+                        const isVisible = rect.top < (window.innerHeight - 50) && rect.bottom > 0;
+                        
+                        if (isVisible) {
+                            console.log('🎬 DEBUG: Scroll animating element', index);
+                            el.classList.add('animate-in');
+                        }
                     }
                 });
             }
             
-            window.addEventListener('scroll', checkScroll);
+            // Throttle scroll events for performance
+            let scrollTimeout;
+            function throttledScroll() {
+                if (scrollTimeout) return;
+                scrollTimeout = setTimeout(() => {
+                    checkScroll();
+                    scrollTimeout = null;
+                }, 16); // ~60fps
+            }
+            
+            window.addEventListener('scroll', throttledScroll, { passive: true });
             window.addEventListener('resize', checkScroll);
-            checkScroll(); // Check initial state
+            
+            // Initial check after a delay
+            setTimeout(checkScroll, 100);
         }
 
         // Initialize download functionality
