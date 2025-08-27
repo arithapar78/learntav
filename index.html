@@ -444,8 +444,46 @@
         </div>
     </div>
 
-    <!-- Emergency Fix for Content Visibility -->
-    <script src="assets/js/emergency-fix.js"></script>
+    <!-- EMERGENCY INLINE FIX: Direct content reveal for GitHub Pages -->
+    <script>
+        // EMERGENCY FIX FOR SCROLL VISIBILITY ISSUE - INLINE VERSION
+        console.log('🚨 INLINE EMERGENCY FIX: Loading emergency content reveal...');
+
+        // Show all content immediately - no animations
+        function emergencyRevealContent() {
+            console.log('🔧 INLINE EMERGENCY: Revealing all content...');
+            
+            const hiddenElements = document.querySelectorAll(
+                '.learntav-value-card, .learntav-service-card, .learntav-testimonial-card'
+            );
+            
+            console.log('📊 INLINE EMERGENCY: Found', hiddenElements.length, 'elements to reveal');
+            
+            hiddenElements.forEach((el, index) => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+                el.style.transition = 'none';
+                console.log('✅ INLINE EMERGENCY: Revealed element', index, el.className);
+            });
+            
+            console.log('🎉 INLINE EMERGENCY: All content revealed!');
+        }
+
+        // Run immediately if DOM is already loaded
+        if (document.readyState === 'loading') {
+            console.log('⏳ INLINE EMERGENCY: DOM still loading, waiting...');
+            document.addEventListener('DOMContentLoaded', emergencyRevealContent);
+        } else {
+            console.log('⚡ INLINE EMERGENCY: DOM already loaded, running fix now...');
+            emergencyRevealContent();
+        }
+        
+        // Also run on window load as final backup
+        window.addEventListener('load', function() {
+            console.log('🔄 INLINE EMERGENCY: Window loaded, running backup reveal...');
+            emergencyRevealContent();
+        });
+    </script>
     
     <!-- JavaScript -->
     <script src="assets/js/main.js"></script>
