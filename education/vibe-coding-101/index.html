@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vibe Coding 101 - Learn to create apps with AI tools. No coding experience required. Perfect for kids and beginners.">
+    <title>Vibe Coding 101 - LearnTAV | AI-Powered App Development Course</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../assets/images/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <style>
+        .course-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+        }
+        
+        .course-hero__badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+        
+        .course-hero__title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+        
+        .course-hero__subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 32px;
+            max-width: 600px;
+        }
+        
+        .course-stats {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+        
+        .course-stat {
+            text-align: center;
+        }
+        
+        .course-stat__number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .course-stat__label {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin: 48px 0;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card--popular {
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+        
+        .pricing-card--popular::before {
+            content: "Most Popular";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #667eea;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .pricing-card--popular .pricing-card__content {
+            padding-top: 24px;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+        
+        .pricing-card__type {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .pricing-card__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 8px 0 16px 0;
+        }
+        
+        .pricing-card__price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .pricing-card__price-note {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        
+        .pricing-card__features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 32px;
+        }
+        
+        .pricing-card__features li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pricing-card__features li::before {
+            content: "✓";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 16px;
+        }
+        
+        .curriculum-section {
+            background: #f8fafc;
+            padding: 80px 0;
+        }
+        
+        .session-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+        
+        .session-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .session-card__number {
+            background: #667eea;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .session-card__title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .session-card__description {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .tools-showcase {
+            padding: 80px 0;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+        
+        .tool-card {
+            text-align: center;
+            padding: 24px;
+        }
+        
+        .tool-card__icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+        
+        .tool-card__name {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .tool-card__description {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .enrollment-form {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            margin-top: 32px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+        }
+        
+        @media (max-width: 768px) {
+            .course-hero__title {
+                font-size: 2.5rem;
+            }
+            
+            .course-stats {
+                justify-content: center;
+                gap: 24px;
+            }
+            
+            .pricing-card--popular {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="learntav-nav" id="mainNav">
+        <div class="learntav-container">
+            <div class="learntav-nav__container">
+                <a href="../../index.html" class="learntav-nav__logo">
+                    <span class="learntav-nav__logo-text">LearnTAV</span>
+                </a>
+                
+                <div class="learntav-nav__menu" id="navMenu">
+                    <a href="../index.html" class="learntav-nav__link learntav-nav__link--active">Education</a>
+                    <a href="../../consulting/index.html" class="learntav-nav__link">Consulting</a>
+                    <a href="../../about/index.html" class="learntav-nav__link">About</a>
+                    <a href="../../resources/index.html" class="learntav-nav__link">Resources</a>
+                    <a href="../../ai-tools/index.html" class="learntav-nav__link">AI Tools</a>
+                    <a href="../../contact/index.html" class="learntav-nav__link">Contact</a>
+                </div>
+                
+                <div class="learntav-nav__actions">
+                    <a href="#enrollment" class="learntav-btn learntav-btn--primary">Enroll Now</a>
+                    <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Course Hero Section -->
+    <section class="course-hero">
+        <div class="learntav-container">
+            <div class="course-hero__content">
+                <span class="course-hero__badge">🚀 No Coding Experience Required</span>
+                <h1 class="course-hero__title">Vibe Coding 101</h1>
+                <p class="course-hero__subtitle">
+                    Learn to create amazing apps using AI tools like Anthropic, VS Code, and OpenAI. Perfect for kids and beginners who want to build without traditional coding!
+                </p>
+                
+                <div class="course-stats">
+                    <div class="course-stat">
+                        <span class="course-stat__number">4</span>
+                        <span class="course-stat__label">Sessions</span>
+                    </div>
+                    <div class="course-stat">
+                        <span class="course-stat__number">1hr</span>
+                        <span class="course-stat__label">Each Session</span>
+                    </div>
+                    <div class="course-stat">
+                        <span class="course-stat__number">10</span>
+                        <span class="course-stat__label">Kids per Group</span>
+                    </div>
+                    <div class="course-stat">
+                        <span class="course-stat__number">0</span>
+                        <span class="course-stat__label">Prior Experience Needed</span>
+                    </div>
+                </div>
+                
+                <a href="#enrollment" class="learntav-btn learntav-btn--primary learntav-btn--large">Start Your Journey</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="learntav-services">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">Choose Your Learning Style</h2>
+                <p class="learntav-section-subtitle">
+                    Select the option that works best for you
+                </p>
+            </div>
+            
+            <div class="pricing-cards">
+                <div class="pricing-card pricing-card--popular">
+                    <div class="pricing-card__content">
+                        <div class="pricing-card__type">Group Learning</div>
+                        <h3 class="pricing-card__title">Vibe Squad</h3>
+                        <div class="pricing-card__price">$100</div>
+                        <div class="pricing-card__price-note">4 sessions • Up to 10 kids</div>
+                        
+                        <ul class="pricing-card__features">
+                            <li>4 interactive group sessions</li>
+                            <li>Learn with friends (10 kids max)</li>
+                            <li>Collaborative app building</li>
+                            <li>AI tools introduction</li>
+                            <li>VS Code setup and basics</li>
+                            <li>Extension development example</li>
+                            <li>Agents and Framework explained</li>
+                            <li>Certificate of completion</li>
+                        </ul>
+                        
+                        <a href="#enrollment" class="learntav-btn learntav-btn--primary learntav-btn--full">Join the Squad</a>
+                    </div>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-card__content">
+                        <div class="pricing-card__type">Private Learning</div>
+                        <h3 class="pricing-card__title">1-on-1 Mentoring</h3>
+                        <div class="pricing-card__price">$200</div>
+                        <div class="pricing-card__price-note">4 session package</div>
+                        
+                        <ul class="pricing-card__features">
+                            <li>Personalized 1-on-1 attention</li>
+                            <li>Customized learning pace</li>
+                            <li>Individual project focus</li>
+                            <li>All group content included</li>
+                            <li>Flexible scheduling</li>
+                            <li>Direct mentor access</li>
+                            <li>Custom app development</li>
+                            <li>Premium support</li>
+                        </ul>
+                        
+                        <a href="#enrollment" class="learntav-btn learntav-btn--outline learntav-btn--full">Get Personal Coaching</a>
+                    </div>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-card__content">
+                        <div class="pricing-card__type">Flexible Option</div>
+                        <h3 class="pricing-card__title">Per Session</h3>
+                        <div class="pricing-card__price">$75</div>
+                        <div class="pricing-card__price-note">per hour • Private only</div>
+                        
+                        <ul class="pricing-card__features">
+                            <li>Pay as you go</li>
+                            <li>No package commitment</li>
+                            <li>1-on-1 private sessions</li>
+                            <li>Perfect for trial</li>
+                            <li>Flexible scheduling</li>
+                            <li>Same quality content</li>
+                            <li>Individual attention</li>
+                            <li>Cancel anytime</li>
+                        </ul>
+                        
+                        <a href="#enrollment" class="learntav-btn learntav-btn--ghost learntav-btn--full">Try a Session</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum Section -->
+    <section class="curriculum-section">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">What You'll Learn</h2>
+                <p class="learntav-section-subtitle">
+                    4 power-packed sessions that will transform you into an AI-powered app builder
+                </p>
+            </div>
+            
+            <div class="session-grid">
+                <div class="session-card">
+                    <div class="session-card__number">1</div>
+                    <h3 class="session-card__title">AI Tools Introduction</h3>
+                    <p class="session-card__description">
+                        Get familiar with Anthropic Claude, OpenAI, VS Code, and other essential tools. Learn how AI can be your coding companion and set up your development environment.
+                    </p>
+                </div>
+                
+                <div class="session-card">
+                    <div class="session-card__number">2</div>
+                    <h3 class="session-card__title">Vibe Coding Basics</h3>
+                    <p class="session-card__description">
+                        Understand the concept of "vibe coding" - using AI to write code by describing what you want. Practice with simple examples and see the magic happen.
+                    </p>
+                </div>
+                
+                <div class="session-card">
+                    <div class="session-card__number">3</div>
+                    <h3 class="session-card__title">Build Your First App</h3>
+                    <p class="session-card__description">
+                        Create a real app from scratch using AI assistance. Learn how to break down ideas into AI-friendly prompts and watch your vision come to life.
+                    </p>
+                </div>
+                
+                <div class="session-card">
+                    <div class="session-card__number">4</div>
+                    <h3 class="session-card__title">Agents & Advanced Concepts</h3>
+                    <p class="session-card__description">
+                        Explore how AI agents work, understand frameworks, and see real examples including how I created my extension. Launch your app and plan next steps.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Showcase -->
+    <section class="tools-showcase">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">Tools You'll Master</h2>
+                <p class="learntav-section-subtitle">
+                    Professional-grade AI tools that will power your development journey
+                </p>
+            </div>
+            
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <span class="tool-card__icon">🤖</span>
+                    <h4 class="tool-card__name">Anthropic Claude</h4>
+                    <p class="tool-card__description">Advanced AI assistant for coding help and problem-solving</p>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-card__icon">⚡</span>
+                    <h4 class="tool-card__name">OpenAI GPT</h4>
+                    <p class="tool-card__description">Powerful language model for code generation and debugging</p>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-card__icon">💻</span>
+                    <h4 class="tool-card__name">VS Code</h4>
+                    <p class="tool-card__description">Professional code editor with AI extensions</p>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-card__icon">🌐</span>
+                    <h4 class="tool-card__name">Web Frameworks</h4>
+                    <p class="tool-card__description">Modern tools for building responsive web applications</p>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-card__icon">🚀</span>
+                    <h4 class="tool-card__name">AI Agents</h4>
+                    <p class="tool-card__description">Understand automated AI systems and workflows</p>
+                </div>
+                
+                <div class="tool-card">
+                    <span class="tool-card__icon">🔧</span>
+                    <h4 class="tool-card__name">Extensions</h4>
+                    <p class="tool-card__description">Learn to build browser and editor extensions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories / Example -->
+    <section class="learntav-services">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">Real Success Story</h2>
+                <p class="learntav-section-subtitle">
+                    See what's possible when you combine creativity with AI tools
+                </p>
+            </div>
+            
+            <div class="learntav-service-card learntav-service-card--highlight">
+                <div class="learntav-service-card__header">
+                    <div class="learntav-service-card__icon">🔌</div>
+                    <div class="learntav-service-card__category">Case Study</div>
+                </div>
+                <h3 class="learntav-service-card__title">Power Tracker Extension</h3>
+                <p class="learntav-service-card__description">
+                    I built a complete browser extension using the same AI-powered methods you'll learn in this course. The extension helps users track their productivity and energy levels throughout the day. What took traditional developers weeks, we accomplished in hours using AI assistance and smart prompting techniques.
+                </p>
+                <ul class="learntav-service-card__features">
+                    <li>Built entirely with AI assistance</li>
+                    <li>No traditional coding required</li>
+                    <li>Professional-quality result</li>
+                    <li>Published and actively used</li>
+                </ul>
+                <div class="learntav-service-card__actions">
+                    <a href="../../ai-tools/power-tracker/index.html" class="learntav-btn learntav-btn--primary">See the Extension</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enrollment Form -->
+    <section id="enrollment" class="learntav-services">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">Ready to Start Building?</h2>
+                <p class="learntav-section-subtitle">
+                    Join Vibe Coding 101 and discover the future of app development
+                </p>
+            </div>
+            
+            <div class="enrollment-form">
+                <form id="enrollmentForm" class="learntav-form">
+                    <div class="learntav-grid learntav-grid--2-col">
+                        <div class="form-group">
+                            <label for="studentName" class="form-label">Student Name *</label>
+                            <input type="text" id="studentName" name="studentName" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="studentAge" class="form-label">Age *</label>
+                            <input type="number" id="studentAge" name="studentAge" class="form-input" min="6" max="18" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="parentName" class="form-label">Parent/Guardian Name *</label>
+                            <input type="text" id="parentName" name="parentName" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address *</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="learningStyle" class="form-label">Preferred Learning Style *</label>
+                            <select id="learningStyle" name="learningStyle" class="form-select" required>
+                                <option value="">Select an option</option>
+                                <option value="group">Group Learning - $100 (4 sessions)</option>
+                                <option value="private-package">Private 1-on-1 - $200 (4 sessions)</option>
+                                <option value="private-hourly">Private Per Session - $75/hour</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="experience" class="form-label">Any previous experience with coding or AI tools?</label>
+                        <textarea id="experience" name="experience" class="form-input" rows="3" placeholder="Tell us about any prior experience (it's okay if none!)"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="goals" class="form-label">What would you like to build? *</label>
+                        <textarea id="goals" name="goals" class="form-input" rows="3" placeholder="Describe your dream app or project ideas" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="timing" class="form-label">Preferred timing (weekdays/weekends, morning/afternoon)</label>
+                        <input type="text" id="timing" name="timing" class="form-input" placeholder="e.g., Weekend mornings">
+                    </div>
+                    
+                    <div class="learntav-service-card__actions">
+                        <button type="submit" class="learntav-btn learntav-btn--primary learntav-btn--large">
+                            Enroll in Vibe Coding 101
+                        </button>
+                        <p style="text-align: center; color: #666; font-size: 14px; margin-top: 16px;">
+                            We'll contact you within 24 hours to confirm your spot and schedule
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="learntav-footer">
+        <div class="learntav-container">
+            <div class="learntav-footer__main">
+                <div class="learntav-footer__brand">
+                    <div class="learntav-footer__logo">
+                        <span class="learntav-footer__logo-text">LearnTAV</span>
+                    </div>
+                    <p class="learntav-footer__description">
+                        Where Technology Meets Accessibility, Sustainability, and Real-World Impact.
+                    </p>
+                </div>
+
+                <div class="learntav-footer__links">
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">Education</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../index.html">Education Programs</a></li>
+                            <li><a href="../paths/index.html">Learning Paths</a></li>
+                            <li><a href="index.html">Vibe Coding 101</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">Company</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../../about/index.html">About</a></li>
+                            <li><a href="../../contact/index.html">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">Resources</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../../resources/index.html">Resources</a></li>
+                            <li><a href="../../ai-tools/index.html">AI Tools</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="learntav-footer__bottom">
+                <div class="learntav-footer__legal">
+                    <p>&copy; 2024 LearnTAV. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        // Enrollment form handling
+        document.getElementById('enrollmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Simple validation
+            if (!data.studentName || !data.email || !data.learningStyle || !data.goals) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Show success message
+            alert('Thank you for enrolling in Vibe Coding 101! We\'ll contact you within 24 hours to confirm your spot and schedule your sessions.');
+            
+            // In a real application, you would send this data to a server
+            console.log('Enrollment data:', data);
+            
+            // Reset form
+            this.reset();
+        });
+        
+        // Smooth scrolling for enrollment link
+        document.querySelectorAll('a[href="#enrollment"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('enrollment').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
