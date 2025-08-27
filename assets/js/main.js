@@ -9,25 +9,74 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
 (function() {
     'use strict';
     
-    // Set up scroll animations with GitHub Pages failsafe
+    // DEBUG: Track animation system status
+    window.LEARNTAV_DEBUG = {
+        animationSystemLoaded: false,
+        elementsFound: 0,
+        elementsAnimated: 0,
+        failsafeTriggered: false,
+        intersectionObserverSupported: false,
+        log: function(message, data) {
+            console.log('🐛 ANIMATION DEBUG:', message, data || '');
+        }
+    };
+    
+    // Set up scroll animations with robust failsafe system
     const setupScrollAnimations = function() {
         const elements = document.querySelectorAll(
             '.learntav-value-card, .learntav-service-card, .learntav-testimonial-card'
         );
         
+        window.LEARNTAV_DEBUG.elementsFound = elements.length;
+        window.LEARNTAV_DEBUG.log('Early setup found elements:', elements.length);
+        
         // Add scroll-animate class for animation
-        elements.forEach((el) => {
+        elements.forEach((el, index) => {
             el.classList.add('scroll-animate');
+            window.LEARNTAV_DEBUG.log(`Added scroll-animate to element ${index}:`, el.className);
         });
         
-        // Failsafe: if animations haven't triggered after 5 seconds, show all content
-        setTimeout(() => {
-            elements.forEach((el) => {
-                if (!el.classList.contains('animate-in')) {
-                    el.classList.add('animate-in');
-                }
-            });
-        }, 5000);
+        // Robust failsafe: Multiple fallback mechanisms
+        const enableFailsafe = () => {
+            window.LEARNTAV_DEBUG.log('Enabling failsafe system');
+            
+            // Immediate check for elements that should be visible
+            setTimeout(() => {
+                elements.forEach((el, index) => {
+                    const rect = el.getBoundingClientRect();
+                    const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+                    
+                    if (!el.classList.contains('animate-in')) {
+                        window.LEARNTAV_DEBUG.log(`Element ${index} not animated, in viewport: ${isInViewport}`);
+                        if (isInViewport) {
+                            el.classList.add('animate-in');
+                            window.LEARNTAV_DEBUG.elementsAnimated++;
+                            window.LEARNTAV_DEBUG.log(`Failsafe animated element ${index}`);
+                        }
+                    }
+                });
+            }, 1000);
+            
+            // Final failsafe: ensure all elements are visible after reasonable time
+            setTimeout(() => {
+                elements.forEach((el, index) => {
+                    if (!el.classList.contains('animate-in')) {
+                        el.classList.add('animate-in');
+                        window.LEARNTAV_DEBUG.elementsAnimated++;
+                        window.LEARNTAV_DEBUG.failsafeTriggered = true;
+                        window.LEARNTAV_DEBUG.log(`Final failsafe revealed element ${index}`);
+                    }
+                });
+                
+                window.LEARNTAV_DEBUG.log('Animation system status:', {
+                    found: window.LEARNTAV_DEBUG.elementsFound,
+                    animated: window.LEARNTAV_DEBUG.elementsAnimated,
+                    failsafeTriggered: window.LEARNTAV_DEBUG.failsafeTriggered
+                });
+            }, 7000);
+        };
+        
+        enableFailsafe();
     };
     
     // Run setup when DOM is ready
@@ -480,15 +529,26 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
     // ===================================================================
     
     function initializeAnimations() {
-        console.log('🔍 DEBUG: Initializing scroll animations...');
+        window.LEARNTAV_DEBUG.log('Main animation system initializing...');
+        window.LEARNTAV_DEBUG.animationSystemLoaded = true;
         
         // Find all elements that should animate
         const animatedElements = document.querySelectorAll('.scroll-animate');
         
-        console.log('📊 DEBUG: Found', animatedElements.length, 'elements to animate');
+        window.LEARNTAV_DEBUG.log('Main system found elements:', animatedElements.length);
+        
+        // Prevent duplicate animation systems from conflicting
+        if (animatedElements.length === 0) {
+            window.LEARNTAV_DEBUG.log('No elements found - early system may have handled setup');
+            // Initialize other systems and return
+            initializeDownloadSystem();
+            initializeNavbarScroll();
+            return;
+        }
         
         if ('IntersectionObserver' in window) {
-            console.log('✅ DEBUG: IntersectionObserver supported');
+            window.LEARNTAV_DEBUG.intersectionObserverSupported = true;
+            window.LEARNTAV_DEBUG.log('IntersectionObserver supported, setting up...');
             
             const observerOptions = {
                 threshold: 0.1,
@@ -498,13 +558,18 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting && !entry.target.classList.contains('animate-in')) {
-                        console.log('🎬 DEBUG: Element entering view, animating:', entry.target.classList.toString());
+                        const elementIndex = Array.from(animatedElements).indexOf(entry.target);
+                        window.LEARNTAV_DEBUG.log(`Element ${elementIndex} entering view, animating...`);
                         
                         // Add staggered delay based on element position
-                        const delay = Array.from(animatedElements).indexOf(entry.target) * 100;
+                        const delay = elementIndex * 100;
                         
                         setTimeout(() => {
-                            entry.target.classList.add('animate-in');
+                            if (!entry.target.classList.contains('animate-in')) {
+                                entry.target.classList.add('animate-in');
+                                window.LEARNTAV_DEBUG.elementsAnimated++;
+                                window.LEARNTAV_DEBUG.log(`Animated element ${elementIndex} via IntersectionObserver`);
+                            }
                         }, delay);
                         
                         observer.unobserve(entry.target);
@@ -515,11 +580,27 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
             // Observe all animated elements
             animatedElements.forEach((el, index) => {
                 observer.observe(el);
-                console.log('🎯 DEBUG: Observing element', index, el.classList.toString());
+                window.LEARNTAV_DEBUG.log(`Observing element ${index}:`, el.className);
             });
             
+            // Backup check for IntersectionObserver failures
+            setTimeout(() => {
+                animatedElements.forEach((el, index) => {
+                    if (!el.classList.contains('animate-in')) {
+                        const rect = el.getBoundingClientRect();
+                        const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+                        
+                        if (isInViewport) {
+                            el.classList.add('animate-in');
+                            window.LEARNTAV_DEBUG.elementsAnimated++;
+                            window.LEARNTAV_DEBUG.log(`Backup animation for element ${index} - IntersectionObserver may have failed`);
+                        }
+                    }
+                });
+            }, 2000);
+            
         } else {
-            console.warn('⚠️ DEBUG: IntersectionObserver not supported, using scroll fallback');
+            window.LEARNTAV_DEBUG.log('IntersectionObserver not supported, using scroll fallback');
             
             // Fallback for older browsers
             function checkScroll() {
@@ -529,8 +610,9 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
                         const isVisible = rect.top < (window.innerHeight - 50) && rect.bottom > 0;
                         
                         if (isVisible) {
-                            console.log('🎬 DEBUG: Scroll animating element', index);
                             el.classList.add('animate-in');
+                            window.LEARNTAV_DEBUG.elementsAnimated++;
+                            window.LEARNTAV_DEBUG.log(`Scroll fallback animated element ${index}`);
                         }
                     }
                 });
@@ -552,6 +634,26 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
             // Initial check after a delay
             setTimeout(checkScroll, 100);
         }
+
+        // Emergency failsafe: ensure no elements are permanently hidden
+        setTimeout(() => {
+            animatedElements.forEach((el, index) => {
+                if (!el.classList.contains('animate-in')) {
+                    window.LEARNTAV_DEBUG.log(`EMERGENCY: Revealing hidden element ${index}`);
+                    el.classList.add('animate-in');
+                    window.LEARNTAV_DEBUG.elementsAnimated++;
+                    window.LEARNTAV_DEBUG.failsafeTriggered = true;
+                }
+            });
+            
+            // Final status report
+            window.LEARNTAV_DEBUG.log('Final Animation Status:', {
+                elementsFound: window.LEARNTAV_DEBUG.elementsFound,
+                elementsAnimated: window.LEARNTAV_DEBUG.elementsAnimated,
+                intersectionObserverSupported: window.LEARNTAV_DEBUG.intersectionObserverSupported,
+                failsafeTriggered: window.LEARNTAV_DEBUG.failsafeTriggered
+            });
+        }, 10000);
 
         // Initialize download functionality
         initializeDownloadSystem();
