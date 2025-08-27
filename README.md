@@ -83,7 +83,6 @@ website/
 
 ### Education Programs
 1. **App Development Learning** - No-code/low-code application building
-2. **AI Workplace Integration** - Master AI tools for immediate productivity
 
 ### Consulting Services
 1. **Environmental Impact Assessment** - Optimize AI adoption's carbon footprint
