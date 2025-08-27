@@ -9,31 +9,23 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
 (function() {
     'use strict';
     
-    // EMERGENCY FIX: Show all content immediately in case animations fail
-    console.log('⚡ DEBUG: Emergency content reveal starting...');
-    
-    // Show all potentially hidden content immediately
-    const emergencyReveal = function() {
-        const hiddenElements = document.querySelectorAll(
+    // Ensure content is visible immediately for GitHub Pages compatibility
+    const ensureContentVisible = function() {
+        const elements = document.querySelectorAll(
             '.learntav-value-card, .learntav-service-card, .learntav-testimonial-card'
         );
         
-        console.log('🔧 DEBUG: Emergency revealing', hiddenElements.length, 'elements');
-        
-        hiddenElements.forEach((el, index) => {
+        elements.forEach((el) => {
+            // Remove any initial hiding that might cause issues on GitHub Pages
             el.style.opacity = '1';
             el.style.transform = 'translateY(0)';
-            el.style.transition = 'none'; // Remove transitions for immediate show
         });
-        
-        console.log('✅ DEBUG: Emergency reveal complete');
     };
     
-    // Run emergency reveal immediately when DOM is ready
+    // Run immediately and on DOM ready for maximum compatibility
+    ensureContentVisible();
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', emergencyReveal);
-    } else {
-        emergencyReveal();
+        document.addEventListener('DOMContentLoaded', ensureContentVisible);
     }
 
     // ===================================================================
@@ -732,12 +724,42 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
                 e.preventDefault();
                 const url = this.getAttribute('href') || this.getAttribute('data-href');
                 if (url && (url.includes('power-tracker') || url.includes('prompt-energy-optimizer'))) {
+                    // Direct download without modal for free access
+                    directDownload(url);
+                } else {
                     showDownloadModal(url);
                 }
             });
         });
         
         console.log('✅ DEBUG: Download system initialized');
+    }
+    
+    // New function for direct downloads
+    function directDownload(url) {
+        let zipFile = '';
+        let toolName = '';
+        
+        if (url.includes('power-tracker')) {
+            zipFile = 'power-tracker-extension.zip';
+            toolName = 'Power Tracker';
+        } else if (url.includes('prompt-energy-optimizer')) {
+            zipFile = 'prompt-optimizer-extension.zip';
+            toolName = 'Prompt Optimizer';
+        }
+        
+        if (zipFile) {
+            const link = document.createElement('a');
+            link.href = `assets/extensions/${zipFile}`;
+            link.download = zipFile;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Show success message
+            alert(`✅ ${toolName} download started!\n\nInstallation:\n1. Unzip the downloaded file\n2. Open Chrome → Extensions\n3. Enable Developer Mode\n4. Click "Load Unpacked"\n5. Select the unzipped folder`);
+        }
     }
     
     function showDownloadModal(toolType) {
@@ -913,34 +935,29 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
     }
     
     window.verifyAndDownload = function(zipFile, toolName) {
-        const inputs = document.querySelectorAll('.verification-digit');
-        const code = Array.from(inputs).map(input => input.value).join('');
-        
-        // For demo purposes, accept the example code 7392
-        if (code === '7392') {
-            // Show instructions
-            const instructions = document.getElementById('downloadInstructions');
+        // Skip verification - allow free download
+        const instructions = document.getElementById('downloadInstructions');
+        if (instructions) {
             instructions.classList.add('active');
-            
-            // Trigger download
-            const link = document.createElement('a');
-            link.href = `../assets/extensions/${zipFile}`;
-            link.download = zipFile;
-            link.style.display = 'none';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Update button text
-            const downloadBtn = document.getElementById('downloadBtn');
+        }
+        
+        // Trigger download immediately
+        const link = document.createElement('a');
+        link.href = `../assets/extensions/${zipFile}`;
+        link.download = zipFile;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Update button text
+        const downloadBtn = document.getElementById('downloadBtn');
+        if (downloadBtn) {
             downloadBtn.textContent = `✓ Downloaded ${toolName}`;
             downloadBtn.style.background = '#10b981';
-            
-            console.log(`✅ Downloaded: ${zipFile}`);
-        } else {
-            // Show error
-            alert('Invalid verification code. Please use the example code: 7392');
         }
+        
+        console.log(`✅ Downloaded: ${zipFile}`);
     };
     
     // Expose download modal functions globally

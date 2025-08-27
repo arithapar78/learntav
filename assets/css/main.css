@@ -1475,12 +1475,20 @@ li {
    Scroll-Triggered Animations
    =================================================================== */
 .scroll-animate {
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1;
+    transform: translateY(0);
     transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .scroll-animate.animate-in {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Fallback for elements that might be initially hidden */
+.learntav-value-card,
+.learntav-service-card,
+.learntav-testimonial-card {
     opacity: 1 !important;
     transform: translateY(0) !important;
 }

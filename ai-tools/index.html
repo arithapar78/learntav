@@ -274,7 +274,7 @@
                     </div>
                     
                     <div class="product-actions">
-                        <button class="btn-purchase" data-href="power-tracker/index.html">Download Power Tracker</button>
+                        <button class="btn-purchase" onclick="directDownloadPowerTracker()">Download Power Tracker</button>
                         <a href="power-tracker/index.html" class="btn-learn-more">Learn More</a>
                     </div>
                     
@@ -310,7 +310,7 @@
                     </div>
                     
                     <div class="product-actions">
-                        <button class="btn-purchase" data-href="prompt-energy-optimizer/index.html">Download Prompt Optimizer</button>
+                        <button class="btn-purchase" onclick="directDownloadPromptOptimizer()">Download Prompt Optimizer</button>
                         <a href="prompt-energy-optimizer/index.html" class="btn-learn-more">Learn More</a>
                     </div>
                     
@@ -369,7 +369,7 @@
                     Join thousands of users who are already reducing their carbon footprint while improving their AI workflows.
                 </p>
                 <div class="learntav-cta__actions">
-                    <button class="learntav-btn learntav-btn--primary learntav-btn--large" data-href="power-tracker/index.html">
+                    <button class="learntav-btn learntav-btn--primary learntav-btn--large" onclick="directDownloadPowerTracker()">
                         Download Power Tracker Free
                     </button>
                     <div class="learntav-cta__contact-info">
@@ -441,5 +441,28 @@
 
     <!-- JavaScript -->
     <script src="../assets/js/main.js"></script>
+    <script>
+        function directDownloadPowerTracker() {
+            const link = document.createElement('a');
+            link.href = '../assets/extensions/power-tracker-extension.zip';
+            link.download = 'power-tracker-extension.zip';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            alert('✅ Power Tracker download started!\n\nInstallation Instructions:\n1. Unzip the downloaded file\n2. Open Chrome → More tools → Extensions\n3. Enable "Developer mode" (top right)\n4. Click "Load unpacked"\n5. Select the unzipped folder\n6. Pin the extension to your toolbar');
+        }
+
+        function directDownloadPromptOptimizer() {
+            const link = document.createElement('a');
+            link.href = '../assets/extensions/prompt-optimizer-extension.zip';
+            link.download = 'prompt-optimizer-extension.zip';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            alert('✅ Prompt Optimizer download started!\n\nInstallation Instructions:\n1. Unzip the downloaded file\n2. Open Chrome → More tools → Extensions\n3. Enable "Developer mode" (top right)\n4. Click "Load unpacked"\n5. Select the unzipped folder\n6. Pin the extension to your toolbar\n7. Visit any AI platform to start optimizing!');
+        }
+    </script>
 </body>
 </html>

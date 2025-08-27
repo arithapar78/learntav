@@ -532,7 +532,7 @@
                         <li>Historical data tracking</li>
                         <li>Customizable thresholds</li>
                     </ul>
-                    <button onclick="initiateDownload('free')" class="btn-download secondary">Download Free</button>
+                    <button onclick="directDownloadFree()" class="btn-download secondary">Download Free</button>
                 </div>
                 
                 <div class="pricing-card featured">
@@ -550,7 +550,7 @@
                         <li><strong>Cost savings calculator</strong></li>
                         <li><strong>Priority support</strong></li>
                     </ul>
-                    <button onclick="initiateDownload('pro')" class="btn-download">Upgrade to Pro</button>
+                    <button onclick="directDownloadPro()" class="btn-download">Download Pro Version</button>
                 </div>
             </div>
         </div>
@@ -1076,42 +1076,36 @@
             document.getElementById('codeInput1').focus();
         }
 
-        function verifyAndDownload() {
-            const inputs = document.querySelectorAll('.code-digit');
-            const enteredCode = Array.from(inputs).map(input => input.value).join('');
-            
-            if (enteredCode.length !== 4) {
-                alert('Please enter all 4 digits of the verification code.');
-                return;
-            }
-            
-            if (enteredCode === correctCode) {
-                // Correct code entered
-                startDownload();
-            } else {
-                // Incorrect code
-                alert('Invalid verification code. Please try again.');
-                clearCode();
-            }
-        }
-
-        function startDownload() {
-            // Create download link
+        function directDownloadFree() {
             const link = document.createElement('a');
             link.href = '../../assets/extensions/power-tracker-extension.zip';
-            link.download = `power-tracker-${currentDownloadType}.zip`;
+            link.download = 'power-tracker-free.zip';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
-            // Show installation instructions
-            document.getElementById('installationInstructions').style.display = 'block';
+            alert('✅ Power Tracker Free download started!\n\nInstallation Instructions:\n1. Unzip the downloaded file\n2. Open Chrome → More tools → Extensions\n3. Enable "Developer mode" (top right)\n4. Click "Load unpacked"\n5. Select the unzipped folder\n6. Pin the extension to your toolbar');
+        }
+
+        function directDownloadPro() {
+            const link = document.createElement('a');
+            link.href = '../../assets/extensions/power-tracker-extension.zip';
+            link.download = 'power-tracker-pro.zip';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
             
-            // Update modal content
-            const title = document.getElementById('downloadModalTitle');
-            const description = document.getElementById('downloadModalDescription');
-            title.textContent = '✅ Download Started!';
-            description.textContent = 'Your download should begin automatically. Follow the installation steps below:';
+            alert('✅ Power Tracker Pro download started!\n\nInstallation Instructions:\n1. Unzip the downloaded file\n2. Open Chrome → More tools → Extensions\n3. Enable "Developer mode" (top right)\n4. Click "Load unpacked"\n5. Select the unzipped folder\n6. Pin the extension to your toolbar\n7. Click the ⚡ button and enter code: 0410 for Pro features');
+        }
+
+        function verifyAndDownload() {
+            // Legacy function - now redirects to direct download
+            directDownloadFree();
+        }
+
+        function startDownload() {
+            // Legacy function - now redirects to direct download
+            directDownloadFree();
         }
 
         // Close modal on Escape key
