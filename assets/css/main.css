@@ -1474,21 +1474,42 @@ li {
 /* ===================================================================
    Scroll-Triggered Animations
    =================================================================== */
+/* EMERGENCY FIX: All elements visible by default */
 .scroll-animate {
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1 !important;
+    transform: translateY(0) !important;
     transition: opacity 0.6s ease, transform 0.6s ease;
-    /* CSS-only failsafe: Auto-reveal after animation duration to prevent permanent hiding */
-    animation: cssFailsafeReveal 1s ease forwards 8s;
 }
 
+/* Animation class can still add smooth effects when working */
 .scroll-animate.animate-in {
     opacity: 1 !important;
     transform: translateY(0) !important;
-    animation: none !important; /* Stop failsafe animation once properly animated */
 }
 
-/* Keyframe for CSS-only failsafe - ensures elements are never permanently hidden */
+/* Ensure content is always visible regardless of JavaScript state */
+.learntav-value-card,
+.learntav-service-card,
+.learntav-testimonial-card {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    visibility: visible !important;
+}
+
+/* Restore original scroll animation behavior only when explicitly enabled */
+.enable-scroll-animations .scroll-animate {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: cssFailsafeReveal 1s ease forwards 3s;
+}
+
+.enable-scroll-animations .scroll-animate.animate-in {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    animation: none !important;
+}
+
+/* Keyframe for future animation restoration */
 @keyframes cssFailsafeReveal {
     to {
         opacity: 1;
@@ -1496,64 +1517,21 @@ li {
     }
 }
 
-/* Ensure content is visible if JavaScript fails to load completely */
-.no-js .scroll-animate {
-    opacity: 1;
-    transform: translateY(0);
-    animation: none;
-}
+/* Staggered animation delays for future use */
+.enable-scroll-animations .scroll-animate:nth-child(1) { transition-delay: 0s; }
+.enable-scroll-animations .scroll-animate:nth-child(2) { transition-delay: 0.1s; }
+.enable-scroll-animations .scroll-animate:nth-child(3) { transition-delay: 0.2s; }
+.enable-scroll-animations .scroll-animate:nth-child(4) { transition-delay: 0.3s; }
+.enable-scroll-animations .scroll-animate:nth-child(5) { transition-delay: 0.4s; }
+.enable-scroll-animations .scroll-animate:nth-child(6) { transition-delay: 0.5s; }
 
-/* Enhanced fallback: After reasonable time, show all content regardless of JavaScript state */
-.scroll-animate {
-    /* If animation hasn't been cancelled after 10 seconds, force visibility */
-    animation: cssFailsafeReveal 0.5s ease forwards 10s, cssFailsafeReveal 1s ease forwards 8s;
-}
+/* Grid layout delays for future use */
+.enable-scroll-animations .learntav-grid .scroll-animate:nth-child(1) { transition-delay: 0.1s; }
+.enable-scroll-animations .learntav-grid .scroll-animate:nth-child(2) { transition-delay: 0.2s; }
+.enable-scroll-animations .learntav-grid .scroll-animate:nth-child(3) { transition-delay: 0.3s; }
+.enable-scroll-animations .learntav-grid .scroll-animate:nth-child(4) { transition-delay: 0.4s; }
 
-/* Staggered animation delays for smooth sequential entrance */
-.scroll-animate:nth-child(1) {
-    transition-delay: 0s;
-    animation-delay: 8s, 10s;
-}
-.scroll-animate:nth-child(2) {
-    transition-delay: 0.1s;
-    animation-delay: 8.1s, 10.1s;
-}
-.scroll-animate:nth-child(3) {
-    transition-delay: 0.2s;
-    animation-delay: 8.2s, 10.2s;
-}
-.scroll-animate:nth-child(4) {
-    transition-delay: 0.3s;
-    animation-delay: 8.3s, 10.3s;
-}
-.scroll-animate:nth-child(5) {
-    transition-delay: 0.4s;
-    animation-delay: 8.4s, 10.4s;
-}
-.scroll-animate:nth-child(6) {
-    transition-delay: 0.5s;
-    animation-delay: 8.5s, 10.5s;
-}
-
-/* Alternative staggered delays for grid layouts */
-.learntav-grid .scroll-animate:nth-child(1) {
-    transition-delay: 0.1s;
-    animation-delay: 8.1s, 10.1s;
-}
-.learntav-grid .scroll-animate:nth-child(2) {
-    transition-delay: 0.2s;
-    animation-delay: 8.2s, 10.2s;
-}
-.learntav-grid .scroll-animate:nth-child(3) {
-    transition-delay: 0.3s;
-    animation-delay: 8.3s, 10.3s;
-}
-.learntav-grid .scroll-animate:nth-child(4) {
-    transition-delay: 0.4s;
-    animation-delay: 8.4s, 10.4s;
-}
-
-/* Debug: Reduced motion users get immediate visibility */
+/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
     .scroll-animate {
         opacity: 1 !important;
