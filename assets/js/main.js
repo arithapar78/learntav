@@ -3,8 +3,38 @@
  * Professional interactive functionality for education and consulting website
  */
 
+// IMMEDIATE DEBUG: Test if JavaScript is loading
+console.log('🚀 DEBUG: JavaScript file is loading!');
+
 (function() {
     'use strict';
+    
+    // EMERGENCY FIX: Show all content immediately in case animations fail
+    console.log('⚡ DEBUG: Emergency content reveal starting...');
+    
+    // Show all potentially hidden content immediately
+    const emergencyReveal = function() {
+        const hiddenElements = document.querySelectorAll(
+            '.learntav-value-card, .learntav-service-card, .learntav-testimonial-card'
+        );
+        
+        console.log('🔧 DEBUG: Emergency revealing', hiddenElements.length, 'elements');
+        
+        hiddenElements.forEach((el, index) => {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+            el.style.transition = 'none'; // Remove transitions for immediate show
+        });
+        
+        console.log('✅ DEBUG: Emergency reveal complete');
+    };
+    
+    // Run emergency reveal immediately when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', emergencyReveal);
+    } else {
+        emergencyReveal();
+    }
 
     // ===================================================================
     // DOM Ready and Initialization
@@ -449,16 +479,23 @@
     // ===================================================================
     
     function initializeAnimations() {
+        console.log('🔍 DEBUG: Initializing animations...');
+        
         if ('IntersectionObserver' in window) {
+            console.log('✅ DEBUG: IntersectionObserver supported');
+            
             const observerOptions = {
                 threshold: 0.1,
                 rootMargin: '0px 0px -50px 0px'
             };
 
             const observer = new IntersectionObserver((entries) => {
+                console.log('👀 DEBUG: Observer triggered with', entries.length, 'entries');
                 entries.forEach(entry => {
+                    console.log('🎯 DEBUG: Element intersecting:', entry.isIntersecting, entry.target);
                     if (entry.isIntersecting) {
                         entry.target.classList.add('animate-in');
+                        console.log('✨ DEBUG: Added animate-in class to:', entry.target);
                         observer.unobserve(entry.target);
                     }
                 });
@@ -468,12 +505,25 @@
             const animatedElements = document.querySelectorAll(
                 '.learntav-value-card, .learntav-service-card, .learntav-testimonial-card'
             );
+            
+            console.log('📊 DEBUG: Found', animatedElements.length, 'animated elements');
 
             animatedElements.forEach((el, index) => {
+                console.log('🎨 DEBUG: Setting up animation for element', index, el);
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(30px)';
                 el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
                 observer.observe(el);
+            });
+        } else {
+            console.error('❌ DEBUG: IntersectionObserver not supported - showing all content immediately');
+            // Fallback: show all content immediately
+            const animatedElements = document.querySelectorAll(
+                '.learntav-value-card, .learntav-service-card, .learntav-testimonial-card'
+            );
+            animatedElements.forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
             });
         }
 
