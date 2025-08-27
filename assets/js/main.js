@@ -481,6 +481,19 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
     function initializeAnimations() {
         console.log('🔍 DEBUG: Initializing animations...');
         
+        // Find all elements that should animate
+        const animatedElements = document.querySelectorAll(
+            '.learntav-value-card, .learntav-service-card, .learntav-testimonial-card'
+        );
+        
+        console.log('📊 DEBUG: Found', animatedElements.length, 'elements to animate');
+        
+        // Add animation class to all elements immediately
+        animatedElements.forEach((el, index) => {
+            el.classList.add('scroll-animate');
+            console.log('🎨 DEBUG: Added scroll-animate class to element', index);
+        });
+        
         if ('IntersectionObserver' in window) {
             console.log('✅ DEBUG: IntersectionObserver supported');
             
@@ -490,43 +503,43 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
             };
 
             const observer = new IntersectionObserver((entries) => {
-                console.log('👀 DEBUG: Observer triggered with', entries.length, 'entries');
                 entries.forEach(entry => {
-                    console.log('🎯 DEBUG: Element intersecting:', entry.isIntersecting, entry.target);
                     if (entry.isIntersecting) {
+                        console.log('👀 DEBUG: Element entering view:', entry.target);
                         entry.target.classList.add('animate-in');
-                        console.log('✨ DEBUG: Added animate-in class to:', entry.target);
                         observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
 
-            // Observe elements for animation
-            const animatedElements = document.querySelectorAll(
-                '.learntav-value-card, .learntav-service-card, .learntav-testimonial-card'
-            );
-            
-            console.log('📊 DEBUG: Found', animatedElements.length, 'animated elements');
-
-            animatedElements.forEach((el, index) => {
-                console.log('🎨 DEBUG: Setting up animation for element', index, el);
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+            // Observe all animated elements
+            animatedElements.forEach(el => {
                 observer.observe(el);
             });
+            
         } else {
-            console.error('❌ DEBUG: IntersectionObserver not supported - showing all content immediately');
-            // Fallback: show all content immediately
-            const animatedElements = document.querySelectorAll(
-                '.learntav-value-card, .learntav-service-card, .learntav-testimonial-card'
-            );
-            animatedElements.forEach(el => {
-                el.style.opacity = '1';
-                el.style.transform = 'translateY(0)';
-            });
+            console.warn('⚠️ DEBUG: IntersectionObserver not supported, using fallback');
+            
+            // Fallback for older browsers
+            function checkScroll() {
+                animatedElements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    const isVisible = rect.top < (window.innerHeight - 100);
+                    
+                    if (isVisible && !el.classList.contains('animate-in')) {
+                        el.classList.add('animate-in');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', checkScroll);
+            window.addEventListener('resize', checkScroll);
+            checkScroll(); // Check initial state
         }
 
+        // Initialize download functionality
+        initializeDownloadSystem();
+        
         // Navbar background on scroll
         initializeNavbarScroll();
     }
@@ -705,16 +718,241 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
     }
 
     // ===================================================================
-    // Add animation styles
+    // Download System with Verification
     // ===================================================================
     
-    // Inject animation CSS
-    const animationStyles = `
-        .animate-in {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
+    function initializeDownloadSystem() {
+        console.log('💾 DEBUG: Initializing download system...');
+        
+        // Add event listeners to all download buttons
+        const downloadButtons = document.querySelectorAll('.btn-purchase, .learntav-btn[href*="power-tracker"], .learntav-btn[href*="prompt-energy-optimizer"]');
+        
+        downloadButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const url = this.getAttribute('href') || this.getAttribute('data-href');
+                if (url && (url.includes('power-tracker') || url.includes('prompt-energy-optimizer'))) {
+                    showDownloadModal(url);
+                }
+            });
+        });
+        
+        console.log('✅ DEBUG: Download system initialized');
+    }
+    
+    function showDownloadModal(toolType) {
+        const isPromptOptimizer = toolType.includes('prompt-energy-optimizer');
+        const toolName = isPromptOptimizer ? 'Prompt Optimizer' : 'Power Tracker';
+        const zipFile = isPromptOptimizer ? 'prompt-optimizer-extension.zip' : 'power-tracker-extension.zip';
+        
+        // Create modal HTML
+        const modalHTML = `
+            <div class="download-modal-overlay" id="downloadOverlay" onclick="hideDownloadModal()"></div>
+            <div class="download-modal" id="downloadModal">
+                <button class="download-modal__close" onclick="hideDownloadModal()">&times;</button>
+                <div class="download-modal__header">
+                    <h3 class="download-modal__title">Download ${toolName}</h3>
+                    <p class="download-modal__subtitle">Please enter the verification code to proceed</p>
+                </div>
+                
+                <div class="verification-section">
+                    <label class="verification-label">Enter Verification Code</label>
+                    <div class="verification-input" id="verificationInput">
+                        <input type="text" class="verification-digit" maxlength="1" data-index="0">
+                        <input type="text" class="verification-digit" maxlength="1" data-index="1">
+                        <input type="text" class="verification-digit" maxlength="1" data-index="2">
+                        <input type="text" class="verification-digit" maxlength="1" data-index="3">
+                    </div>
+                    <div class="verification-example">
+                        Example code: <strong>7 3 9 2</strong>
+                    </div>
+                    
+                    <div class="verification-keypad">
+                        <button class="keypad-btn" onclick="addDigit('1')">1</button>
+                        <button class="keypad-btn" onclick="addDigit('2')">2</button>
+                        <button class="keypad-btn" onclick="addDigit('3')">3</button>
+                        <button class="keypad-btn" onclick="addDigit('4')">4</button>
+                        <button class="keypad-btn" onclick="addDigit('5')">5</button>
+                        <button class="keypad-btn" onclick="addDigit('6')">6</button>
+                        <button class="keypad-btn" onclick="addDigit('7')">7</button>
+                        <button class="keypad-btn" onclick="addDigit('8')">8</button>
+                        <button class="keypad-btn" onclick="addDigit('9')">9</button>
+                        <button class="keypad-btn" onclick="clearCode()">Clear</button>
+                        <button class="keypad-btn" onclick="addDigit('0')">0</button>
+                        <button class="keypad-btn" onclick="removeDigit()">⌫</button>
+                    </div>
+                </div>
+                
+                <div class="download-actions">
+                    <button class="download-btn" id="downloadBtn" onclick="verifyAndDownload('${zipFile}', '${toolName}')" disabled>
+                        Download ${toolName}
+                    </button>
+                </div>
+                
+                <div class="download-instructions" id="downloadInstructions">
+                    <h4 class="download-instructions__title">Installation Instructions</h4>
+                    <ol class="download-instructions__list">
+                        <li>Unzip the downloaded file to a folder on your computer</li>
+                        <li>Open Chrome and go to chrome://extensions/</li>
+                        <li>Enable "Developer mode" by clicking the toggle in the top right</li>
+                        <li>Click "Load unpacked" and select the unzipped folder</li>
+                        <li>The extension will now appear in your Chrome toolbar</li>
+                        <li>Pin it to your toolbar for easy access</li>
+                    </ol>
+                </div>
+            </div>
+        `;
+        
+        // Add modal to page
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+        
+        // Show modal with animation
+        setTimeout(() => {
+            document.getElementById('downloadOverlay').classList.add('active');
+            document.getElementById('downloadModal').classList.add('active');
+        }, 10);
+        
+        // Setup input handlers
+        setupVerificationInputs();
+        
+        // Prevent body scrolling
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function hideDownloadModal() {
+        const overlay = document.getElementById('downloadOverlay');
+        const modal = document.getElementById('downloadModal');
+        
+        if (overlay && modal) {
+            overlay.classList.remove('active');
+            modal.classList.remove('active');
+            
+            setTimeout(() => {
+                overlay.remove();
+                modal.remove();
+            }, 300);
         }
         
+        // Restore body scrolling
+        document.body.style.overflow = 'auto';
+    }
+    
+    function setupVerificationInputs() {
+        const inputs = document.querySelectorAll('.verification-digit');
+        
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', function(e) {
+                const value = e.target.value;
+                if (value.length === 1 && /^\d$/.test(value)) {
+                    e.target.classList.add('filled');
+                    // Move to next input
+                    if (index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                } else {
+                    e.target.classList.remove('filled');
+                }
+                checkCodeComplete();
+            });
+            
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+            
+            input.addEventListener('focus', function(e) {
+                e.target.select();
+            });
+        });
+    }
+    
+    window.addDigit = function(digit) {
+        const inputs = document.querySelectorAll('.verification-digit');
+        const emptyInput = Array.from(inputs).find(input => !input.value);
+        
+        if (emptyInput) {
+            emptyInput.value = digit;
+            emptyInput.classList.add('filled');
+            emptyInput.dispatchEvent(new Event('input'));
+        }
+    };
+    
+    window.removeDigit = function() {
+        const inputs = document.querySelectorAll('.verification-digit');
+        const lastFilledInput = Array.from(inputs).reverse().find(input => input.value);
+        
+        if (lastFilledInput) {
+            lastFilledInput.value = '';
+            lastFilledInput.classList.remove('filled');
+            lastFilledInput.focus();
+            checkCodeComplete();
+        }
+    };
+    
+    window.clearCode = function() {
+        const inputs = document.querySelectorAll('.verification-digit');
+        inputs.forEach(input => {
+            input.value = '';
+            input.classList.remove('filled');
+        });
+        inputs[0].focus();
+        checkCodeComplete();
+    };
+    
+    function checkCodeComplete() {
+        const inputs = document.querySelectorAll('.verification-digit');
+        const code = Array.from(inputs).map(input => input.value).join('');
+        const downloadBtn = document.getElementById('downloadBtn');
+        
+        if (code.length === 4) {
+            downloadBtn.disabled = false;
+        } else {
+            downloadBtn.disabled = true;
+        }
+    }
+    
+    window.verifyAndDownload = function(zipFile, toolName) {
+        const inputs = document.querySelectorAll('.verification-digit');
+        const code = Array.from(inputs).map(input => input.value).join('');
+        
+        // For demo purposes, accept the example code 7392
+        if (code === '7392') {
+            // Show instructions
+            const instructions = document.getElementById('downloadInstructions');
+            instructions.classList.add('active');
+            
+            // Trigger download
+            const link = document.createElement('a');
+            link.href = `../assets/extensions/${zipFile}`;
+            link.download = zipFile;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Update button text
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.textContent = `✓ Downloaded ${toolName}`;
+            downloadBtn.style.background = '#10b981';
+            
+            console.log(`✅ Downloaded: ${zipFile}`);
+        } else {
+            // Show error
+            alert('Invalid verification code. Please use the example code: 7392');
+        }
+    };
+    
+    // Expose download modal functions globally
+    window.showDownloadModal = showDownloadModal;
+    window.hideDownloadModal = hideDownloadModal;
+
+    // ===================================================================
+    // Additional Animation Styles Injection
+    // ===================================================================
+    
+    // Inject additional styles for scrolled navbar and forms
+    const additionalStyles = `
         .learntav-nav.scrolled {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -765,7 +1003,7 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
     `;
     
     const styleSheet = document.createElement('style');
-    styleSheet.textContent = animationStyles;
+    styleSheet.textContent = additionalStyles;
     document.head.appendChild(styleSheet);
 
 })();
