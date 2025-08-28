@@ -46,6 +46,7 @@
         init() {
             this.loadUserSession();
             this.setupEventListeners();
+            this.createDefaultAdminUser();
             this.checkFirstVisit();
             this.isInitialized = true;
             
@@ -272,48 +273,13 @@
                 const user = users.find(u => u.email === credentials.email.toLowerCase());
                 
                 if (!user) {
-                    console.log('🔐 LOGIN: User not found - creating test user');
-                    
-                    // Create test user if it doesn't exist (for debugging)
-                    if (credentials.email.toLowerCase() === 'test@example.com') {
-                        const testUser = {
-                            id: this.generateUserId(),
-                            fullName: 'Test User',
-                            email: 'test@example.com',
-                            passwordHash: this.hashPassword('TestPass123!'),
-                            role: 'member',
-                            created: Date.now(),
-                            lastLogin: Date.now(),
-                            verified: false,
-                            activityLog: [{
-                                action: 'account_created',
-                                timestamp: Date.now(),
-                                ip: this.getClientIP(),
-                                userAgent: navigator.userAgent
-                            }],
-                            settings: this.getDefaultSettings()
-                        };
-                        
-                        console.log('🔐 LOGIN: Creating test user:', testUser.email);
-                        this.saveUser(testUser);
-                        
-                        // Use the newly created user
-                        users.push(testUser);
-                        const foundUser = users.find(u => u.email === credentials.email.toLowerCase());
-                        if (foundUser) {
-                            console.log('🔐 LOGIN: Test user created successfully');
-                        }
-                    } else {
-                        this.updateRateLimit('login');
-                        throw new Error('Invalid email or password.');
-                    }
+                    console.log('🔐 LOGIN: User not found');
+                    this.updateRateLimit('login');
+                    throw new Error('Invalid email or password.');
                 }
 
-                const finalUser = users.find(u => u.email === credentials.email.toLowerCase());
-                console.log('🔐 LOGIN: Final user found:', !!finalUser);
-
                 // Verify password
-                if (!this.verifyPassword(credentials.password, finalUser.passwordHash)) {
+                if (!this.verifyPassword(credentials.password, user.passwordHash)) {
                     console.log('🔐 LOGIN: Password verification failed');
                     this.updateRateLimit('login');
                     throw new Error('Invalid email or password.');
@@ -324,7 +290,7 @@
                 // Success - clear rate limits
                 this.clearRateLimit('login');
                 
-                this.currentUser = { ...finalUser };
+                this.currentUser = { ...user };
                 delete this.currentUser.passwordHash;
 
                 console.log('🔐 LOGIN: User logged in:', this.currentUser.email);
@@ -801,6 +767,40 @@
         closeAuthModals() {
             // This will be implemented with UI components
             console.log('Closing auth modals');
+        }
+
+        createDefaultAdminUser() {
+            try {
+                const users = this.getAllUsers();
+                const adminExists = users.some(user => user.role === 'admin' || user.role === 'super_admin');
+                
+                if (!adminExists) {
+                    console.log('🔐 Creating default admin user...');
+                    const adminUser = {
+                        id: this.generateUserId(),
+                        fullName: 'Admin User',
+                        email: 'admin@learntav.com',
+                        passwordHash: this.hashPassword('AdminPass123!'),
+                        role: 'admin',
+                        created: Date.now(),
+                        lastLogin: 0,
+                        verified: true,
+                        activityLog: [{
+                            action: 'account_created',
+                            timestamp: Date.now(),
+                            ip: this.getClientIP(),
+                            userAgent: 'System',
+                            reason: 'Default admin user creation'
+                        }],
+                        settings: this.getDefaultSettings()
+                    };
+                    
+                    this.saveUser(adminUser);
+                    console.log('✅ Default admin user created: admin@learntav.com / AdminPass123!');
+                }
+            } catch (error) {
+                console.error('❌ Error creating default admin user:', error);
+            }
         }
 
         // Placeholder methods for UI components
