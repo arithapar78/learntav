@@ -11,6 +11,10 @@
         initializeFAQAccordion();
         initializeFormEnhancements();
         initializeURLHandling();
+        initializeCoolEnhancements();
+        initializeScrollReveal();
+        initializeFormProgressTracking();
+        initializeTabIndicator();
     });
 
     // ===================================================================
@@ -520,3 +524,286 @@ if (!document.querySelector('#floating-label-styles')) {
     styleSheet.textContent = floatingLabelStyles;
     document.head.appendChild(styleSheet);
 }
+    
+    // ===================================================================
+    // Cool Contact Page Enhancements
+    // ===================================================================
+    
+    function initializeCoolEnhancements() {
+        // Add form progress bar to page
+        const progressBar = document.createElement('div');
+        progressBar.className = 'learntav-form-progress';
+        document.body.appendChild(progressBar);
+        
+        // Enhanced button interactions
+        enhanceButtonInteractions();
+        
+        // Add scroll reveal classes to elements
+        addScrollRevealClasses();
+        
+        // Initialize particle animation observer
+        initializeParticleObserver();
+    }
+    
+    function initializeScrollReveal() {
+        const revealElements = document.querySelectorAll('.scroll-reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+        
+        revealElements.forEach(el => revealObserver.observe(el));
+    }
+    
+    function initializeFormProgressTracking() {
+        const forms = document.querySelectorAll('.learntav-form');
+        const progressBar = document.querySelector('.learntav-form-progress');
+        
+        if (!progressBar) return;
+        
+        forms.forEach(form => {
+            const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+            const totalFields = inputs.length;
+            
+            function updateProgress() {
+                let completedFields = 0;
+                inputs.forEach(input => {
+                    if (input.value.trim() !== '' && input.checkValidity()) {
+                        completedFields++;
+                    }
+                });
+                
+                const progress = (completedFields / totalFields) * 100;
+                progressBar.style.width = progress + '%';
+                
+                if (progress > 0) {
+                    progressBar.classList.add('visible');
+                } else {
+                    progressBar.classList.remove('visible');
+                }
+            }
+            
+            inputs.forEach(input => {
+                input.addEventListener('input', updateProgress);
+                input.addEventListener('change', updateProgress);
+            });
+            
+            // Reset progress when switching tabs
+            form.addEventListener('reset', () => {
+                setTimeout(() => {
+                    progressBar.style.width = '0%';
+                    progressBar.classList.remove('visible');
+                }, 100);
+            });
+        });
+    }
+    
+    function initializeTabIndicator() {
+        const tabsNav = document.querySelector('.learntav-contact-tabs__nav');
+        const tabButtons = tabsNav?.querySelectorAll('.learntav-tab-btn');
+        
+        if (!tabsNav || !tabButtons.length) return;
+        
+        // Create tab indicator
+        const indicator = document.createElement('div');
+        indicator.className = 'learntav-tab-indicator';
+        tabsNav.appendChild(indicator);
+        
+        function updateIndicator(activeButton) {
+            const rect = activeButton.getBoundingClientRect();
+            const navRect = tabsNav.getBoundingClientRect();
+            const left = rect.left - navRect.left;
+            const width = rect.width;
+            
+            indicator.style.left = left + 'px';
+            indicator.style.width = width + 'px';
+            indicator.classList.add('active');
+        }
+        
+        // Set initial position
+        const activeButton = tabsNav.querySelector('.learntav-tab-btn.active');
+        if (activeButton) {
+            setTimeout(() => updateIndicator(activeButton), 100);
+        }
+        
+        // Update on tab change
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                updateIndicator(this);
+            });
+        });
+        
+        // Update on window resize
+        window.addEventListener('resize', debounce(() => {
+            const currentActive = tabsNav.querySelector('.learntav-tab-btn.active');
+            if (currentActive) {
+                updateIndicator(currentActive);
+            }
+        }, 250));
+    }
+    
+    function enhanceButtonInteractions() {
+        const buttons = document.querySelectorAll('.learntav-btn--primary');
+        
+        buttons.forEach(button => {
+            // Add ripple effect on click
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: rgba(255, 255, 255, 0.3);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                `;
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+        
+        // Add ripple animation styles
+        if (!document.querySelector('#ripple-styles')) {
+            const rippleStyles = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            
+            const styleSheet = document.createElement('style');
+            styleSheet.id = 'ripple-styles';
+            styleSheet.textContent = rippleStyles;
+            document.head.appendChild(styleSheet);
+        }
+    }
+    
+    function addScrollRevealClasses() {
+        const elementsToReveal = [
+            '.learntav-contact-option',
+            '.learntav-faq-item',
+            '.learntav-form-container',
+            '.learntav-section-header'
+        ];
+        
+        elementsToReveal.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(el => {
+                if (!el.classList.contains('scroll-reveal')) {
+                    el.classList.add('scroll-reveal');
+                }
+            });
+        });
+    }
+    
+    function initializeParticleObserver() {
+        const contactOptions = document.querySelector('.learntav-contact-options');
+        
+        if (!contactOptions) return;
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('particles-active');
+                } else {
+                    entry.target.classList.remove('particles-active');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        observer.observe(contactOptions);
+    }
+    
+    // Enhanced form validation with cool animations
+    function addCoolFormValidation() {
+        const forms = document.querySelectorAll('.learntav-form');
+        
+        forms.forEach(form => {
+            const inputs = form.querySelectorAll('input, select, textarea');
+            
+            inputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    if (this.checkValidity() && this.value.trim()) {
+                        this.classList.add('valid');
+                        this.classList.remove('invalid');
+                    } else if (this.value.trim()) {
+                        this.classList.add('invalid');
+                        this.classList.remove('valid');
+                    }
+                });
+                
+                input.addEventListener('input', function() {
+                    if (this.classList.contains('invalid') && this.checkValidity()) {
+                        this.classList.remove('invalid');
+                        this.classList.add('valid');
+                    }
+                });
+            });
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const submitBtn = this.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.classList.add('learntav-btn--loading');
+                    submitBtn.disabled = true;
+                    
+                    // Simulate form submission
+                    setTimeout(() => {
+                        submitBtn.classList.remove('learntav-btn--loading');
+                        submitBtn.disabled = false;
+                        showSuccessMessage(this);
+                    }, 2000);
+                }
+            });
+        });
+    }
+    
+    function showSuccessMessage(form) {
+        const successHTML = `
+            <div class="learntav-form__success">
+                <span class="learntav-form__success-icon">🎉</span>
+                <div class="learntav-form__success-content">
+                    <h3>Message Sent Successfully!</h3>
+                    <p>Thank you for contacting us. We'll get back to you within 24 hours.</p>
+                </div>
+            </div>
+        `;
+        
+        const formContainer = form.closest('.learntav-form-container');
+        formContainer.innerHTML = successHTML;
+        
+        // Reset progress bar
+        const progressBar = document.querySelector('.learntav-form-progress');
+        if (progressBar) {
+            progressBar.style.width = '0%';
+            progressBar.classList.remove('visible');
+        }
+    }
+    
+    // Initialize cool form validation on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        addCoolFormValidation();
+    });

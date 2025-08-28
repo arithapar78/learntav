@@ -664,6 +664,63 @@
         </div>
     </footer>
 
+    <!-- AI Chatbot Widget -->
+    <div class="ai-chatbot-widget" id="aiChatbot">
+        <div class="ai-chatbot-button" onclick="toggleChatbot()">
+            <span class="ai-chatbot-icon">🤖</span>
+            <span class="ai-chatbot-text">AI Help</span>
+        </div>
+        
+        <div class="ai-chatbot-panel" id="chatbotPanel">
+            <div class="ai-chatbot-header">
+                <h3>LearnTAV AI Assistant</h3>
+                <button class="ai-chatbot-close" onclick="toggleChatbot()">&times;</button>
+            </div>
+            
+            <div class="ai-chatbot-messages" id="chatMessages">
+                <div class="ai-message">
+                    <div class="ai-avatar">🤖</div>
+                    <div class="ai-content">
+                        <p>Hello! I'm here to help you with questions about LearnTAV's services, pricing, or anything else. How can I assist you today?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ai-chatbot-input">
+                <input type="text" id="chatInput" placeholder="Ask me anything..." onkeypress="handleChatKeypress(event)">
+                <button onclick="sendMessage()" class="ai-send-btn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Contact Form Widget -->
+    <div class="popup-contact-widget" id="contactWidget">
+        <div class="contact-widget-button" onclick="toggleContactForm()">
+            <span class="contact-widget-icon">✉️</span>
+            <span class="contact-widget-text">Quick Contact</span>
+        </div>
+        
+        <div class="contact-widget-panel" id="contactPanel">
+            <div class="contact-widget-header">
+                <h3>Quick Contact</h3>
+                <button class="contact-widget-close" onclick="toggleContactForm()">&times;</button>
+            </div>
+            
+            <form class="contact-widget-form" onsubmit="submitQuickContact(event)">
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="contact-submit-btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+
     <!-- JavaScript -->
     <script src="../assets/js/main.js"></script>
     <script src="../assets/js/contact.js"></script>
