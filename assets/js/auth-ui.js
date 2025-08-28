@@ -1203,6 +1203,219 @@
                     }
                 }
 
+                /* User Avatar Styles */
+                .auth-user-menu__avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: linear-gradient(135deg, #6366f1, #2563eb);
+                    color: white;
+                    font-weight: 600;
+                    font-size: 14px;
+                    margin-right: 12px;
+                    flex-shrink: 0;
+                }
+
+                .auth-user-menu__avatar-image {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+
+                .auth-user-menu__dropdown-avatar {
+                    width: 48px;
+                    height: 48px;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: linear-gradient(135deg, #6366f1, #2563eb);
+                    color: white;
+                    font-weight: 600;
+                    font-size: 16px;
+                    margin-right: 16px;
+                    flex-shrink: 0;
+                }
+
+                .auth-user-menu__dropdown-avatar-image {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+
+                .auth-user-menu__info {
+                    display: flex;
+                    flex-direction: column;
+                    min-width: 0;
+                    flex: 1;
+                }
+
+                .auth-user-menu__name {
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: var(--text-primary, #1f2937);
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .auth-user-menu__role {
+                    font-size: 12px;
+                    color: var(--text-secondary, #6b7280);
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .auth-user-menu__trigger {
+                    display: flex;
+                    align-items: center;
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    padding: 8px;
+                    border-radius: 12px;
+                    transition: background-color 0.2s ease;
+                    color: inherit;
+                    text-align: left;
+                }
+
+                .auth-user-menu__trigger:hover {
+                    background-color: var(--gray-100, #f3f4f6);
+                }
+
+                .auth-user-menu__chevron {
+                    width: 16px;
+                    height: 16px;
+                    color: var(--text-secondary, #6b7280);
+                    margin-left: 8px;
+                    transition: transform 0.2s ease;
+                }
+
+                .auth-user-menu__trigger[aria-expanded="true"] .auth-user-menu__chevron {
+                    transform: rotate(180deg);
+                }
+
+                .auth-user-menu__dropdown {
+                    position: absolute;
+                    top: 100%;
+                    right: 0;
+                    min-width: 320px;
+                    background: white;
+                    border: 1px solid var(--gray-200, #e5e7eb);
+                    border-radius: 12px;
+                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                    opacity: 0;
+                    visibility: hidden;
+                    transform: translateY(-8px);
+                    transition: all 0.2s ease;
+                    z-index: 1000;
+                    margin-top: 8px;
+                }
+
+                .auth-user-menu__dropdown.active {
+                    opacity: 1;
+                    visibility: visible;
+                    transform: translateY(0);
+                }
+
+                .auth-user-menu__dropdown-header {
+                    padding: 16px;
+                    border-bottom: 1px solid var(--gray-200, #e5e7eb);
+                }
+
+                .auth-user-menu__dropdown-user {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .auth-user-menu__dropdown-info h3 {
+                    margin: 0 0 4px 0;
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: var(--text-primary, #1f2937);
+                }
+
+                .auth-user-menu__dropdown-info p {
+                    margin: 0;
+                    font-size: 14px;
+                    color: var(--text-secondary, #6b7280);
+                }
+
+                .auth-user-menu__dropdown-section {
+                    padding: 8px 0;
+                }
+
+                .auth-user-menu__dropdown-section:not(:last-child) {
+                    border-bottom: 1px solid var(--gray-200, #e5e7eb);
+                }
+
+                .auth-user-menu__dropdown-section-title {
+                    padding: 8px 16px 4px;
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: var(--text-secondary, #6b7280);
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                }
+
+                .auth-user-menu__item {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    padding: 12px 16px;
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    color: inherit;
+                    text-align: left;
+                    transition: background-color 0.2s ease;
+                }
+
+                .auth-user-menu__item:hover {
+                    background-color: var(--gray-50, #f9fafb);
+                }
+
+                .auth-user-menu__item.danger {
+                    color: var(--error, #dc2626);
+                }
+
+                .auth-user-menu__item.danger:hover {
+                    background-color: var(--red-50, #fef2f2);
+                }
+
+                .auth-user-menu__item-icon {
+                    width: 20px;
+                    height: 20px;
+                    margin-right: 12px;
+                    flex-shrink: 0;
+                }
+
+                .auth-user-menu__item-content {
+                    display: flex;
+                    flex-direction: column;
+                    min-width: 0;
+                }
+
+                .auth-user-menu__item-title {
+                    font-size: 14px;
+                    font-weight: 500;
+                    margin-bottom: 2px;
+                }
+
+                .auth-user-menu__item-description {
+                    font-size: 12px;
+                    color: var(--text-secondary, #6b7280);
+                    line-height: 1.3;
+                }
+
                 /* Accessibility */
                 @media (prefers-reduced-motion: reduce) {
                     .auth-modal-container,
@@ -1250,7 +1463,8 @@
             userMenu.innerHTML = `
                 <button class="auth-user-menu__trigger" aria-expanded="false" onclick="window.LearnTAVAuthUI.toggleUserMenu()">
                     <div class="auth-user-menu__avatar">
-                        <span data-user-initials>U</span>
+                        <img data-user-avatar src="/assets/images/user-avatar-default.svg" alt="User Avatar" class="auth-user-menu__avatar-image">
+                        <span data-user-initials style="display: none;">U</span>
                     </div>
                     <div class="auth-user-menu__info">
                         <div class="auth-user-menu__name" data-user-name>User</div>
@@ -1265,7 +1479,8 @@
                     <div class="auth-user-menu__dropdown-header">
                         <div class="auth-user-menu__dropdown-user">
                             <div class="auth-user-menu__dropdown-avatar">
-                                <span data-user-initials>U</span>
+                                <img data-user-avatar-large src="/assets/images/user-avatar-default.svg" alt="User Avatar" class="auth-user-menu__dropdown-avatar-image">
+                                <span data-user-initials style="display: none;">U</span>
                             </div>
                             <div class="auth-user-menu__dropdown-info">
                                 <h3 data-user-name>User</h3>
@@ -1373,7 +1588,7 @@
                 el.textContent = user.email || '';
             });
 
-            // Update user initials
+            // Update user initials (fallback)
             const initials = this.getUserInitials(user.fullName || user.name || 'U');
             document.querySelectorAll('[data-user-initials]').forEach(el => {
                 el.textContent = initials;
@@ -1383,6 +1598,32 @@
             document.querySelectorAll('[data-user-role]').forEach(el => {
                 el.textContent = this.formatUserRole(user.role || 'member');
             });
+
+            // Update user avatars with appropriate image
+            const avatarSrc = this.getUserAvatarSrc(user.role || 'member');
+            document.querySelectorAll('[data-user-avatar]').forEach(el => {
+                el.src = avatarSrc;
+                el.alt = `${user.fullName || 'User'} Avatar`;
+            });
+
+            document.querySelectorAll('[data-user-avatar-large]').forEach(el => {
+                el.src = avatarSrc;
+                el.alt = `${user.fullName || 'User'} Avatar`;
+            });
+        }
+
+        getUserAvatarSrc(role) {
+            // Return appropriate avatar based on user role
+            switch (role) {
+                case 'admin':
+                case 'administrator':
+                    return '/assets/images/user-avatar-admin.svg';
+                case 'member':
+                case 'premium':
+                case 'moderator':
+                default:
+                    return '/assets/images/user-avatar-default.svg';
+            }
         }
 
         getUserInitials(name) {
