@@ -444,6 +444,51 @@
         </div>
     </div>
 
+    <!-- Cool Popup System -->
+    <div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
+    <div class="popup-container" id="popupContainer">
+        <div class="popup-header">
+            <h2 class="popup-title" id="popupTitle">Welcome to LearnTAV!</h2>
+            <button class="popup-close" onclick="closePopup()" aria-label="Close popup">&times;</button>
+        </div>
+        <div class="popup-content" id="popupContent">
+            <p>Discover the future of AI education and consulting!</p>
+        </div>
+    </div>
+
+    <!-- AI Chatbot Widget -->
+    <div class="chatbot-widget">
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div class="chatbot-avatar">🤖</div>
+                <div class="chatbot-info">
+                    <h3>TAV Assistant</h3>
+                    <p class="chatbot-status">Online - Ready to help!</p>
+                </div>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message message-bot">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        Hi! I'm your AI assistant. I can help you learn about our services, answer questions about AI education, or guide you through building your first app. What would you like to know?
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <div class="chat-input-wrapper">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." maxlength="500">
+                    <button class="chat-send-btn" id="chatSendBtn" onclick="sendMessage()">
+                        <span>📤</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <button class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()">
+            <span>💬</span>
+            <div class="notification-badge" id="chatBadge" style="display: none;">1</div>
+        </button>
+    </div>
+
     <!-- Scroll animations are now handled in main.js and main.css -->
     
     <!-- JavaScript -->
@@ -477,6 +522,261 @@
             phrases.forEach(phrase => {
                 const regex = new RegExp(`\\b${phrase}\\b`, 'gi');
                 document.body.innerHTML = content.replace(regex, `<span class="tech-highlight">${phrase}</span>`);
+            });
+
+            // Initialize cool features
+            initChatbot();
+            initPopupSystem();
+        });
+
+        // ===================================================================
+        // AI Chatbot Functionality
+        // ===================================================================
+        let chatbotOpen = false;
+        let messageCount = 0;
+
+        const aiResponses = [
+            "That's a great question! At LearnTAV, we specialize in making AI accessible to everyone, regardless of their technical background.",
+            "I'd love to help you with that! Our approach focuses on practical, hands-on learning that gets you building real applications from day one.",
+            "Absolutely! We offer both individual education programs and corporate consulting services. Which area interests you most?",
+            "That's exactly what we're here for! Our AI-native approach means you'll learn to use cutting-edge tools from the very beginning.",
+            "Perfect! We believe that 'Learning Takes a Village' - our community-focused approach ensures you get the support you need.",
+            "Great point! Our environmental focus sets us apart. We help you understand and minimize the environmental impact of AI technologies.",
+            "I can help you get started! Would you like to know more about our education programs or consulting services?",
+            "That sounds like a perfect fit for our services! Let me connect you with more information about how we can help.",
+            "Excellent question! Our expert mentorship program pairs you with experienced professionals in AI and application development.",
+            "I'm excited to help you on your AI journey! What specific aspect of AI or app development interests you most?"
+        ];
+
+        function initChatbot() {
+            const chatInput = document.getElementById('chatInput');
+            const chatSendBtn = document.getElementById('chatSendBtn');
+            const chatBadge = document.getElementById('chatBadge');
+
+            // Show notification badge after 10 seconds
+            setTimeout(() => {
+                if (!chatbotOpen) {
+                    chatBadge.style.display = 'block';
+                }
+            }, 10000);
+
+            // Handle Enter key in chat input
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Handle input changes
+            chatInput.addEventListener('input', function() {
+                chatSendBtn.disabled = this.value.trim() === '';
+            });
+        }
+
+        function toggleChatbot() {
+            const chatWindow = document.getElementById('chatbotWindow');
+            const chatBadge = document.getElementById('chatBadge');
+            
+            chatbotOpen = !chatbotOpen;
+            
+            if (chatbotOpen) {
+                chatWindow.classList.add('active');
+                chatBadge.style.display = 'none';
+                document.getElementById('chatInput').focus();
+            } else {
+                chatWindow.classList.remove('active');
+            }
+        }
+
+        function sendMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const message = chatInput.value.trim();
+            
+            if (message === '') return;
+            
+            // Add user message
+            addMessage(message, 'user');
+            chatInput.value = '';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Simulate AI response delay
+            setTimeout(() => {
+                hideTypingIndicator();
+                const response = getAIResponse(message);
+                addMessage(response, 'bot');
+            }, 1000 + Math.random() * 2000); // Random delay 1-3 seconds
+        }
+
+        function addMessage(content, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message message-${sender}`;
+            
+            if (sender === 'bot') {
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">${content}</div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="message-content">${content}</div>
+                `;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            messageCount++;
+        }
+
+        function getAIResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+            
+            // Simple keyword-based responses
+            if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
+                return "Hello! Welcome to LearnTAV! I'm here to help you discover how AI can transform your career and projects. What would you like to learn about?";
+            } else if (message.includes('price') || message.includes('cost') || message.includes('expensive')) {
+                return "Great question about pricing! We offer flexible options for both individuals and businesses. I'd recommend booking a free consultation to discuss your specific needs and get a personalized quote.";
+            } else if (message.includes('education') || message.includes('learn') || message.includes('course')) {
+                return "Our education programs are designed for people with no coding experience! You'll learn to build real applications using AI tools from day one. Would you like to know more about our learning paths?";
+            } else if (message.includes('consulting') || message.includes('business') || message.includes('company')) {
+                return "Our consulting services help businesses integrate AI responsibly and effectively. We specialize in environmental impact assessment and healthcare AI implementation. What's your industry?";
+            } else if (message.includes('app') || message.includes('application') || message.includes('build')) {
+                return "Perfect! Building apps without coding is exactly what we teach. Our AI-native approach means you'll use cutting-edge tools to create professional applications. Want to see what you can build in your first week?";
+            } else if (message.includes('help') || message.includes('support')) {
+                return "I'm here to help! You can ask me about our services, learning programs, consulting options, or anything else about LearnTAV. What specific area interests you?";
+            }
+            
+            // Return random response from array
+            return aiResponses[Math.floor(Math.random() * aiResponses.length)];
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typingIndicator';
+            typingDiv.className = 'typing-indicator';
+            typingDiv.innerHTML = `
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <span>AI is typing</span>
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `;
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        // ===================================================================
+        // Cool Popup System
+        // ===================================================================
+        function initPopupSystem() {
+            // Show welcome popup after 5 seconds (first visit)
+            const hasSeenPopup = localStorage.getItem('learntav_welcome_seen');
+            if (!hasSeenPopup) {
+                setTimeout(() => {
+                    showPopup('🚀 Welcome to LearnTAV!',
+                        `<p>Transform your relationship with technology! Learn to build apps and master AI without any coding experience.</p>
+                         <p>✨ <strong>Special offer:</strong> Book a free consultation this week and get exclusive access to our starter resources!</p>
+                         <div style="text-align: center; margin-top: 20px;">
+                             <a href="contact/index.html" class="learntav-btn learntav-btn--primary" onclick="closePopup()">Book Free Consultation</a>
+                         </div>`);
+                    localStorage.setItem('learntav_welcome_seen', 'true');
+                }, 5000);
+            }
+        }
+
+        function showPopup(title, content) {
+            const overlay = document.getElementById('popupOverlay');
+            const container = document.getElementById('popupContainer');
+            const titleEl = document.getElementById('popupTitle');
+            const contentEl = document.getElementById('popupContent');
+            
+            titleEl.textContent = title;
+            contentEl.innerHTML = content;
+            
+            overlay.classList.add('active');
+            container.classList.add('active');
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePopup() {
+            const overlay = document.getElementById('popupOverlay');
+            const container = document.getElementById('popupContainer');
+            
+            overlay.classList.remove('active');
+            container.classList.remove('active');
+            
+            // Restore body scroll
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close popup on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePopup();
+                if (chatbotOpen) {
+                    toggleChatbot();
+                }
+            }
+        });
+
+        // Add popup triggers to service cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const serviceCards = document.querySelectorAll('.learntav-service-card');
+            serviceCards.forEach((card, index) => {
+                card.addEventListener('click', function(e) {
+                    if (!e.target.closest('.learntav-btn')) {
+                        const titles = ['📱 App Development Education', '🌍 Environmental AI Consulting', '🏥 Healthcare AI Solutions'];
+                        const contents = [
+                            `<p>Learn to build powerful applications without formal computer science training!</p>
+                             <ul style="text-align: left; margin: 20px 0;">
+                                 <li>✅ No-code/Low-code development</li>
+                                 <li>✅ AI-assisted application building</li>
+                                 <li>✅ Real-world project portfolio</li>
+                                 <li>✅ Venture creation guidance</li>
+                             </ul>
+                             <div style="text-align: center;">
+                                 <a href="education/index.html" class="learntav-btn learntav-btn--primary" onclick="closePopup()">Explore Education</a>
+                             </div>`,
+                            `<p>Understand, measure, and optimize your AI adoption's environmental footprint!</p>
+                             <ul style="text-align: left; margin: 20px 0;">
+                                 <li>🌱 Carbon footprint analysis</li>
+                                 <li>⚡ Energy optimization strategies</li>
+                                 <li>📊 Compliance reporting</li>
+                                 <li>💰 Cost reduction opportunities</li>
+                             </ul>
+                             <div style="text-align: center;">
+                                 <a href="consulting/index.html" class="learntav-btn learntav-btn--primary" onclick="closePopup()">Learn More</a>
+                             </div>`,
+                            `<p>Expert third-party assessment and implementation of AI tools in healthcare settings!</p>
+                             <ul style="text-align: left; margin: 20px 0;">
+                                 <li>🔬 AI adoption in drug discovery</li>
+                                 <li>👥 Staff training programs</li>
+                                 <li>📋 Implementation planning</li>
+                                 <li>✅ Validation of AI tools</li>
+                             </ul>
+                             <div style="text-align: center;">
+                                 <a href="consulting/index.html" class="learntav-btn learntav-btn--primary" onclick="closePopup()">Get Started</a>
+                             </div>`
+                        ];
+                        showPopup(titles[index], contents[index]);
+                    }
+                });
             });
         });
     </script>
