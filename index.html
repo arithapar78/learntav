@@ -416,9 +416,8 @@
                     <div class="learntav-footer__column">
                         <h4 class="learntav-footer__column-title">AI Tools</h4>
                         <ul class="learntav-footer__link-list">
-                            <li><a href="ai-tools/index.html">All Tools</a></li>
-                            <li><a href="ai-tools/power-tracker/index.html">Power Tracker</a></li>
-                            <li><a href="ai-tools/prompt-energy-optimizer/index.html">Prompt Optimizer</a></li>
+                            <li><a href="ai-tools/index.html">Power Tracker</a></li>
+                            <li><a href="ai-tools/power-tracker/index.html">Learn More</a></li>
                         </ul>
                     </div>
 
@@ -866,7 +865,7 @@
             serviceCards.forEach((card, index) => {
                 card.addEventListener('click', function(e) {
                     if (!e.target.closest('.learntav-btn')) {
-                        const titles = ['📱 App Development Education', '🌍 Environmental AI Consulting', '🏥 Healthcare AI Solutions'];
+                        const titles = ['📱 App Development Education', '🌍 Environmental AI Consulting', '🏥 Healthcare AI Solutions', '🎵 Vibe Coding 101'];
                         const contents = [
                             `<p>Learn to build powerful applications without formal computer science training!</p>
                              <ul style="text-align: left; margin: 20px 0;">
@@ -886,7 +885,35 @@
                                  <li>💰 Cost reduction opportunities</li>
                              </ul>
                              <div style="text-align: center;">
-        
+                                 <a href="consulting/index.html" class="learntav-btn learntav-btn--primary" onclick="closePopup()">Learn More</a>
+                             </div>`,
+                            `<p>Expert third-party assessment and implementation of AI tools in healthcare settings!</p>
+                             <ul style="text-align: left; margin: 20px 0;">
+                                 <li>🔬 AI adoption in drug discovery</li>
+                                 <li>👥 Staff training programs</li>
+                                 <li>📋 Implementation planning</li>
+                                 <li>✅ Validation of AI tools</li>
+                             </ul>
+                             <div style="text-align: center;">
+                                 <a href="consulting/index.html" class="learntav-btn learntav-btn--primary" onclick="closePopup()">Get Started</a>
+                             </div>`,
+                            `<p>Learn coding with a vibe! Our unique approach makes programming fun and accessible through music, creativity, and community-driven learning experiences.</p>
+                             <ul style="text-align: left; margin: 20px 0;">
+                                 <li>🎵 Music-inspired coding lessons</li>
+                                 <li>🎨 Creative project-based learning</li>
+                                 <li>👥 Community coding sessions</li>
+                                 <li>🌟 Beginner-friendly environment</li>
+                             </ul>
+                             <div style="text-align: center;">
+                                 <a href="education/vibe-coding-101/index.html" class="learntav-btn learntav-btn--primary" onclick="closePopup()">Learn More</a>
+                             </div>`
+                        ];
+                        showPopup(titles[index], contents[index]);
+                    }
+                });
+            });
+        });
+
         // ===================================================================
         // Popup Contact Form Functionality
         // ===================================================================
@@ -937,24 +964,6 @@
                     toggleContactForm();
                 }
             }
-        });
-                                 <a href="consulting/index.html" class="learntav-btn learntav-btn--primary" onclick="closePopup()">Learn More</a>
-                             </div>`,
-                            `<p>Expert third-party assessment and implementation of AI tools in healthcare settings!</p>
-                             <ul style="text-align: left; margin: 20px 0;">
-                                 <li>🔬 AI adoption in drug discovery</li>
-                                 <li>👥 Staff training programs</li>
-                                 <li>📋 Implementation planning</li>
-                                 <li>✅ Validation of AI tools</li>
-                             </ul>
-                             <div style="text-align: center;">
-                                 <a href="consulting/index.html" class="learntav-btn learntav-btn--primary" onclick="closePopup()">Get Started</a>
-                             </div>`
-                        ];
-                        showPopup(titles[index], contents[index]);
-                    }
-                });
-            });
         });
     </script>
 </body>
