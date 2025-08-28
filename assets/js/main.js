@@ -9,6 +9,34 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
 (function() {
     'use strict';
     
+    // Utility Functions - Define early since they're used throughout
+    // Debounce function for performance
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Throttle function for scroll events
+    function throttle(func, limit) {
+        let inThrottle;
+        return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    }
+    
     // DEBUG: Track animation system status
     window.LEARNTAV_DEBUG = {
         animationSystemLoaded: false,
@@ -846,35 +874,8 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
     }
 
     // ===================================================================
-    // Utility Functions
+    // Utility Functions (moved to top for earlier access)
     // ===================================================================
-    
-    // Debounce function for performance
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
-
-    // Throttle function for scroll events
-    function throttle(func, limit) {
-        let inThrottle;
-        return function() {
-            const args = arguments;
-            const context = this;
-            if (!inThrottle) {
-                func.apply(context, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        };
-    }
 
     // ===================================================================
     // Download System with Verification

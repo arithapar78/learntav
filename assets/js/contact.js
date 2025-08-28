@@ -6,6 +6,19 @@
 (function() {
     'use strict';
 
+    // Debounce utility function - defined early since it's used throughout
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         initializeContactTabs();
         initializeFAQAccordion();
@@ -459,19 +472,6 @@
             // Clear saved data after successful submission
             setTimeout(clearSavedData, 5000);
         });
-    }
-
-    // Debounce utility
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
     }
 
     // Enable auto-save for all forms
