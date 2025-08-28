@@ -1474,27 +1474,28 @@ li {
 /* ===================================================================
    Scroll-Triggered Animations
    =================================================================== */
-/* Scroll-Triggered Animation Base Styles - ULTIMATE FIX: Pure JavaScript control */
+/* Scroll-Triggered Animation Base Styles - FINAL SOLUTION: Pure CSS class control */
 .scroll-animate {
     opacity: 1;
     visibility: visible;
+    transform: translateY(0);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-/* Animation states - controlled purely by JavaScript, not CSS */
+/* Animation pending state - only applied by JavaScript when needed */
+.scroll-animate.animate-pending {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Animation complete state */
 .scroll-animate.animate-in {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-.scroll-animate.animate-out {
-    opacity: 0;
-    transform: translateY(30px);
-}
-
-/* Remove all CSS-based hiding - let JavaScript handle everything */
-/* This ensures IntersectionObserver can always detect elements properly */
+/* Ensure all content is visible by default for accessibility */
 .learntav-value-card,
 .learntav-service-card,
 .learntav-testimonial-card,
@@ -1505,12 +1506,12 @@ li {
     visibility: visible;
 }
 
-/* NO CSS HIDING - JavaScript will handle initial state */
-/* This guarantees IntersectionObserver compatibility */
+/* No automatic hiding - let JavaScript control everything based on viewport detection */
 .enable-scroll-animations .scroll-animate {
-    /* Elements remain fully visible until JavaScript takes control */
+    /* Elements start fully visible - JavaScript will add animate-pending class as needed */
     opacity: 1;
     visibility: visible;
+    transform: translateY(0);
 }
 
 /* Keyframe for CSS failsafe animation */

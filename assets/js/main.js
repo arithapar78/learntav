@@ -38,16 +38,15 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
                 window.LEARNTAV_DEBUG.log(`Added scroll-animate to element ${index}:`, el.className);
             }
             
-            // JavaScript-controlled initial state - hide elements that should animate
+            // CSS class-controlled initial state - no JavaScript style manipulation
             if (document.body.classList.contains('enable-scroll-animations')) {
                 const rect = el.getBoundingClientRect();
                 const isInitiallyInView = rect.top < window.innerHeight && rect.bottom > 0;
                 
                 if (!isInitiallyInView) {
-                    // Hide elements that are not initially visible
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(30px)';
-                    window.LEARNTAV_DEBUG.log(`JS: Initially hid element ${index}`);
+                    // Mark elements as hidden via CSS class only
+                    el.classList.add('animate-pending');
+                    window.LEARNTAV_DEBUG.log(`JS: Marked element ${index} as animate-pending`);
                 } else {
                     // Elements initially in view start visible
                     el.classList.add('animate-in');
@@ -580,78 +579,68 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
             return;
         }
         
-        if ('IntersectionObserver' in window) {
-            window.LEARNTAV_DEBUG.intersectionObserverSupported = true;
-            window.LEARNTAV_DEBUG.log('IntersectionObserver supported, setting up...');
+        // SCROLL-BASED ANIMATION SYSTEM - IntersectionObserver replacement
+        window.LEARNTAV_DEBUG.intersectionObserverSupported = true;
+        window.LEARNTAV_DEBUG.log('Using scroll-based animation system...');
+        
+        const isHomepage = window.location.pathname === '/' || window.location.pathname === '/index.html';
+        
+        function checkElementsInViewport() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const windowHeight = window.innerHeight;
             
-            const observerOptions = {
-                threshold: 0.1,  // Trigger when 10% visible
-                rootMargin: '50px 0px 50px 0px'  // Moderate detection area
-            };
-
-            const isHomepage = window.location.pathname === '/' || window.location.pathname === '/index.html';
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    const elementIndex = Array.from(animatedElements).indexOf(entry.target);
+            animatedElements.forEach((el, index) => {
+                if (!el.classList.contains('animate-in')) {
+                    // Use offsetTop instead of getBoundingClientRect to avoid transform issues
+                    const elementTop = el.offsetTop;
+                    const elementHeight = el.offsetHeight;
+                    const elementBottom = elementTop + elementHeight;
                     
-                    if (entry.isIntersecting && !entry.target.classList.contains('animate-in')) {
-                        window.LEARNTAV_DEBUG.log(`✅ Element ${elementIndex} entering view, animating...`);
-                        
-                        // Add staggered delay based on element position
-                        let baseDelay = elementIndex * 100;
+                    // Calculate if element is in viewport using offset positioning
+                    const isInViewport = (elementBottom > scrollTop + 100) && (elementTop < scrollTop + windowHeight - 100);
+                    
+                    window.LEARNTAV_DEBUG.log(`🔍 OFFSET check element ${index}: offsetTop=${elementTop}, scrollTop=${scrollTop}, windowHeight=${windowHeight}, inViewport=${isInViewport}`);
+                    
+                    if (isInViewport) {
+                        // Add staggered delay
+                        let baseDelay = index * 100;
                         if (isHomepage) {
-                            baseDelay += Math.min(150, elementIndex * 50);
+                            baseDelay += Math.min(150, index * 50);
                         }
                         
                         setTimeout(() => {
-                            if (!entry.target.classList.contains('animate-in')) {
-                                // JavaScript-controlled animation
-                                entry.target.style.opacity = '1';
-                                entry.target.style.transform = 'translateY(0)';
-                                entry.target.classList.add('animate-in');
+                            if (!el.classList.contains('animate-in')) {
+                                // Pure CSS class animation - no JavaScript style manipulation
+                                el.classList.remove('animate-pending');
+                                el.classList.add('animate-in');
                                 window.LEARNTAV_DEBUG.elementsAnimated++;
-                                window.LEARNTAV_DEBUG.log(`✅ Animated element ${elementIndex} via IntersectionObserver (delay: ${baseDelay}ms)`);
+                                window.LEARNTAV_DEBUG.log(`✅ OFFSET: Animated element ${index} (delay: ${baseDelay}ms)`);
                             }
                         }, baseDelay);
-                        
-                        observer.unobserve(entry.target);
                     }
-                    
-                    // Enhanced logging
-                    window.LEARNTAV_DEBUG.log(`📊 Element ${elementIndex} - intersecting: ${entry.isIntersecting}, ratio: ${entry.intersectionRatio.toFixed(2)}, rect: ${Math.round(entry.boundingClientRect.top)}px`);
-                });
-            }, observerOptions);
-
-            // Observe all animated elements
-            animatedElements.forEach((el, index) => {
-                observer.observe(el);
-                window.LEARNTAV_DEBUG.log(`Observing element ${index}:`, el.className);
+                }
             });
-            
-            // Backup check for IntersectionObserver failures - improve viewport detection
-            setTimeout(() => {
-                animatedElements.forEach((el, index) => {
-                    if (!el.classList.contains('animate-in')) {
-                        // Get computed styles to handle transforms properly
-                        const computedStyle = window.getComputedStyle(el);
-                        const rect = el.getBoundingClientRect();
-                        
-                        // More forgiving viewport detection
-                        const isInViewport = rect.bottom > -100 && rect.top < window.innerHeight + 100;
-                        
-                        window.LEARNTAV_DEBUG.log(`Backup check element ${index}: rect.top=${Math.round(rect.top)}, rect.bottom=${Math.round(rect.bottom)}, windowHeight=${window.innerHeight}, inViewport=${isInViewport}`);
-                        
-                        if (isInViewport) {
-                            el.classList.add('animate-in');
-                            window.LEARNTAV_DEBUG.elementsAnimated++;
-                            window.LEARNTAV_DEBUG.log(`Backup animation for element ${index} - IntersectionObserver may have failed`);
-                        }
-                    }
-                });
-            }, 2000);
-            
-        } else {
+        }
+        
+        // Initial check
+        setTimeout(checkElementsInViewport, 100);
+        
+        // Throttled scroll event listener
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            if (!scrollTimeout) {
+                scrollTimeout = setTimeout(() => {
+                    checkElementsInViewport();
+                    scrollTimeout = null;
+                }, 100);
+            }
+        }, { passive: true });
+        
+        // Resize event listener
+        window.addEventListener('resize', checkElementsInViewport);
+        
+        // Legacy fallback for older browsers
+        if (false) {
             window.LEARNTAV_DEBUG.log('IntersectionObserver not supported, using scroll fallback');
             
             // Fallback for older browsers
