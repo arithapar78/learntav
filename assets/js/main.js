@@ -23,17 +23,20 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
     
     // Set up scroll animations with robust failsafe system
     const setupScrollAnimations = function() {
+        // Find elements that should animate - both existing classes and new ones
         const elements = document.querySelectorAll(
-            '.learntav-value-card, .learntav-service-card, .learntav-testimonial-card'
+            '.scroll-animate, .learntav-value-card:not(.scroll-animate), .learntav-service-card:not(.scroll-animate), .learntav-testimonial-card:not(.scroll-animate)'
         );
         
         window.LEARNTAV_DEBUG.elementsFound = elements.length;
         window.LEARNTAV_DEBUG.log('Early setup found elements:', elements.length);
         
-        // Add scroll-animate class for animation
+        // Add scroll-animate class to elements that don't have it yet
         elements.forEach((el, index) => {
-            el.classList.add('scroll-animate');
-            window.LEARNTAV_DEBUG.log(`Added scroll-animate to element ${index}:`, el.className);
+            if (!el.classList.contains('scroll-animate')) {
+                el.classList.add('scroll-animate');
+                window.LEARNTAV_DEBUG.log(`Added scroll-animate to element ${index}:`, el.className);
+            }
         });
         
         // Robust failsafe: Multiple fallback mechanisms
@@ -555,6 +558,8 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
                 rootMargin: '0px 0px -50px 0px'
             };
 
+            const isHomepage = window.location.pathname === '/' || window.location.pathname === '/index.html';
+
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting && !entry.target.classList.contains('animate-in')) {
@@ -562,15 +567,20 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
                         window.LEARNTAV_DEBUG.log(`Element ${elementIndex} entering view, animating...`);
                         
                         // Add staggered delay based on element position
-                        const delay = elementIndex * 100;
+                        // Homepage gets additional delay as specified
+                        let baseDelay = elementIndex * 100;
+                        if (isHomepage) {
+                            // Add homepage-specific delay (100-200ms range)
+                            baseDelay += Math.min(150, elementIndex * 50);
+                        }
                         
                         setTimeout(() => {
                             if (!entry.target.classList.contains('animate-in')) {
                                 entry.target.classList.add('animate-in');
                                 window.LEARNTAV_DEBUG.elementsAnimated++;
-                                window.LEARNTAV_DEBUG.log(`Animated element ${elementIndex} via IntersectionObserver`);
+                                window.LEARNTAV_DEBUG.log(`Animated element ${elementIndex} via IntersectionObserver (delay: ${baseDelay}ms)`);
                             }
-                        }, delay);
+                        }, baseDelay);
                         
                         observer.unobserve(entry.target);
                     }

@@ -1,4 +1,8 @@
-// EMERGENCY FIX FOR SCROLL VISIBILITY ISSUE
+// EMERGENCY FIX DISABLED - Animation system restored
+console.log('✅ EMERGENCY FIX: Disabled - Animation system now active');
+
+/*
+// EMERGENCY FIX FOR SCROLL VISIBILITY ISSUE (DISABLED)
 console.log('🚨 EMERGENCY FIX: Loading emergency content reveal...');
 
 // Show all content immediately - no animations
@@ -35,3 +39,4 @@ if (document.readyState === 'loading') {
         el.style.transition = 'none';
     });
 }
+*/

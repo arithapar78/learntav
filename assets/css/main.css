@@ -1474,29 +1474,29 @@ li {
 /* ===================================================================
    Scroll-Triggered Animations
    =================================================================== */
-/* EMERGENCY FIX: All elements visible by default */
+/* Scroll-Triggered Animation Base Styles */
 .scroll-animate {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
+    opacity: 1;
+    transform: translateY(0);
     transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-/* Animation class can still add smooth effects when working */
+/* Animation class for smooth effects */
 .scroll-animate.animate-in {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* Ensure content is always visible regardless of JavaScript state */
+/* Ensure content is visible by default for accessibility */
 .learntav-value-card,
 .learntav-service-card,
 .learntav-testimonial-card {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-    visibility: visible !important;
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
 }
 
-/* Restore original scroll animation behavior only when explicitly enabled */
+/* Enhanced scroll animation behavior when explicitly enabled */
 .enable-scroll-animations .scroll-animate {
     opacity: 0;
     transform: translateY(30px);
@@ -1509,7 +1509,30 @@ li {
     animation: none !important;
 }
 
-/* Keyframe for future animation restoration */
+/* Hero section specific animations */
+.enable-scroll-animations .learntav-hero.scroll-animate {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.enable-scroll-animations .learntav-hero__title.scroll-animate {
+    opacity: 0;
+    transform: translateY(15px);
+}
+
+/* Section header animations */
+.enable-scroll-animations .learntav-section-header.scroll-animate {
+    opacity: 0;
+    transform: translateY(25px);
+}
+
+/* CTA section animations */
+.enable-scroll-animations .learntav-cta.scroll-animate {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* Keyframe for CSS failsafe animation */
 @keyframes cssFailsafeReveal {
     to {
         opacity: 1;
@@ -1517,7 +1540,7 @@ li {
     }
 }
 
-/* Staggered animation delays for future use */
+/* Enhanced staggered animation delays */
 .enable-scroll-animations .scroll-animate:nth-child(1) { transition-delay: 0s; }
 .enable-scroll-animations .scroll-animate:nth-child(2) { transition-delay: 0.1s; }
 .enable-scroll-animations .scroll-animate:nth-child(3) { transition-delay: 0.2s; }
@@ -1525,11 +1548,15 @@ li {
 .enable-scroll-animations .scroll-animate:nth-child(5) { transition-delay: 0.4s; }
 .enable-scroll-animations .scroll-animate:nth-child(6) { transition-delay: 0.5s; }
 
-/* Grid layout delays for future use */
+/* Grid layout delays with enhanced targeting */
 .enable-scroll-animations .learntav-grid .scroll-animate:nth-child(1) { transition-delay: 0.1s; }
 .enable-scroll-animations .learntav-grid .scroll-animate:nth-child(2) { transition-delay: 0.2s; }
 .enable-scroll-animations .learntav-grid .scroll-animate:nth-child(3) { transition-delay: 0.3s; }
 .enable-scroll-animations .learntav-grid .scroll-animate:nth-child(4) { transition-delay: 0.4s; }
+
+/* Hero section specific delays for homepage */
+.enable-scroll-animations .learntav-hero.scroll-animate { transition-delay: 0.1s; }
+.enable-scroll-animations .learntav-hero__title.scroll-animate { transition-delay: 0.2s; }
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
