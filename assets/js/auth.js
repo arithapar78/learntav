@@ -559,10 +559,11 @@
         checkFirstVisit() {
             const hasVisited = localStorage.getItem('learntav_visited');
             if (!hasVisited && !this.currentUser) {
+                // Small delay to ensure UI components are ready
                 setTimeout(() => {
                     this.showWelcomeModal();
                     localStorage.setItem('learntav_visited', 'true');
-                }, 2000);
+                }, 200);
             }
         }
 

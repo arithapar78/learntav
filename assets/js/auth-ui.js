@@ -74,6 +74,7 @@
                             <button class="auth-btn auth-btn--primary auth-btn--large" onclick="window.LearnTAVAuthUI.showRegisterModal()">
                                 Create Free Account
                             </button>
+                            <div style="margin: 24px 0;"></div>
                             <button class="auth-btn auth-btn--ghost" onclick="window.LearnTAVAuthUI.showLoginModal()">
                                 I Already Have an Account
                             </button>
