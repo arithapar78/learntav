@@ -153,8 +153,16 @@
                     fullName: this.sanitizeInput(userData.fullName),
                     email: this.sanitizeInput(userData.email).toLowerCase(),
                     passwordHash: this.hashPassword(userData.password),
+                    role: 'member', // Default role
                     created: Date.now(),
+                    lastLogin: Date.now(),
                     verified: false,
+                    activityLog: [{
+                        action: 'account_created',
+                        timestamp: Date.now(),
+                        ip: this.getClientIP(),
+                        userAgent: navigator.userAgent
+                    }],
                     settings: this.getDefaultSettings()
                 };
 
@@ -223,6 +231,9 @@
                 
                 this.currentUser = { ...user };
                 delete this.currentUser.passwordHash;
+
+                // Update last login and add activity log
+                this.updateUserActivity('login');
 
                 this.createSession();
                 
@@ -483,6 +494,61 @@
             return navigator.userAgent.slice(0, 50) + navigator.language;
         }
 
+        getClientIP() {
+            // In a real application, this would be handled by the backend
+            // For demo purposes, return a placeholder
+            return '127.0.0.1';
+        }
+
+        updateUserActivity(action, additionalData = {}) {
+            if (!this.currentUser) return;
+
+            const activity = {
+                action,
+                timestamp: Date.now(),
+                ip: this.getClientIP(),
+                userAgent: navigator.userAgent,
+                ...additionalData
+            };
+
+            // Update user's last login if it's a login action
+            if (action === 'login') {
+                this.currentUser.lastLogin = Date.now();
+            }
+
+            // Add to activity log
+            if (!this.currentUser.activityLog) {
+                this.currentUser.activityLog = [];
+            }
+            this.currentUser.activityLog.push(activity);
+
+            // Keep only last 50 activities to prevent storage bloat
+            if (this.currentUser.activityLog.length > 50) {
+                this.currentUser.activityLog = this.currentUser.activityLog.slice(-50);
+            }
+
+            // Update stored user data
+            this.updateStoredUserData();
+        }
+
+        updateStoredUserData() {
+            if (!this.currentUser) return;
+
+            const users = this.getAllUsers();
+            const userIndex = users.findIndex(u => u.id === this.currentUser.id);
+            
+            if (userIndex >= 0) {
+                // Create a complete user object with password hash for storage
+                const completeUser = {
+                    ...this.currentUser,
+                    passwordHash: users[userIndex].passwordHash // Preserve the password hash
+                };
+                
+                users[userIndex] = completeUser;
+                localStorage.setItem('learntav_users', JSON.stringify(users));
+            }
+        }
+
         // ===================================================================
         // UI Management
         // ===================================================================
@@ -533,19 +599,24 @@
             authButtons.forEach(button => {
                 const requiredState = button.dataset.authState;
                 if (requiredState === 'logged-in') {
-                    button.style.display = isLoggedIn ? 'inline-flex' : 'none';
+                    button.style.display = isLoggedIn ? 'flex' : 'none';
                 } else if (requiredState === 'logged-out') {
                     button.style.display = isLoggedIn ? 'none' : 'inline-flex';
                 }
             });
 
-            // Update user info displays
+            // Update modern user menu if available
+            if (isLoggedIn && window.LearnTAVAuthUI) {
+                window.LearnTAVAuthUI.updateUserMenuInfo(this.currentUser);
+            }
+
+            // Update user info displays (legacy support)
             const userNameElements = document.querySelectorAll('[data-user-name]');
             userNameElements.forEach(element => {
                 element.textContent = isLoggedIn ? this.currentUser.fullName : '';
             });
 
-            // Update user email displays
+            // Update user email displays (legacy support)
             const userEmailElements = document.querySelectorAll('[data-user-email]');
             userEmailElements.forEach(element => {
                 element.textContent = isLoggedIn ? this.currentUser.email : '';
