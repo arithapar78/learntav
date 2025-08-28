@@ -77,7 +77,26 @@
                 </div>
                 
                 <div class="learntav-nav__actions">
-                    <a href="contact/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
+                    <!-- Logged out state -->
+                    <button class="learntav-btn learntav-btn--ghost" data-auth-action="show-login" data-auth-state="logged-out">
+                        Sign In
+                    </button>
+                    <button class="learntav-btn learntav-btn--primary" data-auth-action="show-register" data-auth-state="logged-out">
+                        Get Started
+                    </button>
+                    
+                    <!-- Logged in state -->
+                    <div class="user-menu" data-auth-state="logged-in" style="display: none;">
+                        <button class="user-menu__toggle" onclick="toggleUserMenu()">
+                            <span class="user-menu__name" data-user-name></span>
+                            <span class="user-menu__avatar">👤</span>
+                        </button>
+                        <div class="user-menu__dropdown" id="userMenuDropdown">
+                            <a href="settings/" class="user-menu__item">⚙️ Settings</a>
+                            <button class="user-menu__item" data-auth-action="logout">🚪 Sign Out</button>
+                        </div>
+                    </div>
+                    
                     <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
                         <span class="learntav-nav__toggle-line"></span>
                         <span class="learntav-nav__toggle-line"></span>
@@ -544,6 +563,8 @@
     
     <!-- JavaScript -->
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/auth-ui.js"></script>
     <script>
         // Motto popup functionality
         function showMottoPopup() {
@@ -963,6 +984,64 @@
                 if (contactFormOpen) {
                     toggleContactForm();
                 }
+            }
+        });
+
+        // ===================================================================
+        // Authentication Integration
+        // ===================================================================
+        
+        // Global user menu functionality
+        window.toggleUserMenu = function() {
+            const dropdown = document.getElementById('userMenuDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('active');
+            }
+        };
+
+        // Close user menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const userMenu = document.querySelector('.user-menu');
+            const dropdown = document.getElementById('userMenuDropdown');
+            
+            if (userMenu && dropdown && !userMenu.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // Initialize authentication system
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize auth system if classes are available
+            if (typeof LearnTAVAuth !== 'undefined' && typeof AuthUI !== 'undefined') {
+                const auth = new LearnTAVAuth();
+                const authUI = new AuthUI(auth);
+                
+                // Update UI based on authentication state
+                auth.updateAuthenticationState();
+                
+                // Set up auth button event listeners
+                document.addEventListener('click', function(e) {
+                    const authAction = e.target.getAttribute('data-auth-action');
+                    
+                    if (authAction === 'show-login') {
+                        e.preventDefault();
+                        authUI.showLoginModal();
+                    } else if (authAction === 'show-register') {
+                        e.preventDefault();
+                        authUI.showRegisterModal();
+                    } else if (authAction === 'logout') {
+                        e.preventDefault();
+                        auth.logout();
+                    }
+                });
+                
+                // Make auth objects globally available for debugging
+                window.auth = auth;
+                window.authUI = authUI;
+                
+                console.log('✅ Authentication system initialized successfully');
+            } else {
+                console.log('⚠️ Authentication scripts not loaded - auth functionality disabled');
             }
         });
     </script>
