@@ -195,6 +195,32 @@
                                     </div>
                                 </div>
 
+                                <div class="settings-form__section">
+                                    <h3 class="settings-form__section-title">Administrative Access</h3>
+                                    
+                                    <div class="admin-access-card">
+                                        <div class="admin-access-info">
+                                            <div class="admin-access-icon">🔐</div>
+                                            <h4>Admin Sign-In</h4>
+                                            <p>Access administrative functions with the secure passcode</p>
+                                        </div>
+                                        
+                                        <div class="admin-passcode-section" id="adminPasscodeSection">
+                                            <label class="admin-passcode-label">Enter Admin Passcode:</label>
+                                            <div class="admin-passcode-input">
+                                                <input type="password" id="adminPasscode1" class="admin-digit" maxlength="1" inputmode="numeric">
+                                                <input type="password" id="adminPasscode2" class="admin-digit" maxlength="1" inputmode="numeric">
+                                                <input type="password" id="adminPasscode3" class="admin-digit" maxlength="1" inputmode="numeric">
+                                                <input type="password" id="adminPasscode4" class="admin-digit" maxlength="1" inputmode="numeric">
+                                            </div>
+                                            <button type="button" class="admin-signin-btn" onclick="attemptAdminSignIn()">
+                                                Access Admin Panel
+                                            </button>
+                                            <div class="admin-error-message" id="adminErrorMessage"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="settings-form__actions">
                                     <button type="submit" class="learntav-btn learntav-btn--primary">
                                         Save Changes

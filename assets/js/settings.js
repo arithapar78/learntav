@@ -1,4 +1,187 @@
 /**
+ * Admin Sign-In Functionality
+ */
+
+// Admin passcode functionality
+const ADMIN_PASSCODE = '0410';
+let adminPasscodeAttempts = 0;
+const MAX_ADMIN_ATTEMPTS = 3;
+
+function setupAdminPasscodeInputs() {
+    const inputs = document.querySelectorAll('.admin-digit');
+    
+    inputs.forEach((input, index) => {
+        // Auto-focus next input on digit entry
+        input.addEventListener('input', (e) => {
+            const value = e.target.value;
+            if (value && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            }
+            
+            // Add filled class for styling
+            if (value) {
+                input.classList.add('filled');
+            } else {
+                input.classList.remove('filled');
+            }
+            
+            // Auto-submit when all 4 digits are entered
+            const allFilled = Array.from(inputs).every(inp => inp.value);
+            if (allFilled) {
+                setTimeout(() => attemptAdminSignIn(), 300);
+            }
+        });
+        
+        // Handle backspace to go to previous input
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && !input.value && index > 0) {
+                inputs[index - 1].focus();
+            }
+            
+            // Only allow numeric input
+            if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'Tab', 'Enter'].includes(e.key)) {
+                e.preventDefault();
+            }
+        });
+        
+        // Clear input on focus if it already has a value
+        input.addEventListener('focus', (e) => {
+            if (e.target.value) {
+                e.target.select();
+            }
+        });
+    });
+}
+
+function attemptAdminSignIn() {
+    const inputs = document.querySelectorAll('.admin-digit');
+    const errorMessage = document.getElementById('adminErrorMessage');
+    const enteredCode = Array.from(inputs).map(input => input.value).join('');
+    
+    console.log('🔐 Admin sign-in attempt with code:', enteredCode);
+    
+    if (enteredCode.length !== 4) {
+        showAdminError('Please enter all 4 digits');
+        return;
+    }
+    
+    if (enteredCode === ADMIN_PASSCODE) {
+        console.log('✅ Admin passcode correct, redirecting to admin panel');
+        showAdminSuccess('Access granted! Redirecting to admin panel...');
+        
+        // Add success animation
+        inputs.forEach(input => {
+            input.style.borderColor = 'var(--success)';
+            input.style.backgroundColor = 'rgba(5, 150, 105, 0.1)';
+        });
+        
+        // Redirect to admin panel after short delay
+        setTimeout(() => {
+            window.location.href = '/admin/';
+        }, 1500);
+        
+        // Reset attempts on success
+        adminPasscodeAttempts = 0;
+    } else {
+        adminPasscodeAttempts++;
+        console.log(`❌ Invalid admin passcode. Attempt ${adminPasscodeAttempts}/${MAX_ADMIN_ATTEMPTS}`);
+        
+        // Add error animation
+        inputs.forEach(input => {
+            input.style.borderColor = 'var(--error)';
+            input.style.backgroundColor = 'rgba(220, 38, 38, 0.1)';
+            input.classList.add('shake');
+        });
+        
+        setTimeout(() => {
+            inputs.forEach(input => {
+                input.style.borderColor = '';
+                input.style.backgroundColor = '';
+                input.classList.remove('shake');
+            });
+        }, 600);
+        
+        if (adminPasscodeAttempts >= MAX_ADMIN_ATTEMPTS) {
+            showAdminError(`Access denied. Too many attempts. Please try again later.`);
+            disableAdminInputs(60000); // Disable for 1 minute
+        } else {
+            const remainingAttempts = MAX_ADMIN_ATTEMPTS - adminPasscodeAttempts;
+            showAdminError(`Invalid passcode. ${remainingAttempts} attempt${remainingAttempts !== 1 ? 's' : ''} remaining.`);
+        }
+        
+        // Clear inputs
+        setTimeout(() => {
+            inputs.forEach(input => {
+                input.value = '';
+                input.classList.remove('filled');
+            });
+            inputs[0].focus();
+        }, 1000);
+    }
+}
+
+function showAdminError(message) {
+    const errorElement = document.getElementById('adminErrorMessage');
+    errorElement.textContent = message;
+    errorElement.classList.add('show');
+    errorElement.style.color = 'var(--error)';
+    
+    setTimeout(() => {
+        errorElement.classList.remove('show');
+    }, 5000);
+}
+
+function showAdminSuccess(message) {
+    const errorElement = document.getElementById('adminErrorMessage');
+    errorElement.textContent = message;
+    errorElement.classList.add('show');
+    errorElement.style.color = 'var(--success)';
+}
+
+function disableAdminInputs(duration) {
+    const inputs = document.querySelectorAll('.admin-digit');
+    const button = document.querySelector('.admin-signin-btn');
+    
+    inputs.forEach(input => {
+        input.disabled = true;
+        input.style.opacity = '0.5';
+    });
+    
+    button.disabled = true;
+    button.style.opacity = '0.5';
+    button.textContent = 'Access Temporarily Disabled';
+    
+    setTimeout(() => {
+        inputs.forEach(input => {
+            input.disabled = false;
+            input.style.opacity = '';
+        });
+        
+        button.disabled = false;
+        button.style.opacity = '';
+        button.textContent = 'Access Admin Panel';
+        
+        adminPasscodeAttempts = 0;
+        document.getElementById('adminErrorMessage').classList.remove('show');
+    }, duration);
+}
+
+// Add shake animation CSS
+const adminStyles = document.createElement('style');
+adminStyles.textContent = `
+    .admin-digit.shake {
+        animation: shake 0.6s ease-in-out;
+    }
+    
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+        20%, 40%, 60%, 80% { transform: translateX(8px); }
+    }
+`;
+document.head.appendChild(adminStyles);
+
+/**
  * LearnTAV Settings Page JavaScript
  * Handles user settings, preferences, and profile management
  */
@@ -683,6 +866,11 @@
 
     function initializeSettings() {
         window.settingsManager = new SettingsManager();
+        
+        // Initialize admin passcode inputs
+        setTimeout(() => {
+            setupAdminPasscodeInputs();
+        }, 100);
         
         // Handle initial hash
         const hash = window.location.hash.substring(1);

@@ -11,8 +11,14 @@
     // ===================================================================
     
     class AuthUI {
-        constructor() {
+        constructor(authInstance) {
             this.activeModal = null;
+            this.authInstance = authInstance;
+            
+            // Debug logging for initialization
+            console.log('🎨 AuthUI constructor called with authInstance:', !!authInstance);
+            console.log('🎨 window.LearnTAVAuth available:', !!window.LearnTAVAuth);
+            
             this.init();
         }
 
@@ -287,7 +293,8 @@
         async handleRegister(event) {
             event.preventDefault();
             
-            if (!window.LearnTAVAuth) {
+            const authSystem = this.authInstance || window.LearnTAVAuth;
+            if (!authSystem) {
                 this.showError('Authentication system not available');
                 return;
             }
@@ -300,7 +307,7 @@
             this.setFormLoading(form, true);
 
             try {
-                await window.LearnTAVAuth.register(data);
+                await authSystem.register(data);
                 this.closeModal();
                 this.showSuccess('Account created successfully! Welcome to LearnTAV!');
             } catch (error) {
@@ -313,7 +320,13 @@
         async handleLogin(event) {
             event.preventDefault();
             
-            if (!window.LearnTAVAuth) {
+            console.log('🔐 handleLogin called');
+            console.log('🔐 this.authInstance:', !!this.authInstance);
+            console.log('🔐 window.LearnTAVAuth:', !!window.LearnTAVAuth);
+            
+            const authSystem = this.authInstance || window.LearnTAVAuth;
+            if (!authSystem) {
+                console.error('💥 Authentication system not available!');
                 this.showError('Authentication system not available');
                 return;
             }
@@ -321,12 +334,21 @@
             const form = event.target;
             const formData = new FormData(form);
             const data = Object.fromEntries(formData);
+            
+            console.log('🔐 Form data:', {
+                email: data.email,
+                hasPassword: !!data.password,
+                rememberMe: !!data.rememberMe
+            });
 
             // Show loading state
             this.setFormLoading(form, true);
 
             try {
-                await window.LearnTAVAuth.login(data);
+                console.log('🔐 Calling authSystem.login...');
+                const result = await authSystem.login(data);
+                console.log('🔐 Login successful:', result);
+                
                 this.closeModal();
                 this.showSuccess('Welcome back!');
                 
@@ -335,6 +357,7 @@
                     window.LearnTAVAccessControl.handleSuccessfulLogin();
                 }
             } catch (error) {
+                console.error('💥 Login error:', error);
                 this.showError(error.message);
             } finally {
                 this.setFormLoading(form, false);
@@ -344,7 +367,8 @@
         async handleReset(event) {
             event.preventDefault();
             
-            if (!window.LearnTAVAuth) {
+            const authSystem = this.authInstance || window.LearnTAVAuth;
+            if (!authSystem) {
                 this.showError('Authentication system not available');
                 return;
             }
@@ -357,7 +381,7 @@
             this.setFormLoading(form, true);
 
             try {
-                await window.LearnTAVAuth.initiatePasswordReset(email);
+                await authSystem.initiatePasswordReset(email);
                 this.closeModal();
                 this.showSuccess('Reset instructions sent! Check your email.');
             } catch (error) {
@@ -1398,10 +1422,15 @@
     }
 
     function initializeAuthUI() {
-        window.LearnTAVAuthUI = new AuthUI();
+        console.log('🎨 Initializing AuthUI...');
+        console.log('🎨 window.LearnTAVAuth exists:', !!window.LearnTAVAuth);
+        console.log('🎨 window.LearnTAVAuth.isInitialized:', window.LearnTAVAuth?.isInitialized);
+        
+        window.LearnTAVAuthUI = new AuthUI(window.LearnTAVAuth);
         
         // Wire up auth system UI methods
         if (window.LearnTAVAuth) {
+            console.log('🎨 Wiring up auth system UI methods...');
             window.LearnTAVAuth.showWelcomeModal = () => window.LearnTAVAuthUI.showWelcomeModal();
             window.LearnTAVAuth.showRegisterModal = () => window.LearnTAVAuthUI.showRegisterModal();
             window.LearnTAVAuth.showLoginModal = () => window.LearnTAVAuthUI.showLoginModal();
@@ -1414,10 +1443,13 @@
             window.LearnTAVAuth.showSuccessMessage = (message) => window.LearnTAVAuthUI.showSuccess(message);
             window.LearnTAVAuth.showErrorMessage = (message) => window.LearnTAVAuthUI.showError(message);
             window.LearnTAVAuth.showInfoMessage = (message) => window.LearnTAVAuthUI.showInfo(message);
+        } else {
+            console.error('💥 window.LearnTAVAuth not available during AuthUI initialization!');
         }
         
         // Initialize modern user menu
         window.LearnTAVAuthUI.initializeModernUserMenu();
+        console.log('🎨 AuthUI initialization complete');
     }
 
 })();

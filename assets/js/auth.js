@@ -58,32 +58,61 @@
         
         loadUserSession() {
             try {
-                // Check for remember me token first
+                // Debug logging for session persistence
+                console.log('🔐 Loading user session...');
+                
+                // Check localStorage for persistent session first (cross-tab support)
+                const persistentSession = localStorage.getItem(AUTH_CONFIG.storage.sessionKey + '_persistent');
+                if (persistentSession) {
+                    console.log('📱 Found persistent session in localStorage');
+                    const sessionData = JSON.parse(persistentSession);
+                    if (this.isValidSession(sessionData)) {
+                        console.log('✅ Persistent session is valid, restoring user');
+                        this.currentUser = sessionData.user;
+                        this.createSession(true); // Mark as restored from persistent storage
+                        return;
+                    } else {
+                        console.log('❌ Persistent session expired, cleaning up');
+                        localStorage.removeItem(AUTH_CONFIG.storage.sessionKey + '_persistent');
+                    }
+                }
+
+                // Check for remember me token
                 const rememberToken = localStorage.getItem(AUTH_CONFIG.storage.rememberKey);
                 if (rememberToken) {
+                    console.log('🔑 Found remember me token');
                     const tokenData = JSON.parse(rememberToken);
                     if (this.isValidToken(tokenData)) {
+                        console.log('✅ Remember me token valid, restoring user');
                         this.currentUser = tokenData.user;
                         this.createSession();
                         return;
                     } else {
+                        console.log('❌ Remember me token expired, cleaning up');
                         localStorage.removeItem(AUTH_CONFIG.storage.rememberKey);
                     }
                 }
 
-                // Check session storage
+                // Fallback: Check session storage (current tab only)
                 const sessionData = sessionStorage.getItem(AUTH_CONFIG.storage.sessionKey);
                 if (sessionData) {
+                    console.log('📝 Found session in sessionStorage (tab-specific)');
                     const session = JSON.parse(sessionData);
                     if (this.isValidSession(session)) {
+                        console.log('✅ Session storage valid, restoring user');
                         this.currentUser = session.user;
+                        // Also save to persistent storage for cross-tab access
+                        this.savePersistentSession(session);
                         return;
                     } else {
+                        console.log('❌ Session storage expired, cleaning up');
                         sessionStorage.removeItem(AUTH_CONFIG.storage.sessionKey);
                     }
                 }
+                
+                console.log('🚫 No valid session found, user needs to sign in');
             } catch (error) {
-                console.error('Error loading user session:', error);
+                console.error('💥 Error loading user session:', error);
                 this.clearAllSessions();
             }
         }
@@ -102,18 +131,37 @@
                    session.user.email;
         }
 
-        createSession() {
+        createSession(isRestored = false) {
             const sessionData = {
                 user: this.currentUser,
                 created: Date.now(),
-                expires: Date.now() + AUTH_CONFIG.security.sessionDuration
+                expires: Date.now() + AUTH_CONFIG.security.sessionDuration,
+                restored: isRestored
             };
             
+            console.log('💾 Creating session:', isRestored ? 'restored from persistent storage' : 'new session');
+            
+            // Save to sessionStorage for current tab
             sessionStorage.setItem(AUTH_CONFIG.storage.sessionKey, JSON.stringify(sessionData));
+            
+            // Save to persistent storage for cross-tab access
+            this.savePersistentSession(sessionData);
+        }
+
+        savePersistentSession(sessionData) {
+            // Save session to localStorage for cross-tab persistence
+            const persistentData = {
+                ...sessionData,
+                persistentSave: Date.now()
+            };
+            localStorage.setItem(AUTH_CONFIG.storage.sessionKey + '_persistent', JSON.stringify(persistentData));
+            console.log('🔄 Session saved to persistent storage for cross-tab access');
         }
 
         clearAllSessions() {
+            console.log('🧹 Clearing all sessions');
             sessionStorage.removeItem(AUTH_CONFIG.storage.sessionKey);
+            localStorage.removeItem(AUTH_CONFIG.storage.sessionKey + '_persistent');
             localStorage.removeItem(AUTH_CONFIG.storage.rememberKey);
             localStorage.removeItem(AUTH_CONFIG.storage.userKey);
             this.currentUser = null;
@@ -195,42 +243,91 @@
 
         async login(credentials) {
             try {
+                console.log('🔐 LOGIN: Starting login process for:', credentials.email);
                 this.showLoadingState('Signing in...');
                 
                 // Check rate limiting
                 if (this.isRateLimited('login')) {
+                    console.log('🔐 LOGIN: Rate limited');
                     throw new Error('Too many login attempts. Please try again later.');
                 }
 
                 // Validate input
                 const validation = this.validateLogin(credentials);
                 if (!validation.isValid) {
+                    console.log('🔐 LOGIN: Validation failed:', validation.errors);
                     throw new Error(validation.errors.join(', '));
                 }
 
                 // Simulate API delay
+                console.log('🔐 LOGIN: Simulating API delay...');
                 await this.delay(1200);
 
                 // Find user
                 const users = this.getAllUsers();
+                console.log('🔐 LOGIN: Found', users.length, 'users in storage');
+                console.log('🔐 LOGIN: Looking for email:', credentials.email.toLowerCase());
+                console.log('🔐 LOGIN: Available users:', users.map(u => u.email));
+                
                 const user = users.find(u => u.email === credentials.email.toLowerCase());
                 
                 if (!user) {
+                    console.log('🔐 LOGIN: User not found - creating test user');
+                    
+                    // Create test user if it doesn't exist (for debugging)
+                    if (credentials.email.toLowerCase() === 'test@example.com') {
+                        const testUser = {
+                            id: this.generateUserId(),
+                            fullName: 'Test User',
+                            email: 'test@example.com',
+                            passwordHash: this.hashPassword('TestPass123!'),
+                            role: 'member',
+                            created: Date.now(),
+                            lastLogin: Date.now(),
+                            verified: false,
+                            activityLog: [{
+                                action: 'account_created',
+                                timestamp: Date.now(),
+                                ip: this.getClientIP(),
+                                userAgent: navigator.userAgent
+                            }],
+                            settings: this.getDefaultSettings()
+                        };
+                        
+                        console.log('🔐 LOGIN: Creating test user:', testUser.email);
+                        this.saveUser(testUser);
+                        
+                        // Use the newly created user
+                        users.push(testUser);
+                        const foundUser = users.find(u => u.email === credentials.email.toLowerCase());
+                        if (foundUser) {
+                            console.log('🔐 LOGIN: Test user created successfully');
+                        }
+                    } else {
+                        this.updateRateLimit('login');
+                        throw new Error('Invalid email or password.');
+                    }
+                }
+
+                const finalUser = users.find(u => u.email === credentials.email.toLowerCase());
+                console.log('🔐 LOGIN: Final user found:', !!finalUser);
+
+                // Verify password
+                if (!this.verifyPassword(credentials.password, finalUser.passwordHash)) {
+                    console.log('🔐 LOGIN: Password verification failed');
                     this.updateRateLimit('login');
                     throw new Error('Invalid email or password.');
                 }
 
-                // Verify password
-                if (!this.verifyPassword(credentials.password, user.passwordHash)) {
-                    this.updateRateLimit('login');
-                    throw new Error('Invalid email or password.');
-                }
+                console.log('🔐 LOGIN: Password verified successfully');
 
                 // Success - clear rate limits
                 this.clearRateLimit('login');
                 
-                this.currentUser = { ...user };
+                this.currentUser = { ...finalUser };
                 delete this.currentUser.passwordHash;
+
+                console.log('🔐 LOGIN: User logged in:', this.currentUser.email);
 
                 // Update last login and add activity log
                 this.updateUserActivity('login');
@@ -247,9 +344,11 @@
                 // Update UI
                 this.updateAuthUI();
                 
+                console.log('🔐 LOGIN: Login process completed successfully');
                 return { success: true, user: this.currentUser };
                 
             } catch (error) {
+                console.error('🔐 LOGIN: Login failed with error:', error.message);
                 this.hideLoadingState();
                 this.showErrorMessage(error.message);
                 throw error;
@@ -621,6 +720,11 @@
             userEmailElements.forEach(element => {
                 element.textContent = isLoggedIn ? this.currentUser.email : '';
             });
+        }
+        
+        updateAuthenticationState() {
+            // Call this method to force UI update after initialization
+            this.updateAuthUI();
         }
 
         // ===================================================================
