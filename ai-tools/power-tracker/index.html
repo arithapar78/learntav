@@ -1079,32 +1079,30 @@
         function directDownloadFree() {
             const link = document.createElement('a');
             link.href = '../../assets/extensions/power-tracker-extension.zip';
-            link.download = 'power-tracker-free.zip';
+            link.download = 'power-tracker.zip';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
-            alert('✅ Power Tracker Free download started!\n\nInstallation Instructions:\n1. Unzip the downloaded file\n2. Open Chrome → More tools → Extensions\n3. Enable "Developer mode" (top right)\n4. Click "Load unpacked"\n5. Select the unzipped folder\n6. Pin the extension to your toolbar');
+            alert('✅ Power Tracker download started!\n\nInstallation Instructions:\n1. Unzip the downloaded file\n2. Open Chrome → More tools → Extensions\n3. Enable "Developer mode" (top right)\n4. Click "Load unpacked"\n5. Select the unzipped folder\n6. Pin the extension to your toolbar');
         }
 
         function directDownloadPro() {
             const link = document.createElement('a');
             link.href = '../../assets/extensions/power-tracker-extension.zip';
-            link.download = 'power-tracker-pro.zip';
+            link.download = 'power-tracker.zip';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
-            alert('✅ Power Tracker Pro download started!\n\nInstallation Instructions:\n1. Unzip the downloaded file\n2. Open Chrome → More tools → Extensions\n3. Enable "Developer mode" (top right)\n4. Click "Load unpacked"\n5. Select the unzipped folder\n6. Pin the extension to your toolbar\n7. Click the ⚡ button and enter code: 0410 for Pro features');
+            alert('✅ Power Tracker download started!\n\nInstallation Instructions:\n1. Unzip the downloaded file\n2. Open Chrome → More tools → Extensions\n3. Enable "Developer mode" (top right)\n4. Click "Load unpacked"\n5. Select the unzipped folder\n6. Pin the extension to your toolbar\n7. Click the ⚡ button and enter code: 0410 for Pro features');
         }
 
         function verifyAndDownload() {
-            // Legacy function - now redirects to direct download
             directDownloadFree();
         }
 
         function startDownload() {
-            // Legacy function - now redirects to direct download
             directDownloadFree();
         }
 

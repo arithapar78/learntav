@@ -1153,22 +1153,20 @@
 
         function directDownload() {
             const link = document.createElement('a');
-            link.href = '../../assets/extensions/prompt-optimizer-extension.zip';
-            link.download = 'prompt-optimizer-extension.zip';
+            link.href = '../../assets/extensions/power-tracker-extension.zip';
+            link.download = 'power-tracker.zip';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
-            alert('✅ Prompt Optimizer download started!\n\nInstallation Instructions:\n1. Unzip the downloaded file\n2. Open Chrome → More tools → Extensions\n3. Enable "Developer mode" (top right)\n4. Click "Load unpacked"\n5. Select the unzipped folder\n6. Pin the extension to your toolbar\n7. Visit any AI platform to start optimizing!');
+            alert('✅ Power Tracker download started!\n\nInstallation Instructions:\n1. Unzip the downloaded file\n2. Open Chrome → More tools → Extensions\n3. Enable "Developer mode" (top right)\n4. Click "Load unpacked"\n5. Select the unzipped folder\n6. Pin the extension to your toolbar\n7. Visit any AI platform to start optimizing!\n\nNote: Prompt optimization features are included in this unified extension.');
         }
 
         function verifyAndDownload() {
-            // Legacy function - now redirects to direct download
             directDownload();
         }
 
         function startDownload() {
-            // Legacy function - now redirects to direct download
             directDownload();
         }
 

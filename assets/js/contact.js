@@ -465,7 +465,11 @@
         // Set up auto-save
         loadFormData();
         
-        form.addEventListener('input', debounce(saveFormData, 1000));
+        form.addEventListener('input', () => {
+            let timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(saveFormData, 1000);
+        });
         form.addEventListener('change', saveFormData);
         
         form.addEventListener('submit', function() {
@@ -641,12 +645,16 @@ if (!document.querySelector('#floating-label-styles')) {
         });
         
         // Update on window resize
-        window.addEventListener('resize', debounce(() => {
-            const currentActive = tabsNav.querySelector('.learntav-tab-btn.active');
-            if (currentActive) {
-                updateIndicator(currentActive);
-            }
-        }, 250));
+        window.addEventListener('resize', () => {
+            let timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                const currentActive = tabsNav.querySelector('.learntav-tab-btn.active');
+                if (currentActive) {
+                    updateIndicator(currentActive);
+                }
+            }, 250);
+        });
     }
     
     function enhanceButtonInteractions() {
@@ -769,22 +777,101 @@ if (!document.querySelector('#floating-label-styles')) {
                 if (submitBtn) {
                     submitBtn.classList.add('learntav-btn--loading');
                     submitBtn.disabled = true;
-                    
-                    // Simulate form submission
-                    setTimeout(() => {
-                        submitBtn.classList.remove('learntav-btn--loading');
-                        submitBtn.disabled = false;
-                        showSuccessMessage(this);
-                    }, 2000);
                 }
+                
+                // Collect form data
+                const formData = new FormData(this);
+                const formType = formData.get('form_type') || 'general';
+                
+                // Create submission data object
+                const submissionData = {
+                    timestamp: new Date().toISOString(),
+                    formType: formType,
+                    userAgent: navigator.userAgent,
+                    url: window.location.href
+                };
+                
+                // Collect form fields (skip hidden and honeypot fields)
+                for (let [key, value] of formData.entries()) {
+                    if (key !== 'website' && key !== 'csrf_token' && value.trim() !== '') {
+                        submissionData[key] = value;
+                    }
+                }
+                
+                // Log submission for debugging
+                console.log('Form Submission Data:', submissionData);
+                
+                // Since this is a static site, we'll use EmailJS or similar service
+                // For now, we'll show success but with proper error handling
+                submitFormData(submissionData, submitBtn, this);
             });
         });
     }
     
+    function submitFormData(submissionData, submitBtn, form) {
+        // For a static site, use mailto as the primary method
+        const mailtoFallback = () => {
+            try {
+                const subject = encodeURIComponent(`LearnTAV Contact: ${submissionData.formType || 'General'}`);
+                const body = encodeURIComponent(
+                    Object.keys(submissionData)
+                        .filter(key => !['timestamp', 'userAgent', 'url', 'formType'].includes(key))
+                        .map(key => `${key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}: ${submissionData[key]}`)
+                        .join('\n\n')
+                );
+                window.location.href = `mailto:hello@learntav.com?subject=${subject}&body=${body}`;
+                
+                // Show success message after a brief delay
+                setTimeout(() => {
+                    showSuccessMessage(form);
+                }, 1000);
+                
+            } catch (error) {
+                console.error('Error creating mailto link:', error);
+                showErrorMessage(form, 'Unable to open email client. Please email us directly at hello@learntav.com');
+            }
+        };
+
+        // Try to submit via fetch first (for future backend implementation)
+        const tryServerSubmission = async () => {
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(submissionData)
+                });
+                
+                if (response.ok) {
+                    showSuccessMessage(form);
+                } else {
+                    throw new Error('Server response not ok');
+                }
+            } catch (error) {
+                console.log('Server submission not available, falling back to mailto:', error.message);
+                mailtoFallback();
+            }
+        };
+
+        // Reset button state after attempt
+        const resetButton = () => {
+            if (submitBtn) {
+                submitBtn.classList.remove('learntav-btn--loading');
+                submitBtn.disabled = false;
+            }
+        };
+
+        // Try server submission first, fallback to mailto
+        setTimeout(() => {
+            tryServerSubmission().finally(resetButton);
+        }, 1000);
+    }
+
     function showSuccessMessage(form) {
         const successHTML = `
             <div class="learntav-form__success">
-                <span class="learntav-form__success-icon">🎉</span>
+                <span class="learntav-form__success-icon">✅</span>
                 <div class="learntav-form__success-content">
                     <h3>Message Sent Successfully!</h3>
                     <p>Thank you for contacting us. We'll get back to you within 24 hours.</p>
@@ -793,13 +880,35 @@ if (!document.querySelector('#floating-label-styles')) {
         `;
         
         const formContainer = form.closest('.learntav-form-container');
-        formContainer.innerHTML = successHTML;
+        if (formContainer) {
+            formContainer.innerHTML = successHTML;
+        }
         
         // Reset progress bar
         const progressBar = document.querySelector('.learntav-form-progress');
         if (progressBar) {
             progressBar.style.width = '0%';
             progressBar.classList.remove('visible');
+        }
+    }
+
+    function showErrorMessage(form, message) {
+        const errorHTML = `
+            <div class="learntav-form__error-global">
+                <span class="learntav-form__error-icon">⚠️</span>
+                <div class="learntav-form__error-content">
+                    <h3>Submission Error</h3>
+                    <p>${message}</p>
+                    <button onclick="location.reload()" class="learntav-btn learntav-btn--secondary" style="margin-top: 1rem;">
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        const formContainer = form.closest('.learntav-form-container');
+        if (formContainer) {
+            formContainer.innerHTML = errorHTML;
         }
     }
     
