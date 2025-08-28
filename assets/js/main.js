@@ -37,6 +37,23 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
                 el.classList.add('scroll-animate');
                 window.LEARNTAV_DEBUG.log(`Added scroll-animate to element ${index}:`, el.className);
             }
+            
+            // JavaScript-controlled initial state - hide elements that should animate
+            if (document.body.classList.contains('enable-scroll-animations')) {
+                const rect = el.getBoundingClientRect();
+                const isInitiallyInView = rect.top < window.innerHeight && rect.bottom > 0;
+                
+                if (!isInitiallyInView) {
+                    // Hide elements that are not initially visible
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(30px)';
+                    window.LEARNTAV_DEBUG.log(`JS: Initially hid element ${index}`);
+                } else {
+                    // Elements initially in view start visible
+                    el.classList.add('animate-in');
+                    window.LEARNTAV_DEBUG.log(`JS: Element ${index} initially visible, marked as animated`);
+                }
+            }
         });
         
         // Robust failsafe: Multiple fallback mechanisms
@@ -47,10 +64,24 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
             setTimeout(() => {
                 elements.forEach((el, index) => {
                     const rect = el.getBoundingClientRect();
-                    const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+                    const computedStyle = window.getComputedStyle(el);
+                    const transform = computedStyle.transform;
+                    const opacity = computedStyle.opacity;
+                    
+                    // More generous viewport detection that accounts for transforms
+                    const isInViewport = rect.bottom > -200 && rect.top < window.innerHeight + 200;
                     
                     if (!el.classList.contains('animate-in')) {
-                        window.LEARNTAV_DEBUG.log(`Element ${index} not animated, in viewport: ${isInViewport}`);
+                        window.LEARNTAV_DEBUG.log(`🔍 DIAGNOSIS Element ${index}:`, {
+                            rect: {top: Math.round(rect.top), bottom: Math.round(rect.bottom), width: Math.round(rect.width), height: Math.round(rect.height)},
+                            transform: transform,
+                            opacity: opacity,
+                            classes: el.className,
+                            offsetTop: el.offsetTop,
+                            offsetHeight: el.offsetHeight,
+                            inViewport: isInViewport
+                        });
+                        
                         if (isInViewport) {
                             el.classList.add('animate-in');
                             window.LEARNTAV_DEBUG.elementsAnimated++;
@@ -554,36 +585,41 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
             window.LEARNTAV_DEBUG.log('IntersectionObserver supported, setting up...');
             
             const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
+                threshold: 0.1,  // Trigger when 10% visible
+                rootMargin: '50px 0px 50px 0px'  // Moderate detection area
             };
 
             const isHomepage = window.location.pathname === '/' || window.location.pathname === '/index.html';
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
+                    const elementIndex = Array.from(animatedElements).indexOf(entry.target);
+                    
                     if (entry.isIntersecting && !entry.target.classList.contains('animate-in')) {
-                        const elementIndex = Array.from(animatedElements).indexOf(entry.target);
-                        window.LEARNTAV_DEBUG.log(`Element ${elementIndex} entering view, animating...`);
+                        window.LEARNTAV_DEBUG.log(`✅ Element ${elementIndex} entering view, animating...`);
                         
                         // Add staggered delay based on element position
-                        // Homepage gets additional delay as specified
                         let baseDelay = elementIndex * 100;
                         if (isHomepage) {
-                            // Add homepage-specific delay (100-200ms range)
                             baseDelay += Math.min(150, elementIndex * 50);
                         }
                         
                         setTimeout(() => {
                             if (!entry.target.classList.contains('animate-in')) {
+                                // JavaScript-controlled animation
+                                entry.target.style.opacity = '1';
+                                entry.target.style.transform = 'translateY(0)';
                                 entry.target.classList.add('animate-in');
                                 window.LEARNTAV_DEBUG.elementsAnimated++;
-                                window.LEARNTAV_DEBUG.log(`Animated element ${elementIndex} via IntersectionObserver (delay: ${baseDelay}ms)`);
+                                window.LEARNTAV_DEBUG.log(`✅ Animated element ${elementIndex} via IntersectionObserver (delay: ${baseDelay}ms)`);
                             }
                         }, baseDelay);
                         
                         observer.unobserve(entry.target);
                     }
+                    
+                    // Enhanced logging
+                    window.LEARNTAV_DEBUG.log(`📊 Element ${elementIndex} - intersecting: ${entry.isIntersecting}, ratio: ${entry.intersectionRatio.toFixed(2)}, rect: ${Math.round(entry.boundingClientRect.top)}px`);
                 });
             }, observerOptions);
 
@@ -593,12 +629,18 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
                 window.LEARNTAV_DEBUG.log(`Observing element ${index}:`, el.className);
             });
             
-            // Backup check for IntersectionObserver failures
+            // Backup check for IntersectionObserver failures - improve viewport detection
             setTimeout(() => {
                 animatedElements.forEach((el, index) => {
                     if (!el.classList.contains('animate-in')) {
+                        // Get computed styles to handle transforms properly
+                        const computedStyle = window.getComputedStyle(el);
                         const rect = el.getBoundingClientRect();
-                        const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+                        
+                        // More forgiving viewport detection
+                        const isInViewport = rect.bottom > -100 && rect.top < window.innerHeight + 100;
+                        
+                        window.LEARNTAV_DEBUG.log(`Backup check element ${index}: rect.top=${Math.round(rect.top)}, rect.bottom=${Math.round(rect.bottom)}, windowHeight=${window.innerHeight}, inViewport=${isInViewport}`);
                         
                         if (isInViewport) {
                             el.classList.add('animate-in');

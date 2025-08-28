@@ -1474,62 +1474,43 @@ li {
 /* ===================================================================
    Scroll-Triggered Animations
    =================================================================== */
-/* Scroll-Triggered Animation Base Styles */
+/* Scroll-Triggered Animation Base Styles - ULTIMATE FIX: Pure JavaScript control */
 .scroll-animate {
     opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    visibility: visible;
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-/* Animation class for smooth effects */
+/* Animation states - controlled purely by JavaScript, not CSS */
 .scroll-animate.animate-in {
     opacity: 1;
+    visibility: visible;
     transform: translateY(0);
 }
 
-/* Ensure content is visible by default for accessibility */
+.scroll-animate.animate-out {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Remove all CSS-based hiding - let JavaScript handle everything */
+/* This ensures IntersectionObserver can always detect elements properly */
 .learntav-value-card,
 .learntav-service-card,
-.learntav-testimonial-card {
+.learntav-testimonial-card,
+.learntav-hero,
+.learntav-section-header,
+.learntav-cta {
     opacity: 1;
-    transform: translateY(0);
     visibility: visible;
 }
 
-/* Enhanced scroll animation behavior when explicitly enabled */
+/* NO CSS HIDING - JavaScript will handle initial state */
+/* This guarantees IntersectionObserver compatibility */
 .enable-scroll-animations .scroll-animate {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: cssFailsafeReveal 1s ease forwards 3s;
-}
-
-.enable-scroll-animations .scroll-animate.animate-in {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-    animation: none !important;
-}
-
-/* Hero section specific animations */
-.enable-scroll-animations .learntav-hero.scroll-animate {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-.enable-scroll-animations .learntav-hero__title.scroll-animate {
-    opacity: 0;
-    transform: translateY(15px);
-}
-
-/* Section header animations */
-.enable-scroll-animations .learntav-section-header.scroll-animate {
-    opacity: 0;
-    transform: translateY(25px);
-}
-
-/* CTA section animations */
-.enable-scroll-animations .learntav-cta.scroll-animate {
-    opacity: 0;
-    transform: translateY(20px);
+    /* Elements remain fully visible until JavaScript takes control */
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Keyframe for CSS failsafe animation */
