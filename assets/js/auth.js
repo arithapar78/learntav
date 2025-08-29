@@ -60,16 +60,32 @@
         loadUserSession() {
             try {
                 // Debug logging for session persistence
-                console.log('🔐 Loading user session...');
+                console.log('🔐 DEBUG: Starting loadUserSession...');
+                console.log('🔐 DEBUG: Storage keys - sessionKey:', AUTH_CONFIG.storage.sessionKey, 'rememberKey:', AUTH_CONFIG.storage.rememberKey);
                 
                 // Check localStorage for persistent session first (cross-tab support)
                 const persistentSession = localStorage.getItem(AUTH_CONFIG.storage.sessionKey + '_persistent');
+                console.log('🔐 DEBUG: Persistent session raw data:', persistentSession ? 'Found' : 'Not found');
+                
                 if (persistentSession) {
                     console.log('📱 Found persistent session in localStorage');
                     const sessionData = JSON.parse(persistentSession);
+                    console.log('🔐 DEBUG: Persistent session data:', {
+                        hasUser: !!sessionData.user,
+                        userEmail: sessionData.user?.email,
+                        userRole: sessionData.user?.role,
+                        expires: new Date(sessionData.expires).toISOString(),
+                        isExpired: Date.now() > sessionData.expires
+                    });
+                    
                     if (this.isValidSession(sessionData)) {
                         console.log('✅ Persistent session is valid, restoring user');
                         this.currentUser = sessionData.user;
+                        console.log('🔐 DEBUG: Current user set to:', {
+                            email: this.currentUser.email,
+                            role: this.currentUser.role,
+                            isAdmin: this.isAdmin(this.currentUser)
+                        });
                         this.createSession(true); // Mark as restored from persistent storage
                         return;
                     } else {
@@ -80,12 +96,27 @@
 
                 // Check for remember me token
                 const rememberToken = localStorage.getItem(AUTH_CONFIG.storage.rememberKey);
+                console.log('🔐 DEBUG: Remember me token:', rememberToken ? 'Found' : 'Not found');
+                
                 if (rememberToken) {
                     console.log('🔑 Found remember me token');
                     const tokenData = JSON.parse(rememberToken);
+                    console.log('🔐 DEBUG: Remember me token data:', {
+                        hasUser: !!tokenData.user,
+                        userEmail: tokenData.user?.email,
+                        userRole: tokenData.user?.role,
+                        expires: new Date(tokenData.expires).toISOString(),
+                        isExpired: Date.now() > tokenData.expires
+                    });
+                    
                     if (this.isValidToken(tokenData)) {
                         console.log('✅ Remember me token valid, restoring user');
                         this.currentUser = tokenData.user;
+                        console.log('🔐 DEBUG: Current user set to:', {
+                            email: this.currentUser.email,
+                            role: this.currentUser.role,
+                            isAdmin: this.isAdmin(this.currentUser)
+                        });
                         this.createSession();
                         return;
                     } else {
@@ -96,12 +127,27 @@
 
                 // Fallback: Check session storage (current tab only)
                 const sessionData = sessionStorage.getItem(AUTH_CONFIG.storage.sessionKey);
+                console.log('🔐 DEBUG: Session storage data:', sessionData ? 'Found' : 'Not found');
+                
                 if (sessionData) {
                     console.log('📝 Found session in sessionStorage (tab-specific)');
                     const session = JSON.parse(sessionData);
+                    console.log('🔐 DEBUG: Session storage data:', {
+                        hasUser: !!session.user,
+                        userEmail: session.user?.email,
+                        userRole: session.user?.role,
+                        expires: new Date(session.expires).toISOString(),
+                        isExpired: Date.now() > session.expires
+                    });
+                    
                     if (this.isValidSession(session)) {
                         console.log('✅ Session storage valid, restoring user');
                         this.currentUser = session.user;
+                        console.log('🔐 DEBUG: Current user set to:', {
+                            email: this.currentUser.email,
+                            role: this.currentUser.role,
+                            isAdmin: this.isAdmin(this.currentUser)
+                        });
                         // Also save to persistent storage for cross-tab access
                         this.savePersistentSession(session);
                         return;
@@ -112,6 +158,7 @@
                 }
                 
                 console.log('🚫 No valid session found, user needs to sign in');
+                console.log('🔐 DEBUG: Final currentUser state:', this.currentUser);
             } catch (error) {
                 console.error('💥 Error loading user session:', error);
                 this.clearAllSessions();
@@ -268,7 +315,7 @@
                 const users = this.getAllUsers();
                 console.log('🔐 LOGIN: Found', users.length, 'users in storage');
                 console.log('🔐 LOGIN: Looking for email:', credentials.email.toLowerCase());
-                console.log('🔐 LOGIN: Available users:', users.map(u => u.email));
+                console.log('🔐 LOGIN: Available users:', users.map(u => ({email: u.email, role: u.role})));
                 
                 const user = users.find(u => u.email === credentials.email.toLowerCase());
                 
@@ -278,8 +325,22 @@
                     throw new Error('Invalid email or password.');
                 }
 
+                console.log('🔐 LOGIN DEBUG: Found user:', {
+                    email: user.email,
+                    role: user.role,
+                    hasPasswordHash: !!user.passwordHash,
+                    passwordHashLength: user.passwordHash?.length
+                });
+
                 // Verify password
-                if (!this.verifyPassword(credentials.password, user.passwordHash)) {
+                console.log('🔐 LOGIN DEBUG: Verifying password...');
+                console.log('🔐 LOGIN DEBUG: Input password length:', credentials.password.length);
+                console.log('🔐 LOGIN DEBUG: Stored hash:', user.passwordHash);
+                
+                const passwordValid = this.verifyPassword(credentials.password, user.passwordHash);
+                console.log('🔐 LOGIN DEBUG: Password verification result:', passwordValid);
+                
+                if (!passwordValid) {
                     console.log('🔐 LOGIN: Password verification failed');
                     this.updateRateLimit('login');
                     throw new Error('Invalid email or password.');
@@ -293,7 +354,11 @@
                 this.currentUser = { ...user };
                 delete this.currentUser.passwordHash;
 
-                console.log('🔐 LOGIN: User logged in:', this.currentUser.email);
+                console.log('🔐 LOGIN DEBUG: Current user set:', {
+                    email: this.currentUser.email,
+                    role: this.currentUser.role,
+                    isAdmin: this.isAdmin(this.currentUser)
+                });
 
                 // Update last login and add activity log
                 this.updateUserActivity('login');
@@ -771,16 +836,23 @@
 
         createDefaultAdminUser() {
             try {
+                console.log('🔐 DEBUG: Starting createDefaultAdminUser...');
                 const users = this.getAllUsers();
+                console.log('🔐 DEBUG: Found', users.length, 'existing users:', users.map(u => ({email: u.email, role: u.role})));
+                
                 const adminExists = users.some(user => user.role === 'admin' || user.role === 'super_admin');
+                console.log('🔐 DEBUG: Admin user exists:', adminExists);
                 
                 if (!adminExists) {
                     console.log('🔐 Creating default admin user...');
+                    const passwordHash = this.hashPassword('AdminPass123!');
+                    console.log('🔐 DEBUG: Generated password hash:', passwordHash);
+                    
                     const adminUser = {
                         id: this.generateUserId(),
                         fullName: 'Admin User',
                         email: 'admin@learntav.com',
-                        passwordHash: this.hashPassword('AdminPass123!'),
+                        passwordHash: passwordHash,
                         role: 'admin',
                         created: Date.now(),
                         lastLogin: 0,
@@ -795,8 +867,27 @@
                         settings: this.getDefaultSettings()
                     };
                     
+                    console.log('🔐 DEBUG: Admin user object created:', {
+                        id: adminUser.id,
+                        email: adminUser.email,
+                        role: adminUser.role,
+                        hasPasswordHash: !!adminUser.passwordHash
+                    });
+                    
                     this.saveUser(adminUser);
+                    
+                    // Verify user was saved
+                    const savedUsers = this.getAllUsers();
+                    const savedAdmin = savedUsers.find(u => u.email === 'admin@learntav.com');
+                    console.log('🔐 DEBUG: Admin user verification after save:', {
+                        found: !!savedAdmin,
+                        role: savedAdmin?.role,
+                        hasPasswordHash: !!savedAdmin?.passwordHash
+                    });
+                    
                     console.log('✅ Default admin user created: admin@learntav.com / AdminPass123!');
+                } else {
+                    console.log('🔐 DEBUG: Admin user already exists, skipping creation');
                 }
             } catch (error) {
                 console.error('❌ Error creating default admin user:', error);

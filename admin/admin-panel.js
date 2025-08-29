@@ -32,9 +32,17 @@
         // ===================================================================
         
         async checkAdminAccess() {
-            console.log('🔐 ADMIN: Checking admin access...');
+            console.log('🔐 ADMIN DEBUG: Starting checkAdminAccess...');
+            console.log('🔐 ADMIN DEBUG: window.LearnTAVAuth available:', !!window.LearnTAVAuth);
+            console.log('🔐 ADMIN DEBUG: window.LearnTAVAuth.currentUser:', window.LearnTAVAuth?.currentUser);
+            
             const currentUser = this.getCurrentUser();
-            console.log('🔐 ADMIN: Current user:', currentUser);
+            console.log('🔐 ADMIN DEBUG: getCurrentUser() returned:', {
+                found: !!currentUser,
+                email: currentUser?.email,
+                role: currentUser?.role,
+                hasPasswordHash: !!currentUser?.passwordHash
+            });
             
             if (!currentUser) {
                 console.log('🔐 ADMIN: No user found, redirecting to login');
@@ -42,8 +50,17 @@
                 return;
             }
 
-            if (!this.isAdmin(currentUser)) {
+            console.log('🔐 ADMIN DEBUG: Checking isAdmin for user:', {
+                email: currentUser.email,
+                role: currentUser.role
+            });
+            
+            const isAdminResult = this.isAdmin(currentUser);
+            console.log('🔐 ADMIN DEBUG: isAdmin() result:', isAdminResult);
+            
+            if (!isAdminResult) {
                 console.log('🔐 ADMIN: User is not admin:', currentUser.role);
+                console.log('🔐 ADMIN DEBUG: Expected roles: admin, super_admin');
                 this.showAccessDenied();
                 return;
             }
@@ -64,40 +81,80 @@
 
         getCurrentUser() {
             try {
-                console.log('🔐 ADMIN: Getting current user...');
+                console.log('🔐 ADMIN DEBUG: Getting current user...');
+                
+                // First check if we can get user from main auth system
+                if (window.LearnTAVAuth && window.LearnTAVAuth.currentUser) {
+                    console.log('🔐 ADMIN DEBUG: Found user in main auth system:', {
+                        email: window.LearnTAVAuth.currentUser.email,
+                        role: window.LearnTAVAuth.currentUser.role
+                    });
+                    return window.LearnTAVAuth.currentUser;
+                }
                 
                 // Check persistent session first
                 const persistentSession = localStorage.getItem('learntav_session_persistent');
+                console.log('🔐 ADMIN DEBUG: Persistent session check:', !!persistentSession);
+                
                 if (persistentSession) {
                     console.log('🔐 ADMIN: Found persistent session');
                     const sessionData = JSON.parse(persistentSession);
+                    console.log('🔐 ADMIN DEBUG: Persistent session data:', {
+                        hasUser: !!sessionData.user,
+                        userEmail: sessionData.user?.email,
+                        userRole: sessionData.user?.role,
+                        expires: new Date(sessionData.expires).toISOString(),
+                        isExpired: sessionData.expires <= Date.now()
+                    });
+                    
                     if (sessionData.expires > Date.now()) {
                         console.log('🔐 ADMIN: Persistent session valid:', sessionData.user.email);
                         return sessionData.user;
+                    } else {
+                        console.log('🔐 ADMIN DEBUG: Persistent session expired');
                     }
                 }
                 
                 // Check session storage
                 const session = sessionStorage.getItem('learntav_session');
+                console.log('🔐 ADMIN DEBUG: Session storage check:', !!session);
+                
                 if (session) {
                     console.log('🔐 ADMIN: Found session storage');
                     const sessionData = JSON.parse(session);
+                    console.log('🔐 ADMIN DEBUG: Session storage data:', {
+                        hasUser: !!sessionData.user,
+                        userEmail: sessionData.user?.email,
+                        userRole: sessionData.user?.role,
+                        expires: new Date(sessionData.expires).toISOString(),
+                        isExpired: sessionData.expires <= Date.now()
+                    });
+                    
                     if (sessionData.expires > Date.now()) {
                         console.log('🔐 ADMIN: Session valid:', sessionData.user.email);
                         return sessionData.user;
+                    } else {
+                        console.log('🔐 ADMIN DEBUG: Session storage expired');
                     }
                 }
                 
-                console.log('🔐 ADMIN: No valid session found');
+                console.log('🔐 ADMIN DEBUG: No valid session found anywhere');
                 return null;
             } catch (error) {
-                console.error('Error getting current user:', error);
+                console.error('🔐 ADMIN DEBUG: Error getting current user:', error);
                 return null;
             }
         }
 
         isAdmin(user) {
-            return user && (user.role === 'admin' || user.role === 'super_admin');
+            const result = user && (user.role === 'admin' || user.role === 'super_admin');
+            console.log('🔐 ADMIN DEBUG: isAdmin check:', {
+                hasUser: !!user,
+                userRole: user?.role,
+                isAdminRole: result,
+                acceptedRoles: ['admin', 'super_admin']
+            });
+            return result;
         }
 
         requires2FA() {
