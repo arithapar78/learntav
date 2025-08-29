@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/contact.css">
 </head>
-<body class="enable-scroll-animations">
+<body>
     <!-- Navigation -->
     <nav class="learntav-nav" id="mainNav">
         <div class="learntav-container">
@@ -34,7 +34,6 @@
                     <a href="../consulting/index.html" class="learntav-nav__link">Consulting</a>
                     <a href="../about/index.html" class="learntav-nav__link">About</a>
                     <a href="../resources/index.html" class="learntav-nav__link">Resources</a>
-                    <a href="../ai-tools/index.html" class="learntav-nav__link">AI Tools</a>
                     <a href="../contact/index.html" class="learntav-nav__link learntav-nav__link--active">Contact</a>
                 </div>
                 
@@ -51,7 +50,7 @@
     </nav>
 
     <!-- Page Header -->
-    <section class="learntav-page-header scroll-animate" id="main-content">
+    <section class="learntav-page-header" id="main-content">
         <div class="learntav-container">
             <div class="learntav-page-header__content">
                 <h1 class="learntav-page-header__title">Let's Start Your Journey</h1>
@@ -63,10 +62,10 @@
     </section>
 
     <!-- Contact Options -->
-    <section class="learntav-contact-options scroll-animate">
+    <section class="learntav-contact-options">
         <div class="learntav-container">
             <div class="learntav-grid learntav-grid--3-col">
-                <div class="learntav-contact-option scroll-animate">
+                <div class="learntav-contact-option">
                     <div class="learntav-contact-option__icon">📧</div>
                     <h3 class="learntav-contact-option__title">Email Us</h3>
                     <p class="learntav-contact-option__description">
@@ -77,18 +76,18 @@
                     </a>
                 </div>
 
-                <div class="learntav-contact-option scroll-animate">
+                <div class="learntav-contact-option">
                     <div class="learntav-contact-option__icon">📞</div>
                     <h3 class="learntav-contact-option__title">Schedule a Call</h3>
                     <p class="learntav-contact-option__description">
-                        Book a free 15-minute consultation to discuss your needs.
+                        Book a free 30-minute consultation to discuss your needs.
                     </p>
                     <a href="#consultation-form" class="learntav-contact-option__link">
                         Book Free Consultation
                     </a>
                 </div>
 
-                <div class="learntav-contact-option scroll-animate">
+                <div class="learntav-contact-option">
                     <div class="learntav-contact-option__icon">💬</div>
                     <h3 class="learntav-contact-option__title">Quick Question</h3>
                     <p class="learntav-contact-option__description">
@@ -103,7 +102,7 @@
     </section>
 
     <!-- Contact Forms Section -->
-    <section class="learntav-contact-forms scroll-animate">
+    <section class="learntav-contact-forms">
         <div class="learntav-container">
             <div class="learntav-contact-tabs">
                 <div class="learntav-contact-tabs__nav">
@@ -126,10 +125,12 @@
                     <div class="learntav-form-container">
                         <div class="learntav-form-header">
                             <h2>Book Your Free Consultation</h2>
-                            <p>Let's discuss how we can help you achieve your goals. This 15-minute consultation is completely free with no obligations.</p>
+                            <p>Let's discuss how we can help you achieve your goals. This 30-minute consultation is completely free with no obligations.</p>
                         </div>
                         
-                        <form class="learntav-form" id="consultationForm">
+                        <form class="learntav-form" id="consultationForm" action="/contact/consultation" method="POST">
+                            <!-- CSRF Protection -->
+                            <input type="hidden" name="csrf_token" value="consultation_token_here">
                             <input type="hidden" name="form_type" value="consultation">
                             
                             <!-- Honeypot for Spam Protection -->
@@ -193,12 +194,10 @@
                                     <label for="consultation-budget" class="learntav-form__label">Budget Range</label>
                                     <select id="consultation-budget" name="budget" class="learntav-form__select" data-label="Budget Range">
                                         <option value="">Select budget range...</option>
-                                        <option value="under-1k">Under $1,000</option>
-                                        <option value="1k-5k">$1,000 - $5,000</option>
+                                        <option value="under-5k">Under $5,000</option>
                                         <option value="5k-15k">$5,000 - $15,000</option>
                                         <option value="15k-50k">$15,000 - $50,000</option>
                                         <option value="50k-plus">$50,000+</option>
-                                        <option value="custom">Custom amount</option>
                                         <option value="discuss">Prefer to discuss</option>
                                     </select>
                                 </div>
@@ -243,7 +242,8 @@
                             <p>Interested in learning app development or AI workplace skills? Tell us about your learning goals.</p>
                         </div>
                         
-                        <form class="learntav-form" id="educationForm">
+                        <form class="learntav-form" id="educationForm" action="/contact/education" method="POST">
+                            <input type="hidden" name="csrf_token" value="education_token_here">
                             <input type="hidden" name="form_type" value="education">
                             
                             <!-- Honeypot -->
@@ -287,6 +287,7 @@
                                 <select id="education-program" name="program_interest" class="learntav-form__select" required data-label="Program Interest">
                                     <option value="">Select program...</option>
                                     <option value="app-development">App Development (No-Code/Low-Code)</option>
+                                    <option value="ai-workplace">AI Workplace Integration</option>
                                     <option value="venture-creation">Venture Creation</option>
                                     <option value="custom-corporate">Custom Corporate Training</option>
                                     <option value="all-programs">All Programs</option>
@@ -337,7 +338,8 @@
                             <p>Need expert guidance on AI implementation or environmental impact assessment? Let's discuss your project.</p>
                         </div>
                         
-                        <form class="learntav-form" id="consultingForm">
+                        <form class="learntav-form" id="consultingForm" action="/contact/consulting" method="POST">
+                            <input type="hidden" name="csrf_token" value="consulting_token_here">
                             <input type="hidden" name="form_type" value="consulting">
                             
                             <!-- Honeypot -->
@@ -425,12 +427,10 @@
                                     <label for="consulting-budget" class="learntav-form__label">Budget Range</label>
                                     <select id="consulting-budget" name="budget" class="learntav-form__select" data-label="Budget Range">
                                         <option value="">Select budget range...</option>
-                                        <option value="under-10k">Under $10,000</option>
-                                        <option value="10k-25k">$10,000 - $25,000</option>
+                                        <option value="under-25k">Under $25,000</option>
                                         <option value="25k-75k">$25,000 - $75,000</option>
                                         <option value="75k-150k">$75,000 - $150,000</option>
                                         <option value="150k-plus">$150,000+</option>
-                                        <option value="custom">Custom amount</option>
                                         <option value="discuss">Prefer to discuss</option>
                                     </select>
                                 </div>
@@ -456,7 +456,8 @@
                             <p>Have a question or want to learn more about our services? Send us a message and we'll get back to you promptly.</p>
                         </div>
                         
-                        <form class="learntav-form" id="generalForm">
+                        <form class="learntav-form" id="generalForm" action="/contact/general" method="POST">
+                            <input type="hidden" name="csrf_token" value="general_token_here">
                             <input type="hidden" name="form_type" value="general">
                             
                             <!-- Honeypot -->
@@ -516,9 +517,9 @@
     </section>
 
     <!-- FAQ Section -->
-    <section class="learntav-faq scroll-animate">
+    <section class="learntav-faq">
         <div class="learntav-container">
-            <div class="learntav-section-header scroll-animate">
+            <div class="learntav-section-header">
                 <h2 class="learntav-section-title">Frequently Asked Questions</h2>
                 <p class="learntav-section-subtitle">
                     Quick answers to common questions about our services and process
@@ -526,7 +527,7 @@
             </div>
             
             <div class="learntav-faq-list">
-                <div class="learntav-faq-item scroll-animate">
+                <div class="learntav-faq-item">
                     <button class="learntav-faq-question" aria-expanded="false">
                         <span>How quickly will you respond to my inquiry?</span>
                         <span class="learntav-faq-toggle">+</span>
@@ -536,17 +537,17 @@
                     </div>
                 </div>
 
-                <div class="learntav-faq-item scroll-animate">
+                <div class="learntav-faq-item">
                     <button class="learntav-faq-question" aria-expanded="false">
                         <span>Is the consultation really free?</span>
                         <span class="learntav-faq-toggle">+</span>
                     </button>
                     <div class="learntav-faq-answer">
-                        <p>Yes, absolutely! Our 15-minute consultation is completely free with no strings attached. We'll discuss your goals, challenges, and how our services might help, with no pressure to commit to anything.</p>
+                        <p>Yes, absolutely! Our 30-minute consultation is completely free with no strings attached. We'll discuss your goals, challenges, and how our services might help, with no pressure to commit to anything.</p>
                     </div>
                 </div>
 
-                <div class="learntav-faq-item scroll-animate">
+                <div class="learntav-faq-item">
                     <button class="learntav-faq-question" aria-expanded="false">
                         <span>Do you work with international clients?</span>
                         <span class="learntav-faq-toggle">+</span>
@@ -556,7 +557,7 @@
                     </div>
                 </div>
 
-                <div class="learntav-faq-item scroll-animate">
+                <div class="learntav-faq-item">
                     <button class="learntav-faq-question" aria-expanded="false">
                         <span>What if I'm not sure which service is right for me?</span>
                         <span class="learntav-faq-toggle">+</span>
@@ -566,7 +567,7 @@
                     </div>
                 </div>
 
-                <div class="learntav-faq-item scroll-animate">
+                <div class="learntav-faq-item">
                     <button class="learntav-faq-question" aria-expanded="false">
                         <span>Can you accommodate custom requirements?</span>
                         <span class="learntav-faq-toggle">+</span>
@@ -658,63 +659,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- AI Chatbot Widget -->
-    <div class="ai-chatbot-widget" id="aiChatbot">
-        <div class="ai-chatbot-button" onclick="toggleChatbot()">
-            <span class="ai-chatbot-icon">🤖</span>
-            <span class="ai-chatbot-text">AI Help</span>
-        </div>
-        
-        <div class="ai-chatbot-panel" id="chatbotPanel">
-            <div class="ai-chatbot-header">
-                <h3>LearnTAV AI Assistant</h3>
-                <button class="ai-chatbot-close" onclick="toggleChatbot()">&times;</button>
-            </div>
-            
-            <div class="ai-chatbot-messages" id="chatMessages">
-                <div class="ai-message">
-                    <div class="ai-avatar">🤖</div>
-                    <div class="ai-content">
-                        <p>Hello! I'm here to help you with questions about LearnTAV's services, pricing, or anything else. How can I assist you today?</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="ai-chatbot-input">
-                <input type="text" id="chatInput" placeholder="Ask me anything..." onkeypress="handleChatKeypress(event)">
-                <button onclick="sendMessage()" class="ai-send-btn">Send</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Popup Contact Form Widget -->
-    <div class="popup-contact-widget" id="contactWidget">
-        <div class="contact-widget-button" onclick="toggleContactForm()">
-            <span class="contact-widget-icon">✉️</span>
-            <span class="contact-widget-text">Quick Contact</span>
-        </div>
-        
-        <div class="contact-widget-panel" id="contactPanel">
-            <div class="contact-widget-header">
-                <h3>Quick Contact</h3>
-                <button class="contact-widget-close" onclick="toggleContactForm()">&times;</button>
-            </div>
-            
-            <form class="contact-widget-form" onsubmit="submitQuickContact(event)">
-                <div class="form-group">
-                    <input type="text" name="name" placeholder="Your Name" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" name="email" placeholder="Your Email" required>
-                </div>
-                <div class="form-group">
-                    <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
-                </div>
-                <button type="submit" class="contact-submit-btn">Send Message</button>
-            </form>
-        </div>
-    </div>
 
     <!-- JavaScript -->
     <script src="../assets/js/main.js"></script>

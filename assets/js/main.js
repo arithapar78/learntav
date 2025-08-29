@@ -3,160 +3,23 @@
  * Professional interactive functionality for education and consulting website
  */
 
-// IMMEDIATE DEBUG: Test if JavaScript is loading
-console.log('🚀 DEBUG: JavaScript file is loading!');
-
 (function() {
     'use strict';
-    
-    // Utility Functions - Define early since they're used throughout
-    // Debounce function for performance
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
-
-    // Throttle function for scroll events
-    function throttle(func, limit) {
-        let inThrottle;
-        return function() {
-            const args = arguments;
-            const context = this;
-            if (!inThrottle) {
-                func.apply(context, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        };
-    }
-    
-    // DEBUG: Track animation system status
-    window.LEARNTAV_DEBUG = {
-        animationSystemLoaded: false,
-        elementsFound: 0,
-        elementsAnimated: 0,
-        failsafeTriggered: false,
-        intersectionObserverSupported: false,
-        log: function(message, data) {
-            console.log('🐛 ANIMATION DEBUG:', message, data || '');
-        }
-    };
-    
-    // Set up scroll animations with robust failsafe system
-    const setupScrollAnimations = function() {
-        // Find elements that should animate - both existing classes and new ones
-        const elements = document.querySelectorAll(
-            '.scroll-animate, .learntav-value-card:not(.scroll-animate), .learntav-service-card:not(.scroll-animate), .learntav-testimonial-card:not(.scroll-animate)'
-        );
-        
-        window.LEARNTAV_DEBUG.elementsFound = elements.length;
-        window.LEARNTAV_DEBUG.log('Early setup found elements:', elements.length);
-        
-        // Add scroll-animate class to elements that don't have it yet
-        elements.forEach((el, index) => {
-            if (!el.classList.contains('scroll-animate')) {
-                el.classList.add('scroll-animate');
-                window.LEARNTAV_DEBUG.log(`Added scroll-animate to element ${index}:`, el.className);
-            }
-            
-            // CSS class-controlled initial state - no JavaScript style manipulation
-            if (document.body.classList.contains('enable-scroll-animations')) {
-                const rect = el.getBoundingClientRect();
-                const isInitiallyInView = rect.top < window.innerHeight && rect.bottom > 0;
-                
-                if (!isInitiallyInView) {
-                    // Mark elements as hidden via CSS class only
-                    el.classList.add('animate-pending');
-                    window.LEARNTAV_DEBUG.log(`JS: Marked element ${index} as animate-pending`);
-                } else {
-                    // Elements initially in view start visible
-                    el.classList.add('animate-in');
-                    window.LEARNTAV_DEBUG.log(`JS: Element ${index} initially visible, marked as animated`);
-                }
-            }
-        });
-        
-        // Robust failsafe: Multiple fallback mechanisms
-        const enableFailsafe = () => {
-            window.LEARNTAV_DEBUG.log('Enabling failsafe system');
-            
-            // Immediate check for elements that should be visible
-            setTimeout(() => {
-                elements.forEach((el, index) => {
-                    const rect = el.getBoundingClientRect();
-                    const computedStyle = window.getComputedStyle(el);
-                    const transform = computedStyle.transform;
-                    const opacity = computedStyle.opacity;
-                    
-                    // More generous viewport detection that accounts for transforms
-                    const isInViewport = rect.bottom > -200 && rect.top < window.innerHeight + 200;
-                    
-                    if (!el.classList.contains('animate-in')) {
-                        window.LEARNTAV_DEBUG.log(`🔍 DIAGNOSIS Element ${index}:`, {
-                            rect: {top: Math.round(rect.top), bottom: Math.round(rect.bottom), width: Math.round(rect.width), height: Math.round(rect.height)},
-                            transform: transform,
-                            opacity: opacity,
-                            classes: el.className,
-                            offsetTop: el.offsetTop,
-                            offsetHeight: el.offsetHeight,
-                            inViewport: isInViewport
-                        });
-                        
-                        if (isInViewport) {
-                            el.classList.add('animate-in');
-                            window.LEARNTAV_DEBUG.elementsAnimated++;
-                            window.LEARNTAV_DEBUG.log(`Failsafe animated element ${index}`);
-                        }
-                    }
-                });
-            }, 1000);
-            
-            // Final failsafe: ensure all elements are visible after reasonable time
-            setTimeout(() => {
-                elements.forEach((el, index) => {
-                    if (!el.classList.contains('animate-in')) {
-                        el.classList.add('animate-in');
-                        window.LEARNTAV_DEBUG.elementsAnimated++;
-                        window.LEARNTAV_DEBUG.failsafeTriggered = true;
-                        window.LEARNTAV_DEBUG.log(`Final failsafe revealed element ${index}`);
-                    }
-                });
-                
-                window.LEARNTAV_DEBUG.log('Animation system status:', {
-                    found: window.LEARNTAV_DEBUG.elementsFound,
-                    animated: window.LEARNTAV_DEBUG.elementsAnimated,
-                    failsafeTriggered: window.LEARNTAV_DEBUG.failsafeTriggered
-                });
-            }, 7000);
-        };
-        
-        enableFailsafe();
-    };
-    
-    // Run setup when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', setupScrollAnimations);
-    } else {
-        setupScrollAnimations();
-    }
 
     // ===================================================================
     // DOM Ready and Initialization
     // ===================================================================
     
     document.addEventListener('DOMContentLoaded', function() {
+        initializePageLoader();
         initializeNavigation();
         initializeSmoothScrolling();
         initializeFormValidation();
         initializeAnimations();
         initializeAccessibility();
+        initializeFeedbackSystem();
+        initializeInteractiveEffects();
+        initializeCoolEffects();
     });
 
     // ===================================================================
@@ -590,143 +453,34 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
     // ===================================================================
     
     function initializeAnimations() {
-        window.LEARNTAV_DEBUG.log('Main animation system initializing...');
-        window.LEARNTAV_DEBUG.animationSystemLoaded = true;
-        
-        // Find all elements that should animate
-        const animatedElements = document.querySelectorAll('.scroll-animate');
-        
-        window.LEARNTAV_DEBUG.log('Main system found elements:', animatedElements.length);
-        
-        // Prevent duplicate animation systems from conflicting
-        if (animatedElements.length === 0) {
-            window.LEARNTAV_DEBUG.log('No elements found - early system may have handled setup');
-            // Initialize other systems and return
-            initializeDownloadSystem();
-            initializeNavbarScroll();
-            return;
-        }
-        
-        // SCROLL-BASED ANIMATION SYSTEM - IntersectionObserver replacement
-        window.LEARNTAV_DEBUG.intersectionObserverSupported = true;
-        window.LEARNTAV_DEBUG.log('Using scroll-based animation system...');
-        
-        const isHomepage = window.location.pathname === '/' || window.location.pathname === '/index.html';
-        
-        function checkElementsInViewport() {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const windowHeight = window.innerHeight;
-            
-            animatedElements.forEach((el, index) => {
-                if (!el.classList.contains('animate-in')) {
-                    // Use offsetTop instead of getBoundingClientRect to avoid transform issues
-                    const elementTop = el.offsetTop;
-                    const elementHeight = el.offsetHeight;
-                    const elementBottom = elementTop + elementHeight;
-                    
-                    // Calculate if element is in viewport using offset positioning
-                    const isInViewport = (elementBottom > scrollTop + 100) && (elementTop < scrollTop + windowHeight - 100);
-                    
-                    window.LEARNTAV_DEBUG.log(`🔍 OFFSET check element ${index}: offsetTop=${elementTop}, scrollTop=${scrollTop}, windowHeight=${windowHeight}, inViewport=${isInViewport}`);
-                    
-                    if (isInViewport) {
-                        // Add staggered delay
-                        let baseDelay = index * 100;
-                        if (isHomepage) {
-                            baseDelay += Math.min(150, index * 50);
-                        }
-                        
-                        setTimeout(() => {
-                            if (!el.classList.contains('animate-in')) {
-                                // Pure CSS class animation - no JavaScript style manipulation
-                                el.classList.remove('animate-pending');
-                                el.classList.add('animate-in');
-                                window.LEARNTAV_DEBUG.elementsAnimated++;
-                                window.LEARNTAV_DEBUG.log(`✅ OFFSET: Animated element ${index} (delay: ${baseDelay}ms)`);
-                            }
-                        }, baseDelay);
-                    }
-                }
-            });
-        }
-        
-        // Initial check
-        setTimeout(checkElementsInViewport, 100);
-        
-        // Throttled scroll event listener
-        let scrollTimeout;
-        window.addEventListener('scroll', () => {
-            if (!scrollTimeout) {
-                scrollTimeout = setTimeout(() => {
-                    checkElementsInViewport();
-                    scrollTimeout = null;
-                }, 100);
-            }
-        }, { passive: true });
-        
-        // Resize event listener
-        window.addEventListener('resize', checkElementsInViewport);
-        
-        // Legacy fallback for older browsers
-        if (false) {
-            window.LEARNTAV_DEBUG.log('IntersectionObserver not supported, using scroll fallback');
-            
-            // Fallback for older browsers
-            function checkScroll() {
-                animatedElements.forEach((el, index) => {
-                    if (!el.classList.contains('animate-in')) {
-                        const rect = el.getBoundingClientRect();
-                        const isVisible = rect.top < (window.innerHeight - 50) && rect.bottom > 0;
-                        
-                        if (isVisible) {
-                            el.classList.add('animate-in');
-                            window.LEARNTAV_DEBUG.elementsAnimated++;
-                            window.LEARNTAV_DEBUG.log(`Scroll fallback animated element ${index}`);
-                        }
+        if ('IntersectionObserver' in window) {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                        observer.unobserve(entry.target);
                     }
                 });
-            }
-            
-            // Throttle scroll events for performance
-            let scrollTimeout;
-            function throttledScroll() {
-                if (scrollTimeout) return;
-                scrollTimeout = setTimeout(() => {
-                    checkScroll();
-                    scrollTimeout = null;
-                }, 16); // ~60fps
-            }
-            
-            window.addEventListener('scroll', throttledScroll, { passive: true });
-            window.addEventListener('resize', checkScroll);
-            
-            // Initial check after a delay
-            setTimeout(checkScroll, 100);
+            }, observerOptions);
+
+            // Observe elements for animation
+            const animatedElements = document.querySelectorAll(
+                '.learntav-value-card, .learntav-service-card, .learntav-testimonial-card'
+            );
+
+            animatedElements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+                observer.observe(el);
+            });
         }
 
-        // Emergency failsafe: ensure no elements are permanently hidden
-        setTimeout(() => {
-            animatedElements.forEach((el, index) => {
-                if (!el.classList.contains('animate-in')) {
-                    window.LEARNTAV_DEBUG.log(`EMERGENCY: Revealing hidden element ${index}`);
-                    el.classList.add('animate-in');
-                    window.LEARNTAV_DEBUG.elementsAnimated++;
-                    window.LEARNTAV_DEBUG.failsafeTriggered = true;
-                }
-            });
-            
-            // Final status report
-            window.LEARNTAV_DEBUG.log('Final Animation Status:', {
-                elementsFound: window.LEARNTAV_DEBUG.elementsFound,
-                elementsAnimated: window.LEARNTAV_DEBUG.elementsAnimated,
-                intersectionObserverSupported: window.LEARNTAV_DEBUG.intersectionObserverSupported,
-                failsafeTriggered: window.LEARNTAV_DEBUG.failsafeTriggered
-            });
-        }, 10000);
-
-        // Initialize download functionality
-        initializeDownloadSystem();
-        
         // Navbar background on scroll
         initializeNavbarScroll();
     }
@@ -874,270 +628,47 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
     }
 
     // ===================================================================
-    // Utility Functions (moved to top for earlier access)
+    // Utility Functions
     // ===================================================================
+    
+    // Debounce function for performance
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Throttle function for scroll events
+    function throttle(func, limit) {
+        let inThrottle;
+        return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    }
 
     // ===================================================================
-    // Download System with Verification
+    // Add animation styles
     // ===================================================================
     
-    function initializeDownloadSystem() {
-        console.log('💾 DEBUG: Initializing download system...');
-        
-        // Add event listeners to all download buttons
-        const downloadButtons = document.querySelectorAll('.btn-purchase, .learntav-btn[href*="power-tracker"], .learntav-btn[href*="prompt-energy-optimizer"]');
-        
-        downloadButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                const url = this.getAttribute('href') || this.getAttribute('data-href');
-                if (url && (url.includes('power-tracker') || url.includes('prompt-energy-optimizer'))) {
-                    // Direct download without modal for free access
-                    directDownload(url);
-                } else {
-                    showDownloadModal(url);
-                }
-            });
-        });
-        
-        console.log('✅ DEBUG: Download system initialized');
-    }
-    
-    // New function for direct downloads
-    function directDownload(url) {
-        let zipFile = '';
-        let toolName = '';
-        
-        if (url.includes('power-tracker')) {
-            zipFile = 'power-tracker-extension.zip';
-            toolName = 'Power Tracker';
-        } else if (url.includes('prompt-energy-optimizer')) {
-            zipFile = 'prompt-optimizer-extension.zip';
-            toolName = 'Prompt Optimizer';
+    // Inject animation CSS
+    const animationStyles = `
+        .animate-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
         }
         
-        if (zipFile) {
-            const link = document.createElement('a');
-            link.href = `assets/extensions/${zipFile}`;
-            link.download = zipFile;
-            link.style.display = 'none';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Show success message
-            alert(`✅ ${toolName} download started!\n\nInstallation:\n1. Unzip the downloaded file\n2. Open Chrome → Extensions\n3. Enable Developer Mode\n4. Click "Load Unpacked"\n5. Select the unzipped folder`);
-        }
-    }
-    
-    function showDownloadModal(toolType) {
-        const isPromptOptimizer = toolType.includes('prompt-energy-optimizer');
-        const toolName = isPromptOptimizer ? 'Prompt Optimizer' : 'Power Tracker';
-        const zipFile = isPromptOptimizer ? 'prompt-optimizer-extension.zip' : 'power-tracker-extension.zip';
-        
-        // Create modal HTML
-        const modalHTML = `
-            <div class="download-modal-overlay" id="downloadOverlay" onclick="hideDownloadModal()"></div>
-            <div class="download-modal" id="downloadModal">
-                <button class="download-modal__close" onclick="hideDownloadModal()">&times;</button>
-                <div class="download-modal__header">
-                    <h3 class="download-modal__title">Download ${toolName}</h3>
-                    <p class="download-modal__subtitle">Please enter the verification code to proceed</p>
-                </div>
-                
-                <div class="verification-section">
-                    <label class="verification-label">Enter Verification Code</label>
-                    <div class="verification-input" id="verificationInput">
-                        <input type="text" class="verification-digit" maxlength="1" data-index="0">
-                        <input type="text" class="verification-digit" maxlength="1" data-index="1">
-                        <input type="text" class="verification-digit" maxlength="1" data-index="2">
-                        <input type="text" class="verification-digit" maxlength="1" data-index="3">
-                    </div>
-                    <div class="verification-example">
-                        Example code: <strong>7 3 9 2</strong>
-                    </div>
-                    
-                    <div class="verification-keypad">
-                        <button class="keypad-btn" onclick="addDigit('1')">1</button>
-                        <button class="keypad-btn" onclick="addDigit('2')">2</button>
-                        <button class="keypad-btn" onclick="addDigit('3')">3</button>
-                        <button class="keypad-btn" onclick="addDigit('4')">4</button>
-                        <button class="keypad-btn" onclick="addDigit('5')">5</button>
-                        <button class="keypad-btn" onclick="addDigit('6')">6</button>
-                        <button class="keypad-btn" onclick="addDigit('7')">7</button>
-                        <button class="keypad-btn" onclick="addDigit('8')">8</button>
-                        <button class="keypad-btn" onclick="addDigit('9')">9</button>
-                        <button class="keypad-btn" onclick="clearCode()">Clear</button>
-                        <button class="keypad-btn" onclick="addDigit('0')">0</button>
-                        <button class="keypad-btn" onclick="removeDigit()">⌫</button>
-                    </div>
-                </div>
-                
-                <div class="download-actions">
-                    <button class="download-btn" id="downloadBtn" onclick="verifyAndDownload('${zipFile}', '${toolName}')" disabled>
-                        Download ${toolName}
-                    </button>
-                </div>
-                
-                <div class="download-instructions" id="downloadInstructions">
-                    <h4 class="download-instructions__title">Installation Instructions</h4>
-                    <ol class="download-instructions__list">
-                        <li>Unzip the downloaded file to a folder on your computer</li>
-                        <li>Open Chrome and go to chrome://extensions/</li>
-                        <li>Enable "Developer mode" by clicking the toggle in the top right</li>
-                        <li>Click "Load unpacked" and select the unzipped folder</li>
-                        <li>The extension will now appear in your Chrome toolbar</li>
-                        <li>Pin it to your toolbar for easy access</li>
-                    </ol>
-                </div>
-            </div>
-        `;
-        
-        // Add modal to page
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-        
-        // Show modal with animation
-        setTimeout(() => {
-            document.getElementById('downloadOverlay').classList.add('active');
-            document.getElementById('downloadModal').classList.add('active');
-        }, 10);
-        
-        // Setup input handlers
-        setupVerificationInputs();
-        
-        // Prevent body scrolling
-        document.body.style.overflow = 'hidden';
-    }
-    
-    function hideDownloadModal() {
-        const overlay = document.getElementById('downloadOverlay');
-        const modal = document.getElementById('downloadModal');
-        
-        if (overlay && modal) {
-            overlay.classList.remove('active');
-            modal.classList.remove('active');
-            
-            setTimeout(() => {
-                overlay.remove();
-                modal.remove();
-            }, 300);
-        }
-        
-        // Restore body scrolling
-        document.body.style.overflow = 'auto';
-    }
-    
-    function setupVerificationInputs() {
-        const inputs = document.querySelectorAll('.verification-digit');
-        
-        inputs.forEach((input, index) => {
-            input.addEventListener('input', function(e) {
-                const value = e.target.value;
-                if (value.length === 1 && /^\d$/.test(value)) {
-                    e.target.classList.add('filled');
-                    // Move to next input
-                    if (index < inputs.length - 1) {
-                        inputs[index + 1].focus();
-                    }
-                } else {
-                    e.target.classList.remove('filled');
-                }
-                checkCodeComplete();
-            });
-            
-            input.addEventListener('keydown', function(e) {
-                if (e.key === 'Backspace' && !e.target.value && index > 0) {
-                    inputs[index - 1].focus();
-                }
-            });
-            
-            input.addEventListener('focus', function(e) {
-                e.target.select();
-            });
-        });
-    }
-    
-    window.addDigit = function(digit) {
-        const inputs = document.querySelectorAll('.verification-digit');
-        const emptyInput = Array.from(inputs).find(input => !input.value);
-        
-        if (emptyInput) {
-            emptyInput.value = digit;
-            emptyInput.classList.add('filled');
-            emptyInput.dispatchEvent(new Event('input'));
-        }
-    };
-    
-    window.removeDigit = function() {
-        const inputs = document.querySelectorAll('.verification-digit');
-        const lastFilledInput = Array.from(inputs).reverse().find(input => input.value);
-        
-        if (lastFilledInput) {
-            lastFilledInput.value = '';
-            lastFilledInput.classList.remove('filled');
-            lastFilledInput.focus();
-            checkCodeComplete();
-        }
-    };
-    
-    window.clearCode = function() {
-        const inputs = document.querySelectorAll('.verification-digit');
-        inputs.forEach(input => {
-            input.value = '';
-            input.classList.remove('filled');
-        });
-        inputs[0].focus();
-        checkCodeComplete();
-    };
-    
-    function checkCodeComplete() {
-        const inputs = document.querySelectorAll('.verification-digit');
-        const code = Array.from(inputs).map(input => input.value).join('');
-        const downloadBtn = document.getElementById('downloadBtn');
-        
-        if (code.length === 4) {
-            downloadBtn.disabled = false;
-        } else {
-            downloadBtn.disabled = true;
-        }
-    }
-    
-    window.verifyAndDownload = function(zipFile, toolName) {
-        // Skip verification - allow free download
-        const instructions = document.getElementById('downloadInstructions');
-        if (instructions) {
-            instructions.classList.add('active');
-        }
-        
-        // Trigger download immediately
-        const link = document.createElement('a');
-        link.href = `../assets/extensions/${zipFile}`;
-        link.download = zipFile;
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        // Update button text
-        const downloadBtn = document.getElementById('downloadBtn');
-        if (downloadBtn) {
-            downloadBtn.textContent = `✓ Downloaded ${toolName}`;
-            downloadBtn.style.background = '#10b981';
-        }
-        
-        console.log(`✅ Downloaded: ${zipFile}`);
-    };
-    
-    // Expose download modal functions globally
-    window.showDownloadModal = showDownloadModal;
-    window.hideDownloadModal = hideDownloadModal;
-
-    // ===================================================================
-    // Additional Animation Styles Injection
-    // ===================================================================
-    
-    // Inject additional styles for scrolled navbar and forms
-    const additionalStyles = `
         .learntav-nav.scrolled {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -1188,7 +719,326 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
     `;
     
     const styleSheet = document.createElement('style');
-    styleSheet.textContent = additionalStyles;
+    styleSheet.textContent = animationStyles;
     document.head.appendChild(styleSheet);
+
+    // ===================================================================
+    // Page Loader System
+    // ===================================================================
+    
+    function initializePageLoader() {
+        // Create page loader
+        const loader = document.createElement('div');
+        loader.className = 'page-loader';
+        loader.innerHTML = `
+            <div class="loader-content">
+                <div class="loader-logo">LearnTAV</div>
+                <div class="loading-spinner"></div>
+            </div>
+        `;
+        document.body.appendChild(loader);
+        
+        // Hide loader after page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                loader.classList.add('fade-out');
+                setTimeout(() => {
+                    loader.remove();
+                }, 500);
+            }, 1000);
+        });
+    }
+
+    // ===================================================================
+    // User Feedback System
+    // ===================================================================
+    
+    function initializeFeedbackSystem() {
+        createFeedbackFAB();
+        
+        // Global feedback functions
+        window.showFeedback = function(message, type = 'success', duration = 5000) {
+            const feedback = document.createElement('div');
+            feedback.className = `feedback-popup ${type}`;
+            
+            const icons = {
+                success: '✅',
+                warning: '⚠️',
+                error: '❌',
+                info: 'ℹ️'
+            };
+            
+            feedback.innerHTML = `
+                <button class="close-btn">&times;</button>
+                <div class="feedback-title">
+                    <span>${icons[type] || '💬'}</span>
+                    ${message}
+                </div>
+            `;
+            
+            document.body.appendChild(feedback);
+            
+            // Show feedback
+            setTimeout(() => feedback.classList.add('show'), 100);
+            
+            // Auto-hide
+            const hideTimeout = setTimeout(() => hideFeedback(feedback), duration);
+            
+            // Close button
+            feedback.querySelector('.close-btn').addEventListener('click', () => {
+                clearTimeout(hideTimeout);
+                hideFeedback(feedback);
+            });
+            
+            // Click to dismiss
+            feedback.addEventListener('click', () => {
+                clearTimeout(hideTimeout);
+                hideFeedback(feedback);
+            });
+        };
+        
+        function hideFeedback(feedback) {
+            feedback.classList.remove('show');
+            setTimeout(() => feedback.remove(), 300);
+        }
+        
+        function createFeedbackFAB() {
+            const fab = document.createElement('button');
+            fab.className = 'feedback-fab';
+            fab.innerHTML = '💬';
+            fab.setAttribute('aria-label', 'Give Feedback');
+            fab.title = 'Give us feedback!';
+            
+            fab.addEventListener('click', () => {
+                showFeedback('Thanks for wanting to give feedback! Contact form coming soon...', 'info');
+            });
+            
+            document.body.appendChild(fab);
+        }
+
+        // Demonstrate feedback on page interactions
+        setTimeout(() => {
+            showFeedback('Welcome to LearnTAV! 🚀 Enjoy the enhanced experience!', 'success', 6000);
+        }, 2000);
+    }
+
+    // ===================================================================
+    // Interactive Effects
+    // ===================================================================
+    
+    function initializeInteractiveEffects() {
+        // Add glow effect to interactive elements
+        const interactiveElements = document.querySelectorAll('.learntav-btn, .learntav-service-card, .learntav-value-card');
+        
+        interactiveElements.forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.classList.add('interactive-glow');
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                this.classList.remove('interactive-glow');
+            });
+        });
+
+        // Enhanced button interactions
+        const buttons = document.querySelectorAll('.learntav-btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Create ripple effect
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: rgba(255, 255, 255, 0.3);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s ease-out;
+                    pointer-events: none;
+                `;
+                
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+                
+                // Show feedback for certain buttons
+                if (this.textContent.includes('Get Started') || this.textContent.includes('Book')) {
+                    setTimeout(() => {
+                        showFeedback('Great choice! Contact form functionality coming soon.', 'info');
+                    }, 300);
+                }
+            });
+        });
+
+        // Add ripple animation
+        const rippleCSS = `
+            @keyframes ripple {
+                0% { transform: scale(0); opacity: 1; }
+                100% { transform: scale(4); opacity: 0; }
+            }
+        `;
+        
+        const rippleStyle = document.createElement('style');
+        rippleStyle.textContent = rippleCSS;
+        document.head.appendChild(rippleStyle);
+    }
+
+    // ===================================================================
+    // Cool Effects and Enhancements
+    // ===================================================================
+    
+    function initializeCoolEffects() {
+        // Parallax effect for hero
+        initializeParallax();
+        
+        // Mouse tracking effects
+        initializeMouseTracking();
+        
+        // Cool loading states
+        initializeCoolLoading();
+        
+        // Enhanced scroll effects
+        initializeScrollEffects();
+        
+        // Initialize tooltips
+        initializeTooltips();
+    }
+
+    function initializeParallax() {
+        const hero = document.querySelector('.learntav-hero');
+        if (!hero) return;
+
+        window.addEventListener('scroll', throttle(() => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.2;
+            
+            if (hero.style) {
+                hero.style.transform = `translateY(${rate}px)`;
+            }
+        }, 16));
+    }
+
+    function initializeMouseTracking() {
+        const cards = document.querySelectorAll('.learntav-service-card, .learntav-value-card');
+        
+        cards.forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        });
+    }
+
+    function initializeCoolLoading() {
+        // Add cool loading to all forms
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const button = this.querySelector('button[type="submit"]');
+                if (button) {
+                    button.innerHTML = '<div class="loading-spinner"></div>';
+                    setTimeout(() => {
+                        showFeedback('Form submitted! (Demo mode)', 'success');
+                        button.innerHTML = 'Sent!';
+                        setTimeout(() => {
+                            button.innerHTML = 'Send Message';
+                        }, 2000);
+                    }, 2000);
+                }
+            });
+        });
+    }
+
+    function initializeScrollEffects() {
+        let lastScrollTop = 0;
+        const nav = document.querySelector('.learntav-nav');
+        
+        window.addEventListener('scroll', throttle(() => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Cool navbar behavior
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scrolling down
+                nav.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up
+                nav.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = scrollTop;
+            
+            // Add scroll progress indicator
+            const scrollPercent = (scrollTop / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            updateScrollProgress(scrollPercent);
+        }, 16));
+    }
+
+    function updateScrollProgress(percent) {
+        let progressBar = document.getElementById('scroll-progress');
+        if (!progressBar) {
+            progressBar = document.createElement('div');
+            progressBar.id = 'scroll-progress';
+            progressBar.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 0%;
+                height: 3px;
+                background: linear-gradient(90deg, #2563eb, #6366f1);
+                z-index: 9999;
+                transition: width 0.1s ease;
+            `;
+            document.body.appendChild(progressBar);
+        }
+        
+        progressBar.style.width = `${percent}%`;
+    }
+
+    // Add tooltips to elements with data-tooltip attribute
+    function initializeTooltips() {
+        const tooltipElements = document.querySelectorAll('[data-tooltip]');
+        tooltipElements.forEach(element => {
+            element.classList.add('tooltip');
+        });
+
+        // Add some demo tooltips
+        setTimeout(() => {
+            const logo = document.querySelector('.learntav-nav__logo');
+            if (logo) {
+                logo.setAttribute('data-tooltip', 'LearnTAV - AI Education & Consulting');
+                logo.classList.add('tooltip');
+            }
+        }, 1000);
+    }
+
+    // Performance monitoring
+    window.addEventListener('load', () => {
+        const loadTime = performance.now();
+        if (loadTime > 3000) {
+            setTimeout(() => {
+                showFeedback('Page loaded! Thanks for your patience.', 'info', 3000);
+            }, 500);
+        }
+    });
 
 })();
