@@ -16,6 +16,7 @@
             this.twoFactorEnabled = false;
             this.currentTab = 'dashboard';
             this.refreshInterval = null;
+            this.adminAccessCode = 'ADMIN2024!'; // Simple admin access code
             this.init();
         }
 
@@ -32,50 +33,82 @@
         // ===================================================================
         
         async checkAdminAccess() {
-            console.log('🔐 ADMIN DEBUG: Starting checkAdminAccess...');
-            console.log('🔐 ADMIN DEBUG: window.LearnTAVAuth available:', !!window.LearnTAVAuth);
-            console.log('🔐 ADMIN DEBUG: window.LearnTAVAuth.currentUser:', window.LearnTAVAuth?.currentUser);
+            console.log('🔐 ADMIN DEBUG: Starting simplified checkAdminAccess...');
             
+            // Check for admin access code in URL parameters first
+            const urlParams = new URLSearchParams(window.location.search);
+            const accessCode = urlParams.get('code');
+            
+            if (accessCode === this.adminAccessCode) {
+                console.log('✅ ADMIN: Valid access code provided in URL');
+                this.grantAdminAccess();
+                return;
+            }
+            
+            // Check for stored admin session
+            const adminSession = localStorage.getItem('admin_session');
+            if (adminSession) {
+                try {
+                    const session = JSON.parse(adminSession);
+                    if (session.expires > Date.now() && session.accessCode === this.adminAccessCode) {
+                        console.log('✅ ADMIN: Valid admin session found');
+                        this.currentAdmin = session.admin;
+                        this.updateAdminUI();
+                        this.loadDashboardData();
+                        return;
+                    }
+                } catch (error) {
+                    console.error('Error parsing admin session:', error);
+                }
+            }
+            
+            // Check if user is logged in with admin role as fallback
             const currentUser = this.getCurrentUser();
-            console.log('🔐 ADMIN DEBUG: getCurrentUser() returned:', {
-                found: !!currentUser,
-                email: currentUser?.email,
-                role: currentUser?.role,
-                hasPasswordHash: !!currentUser?.passwordHash
-            });
-            
-            if (!currentUser) {
-                console.log('🔐 ADMIN: No user found, redirecting to login');
-                this.redirectToLogin();
-                return;
-            }
-
-            console.log('🔐 ADMIN DEBUG: Checking isAdmin for user:', {
-                email: currentUser.email,
-                role: currentUser.role
-            });
-            
-            const isAdminResult = this.isAdmin(currentUser);
-            console.log('🔐 ADMIN DEBUG: isAdmin() result:', isAdminResult);
-            
-            if (!isAdminResult) {
-                console.log('🔐 ADMIN: User is not admin:', currentUser.role);
-                console.log('🔐 ADMIN DEBUG: Expected roles: admin, super_admin');
-                this.showAccessDenied();
-                return;
-            }
-
-            console.log('✅ ADMIN: Admin access granted for:', currentUser.email);
-            this.currentAdmin = currentUser;
-            
-            // Check if 2FA is required - skip for now to simplify testing
-            if (this.requires2FA()) {
-                console.log('🔐 ADMIN: 2FA required, showing modal');
-                await this.show2FAModal();
-            } else {
-                console.log('✅ ADMIN: 2FA not required, proceeding');
+            if (currentUser && this.isAdmin(currentUser)) {
+                console.log('✅ ADMIN: User has admin role, granting access');
+                this.currentAdmin = currentUser;
                 this.updateAdminUI();
                 this.loadDashboardData();
+                return;
+            }
+            
+            // No valid access, show access code prompt
+            console.log('🔐 ADMIN: No valid access found, prompting for code');
+            this.showAccessCodePrompt();
+        }
+
+        grantAdminAccess() {
+            this.currentAdmin = {
+                id: 'admin_' + Date.now(),
+                fullName: 'Administrator',
+                email: 'admin@learntav.com',
+                role: 'admin'
+            };
+            
+            // Create admin session
+            const adminSession = {
+                admin: this.currentAdmin,
+                accessCode: this.adminAccessCode,
+                created: Date.now(),
+                expires: Date.now() + 4 * 60 * 60 * 1000 // 4 hours
+            };
+            
+            localStorage.setItem('admin_session', JSON.stringify(adminSession));
+            
+            this.updateAdminUI();
+            this.loadDashboardData();
+            this.showSuccess('Admin panel access granted!');
+        }
+
+        showAccessCodePrompt() {
+            const code = prompt('Enter admin access code:');
+            if (code === this.adminAccessCode) {
+                this.grantAdminAccess();
+            } else if (code !== null) {
+                alert('Invalid access code. Contact administrator for access.');
+                window.location.href = '../index.html';
+            } else {
+                window.location.href = '../index.html';
             }
         }
 
@@ -147,7 +180,8 @@
         }
 
         isAdmin(user) {
-            const result = user && (user.role === 'admin' || user.role === 'super_admin');
+            if (!user) return false;
+            const result = user.role === 'admin' || user.role === 'super_admin';
             console.log('🔐 ADMIN DEBUG: isAdmin check:', {
                 hasUser: !!user,
                 userRole: user?.role,
@@ -164,7 +198,8 @@
         }
 
         redirectToLogin() {
-            window.location.href = '../index.html?redirect=admin';
+            // Instead of redirecting to login, show access code prompt
+            this.showAccessCodePrompt();
         }
 
         showAccessDenied() {
@@ -805,6 +840,7 @@
             if (confirm('Are you sure you want to sign out of the admin panel?')) {
                 sessionStorage.clear();
                 localStorage.removeItem('admin_session');
+                this.currentAdmin = null;
                 window.location.href = '../index.html';
             }
         }

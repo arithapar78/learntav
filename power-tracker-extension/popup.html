@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            width: 380px;
+            min-height: 500px;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            opacity: 0.8;
+            margin: 4px 0 0 0;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+
+        .power-display {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .power-value {
+            font-size: 36px;
+            font-weight: 800;
+            margin: 8px 0;
+            color: #4ade80;
+        }
+
+        .power-label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 4px 0;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            opacity: 0.8;
+            margin: 0;
+        }
+
+        .efficiency-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .efficiency-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 12px 0;
+            text-align: center;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            height: 8px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4ade80, #22c55e);
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .efficiency-label {
+            text-align: center;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .pro-section {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .pro-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+        }
+
+        .pro-description {
+            font-size: 11px;
+            opacity: 0.9;
+            margin: 0 0 12px 0;
+        }
+
+        .pro-button {
+            background: rgba(255, 255, 255, 0.9);
+            color: #d97706;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pro-button:hover {
+            background: white;
+            transform: translateY(-1px);
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .footer {
+            padding: 16px 20px;
+            text-align: center;
+            font-size: 10px;
+            opacity: 0.6;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .pro-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .pro-modal-content {
+            background: white;
+            color: #374151;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 320px;
+            text-align: center;
+        }
+
+        .code-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;
+            margin: 16px 0;
+            font-family: monospace;
+        }
+
+        .code-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-btn.primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .modal-btn.secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">⚡</div>
+        <h1 class="title">Power Tracker</h1>
+        <p class="subtitle">Energy Monitor</p>
+    </div>
+
+    <div class="main-content">
+        <div class="power-display">
+            <div class="power-value" id="powerValue">2.4W</div>
+            <p class="power-label">Current Power Usage</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="todayUsage">15.2</div>
+                <p class="stat-label">Wh Today</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgPower">2.8</div>
+                <p class="stat-label">Avg Power</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="tabsCount">12</div>
+                <p class="stat-label">Active Tabs</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="efficiency">87</div>
+                <p class="stat-label">Efficiency %</p>
+            </div>
+        </div>
+
+        <div class="efficiency-bar">
+            <p class="efficiency-title">Battery Efficiency</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="efficiencyBar" style="width: 87%"></div>
+            </div>
+            <p class="efficiency-label">Excellent - Keep it up!</p>
+        </div>
+
+        <div class="pro-section">
+            <p class="pro-title">⚡ Unlock Pro Features</p>
+            <p class="pro-description">AI Prompt Optimization • Advanced Analytics • Carbon Tracking</p>
+            <button class="pro-button" onclick="showProModal()">Enter Access Code</button>
+        </div>
+
+        <div class="actions">
+            <button class="action-btn" onclick="openSettings()">⚙️ Settings</button>
+            <button class="action-btn" onclick="viewHistory()">📊 History</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>LearnTAV Power Tracker v1.0.0</p>
+    </div>
+
+    <!-- Pro Modal -->
+    <div class="pro-modal hidden" id="proModal">
+        <div class="pro-modal-content">
+            <h3>🚀 Unlock Pro Features</h3>
+            <p>Enter your access code to enable AI prompt optimization and advanced analytics.</p>
+            <input type="text" class="code-input" id="codeInput" placeholder="Enter code (e.g., 0410)" maxlength="4">
+            <div class="modal-actions">
+                <button class="modal-btn secondary" onclick="hideProModal()">Cancel</button>
+                <button class="modal-btn primary" onclick="verifyProCode()">Unlock</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
