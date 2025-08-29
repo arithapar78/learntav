@@ -1,6 +1,6 @@
 /**
- * LearnTAV Admin Panel
- * Comprehensive user management and security monitoring system
+ * LearnTAV Admin Panel - Simplified Code-Only Access
+ * Simple administrative access with code-based authentication only
  */
 
 (function() {
@@ -12,11 +12,9 @@
     
     class AdminPanel {
         constructor() {
-            this.currentAdmin = null;
-            this.twoFactorEnabled = false;
             this.currentTab = 'dashboard';
             this.refreshInterval = null;
-            this.adminAccessCode = 'ADMIN2024!'; // Simple admin access code
+            this.adminAccessCode = 'ADMIN2024!'; // The ONLY way to access admin panel
             this.init();
         }
 
@@ -29,11 +27,11 @@
         }
 
         // ===================================================================
-        // Authentication & Access Control
+        // Simple Code-Only Authentication
         // ===================================================================
         
         async checkAdminAccess() {
-            console.log('🔐 ADMIN DEBUG: Starting simplified checkAdminAccess...');
+            console.log('🔐 ADMIN: Starting code-only authentication...');
             
             // Check for admin access code in URL parameters first
             const urlParams = new URLSearchParams(window.location.search);
@@ -52,7 +50,6 @@
                     const session = JSON.parse(adminSession);
                     if (session.expires > Date.now() && session.accessCode === this.adminAccessCode) {
                         console.log('✅ ADMIN: Valid admin session found');
-                        this.currentAdmin = session.admin;
                         this.updateAdminUI();
                         this.loadDashboardData();
                         return;
@@ -62,32 +59,14 @@
                 }
             }
             
-            // Check if user is logged in with admin role as fallback
-            const currentUser = this.getCurrentUser();
-            if (currentUser && this.isAdmin(currentUser)) {
-                console.log('✅ ADMIN: User has admin role, granting access');
-                this.currentAdmin = currentUser;
-                this.updateAdminUI();
-                this.loadDashboardData();
-                return;
-            }
-            
             // No valid access, show access code prompt
             console.log('🔐 ADMIN: No valid access found, prompting for code');
             this.showAccessCodePrompt();
         }
 
         grantAdminAccess() {
-            this.currentAdmin = {
-                id: 'admin_' + Date.now(),
-                fullName: 'Administrator',
-                email: 'admin@learntav.com',
-                role: 'admin'
-            };
-            
-            // Create admin session
+            // Create admin session - no user account needed
             const adminSession = {
-                admin: this.currentAdmin,
                 accessCode: this.adminAccessCode,
                 created: Date.now(),
                 expires: Date.now() + 4 * 60 * 60 * 1000 // 4 hours
@@ -101,183 +80,116 @@
         }
 
         showAccessCodePrompt() {
-            const code = prompt('Enter admin access code:');
-            if (code === this.adminAccessCode) {
-                this.grantAdminAccess();
-            } else if (code !== null) {
-                alert('Invalid access code. Contact administrator for access.');
-                window.location.href = '../index.html';
-            } else {
-                window.location.href = '../index.html';
-            }
-        }
-
-        getCurrentUser() {
-            try {
-                console.log('🔐 ADMIN DEBUG: Getting current user...');
-                
-                // First check if we can get user from main auth system
-                if (window.LearnTAVAuth && window.LearnTAVAuth.currentUser) {
-                    console.log('🔐 ADMIN DEBUG: Found user in main auth system:', {
-                        email: window.LearnTAVAuth.currentUser.email,
-                        role: window.LearnTAVAuth.currentUser.role
-                    });
-                    return window.LearnTAVAuth.currentUser;
-                }
-                
-                // Check persistent session first
-                const persistentSession = localStorage.getItem('learntav_session_persistent');
-                console.log('🔐 ADMIN DEBUG: Persistent session check:', !!persistentSession);
-                
-                if (persistentSession) {
-                    console.log('🔐 ADMIN: Found persistent session');
-                    const sessionData = JSON.parse(persistentSession);
-                    console.log('🔐 ADMIN DEBUG: Persistent session data:', {
-                        hasUser: !!sessionData.user,
-                        userEmail: sessionData.user?.email,
-                        userRole: sessionData.user?.role,
-                        expires: new Date(sessionData.expires).toISOString(),
-                        isExpired: sessionData.expires <= Date.now()
-                    });
-                    
-                    if (sessionData.expires > Date.now()) {
-                        console.log('🔐 ADMIN: Persistent session valid:', sessionData.user.email);
-                        return sessionData.user;
-                    } else {
-                        console.log('🔐 ADMIN DEBUG: Persistent session expired');
-                    }
-                }
-                
-                // Check session storage
-                const session = sessionStorage.getItem('learntav_session');
-                console.log('🔐 ADMIN DEBUG: Session storage check:', !!session);
-                
-                if (session) {
-                    console.log('🔐 ADMIN: Found session storage');
-                    const sessionData = JSON.parse(session);
-                    console.log('🔐 ADMIN DEBUG: Session storage data:', {
-                        hasUser: !!sessionData.user,
-                        userEmail: sessionData.user?.email,
-                        userRole: sessionData.user?.role,
-                        expires: new Date(sessionData.expires).toISOString(),
-                        isExpired: sessionData.expires <= Date.now()
-                    });
-                    
-                    if (sessionData.expires > Date.now()) {
-                        console.log('🔐 ADMIN: Session valid:', sessionData.user.email);
-                        return sessionData.user;
-                    } else {
-                        console.log('🔐 ADMIN DEBUG: Session storage expired');
-                    }
-                }
-                
-                console.log('🔐 ADMIN DEBUG: No valid session found anywhere');
-                return null;
-            } catch (error) {
-                console.error('🔐 ADMIN DEBUG: Error getting current user:', error);
-                return null;
-            }
-        }
-
-        isAdmin(user) {
-            if (!user) return false;
-            const result = user.role === 'admin' || user.role === 'super_admin';
-            console.log('🔐 ADMIN DEBUG: isAdmin check:', {
-                hasUser: !!user,
-                userRole: user?.role,
-                isAdminRole: result,
-                acceptedRoles: ['admin', 'super_admin']
-            });
-            return result;
-        }
-
-        requires2FA() {
-            // Disable 2FA for now to simplify testing
-            // In production, this would check admin settings
-            return false;
-        }
-
-        redirectToLogin() {
-            // Instead of redirecting to login, show access code prompt
-            this.showAccessCodePrompt();
-        }
-
-        showAccessDenied() {
-            document.body.innerHTML = `
-                <div class="access-denied">
-                    <h1>Access Denied</h1>
-                    <p>You don't have permission to access the admin panel.</p>
-                    <a href="../index.html" class="admin-btn admin-btn--primary">Go Back</a>
+            // Create a simple modal for code entry
+            const modalHtml = `
+                <div class="admin-auth-modal" style="
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.8);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 10000;
+                ">
+                    <div class="admin-auth-panel" style="
+                        background: white;
+                        padding: 40px;
+                        border-radius: 12px;
+                        text-align: center;
+                        max-width: 400px;
+                        width: 90%;
+                    ">
+                        <h2 style="margin-bottom: 20px; color: #333;">Admin Access Required</h2>
+                        <p style="margin-bottom: 30px; color: #666;">Enter the admin access code to continue:</p>
+                        <input type="password" id="adminCodeInput" placeholder="Enter access code" style="
+                            width: 100%;
+                            padding: 15px;
+                            border: 2px solid #ddd;
+                            border-radius: 8px;
+                            font-size: 16px;
+                            margin-bottom: 20px;
+                            text-align: center;
+                        ">
+                        <div>
+                            <button onclick="AdminPanel.verifyAccessCode()" style="
+                                background: #2563eb;
+                                color: white;
+                                padding: 12px 24px;
+                                border: none;
+                                border-radius: 8px;
+                                margin-right: 10px;
+                                cursor: pointer;
+                                font-weight: 600;
+                            ">Access Admin Panel</button>
+                            <button onclick="AdminPanel.exitToHome()" style="
+                                background: #6b7280;
+                                color: white;
+                                padding: 12px 24px;
+                                border: none;
+                                border-radius: 8px;
+                                cursor: pointer;
+                            ">Exit</button>
+                        </div>
+                    </div>
                 </div>
             `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            
+            // Focus the input and handle enter key
+            const input = document.getElementById('adminCodeInput');
+            input.focus();
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    this.verifyAccessCode();
+                }
+            });
         }
 
-        // ===================================================================
-        // Two-Factor Authentication
-        // ===================================================================
-        
-        async show2FAModal() {
-            const modal = document.getElementById('twoFactorModal');
-            if (modal) {
-                modal.classList.add('active');
-                document.getElementById('twoFactorCode').focus();
+        verifyAccessCode() {
+            const input = document.getElementById('adminCodeInput');
+            const code = input.value.trim();
+            
+            if (code === this.adminAccessCode) {
+                // Remove the modal
+                document.querySelector('.admin-auth-modal').remove();
+                this.grantAdminAccess();
+            } else if (code) {
+                // Show error
+                input.style.borderColor = '#dc2626';
+                input.value = '';
+                input.placeholder = 'Invalid code - try again';
+                input.focus();
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    input.style.borderColor = '#ddd';
+                    input.placeholder = 'Enter access code';
+                }, 2000);
             }
         }
 
-        async verifyTwoFactor(event) {
-            event.preventDefault();
-            
-            const code = document.getElementById('twoFactorCode').value;
-            
-            if (!code || code.length !== 6) {
-                this.showError('Please enter a valid 6-digit code');
-                return;
-            }
-
-            // Simulate 2FA verification (in production, this would be server-side)
-            const isValid = await this.verify2FACode(code);
-            
-            if (isValid) {
-                this.twoFactorEnabled = true;
-                this.closeTwoFactorModal();
-                this.showSuccess('Two-factor authentication verified');
-            } else {
-                this.showError('Invalid authentication code');
-                document.getElementById('twoFactorCode').value = '';
-            }
+        exitToHome() {
+            window.location.href = '../index.html';
         }
 
-        async verify2FACode(code) {
-            // Simulate verification delay
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            // For demo purposes, accept specific codes or pattern
-            const validCodes = ['123456', '000000', '111111'];
-            return validCodes.includes(code) || code === new Date().getMinutes().toString().padStart(2, '0') + '0000';
-        }
-
-        closeTwoFactorModal() {
-            const modal = document.getElementById('twoFactorModal');
-            if (modal) {
-                modal.classList.remove('active');
-            }
-        }
+        // 2FA removed - code-only authentication
 
         // ===================================================================
         // UI Management
         // ===================================================================
         
         updateAdminUI() {
-            if (!this.currentAdmin) return;
-
-            // Update admin info in nav
+            // Update admin info in nav - no user account needed
             document.querySelectorAll('[data-admin-name]').forEach(el => {
-                el.textContent = this.currentAdmin.fullName || this.currentAdmin.name || 'Admin';
+                el.textContent = 'Administrator';
             });
 
             document.querySelectorAll('[data-admin-initials]').forEach(el => {
-                const name = this.currentAdmin.fullName || this.currentAdmin.name || 'A';
-                el.textContent = name.split(' ').map(n => n[0]).join('').toUpperCase();
+                el.textContent = 'A';
             });
         }
 
@@ -365,34 +277,17 @@
 
         async getDashboardStats() {
             console.log('📊 ADMIN: Loading dashboard stats...');
-            const users = this.getAllUsers();
-            const sessions = this.getActiveSessions();
-            const securityLogs = this.getSecurityLogs();
             
-            console.log('📊 ADMIN: Found', users.length, 'users');
-            console.log('📊 ADMIN: Found', sessions.length, 'active sessions');
-            console.log('📊 ADMIN: Found', securityLogs.length, 'security logs');
-            
-            const today = new Date();
-            const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
-            
-            const todayLogins = users.filter(user =>
-                user.lastLogin && new Date(user.lastLogin) > yesterday
-            ).length;
-
-            const recentSecurityEvents = securityLogs.filter(log =>
-                log.timestamp > yesterday.getTime()
-            ).length;
-
+            // Simple mock stats - no database dependencies
             const stats = {
-                totalUsers: users.length,
-                activeSessions: sessions.length,
-                securityEvents: recentSecurityEvents,
-                dailyLogins: todayLogins,
-                userGrowth: this.calculateUserGrowth(users),
-                sessionChange: sessions.length,
-                securityChange: recentSecurityEvents,
-                loginChange: this.calculateLoginGrowth(users)
+                totalUsers: 0,
+                activeSessions: 1, // Just the admin session
+                securityEvents: 0,
+                dailyLogins: 0,
+                userGrowth: 0,
+                sessionChange: 1,
+                securityChange: 0,
+                loginChange: 0
             };
             
             console.log('📊 ADMIN: Stats calculated:', stats);
@@ -451,12 +346,14 @@
         }
 
         async getRecentActivity() {
-            const logs = this.getSecurityLogs().slice(-10).reverse();
-            return logs.map(log => ({
-                icon: this.getActivityIcon(log.event),
-                text: this.formatActivityText(log),
-                time: this.formatTimeAgo(log.timestamp)
-            }));
+            // Simple activity log for admin access
+            return [
+                {
+                    icon: '🔐',
+                    text: 'Admin panel accessed',
+                    time: 'Just now'
+                }
+            ];
         }
 
         updateRecentActivity(activities) {
@@ -550,8 +447,8 @@
         }
 
         loadUsersData() {
-            const users = this.getAllUsers();
-            this.renderUsersTable(users);
+            // No user data to load - show empty state
+            this.renderUsersTable([]);
         }
 
         renderUsersTable(users) {
@@ -588,8 +485,16 @@
         }
 
         loadSessionsData() {
-            const sessions = this.getActiveSessions();
-            this.renderSessionsTable(sessions);
+            // Show only current admin session
+            const adminSession = {
+                id: 'admin_session',
+                user: { fullName: 'Administrator', email: 'admin@system' },
+                ipAddress: '127.0.0.1',
+                userAgent: navigator.userAgent,
+                created: Date.now(),
+                lastActivity: Date.now()
+            };
+            this.renderSessionsTable([adminSession]);
         }
 
         renderSessionsTable(sessions) {
@@ -621,7 +526,16 @@
         }
 
         loadLogsData() {
-            const logs = this.getSecurityLogs();
+            // Simple log entry for admin access
+            const logs = [
+                {
+                    timestamp: Date.now(),
+                    event: 'admin_access',
+                    userId: null,
+                    ipAddress: '127.0.0.1',
+                    reason: 'Admin panel accessed with valid code'
+                }
+            ];
             this.renderLogsTable(logs);
         }
 
@@ -727,70 +641,29 @@
         // Data Access Methods
         // ===================================================================
         
+        // Data methods simplified - no database dependencies
         getAllUsers() {
-            try {
-                const users = localStorage.getItem('learntav_users');
-                const userList = users ? JSON.parse(users) : [];
-                console.log('👥 ADMIN: Loaded', userList.length, 'users from storage');
-                return userList;
-            } catch (error) {
-                console.error('Error loading users:', error);
-                return [];
-            }
+            return [];
         }
 
         getUserById(userId) {
-            const users = this.getAllUsers();
-            return users.find(user => user.id === userId);
+            return null;
         }
 
         getActiveSessions() {
-            if (window.LearnTAVSecurity?.sessionManager) {
-                return Array.from(window.LearnTAVSecurity.sessionManager.sessions.values());
-            }
             return [];
         }
 
         getSecurityLogs() {
-            try {
-                const logs = localStorage.getItem('security_logs');
-                const logList = logs ? JSON.parse(logs) : this.generateSampleSecurityLogs();
-                console.log('🔒 ADMIN: Loaded', logList.length, 'security logs');
-                return logList;
-            } catch (error) {
-                console.error('Error loading security logs:', error);
-                return this.generateSampleSecurityLogs();
-            }
-        }
-
-        generateSampleSecurityLogs() {
-            const now = Date.now();
-            const sampleLogs = [
+            return [
                 {
-                    event: 'login',
-                    timestamp: now - 5 * 60 * 1000,
-                    userId: 'admin_user',
-                    ipAddress: '127.0.0.1',
-                    reason: 'Admin login successful'
-                },
-                {
-                    event: 'failed_login',
-                    timestamp: now - 10 * 60 * 1000,
+                    event: 'admin_access',
+                    timestamp: Date.now(),
                     userId: null,
-                    ipAddress: '192.168.1.100',
-                    reason: 'Invalid credentials'
-                },
-                {
-                    event: 'account_created',
-                    timestamp: now - 60 * 60 * 1000,
-                    userId: 'new_user',
                     ipAddress: '127.0.0.1',
-                    reason: 'New user registration'
+                    reason: 'Admin panel accessed'
                 }
             ];
-            
-            localStorage.setItem('security_logs', JSON.stringify(sampleLogs));
-            return sampleLogs;
         }
 
         // ===================================================================
@@ -838,9 +711,7 @@
 
         logout() {
             if (confirm('Are you sure you want to sign out of the admin panel?')) {
-                sessionStorage.clear();
                 localStorage.removeItem('admin_session');
-                this.currentAdmin = null;
                 window.location.href = '../index.html';
             }
         }
@@ -912,14 +783,9 @@
     }
 
     function initAdminPanel() {
-        // Wait for dependencies
-        const checkDependencies = setInterval(() => {
-            if (window.LearnTAVAuth && window.LearnTAVAuthUI) {
-                clearInterval(checkDependencies);
-                window.AdminPanel = new AdminPanel();
-                console.log('🔐 Admin Panel initialized');
-            }
-        }, 100);
+        // No dependencies needed - direct initialization
+        window.AdminPanel = new AdminPanel();
+        console.log('🔐 Admin Panel initialized with code-only access');
     }
 
 })();
