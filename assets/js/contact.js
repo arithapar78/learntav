@@ -6,11 +6,28 @@
 (function() {
     'use strict';
 
+    // Debounce utility function - defined early since it's used throughout
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         initializeContactTabs();
         initializeFAQAccordion();
         initializeFormEnhancements();
         initializeURLHandling();
+        initializeCoolEnhancements();
+        initializeScrollReveal();
+        initializeFormProgressTracking();
+        initializeTabIndicator();
     });
 
     // ===================================================================
@@ -448,26 +465,17 @@
         // Set up auto-save
         loadFormData();
         
-        form.addEventListener('input', debounce(saveFormData, 1000));
+        form.addEventListener('input', () => {
+            let timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(saveFormData, 1000);
+        });
         form.addEventListener('change', saveFormData);
         
         form.addEventListener('submit', function() {
             // Clear saved data after successful submission
             setTimeout(clearSavedData, 5000);
         });
-    }
-
-    // Debounce utility
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
     }
 
     // Enable auto-save for all forms
@@ -520,3 +528,391 @@ if (!document.querySelector('#floating-label-styles')) {
     styleSheet.textContent = floatingLabelStyles;
     document.head.appendChild(styleSheet);
 }
+    
+    // ===================================================================
+    // Cool Contact Page Enhancements
+    // ===================================================================
+    
+    function initializeCoolEnhancements() {
+        // Add form progress bar to page
+        const progressBar = document.createElement('div');
+        progressBar.className = 'learntav-form-progress';
+        document.body.appendChild(progressBar);
+        
+        // Enhanced button interactions
+        enhanceButtonInteractions();
+        
+        // Add scroll reveal classes to elements
+        addScrollRevealClasses();
+        
+        // Initialize particle animation observer
+        initializeParticleObserver();
+    }
+    
+    function initializeScrollReveal() {
+        const revealElements = document.querySelectorAll('.scroll-reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+        
+        revealElements.forEach(el => revealObserver.observe(el));
+    }
+    
+    function initializeFormProgressTracking() {
+        const forms = document.querySelectorAll('.learntav-form');
+        const progressBar = document.querySelector('.learntav-form-progress');
+        
+        if (!progressBar) return;
+        
+        forms.forEach(form => {
+            const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+            const totalFields = inputs.length;
+            
+            function updateProgress() {
+                let completedFields = 0;
+                inputs.forEach(input => {
+                    if (input.value.trim() !== '' && input.checkValidity()) {
+                        completedFields++;
+                    }
+                });
+                
+                const progress = (completedFields / totalFields) * 100;
+                progressBar.style.width = progress + '%';
+                
+                if (progress > 0) {
+                    progressBar.classList.add('visible');
+                } else {
+                    progressBar.classList.remove('visible');
+                }
+            }
+            
+            inputs.forEach(input => {
+                input.addEventListener('input', updateProgress);
+                input.addEventListener('change', updateProgress);
+            });
+            
+            // Reset progress when switching tabs
+            form.addEventListener('reset', () => {
+                setTimeout(() => {
+                    progressBar.style.width = '0%';
+                    progressBar.classList.remove('visible');
+                }, 100);
+            });
+        });
+    }
+    
+    function initializeTabIndicator() {
+        const tabsNav = document.querySelector('.learntav-contact-tabs__nav');
+        const tabButtons = tabsNav?.querySelectorAll('.learntav-tab-btn');
+        
+        if (!tabsNav || !tabButtons.length) return;
+        
+        // Create tab indicator
+        const indicator = document.createElement('div');
+        indicator.className = 'learntav-tab-indicator';
+        tabsNav.appendChild(indicator);
+        
+        function updateIndicator(activeButton) {
+            const rect = activeButton.getBoundingClientRect();
+            const navRect = tabsNav.getBoundingClientRect();
+            const left = rect.left - navRect.left;
+            const width = rect.width;
+            
+            indicator.style.left = left + 'px';
+            indicator.style.width = width + 'px';
+            indicator.classList.add('active');
+        }
+        
+        // Set initial position
+        const activeButton = tabsNav.querySelector('.learntav-tab-btn.active');
+        if (activeButton) {
+            setTimeout(() => updateIndicator(activeButton), 100);
+        }
+        
+        // Update on tab change
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                updateIndicator(this);
+            });
+        });
+        
+        // Update on window resize
+        window.addEventListener('resize', () => {
+            let timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                const currentActive = tabsNav.querySelector('.learntav-tab-btn.active');
+                if (currentActive) {
+                    updateIndicator(currentActive);
+                }
+            }, 250);
+        });
+    }
+    
+    function enhanceButtonInteractions() {
+        const buttons = document.querySelectorAll('.learntav-btn--primary');
+        
+        buttons.forEach(button => {
+            // Add ripple effect on click
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: rgba(255, 255, 255, 0.3);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                `;
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+        
+        // Add ripple animation styles
+        if (!document.querySelector('#ripple-styles')) {
+            const rippleStyles = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            
+            const styleSheet = document.createElement('style');
+            styleSheet.id = 'ripple-styles';
+            styleSheet.textContent = rippleStyles;
+            document.head.appendChild(styleSheet);
+        }
+    }
+    
+    function addScrollRevealClasses() {
+        const elementsToReveal = [
+            '.learntav-contact-option',
+            '.learntav-faq-item',
+            '.learntav-form-container',
+            '.learntav-section-header'
+        ];
+        
+        elementsToReveal.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(el => {
+                if (!el.classList.contains('scroll-reveal')) {
+                    el.classList.add('scroll-reveal');
+                }
+            });
+        });
+    }
+    
+    function initializeParticleObserver() {
+        const contactOptions = document.querySelector('.learntav-contact-options');
+        
+        if (!contactOptions) return;
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('particles-active');
+                } else {
+                    entry.target.classList.remove('particles-active');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        observer.observe(contactOptions);
+    }
+    
+    // Enhanced form validation with cool animations
+    function addCoolFormValidation() {
+        const forms = document.querySelectorAll('.learntav-form');
+        
+        forms.forEach(form => {
+            const inputs = form.querySelectorAll('input, select, textarea');
+            
+            inputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    if (this.checkValidity() && this.value.trim()) {
+                        this.classList.add('valid');
+                        this.classList.remove('invalid');
+                    } else if (this.value.trim()) {
+                        this.classList.add('invalid');
+                        this.classList.remove('valid');
+                    }
+                });
+                
+                input.addEventListener('input', function() {
+                    if (this.classList.contains('invalid') && this.checkValidity()) {
+                        this.classList.remove('invalid');
+                        this.classList.add('valid');
+                    }
+                });
+            });
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const submitBtn = this.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.classList.add('learntav-btn--loading');
+                    submitBtn.disabled = true;
+                }
+                
+                // Collect form data
+                const formData = new FormData(this);
+                const formType = formData.get('form_type') || 'general';
+                
+                // Create submission data object
+                const submissionData = {
+                    timestamp: new Date().toISOString(),
+                    formType: formType,
+                    userAgent: navigator.userAgent,
+                    url: window.location.href
+                };
+                
+                // Collect form fields (skip hidden and honeypot fields)
+                for (let [key, value] of formData.entries()) {
+                    if (key !== 'website' && key !== 'csrf_token' && value.trim() !== '') {
+                        submissionData[key] = value;
+                    }
+                }
+                
+                // Log submission for debugging
+                console.log('Form Submission Data:', submissionData);
+                
+                // Since this is a static site, we'll use EmailJS or similar service
+                // For now, we'll show success but with proper error handling
+                submitFormData(submissionData, submitBtn, this);
+            });
+        });
+    }
+    
+    function submitFormData(submissionData, submitBtn, form) {
+        // For a static site, use mailto as the primary method
+        const mailtoFallback = () => {
+            try {
+                const subject = encodeURIComponent(`LearnTAV Contact: ${submissionData.formType || 'General'}`);
+                const body = encodeURIComponent(
+                    Object.keys(submissionData)
+                        .filter(key => !['timestamp', 'userAgent', 'url', 'formType'].includes(key))
+                        .map(key => `${key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}: ${submissionData[key]}`)
+                        .join('\n\n')
+                );
+                window.location.href = `mailto:hello@learntav.com?subject=${subject}&body=${body}`;
+                
+                // Show success message after a brief delay
+                setTimeout(() => {
+                    showSuccessMessage(form);
+                }, 1000);
+                
+            } catch (error) {
+                console.error('Error creating mailto link:', error);
+                showErrorMessage(form, 'Unable to open email client. Please email us directly at hello@learntav.com');
+            }
+        };
+
+        // Try to submit via fetch first (for future backend implementation)
+        const tryServerSubmission = async () => {
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(submissionData)
+                });
+                
+                if (response.ok) {
+                    showSuccessMessage(form);
+                } else {
+                    throw new Error('Server response not ok');
+                }
+            } catch (error) {
+                console.log('Server submission not available, falling back to mailto:', error.message);
+                mailtoFallback();
+            }
+        };
+
+        // Reset button state after attempt
+        const resetButton = () => {
+            if (submitBtn) {
+                submitBtn.classList.remove('learntav-btn--loading');
+                submitBtn.disabled = false;
+            }
+        };
+
+        // Try server submission first, fallback to mailto
+        setTimeout(() => {
+            tryServerSubmission().finally(resetButton);
+        }, 1000);
+    }
+
+    function showSuccessMessage(form) {
+        const successHTML = `
+            <div class="learntav-form__success">
+                <span class="learntav-form__success-icon">✅</span>
+                <div class="learntav-form__success-content">
+                    <h3>Message Sent Successfully!</h3>
+                    <p>Thank you for contacting us. We'll get back to you within 24 hours.</p>
+                </div>
+            </div>
+        `;
+        
+        const formContainer = form.closest('.learntav-form-container');
+        if (formContainer) {
+            formContainer.innerHTML = successHTML;
+        }
+        
+        // Reset progress bar
+        const progressBar = document.querySelector('.learntav-form-progress');
+        if (progressBar) {
+            progressBar.style.width = '0%';
+            progressBar.classList.remove('visible');
+        }
+    }
+
+    function showErrorMessage(form, message) {
+        const errorHTML = `
+            <div class="learntav-form__error-global">
+                <span class="learntav-form__error-icon">⚠️</span>
+                <div class="learntav-form__error-content">
+                    <h3>Submission Error</h3>
+                    <p>${message}</p>
+                    <button onclick="location.reload()" class="learntav-btn learntav-btn--secondary" style="margin-top: 1rem;">
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        const formContainer = form.closest('.learntav-form-container');
+        if (formContainer) {
+            formContainer.innerHTML = errorHTML;
+        }
+    }
+    
+    // Initialize cool form validation on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        addCoolFormValidation();
+    });

@@ -2,12 +2,49 @@
    Contact Page Specific Styles
    =================================================================== */
 
-/* Page Header */
+/* Page Header with Cool Enhancements */
 .learntav-page-header {
   padding: var(--space-16) 0 var(--space-12);
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: var(--text-inverse);
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.learntav-page-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  animation: headerFlow 8s ease-in-out infinite alternate;
+}
+
+.learntav-page-header::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+  animation: headerShimmer 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes headerFlow {
+  0% { transform: translateX(-10px) translateY(-5px); }
+  100% { transform: translateX(10px) translateY(5px); }
+}
+
+@keyframes headerShimmer {
+  0% { transform: rotate(0deg) translateX(-100%); }
+  100% { transform: rotate(0deg) translateX(100%); }
 }
 
 .learntav-page-header__title {
@@ -15,6 +52,10 @@
   font-weight: var(--font-weight-extrabold);
   color: var(--text-inverse);
   margin-bottom: var(--space-6);
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: titleGlow 3s ease-in-out infinite alternate;
 }
 
 .learntav-page-header__subtitle {
@@ -23,6 +64,20 @@
   line-height: var(--line-height-relaxed);
   max-width: 600px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  animation: subtitleFloat 4s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0% { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 10px rgba(255, 255, 255, 0.1); }
+  100% { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.2); }
+}
+
+@keyframes subtitleFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-2px); }
 }
 
 @media (max-width: 768px) {
@@ -51,20 +106,47 @@
   padding: var(--space-8);
   text-align: center;
   box-shadow: var(--shadow-sm);
-  transition: var(--transition-normal);
+  transition: all var(--transition-normal);
   border: 1px solid var(--gray-200);
   height: 100%;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.learntav-contact-option::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.6s ease;
 }
 
 .learntav-contact-option:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-dramatic);
+  border-color: var(--primary);
+}
+
+.learntav-contact-option:hover::before {
+  left: 100%;
 }
 
 .learntav-contact-option__icon {
   font-size: var(--font-size-5xl);
   margin-bottom: var(--space-6);
   display: block;
+  transition: all var(--transition-normal);
+  position: relative;
+  z-index: 2;
+}
+
+.learntav-contact-option:hover .learntav-contact-option__icon {
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
 .learntav-contact-option__title {
@@ -101,6 +183,25 @@
 .learntav-contact-tabs {
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
+}
+
+.learntav-contact-tabs::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: linear-gradient(45deg, transparent, rgba(37, 99, 235, 0.05), transparent);
+  border-radius: var(--radius-2xl);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity var(--transition-slow);
+}
+
+.learntav-contact-tabs:hover::before {
+  opacity: 1;
 }
 
 .learntav-contact-tabs__nav {
@@ -161,13 +262,50 @@
   }
 }
 
-/* Form Container */
+/* Form Container with Enhanced Effects */
 .learntav-form-container {
   background: var(--bg-primary);
   border-radius: var(--radius-2xl);
   padding: var(--space-8);
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--gray-200);
+  position: relative;
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+}
+
+.learntav-form-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+  background-size: 200% 100%;
+  animation: formGradientFlow 3s linear infinite;
+}
+
+.learntav-form-container::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.05) 0%, transparent 70%);
+  animation: formAura 8s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes formGradientFlow {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+@keyframes formAura {
+  0% { transform: scale(0.8) rotate(0deg); }
+  100% { transform: scale(1.2) rotate(180deg); }
 }
 
 .learntav-form-header {
@@ -222,9 +360,11 @@
   border-radius: var(--radius-md);
   font-size: var(--font-size-base);
   font-family: inherit;
-  transition: var(--transition-fast);
+  transition: all var(--transition-fast);
   background: var(--bg-primary);
   color: var(--text-primary);
+  position: relative;
+  z-index: 2;
 }
 
 .learntav-form__input:focus,
@@ -232,7 +372,19 @@
 .learntav-form__textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.1),
+    0 4px 12px rgba(37, 99, 235, 0.15),
+    inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.learntav-form__input:hover,
+.learntav-form__select:hover,
+.learntav-form__textarea:hover {
+  border-color: var(--gray-400);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .learntav-form__textarea {
@@ -313,6 +465,29 @@
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--gray-200);
   overflow: hidden;
+  transition: all var(--transition-normal);
+  position: relative;
+}
+
+.learntav-faq-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 0;
+  background: linear-gradient(to bottom, var(--primary), var(--secondary));
+  transition: height var(--transition-normal);
+}
+
+.learntav-faq-item:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.learntav-faq-item:hover::before,
+.learntav-faq-item.expanded::before {
+  height: 100%;
 }
 
 .learntav-faq-question {
@@ -328,15 +503,38 @@
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-medium);
   color: var(--text-primary);
-  transition: var(--transition-fast);
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.learntav-faq-question::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.1), transparent);
+  transition: width var(--transition-normal);
 }
 
 .learntav-faq-question:hover {
   background: var(--bg-secondary);
+  padding-left: calc(var(--space-6) + 8px);
+}
+
+.learntav-faq-question:hover::before {
+  width: 100%;
 }
 
 .learntav-faq-question[aria-expanded="true"] {
   background: var(--bg-secondary);
+  color: var(--primary);
+  padding-left: calc(var(--space-6) + 8px);
+}
+
+.learntav-faq-question[aria-expanded="true"]::before {
+  width: 100%;
 }
 
 .learntav-faq-toggle {
@@ -535,5 +733,306 @@
   
   .learntav-form {
     page-break-inside: avoid;
+  }
+}
+
+/* ===================================================================
+   COOL CONTACT PAGE ENHANCEMENTS
+   =================================================================== */
+
+/* Floating Particles Background */
+.learntav-contact-options {
+  position: relative;
+}
+
+.learntav-contact-options::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(37, 99, 235, 0.1) 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, rgba(16, 185, 129, 0.1) 1px, transparent 1px);
+  background-size: 60px 60px, 40px 40px;
+  animation: particleFloat 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes particleFloat {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-10px, -10px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Enhanced Button Styling */
+.learntav-btn--primary {
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.learntav-btn--primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.learntav-btn--primary:hover::before {
+  left: 100%;
+}
+
+.learntav-btn--primary:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 
+    0 8px 25px rgba(37, 99, 235, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Form Progress Indicator */
+.learntav-form-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+  transition: width 0.3s ease;
+  z-index: 1000;
+  opacity: 0;
+}
+
+.learntav-form-progress.visible {
+  opacity: 1;
+}
+
+/* Interactive Form Labels */
+.learntav-form__group {
+  position: relative;
+}
+
+.learntav-form__group::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.learntav-form__group:focus-within::after {
+  width: 100%;
+}
+
+/* Cool Tab Indicator */
+.learntav-contact-tabs__nav {
+  position: relative;
+}
+
+.learntav-tab-indicator {
+  position: absolute;
+  bottom: -2px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  opacity: 0;
+}
+
+.learntav-tab-indicator.active {
+  opacity: 1;
+}
+
+/* Pulsing Contact Options */
+.learntav-contact-option {
+  animation: subtlePulse 4s ease-in-out infinite;
+  position: relative;
+  z-index: 2;
+}
+
+.learntav-contact-option:nth-child(2) {
+  animation-delay: 1s;
+}
+
+.learntav-contact-option:nth-child(3) {
+  animation-delay: 2s;
+}
+
+@keyframes subtlePulse {
+  0%, 100% { box-shadow: var(--shadow-sm); }
+  50% { box-shadow: var(--shadow-md); }
+}
+
+/* Success Animations */
+.learntav-form__success {
+  animation: successPop 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes successPop {
+  0% { 
+    opacity: 0;
+    transform: scale(0.3) rotate(-10deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+  100% { 
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Interactive FAQ Items */
+.learntav-faq-item {
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.learntav-faq-item:hover {
+  transform: translateX(8px) scale(1.02);
+}
+
+/* Cool Loading Button State */
+.learntav-btn--loading {
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark), var(--primary));
+  background-size: 200% 100%;
+  animation: loadingShimmer 2s ease-in-out infinite;
+}
+
+@keyframes loadingShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Enhanced Contact Option Links */
+.learntav-contact-option__link {
+  position: relative;
+  display: inline-block;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+}
+
+.learntav-contact-option__link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  border-radius: var(--radius-md);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all var(--transition-normal);
+  z-index: -1;
+}
+
+.learntav-contact-option__link:hover {
+  color: white;
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.learntav-contact-option__link:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Enhanced Form Interactions */
+.learntav-form__input:valid,
+.learntav-form__select:valid,
+.learntav-form__textarea:valid {
+  border-color: var(--success);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
+}
+
+.learntav-form__input:valid::after,
+.learntav-form__select:valid::after,
+.learntav-form__textarea:valid::after {
+  content: '✓';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--success);
+  font-weight: bold;
+}
+
+/* Scroll Reveal Enhancement */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-reveal:nth-child(2) { transition-delay: 0.1s; }
+.scroll-reveal:nth-child(3) { transition-delay: 0.2s; }
+.scroll-reveal:nth-child(4) { transition-delay: 0.3s; }
+
+/* Mobile Enhancements */
+@media (max-width: 768px) {
+  .learntav-contact-option:hover {
+    transform: translateY(-4px) scale(1.05);
+  }
+  
+  .learntav-faq-item:hover {
+    transform: translateX(4px) scale(1.01);
+  }
+  
+  .learntav-btn--primary:hover {
+    transform: translateY(-1px) scale(1.03);
+  }
+  
+  .learntav-form-container::after {
+    display: none; /* Reduce motion on mobile */
+  }
+}
+
+/* Accessibility Enhancements */
+@media (prefers-reduced-motion: reduce) {
+  .learntav-contact-option,
+  .learntav-form-container::after,
+  .learntav-page-header::before,
+  .learntav-page-header::after,
+  .learntav-contact-options::before {
+    animation: none !important;
+  }
+  
+  .learntav-contact-option:hover,
+  .learntav-faq-item:hover,
+  .learntav-btn--primary:hover {
+    transform: none !important;
+  }
+  
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .learntav-form-container::before {
+    background: var(--primary);
+  }
+  
+  .learntav-contact-option {
+    border-width: 3px;
   }
 }

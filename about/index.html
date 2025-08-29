@@ -17,7 +17,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="../assets/css/main.css">
 </head>
-<body>
+<body class="enable-scroll-animations">
     <!-- Navigation -->
     <nav class="learntav-nav" id="mainNav">
         <div class="learntav-container">
@@ -31,6 +31,7 @@
                     <a href="../consulting/index.html" class="learntav-nav__link">Consulting</a>
                     <a href="../about/index.html" class="learntav-nav__link learntav-nav__link--active">About</a>
                     <a href="../resources/index.html" class="learntav-nav__link">Resources</a>
+                    <a href="../ai-tools/index.html" class="learntav-nav__link">AI Tools</a>
                     <a href="../contact/index.html" class="learntav-nav__link">Contact</a>
                 </div>
                 
@@ -47,10 +48,21 @@
     </nav>
 
     <!-- Page Header -->
-    <section class="learntav-page-header" id="main-content">
+    <section class="learntav-page-header scroll-animate" id="main-content">
         <div class="learntav-container">
             <div class="learntav-page-header__content">
                 <h1 class="learntav-page-header__title">About LearnTAV</h1>
+                <div class="learntav-hero__motto">
+                    <em onclick="showMottoPopup()">"Learning Takes a Village"</em>
+                    <div class="tech-particles">
+                        <div class="tech-particle" style="left: 15%; animation-delay: 0s;"></div>
+                        <div class="tech-particle" style="left: 35%; animation-delay: -1.5s;"></div>
+                        <div class="tech-particle" style="left: 55%; animation-delay: -3s;"></div>
+                        <div class="tech-particle" style="left: 75%; animation-delay: -4.5s;"></div>
+                        <div class="tech-particle" style="left: 25%; animation-delay: -2s;"></div>
+                        <div class="tech-particle" style="left: 65%; animation-delay: -3.5s;"></div>
+                    </div>
+                </div>
                 <p class="learntav-page-header__subtitle">
                     Where Technology meets Accessibility, Sustainability, and Real-World Impact. We're on a mission to democratize AI education and promote responsible AI adoption.
                 </p>
@@ -61,15 +73,15 @@
     <!-- Mission Section -->
     <section class="learntav-services">
         <div class="learntav-container">
-            <div class="learntav-section-header">
+            <div class="learntav-section-header scroll-animate">
                 <h2 class="learntav-section-title">Our Mission</h2>
                 <p class="learntav-section-subtitle">
-                    Making AI accessible to everyone while promoting sustainable practices
+                    Making AI accessible to everyone while promoting sustainable practices — because "Learning Takes a Village"
                 </p>
             </div>
             
             <div class="learntav-grid learntav-grid--3-col">
-                <div class="learntav-value-card">
+                <div class="learntav-value-card scroll-animate">
                     <div class="learntav-value-card__icon">🎯</div>
                     <h3 class="learntav-value-card__title">Accessibility</h3>
                     <p class="learntav-value-card__description">
@@ -77,7 +89,7 @@
                     </p>
                 </div>
                 
-                <div class="learntav-value-card">
+                <div class="learntav-value-card scroll-animate">
                     <div class="learntav-value-card__icon">🌱</div>
                     <h3 class="learntav-value-card__title">Sustainability</h3>
                     <p class="learntav-value-card__description">
@@ -85,7 +97,7 @@
                     </p>
                 </div>
                 
-                <div class="learntav-value-card">
+                <div class="learntav-value-card scroll-animate">
                     <div class="learntav-value-card__icon">💼</div>
                     <h3 class="learntav-value-card__title">Real Impact</h3>
                     <p class="learntav-value-card__description">
@@ -99,7 +111,7 @@
     <!-- Story Section -->
     <section class="learntav-values">
         <div class="learntav-container">
-            <div class="learntav-section-header">
+            <div class="learntav-section-header scroll-animate">
                 <h2 class="learntav-section-title">Our Story</h2>
                 <p class="learntav-section-subtitle">
                     Born from the belief that AI education should be practical, accessible, and sustainable
@@ -107,14 +119,14 @@
             </div>
             
             <div class="learntav-grid learntav-grid--2-col">
-                <div class="learntav-service-card">
+                <div class="learntav-service-card scroll-animate">
                     <h3 class="learntav-service-card__title">The Problem We Saw</h3>
                     <p class="learntav-service-card__description">
                         AI education was becoming increasingly complex and theoretical, leaving practical professionals behind. Meanwhile, AI adoption was happening without consideration for environmental impact or sustainable practices.
                     </p>
                 </div>
 
-                <div class="learntav-service-card">
+                <div class="learntav-service-card scroll-animate">
                     <h3 class="learntav-service-card__title">Our Solution</h3>
                     <p class="learntav-service-card__description">
                         We created hands-on, practical AI education that gets you building from day one, while maintaining a strong focus on sustainability and responsible implementation practices.
@@ -127,7 +139,7 @@
     <!-- Approach Section -->
     <section class="learntav-services">
         <div class="learntav-container">
-            <div class="learntav-section-header">
+            <div class="learntav-section-header scroll-animate">
                 <h2 class="learntav-section-title">Our Approach</h2>
                 <p class="learntav-section-subtitle">
                     How we deliver results for our students and clients
@@ -135,7 +147,7 @@
             </div>
             
             <div class="learntav-grid learntav-grid--2-col">
-                <div class="learntav-service-card learntav-service-card--education">
+                <div class="learntav-service-card learntav-service-card--education scroll-animate">
                     <div class="learntav-service-card__header">
                         <div class="learntav-service-card__icon">🚀</div>
                         <div class="learntav-service-card__category">Education</div>
@@ -148,11 +160,10 @@
                         <li>Project-based learning</li>
                         <li>Real-world applications</li>
                         <li>Immediate implementation</li>
-                        <li>Portfolio development</li>
                     </ul>
                 </div>
 
-                <div class="learntav-service-card learntav-service-card--consulting">
+                <div class="learntav-service-card learntav-service-card--consulting scroll-animate">
                     <div class="learntav-service-card__header">
                         <div class="learntav-service-card__icon">🌍</div>
                         <div class="learntav-service-card__category">Consulting</div>
@@ -173,7 +184,7 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="learntav-cta">
+    <section class="learntav-cta scroll-animate">
         <div class="learntav-container">
             <div class="learntav-cta__content">
                 <h2 class="learntav-cta__title">Ready to Learn More?</h2>
@@ -181,7 +192,7 @@
                     Join us in making AI accessible, sustainable, and impactful for everyone.
                 </p>
                 <div class="learntav-cta__actions">
-                    <a href="../contact/index.html" class="learntav-btn learntav-btn--primary learntav-btn--large">
+                    <a href="../contact/index.html" class="learntav-btn learntav-btn--primary learntav-btn--tech learntav-btn--large">
                         Start Your Journey
                     </a>
                 </div>
@@ -198,7 +209,8 @@
                         <span class="learntav-footer__logo-text">LearnTAV</span>
                     </div>
                     <p class="learntav-footer__description">
-                        Where Technology Meets Accessibility, Sustainability, and Real-World Impact.
+                        Where Technology Meets Accessibility, Sustainability, and Real-World Impact.<br>
+                        <em>"Learning Takes a Village"</em>
                     </p>
                 </div>
 
@@ -238,7 +250,57 @@
         </div>
     </footer>
 
+    <!-- Motto Popup Modal -->
+    <div class="motto-popup-overlay" id="mottoPopupOverlay" onclick="hideMottoPopup()"></div>
+    <div class="motto-popup" id="mottoPopup">
+        <button class="motto-popup-close" onclick="hideMottoPopup()">&times;</button>
+        <div class="motto-popup-content">
+            <h3>✨ "Learning Takes a Village" ✨</h3>
+            <p>Our motto reflects the collaborative spirit of education and growth. Just like raising a child, learning complex technologies like AI requires a supportive community, shared knowledge, and collective wisdom.</p>
+            <p>At LearnTAV, we believe that the best learning happens when people come together, share experiences, and support each other's journey toward technological mastery.</p>
+            <div class="learntav-cta__actions">
+                <a href="../contact/index.html" class="learntav-btn learntav-btn--primary">Join Our Village</a>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript -->
     <script src="../assets/js/main.js"></script>
+    <script>
+        // Motto popup functionality
+        function showMottoPopup() {
+            document.getElementById('mottoPopupOverlay').classList.add('active');
+            document.getElementById('mottoPopup').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideMottoPopup() {
+            document.getElementById('mottoPopupOverlay').classList.remove('active');
+            document.getElementById('mottoPopup').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close popup on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('mottoPopup').classList.contains('active')) {
+                hideMottoPopup();
+            }
+        });
+        
+        // Add tech highlight effects to key phrases
+        document.addEventListener('DOMContentLoaded', function() {
+            const phrases = ['AI education', 'sustainable practices', 'practical application', 'accessibility'];
+            
+            phrases.forEach(phrase => {
+                const regex = new RegExp(`\\b${phrase}\\b`, 'gi');
+                const elements = document.querySelectorAll('p, h1, h2, h3, li');
+                elements.forEach(el => {
+                    if (el.innerHTML.match(regex)) {
+                        el.innerHTML = el.innerHTML.replace(regex, `<span class="tech-highlight">${phrase}</span>`);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

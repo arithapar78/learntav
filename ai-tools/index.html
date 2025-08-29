@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Power Tracker - The ultimate AI-powered Chrome extension for energy monitoring and prompt optimization. Reduce your AI carbon footprint with our flagship sustainable browsing tool.">
+    <meta name="keywords" content="Power Tracker, AI tools, Chrome extension, energy monitoring, prompt optimization, carbon footprint, sustainable AI">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://learntav.com/ai-tools/">
+    <meta property="og:title" content="Power Tracker - Sustainable AI Chrome Extension | LearnTAV">
+    <meta property="og:description" content="Power Tracker - The ultimate AI-powered Chrome extension for energy monitoring and prompt optimization. Reduce your AI carbon footprint with our flagship tool.">
+    <meta property="og:image" content="https://learntav.com/assets/images/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://learntav.com/ai-tools/">
+    <meta property="twitter:title" content="Power Tracker - Sustainable AI Chrome Extension | LearnTAV">
+    <meta property="twitter:description" content="Power Tracker - The ultimate AI-powered Chrome extension for energy monitoring and prompt optimization. Reduce your AI carbon footprint with our flagship tool.">
+    <meta property="twitter:image" content="https://learntav.com/assets/images/og-image.jpg">
+
+    <title>Power Tracker - Sustainable AI Chrome Extension | LearnTAV</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    
+    <style>
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .product-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-subtitle {
+            color: #6b7280;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .product-description {
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2rem;
+        }
+        
+        .product-features li {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            color: #374151;
+        }
+        
+        .product-features li::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+        
+        .product-pricing {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .product-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-price-note {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        .product-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .btn-purchase {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-purchase:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+        }
+        
+        .btn-learn-more {
+            background: transparent;
+            color: #667eea;
+            padding: 1rem 1.5rem;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-learn-more:hover {
+            background: #10b981;
+            color: white;
+        }
+        
+        .integration-note {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: #92400e;
+        }
+        
+        .integration-note strong {
+            color: #78350f;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="learntav-nav" id="mainNav">
+        <div class="learntav-container">
+            <div class="learntav-nav__container">
+                <a href="../index.html" class="learntav-nav__logo">
+                    <span class="learntav-nav__logo-text">LearnTAV</span>
+                </a>
+                
+                <div class="learntav-nav__menu" id="navMenu">
+                    <a href="../education/index.html" class="learntav-nav__link">Education</a>
+                    <a href="../consulting/index.html" class="learntav-nav__link">Consulting</a>
+                    <a href="../about/index.html" class="learntav-nav__link">About</a>
+                    <a href="../resources/index.html" class="learntav-nav__link">Resources</a>
+                    <a href="index.html" class="learntav-nav__link learntav-nav__link--active">AI Tools</a>
+                    <a href="../contact/index.html" class="learntav-nav__link">Contact</a>
+                </div>
+                
+                <div class="learntav-nav__actions">
+                    <a href="../contact/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
+                    <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="learntav-hero">
+        <div class="learntav-container">
+            <div class="learntav-hero__content">
+                <div class="learntav-hero__text" style="max-width: 100%; text-align: center;">
+                    <h1 class="learntav-hero__title">
+                        Power Tracker
+                        <span class="learntav-hero__title-accent">AI Energy Monitor</span>
+                    </h1>
+                    <p class="learntav-hero__subtitle">
+                        LearnTAV's flagship Chrome extension for sustainable AI usage. Monitor energy consumption, optimize AI prompts, and reduce your carbon footprint with our comprehensive power tracking solution.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="learntav-services" style="padding-top: 2rem;">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">Power Tracker Features</h2>
+                <p class="learntav-section-subtitle">
+                    Our flagship AI energy monitoring and optimization extension
+                </p>
+            </div>
+            
+            <div style="max-width: 800px; margin: 0 auto;">
+                <!-- Power Tracker Extension -->
+                <div class="product-card">
+                    <div class="product-badge">LearnTAV Flagship Product</div>
+                    <div class="product-icon">⚡</div>
+                    <h3 class="product-title">Power Tracker</h3>
+                    <p class="product-subtitle">Complete AI Energy Management Solution</p>
+                    <p class="product-description">
+                        Our flagship Chrome extension combines real-time browser power monitoring with advanced AI prompt optimization. Get comprehensive insights into energy usage, optimize your AI workflows, and reduce your carbon footprint with our all-in-one sustainable technology solution.
+                    </p>
+                    
+                    <ul class="product-features">
+                        <li>Real-time power monitoring in watts</li>
+                        <li>Advanced AI prompt optimization (GPT, Claude, Gemini)</li>
+                        <li>Energy usage analytics and trends</li>
+                        <li>Smart consumption alerts</li>
+                        <li>Website energy impact scores</li>
+                        <li>Token usage reduction and optimization</li>
+                        <li>Carbon footprint tracking and metrics</li>
+                        <li>Battery life optimization</li>
+                        <li>Multi-platform AI support</li>
+                        <li>Comprehensive usage analytics dashboard</li>
+                    </ul>
+                    
+                    <div class="product-pricing">
+                        <div class="product-price">Free / $4.99</div>
+                        <div class="product-price-note">Basic features free • Pro features $4.99/month</div>
+                    </div>
+                    
+                    <div class="product-actions">
+                        <button class="btn-purchase" onclick="directDownloadPowerTracker()">Download Power Tracker</button>
+                        <a href="power-tracker/index.html" class="btn-learn-more">Learn More</a>
+                    </div>
+                    
+                    <div class="integration-note">
+                        <strong>All-in-One Solution:</strong> Power Tracker combines energy monitoring with AI prompt optimization in one unified extension, providing complete sustainable AI management for your browser.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="learntav-values">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">Why Use Our AI Tools?</h2>
+                <p class="learntav-section-subtitle">
+                    Make a real impact on the environment while optimizing your AI workflows
+                </p>
+            </div>
+            
+            <div class="learntav-grid learntav-grid--3-col">
+                <div class="learntav-value-card">
+                    <div class="learntav-value-card__icon">🌱</div>
+                    <h3 class="learntav-value-card__title">Reduce Carbon Footprint</h3>
+                    <p class="learntav-value-card__description">
+                        Our tools help reduce the environmental impact of AI usage by optimizing energy consumption and prompt efficiency.
+                    </p>
+                </div>
+                
+                <div class="learntav-value-card">
+                    <div class="learntav-value-card__icon">💰</div>
+                    <h3 class="learntav-value-card__title">Save Money</h3>
+                    <p class="learntav-value-card__description">
+                        Lower energy consumption means reduced electricity costs and more efficient use of AI API credits.
+                    </p>
+                </div>
+                
+                <div class="learntav-value-card">
+                    <div class="learntav-value-card__icon">⚡</div>
+                    <h3 class="learntav-value-card__title">Improve Performance</h3>
+                    <p class="learntav-value-card__description">
+                        Optimized prompts and energy-efficient browsing lead to faster responses and better overall system performance.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="learntav-cta">
+        <div class="learntav-container">
+            <div class="learntav-cta__content">
+                <h2 class="learntav-cta__title">Ready to Make Your AI Usage More Sustainable?</h2>
+                <p class="learntav-cta__description">
+                    Join thousands of users who are already reducing their carbon footprint while improving their AI workflows.
+                </p>
+                <div class="learntav-cta__actions">
+                    <button class="learntav-btn learntav-btn--primary learntav-btn--large" onclick="directDownloadPowerTracker()">
+                        Download Power Tracker Free
+                    </button>
+                    <div class="learntav-cta__contact-info">
+                        <p>Questions? <a href="../contact/index.html">Contact our support team</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="learntav-footer">
+        <div class="learntav-container">
+            <div class="learntav-footer__main">
+                <div class="learntav-footer__brand">
+                    <div class="learntav-footer__logo">
+                        <span class="learntav-footer__logo-text">LearnTAV</span>
+                    </div>
+                    <p class="learntav-footer__description">
+                        Where Technology Meets Accessibility, Sustainability, and Real-World Impact.
+                    </p>
+                </div>
+
+                <div class="learntav-footer__links">
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">Services</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../education/index.html">Education</a></li>
+                            <li><a href="../consulting/index.html">Consulting</a></li>
+                            <li><a href="../education/paths/index.html">Learning Paths</a></li>
+                            <li><a href="../consulting/case-studies/index.html">Case Studies</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">AI Tools</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="index.html">Power Tracker</a></li>
+                            <li><a href="power-tracker/index.html">Learn More</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">Company</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../about/index.html">About</a></li>
+                            <li><a href="../contact/index.html">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">Resources</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../resources/guides/index.html">Free Guides</a></li>
+                            <li><a href="../resources/tools/index.html">Tools</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="learntav-footer__bottom">
+                <div class="learntav-footer__legal">
+                    <p>&copy; 2024 LearnTAV. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../assets/js/main.js"></script>
+    <script>
+        function directDownloadPowerTracker() {
+            const link = document.createElement('a');
+            link.href = '../assets/extensions/power-tracker-extension.zip';
+            link.download = 'power-tracker.zip';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            alert('✅ Power Tracker download started!\n\nInstallation Instructions:\n1. Unzip the downloaded file\n2. Open Chrome → More tools → Extensions\n3. Enable "Developer mode" (top right)\n4. Click "Load unpacked"\n5. Select the unzipped folder\n6. Pin the extension to your toolbar');
+        }
+
+    </script>
+</body>
+</html>
