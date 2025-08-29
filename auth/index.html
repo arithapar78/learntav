@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sign in or create an account to access LearnTAV learning materials and dashboard">
+    <title>Authentication - LearnTAV</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive-accessibility.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body class="auth-body">
+    <!-- Navigation -->
+    <nav class="learntav-nav" id="mainNav">
+        <div class="learntav-container">
+            <div class="learntav-nav__container">
+                <a href="../index.html" class="learntav-nav__logo">
+                    <span class="learntav-nav__logo-text">LearnTAV</span>
+                </a>
+                
+                <div class="learntav-nav__menu" id="navMenu">
+                    <a href="../education/index.html" class="learntav-nav__link">Education</a>
+                    <a href="../consulting/index.html" class="learntav-nav__link">Consulting</a>
+                    <a href="../about/index.html" class="learntav-nav__link">About</a>
+                    <a href="../resources/index.html" class="learntav-nav__link">Resources</a>
+                    <a href="../ai-tools/index.html" class="learntav-nav__link">AI Tools</a>
+                    <a href="../contact/index.html" class="learntav-nav__link">Contact</a>
+                </div>
+                
+                <div class="learntav-nav__actions">
+                    <a href="../contact/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
+                    <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Authentication Container -->
+    <main class="auth-main">
+        <div class="auth-container">
+            <div class="auth-card">
+                <!-- Header -->
+                <div class="auth-header">
+                    <div class="auth-logo">
+                        <div class="auth-logo-icon">🚀</div>
+                        <h1>Welcome to LearnTAV</h1>
+                    </div>
+                    <p class="auth-subtitle">Access your learning dashboard and exclusive resources</p>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="signin">Sign In</button>
+                    <button class="auth-tab" data-tab="signup">Create Account</button>
+                </div>
+
+                <!-- Sign In Form -->
+                <div id="signin-form" class="auth-form-container active">
+                    <form class="auth-form" id="signin">
+                        <div class="auth-form-group">
+                            <label for="signin-email" class="auth-form-label">
+                                <span class="label-icon">📧</span>
+                                Email Address
+                            </label>
+                            <input 
+                                type="email" 
+                                id="signin-email" 
+                                name="email" 
+                                class="auth-form-input" 
+                                placeholder="your@email.com"
+                                required
+                                autocomplete="email">
+                        </div>
+
+                        <div class="auth-form-group">
+                            <label for="signin-password" class="auth-form-label">
+                                <span class="label-icon">🔒</span>
+                                Password
+                            </label>
+                            <div class="password-input-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="signin-password" 
+                                    name="password" 
+                                    class="auth-form-input" 
+                                    placeholder="Enter your password"
+                                    required
+                                    autocomplete="current-password">
+                                <button type="button" class="password-toggle" data-target="signin-password">
+                                    <span class="toggle-show">👁️</span>
+                                    <span class="toggle-hide" style="display: none;">🙈</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="auth-form-options">
+                            <label class="auth-checkbox-label">
+                                <input type="checkbox" name="remember" class="auth-checkbox">
+                                <span class="checkbox-custom"></span>
+                                Remember me
+                            </label>
+                            <a href="#" class="auth-link" id="forgot-password">Forgot password?</a>
+                        </div>
+
+                        <button type="submit" class="auth-submit-button">
+                            <span class="button-content">
+                                <span class="button-icon">🚀</span>
+                                <span class="button-text">Sign In</span>
+                            </span>
+                            <span class="button-loader" style="display: none;">
+                                <span class="loader-spinner"></span>
+                                <span class="loader-text">Signing in...</span>
+                            </span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Sign Up Form -->
+                <div id="signup-form" class="auth-form-container">
+                    <form class="auth-form" id="signup">
+                        <div class="auth-form-group">
+                            <label for="signup-name" class="auth-form-label">
+                                <span class="label-icon">👤</span>
+                                Full Name
+                            </label>
+                            <input 
+                                type="text" 
+                                id="signup-name" 
+                                name="fullName" 
+                                class="auth-form-input" 
+                                placeholder="Your full name"
+                                required
+                                autocomplete="name">
+                        </div>
+
+                        <div class="auth-form-group">
+                            <label for="signup-email" class="auth-form-label">
+                                <span class="label-icon">📧</span>
+                                Email Address
+                            </label>
+                            <input 
+                                type="email" 
+                                id="signup-email" 
+                                name="email" 
+                                class="auth-form-input" 
+                                placeholder="your@email.com"
+                                required
+                                autocomplete="email">
+                        </div>
+
+                        <div class="auth-form-group">
+                            <label for="signup-password" class="auth-form-label">
+                                <span class="label-icon">🔒</span>
+                                Password
+                            </label>
+                            <div class="password-input-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="signup-password" 
+                                    name="password" 
+                                    class="auth-form-input" 
+                                    placeholder="Create a strong password"
+                                    required
+                                    autocomplete="new-password">
+                                <button type="button" class="password-toggle" data-target="signup-password">
+                                    <span class="toggle-show">👁️</span>
+                                    <span class="toggle-hide" style="display: none;">🙈</span>
+                                </button>
+                            </div>
+                            <div class="password-strength" id="password-strength">
+                                <div class="strength-bar">
+                                    <div class="strength-fill"></div>
+                                </div>
+                                <span class="strength-text">Enter password to see strength</span>
+                            </div>
+                        </div>
+
+                        <div class="auth-form-group">
+                            <label for="signup-confirm-password" class="auth-form-label">
+                                <span class="label-icon">🔒</span>
+                                Confirm Password
+                            </label>
+                            <input 
+                                type="password" 
+                                id="signup-confirm-password" 
+                                name="confirmPassword" 
+                                class="auth-form-input" 
+                                placeholder="Confirm your password"
+                                required
+                                autocomplete="new-password">
+                        </div>
+
+                        <div class="auth-form-options">
+                            <label class="auth-checkbox-label">
+                                <input type="checkbox" name="agree" class="auth-checkbox" required>
+                                <span class="checkbox-custom"></span>
+                                I agree to the <a href="../legal/terms/index.html" class="auth-link">Terms of Service</a> and <a href="../legal/privacy/index.html" class="auth-link">Privacy Policy</a>
+                            </label>
+                        </div>
+
+                        <div class="auth-form-options">
+                            <label class="auth-checkbox-label">
+                                <input type="checkbox" name="newsletter" class="auth-checkbox">
+                                <span class="checkbox-custom"></span>
+                                Subscribe to our newsletter for AI insights and updates
+                            </label>
+                        </div>
+
+                        <button type="submit" class="auth-submit-button">
+                            <span class="button-content">
+                                <span class="button-icon">✨</span>
+                                <span class="button-text">Create Account</span>
+                            </span>
+                            <span class="button-loader" style="display: none;">
+                                <span class="loader-spinner"></span>
+                                <span class="loader-text">Creating account...</span>
+                            </span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Error/Success Messages -->
+                <div id="auth-message" class="auth-message" style="display: none;">
+                    <span class="message-icon"></span>
+                    <span class="message-text"></span>
+                </div>
+
+                <!-- Social Login Options (Future Enhancement) -->
+                <div class="auth-divider">
+                    <span class="divider-text">Or continue with</span>
+                </div>
+
+                <div class="auth-social">
+                    <button class="auth-social-button" data-provider="google" disabled>
+                        <span class="social-icon">🔍</span>
+                        <span class="social-text">Google (Coming Soon)</span>
+                    </button>
+                </div>
+
+                <!-- Footer -->
+                <div class="auth-footer">
+                    <p class="auth-footer-text">
+                        Need help? <a href="../contact/index.html?form=support" class="auth-link">Contact Support</a>
+                    </p>
+                    <a href="../index.html" class="back-to-home">
+                        <span class="back-icon">←</span>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script type="module" src="supabase-client.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/password-validator.js"></script>
+    <script type="module" src="auth.js"></script>
+</body>
+</html>
