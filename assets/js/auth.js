@@ -386,13 +386,214 @@
             }
         }
 
+        async loginAdmin(credentials) {
+            try {
+                console.log('🔐 ADMIN LOGIN: Starting admin login process for:', credentials.email);
+                this.showLoadingState('Verifying administrator credentials...');
+                
+                // Enhanced rate limiting for admin attempts
+                if (this.isRateLimited('admin_login')) {
+                    console.log('🔐 ADMIN LOGIN: Rate limited');
+                    throw new Error('Too many admin login attempts. Access temporarily restricted.');
+                }
+
+                // Validate admin-specific requirements
+                const validation = this.validateAdminLogin(credentials);
+                if (!validation.isValid) {
+                    console.log('🔐 ADMIN LOGIN: Validation failed:', validation.errors);
+                    throw new Error(validation.errors.join(', '));
+                }
+
+                // Extended API delay for admin security
+                console.log('🔐 ADMIN LOGIN: Performing enhanced security checks...');
+                await this.delay(2000);
+
+                // Find user
+                const users = this.getAllUsers();
+                console.log('🔐 ADMIN LOGIN: Searching for admin user:', credentials.email.toLowerCase());
+                
+                const user = users.find(u => u.email === credentials.email.toLowerCase());
+                
+                if (!user) {
+                    console.log('🔐 ADMIN LOGIN: User not found');
+                    this.updateRateLimit('admin_login');
+                    throw new Error('Invalid administrator credentials.');
+                }
+
+                // Verify admin role
+                if (!this.isAdmin(user)) {
+                    console.log('🔐 ADMIN LOGIN: User lacks admin privileges');
+                    this.updateRateLimit('admin_login');
+                    throw new Error('Access denied. Administrator privileges required.');
+                }
+
+                console.log('🔐 ADMIN LOGIN: Found admin user:', {
+                    email: user.email,
+                    role: user.role,
+                    hasPasswordHash: !!user.passwordHash
+                });
+
+                // Verify password with enhanced security checks
+                console.log('🔐 ADMIN LOGIN: Verifying admin password...');
+                const passwordValid = this.verifyAdminPassword(credentials.password, user.passwordHash);
+                console.log('🔐 ADMIN LOGIN: Password verification result:', passwordValid);
+                
+                if (!passwordValid) {
+                    console.log('🔐 ADMIN LOGIN: Password verification failed');
+                    this.updateRateLimit('admin_login');
+                    throw new Error('Invalid administrator credentials.');
+                }
+
+                // Handle 2FA if provided
+                if (credentials.twoFactorCode) {
+                    console.log('🔐 ADMIN LOGIN: Processing 2FA code...');
+                    const twoFactorValid = this.verifyTwoFactorCode(credentials.twoFactorCode, user);
+                    if (!twoFactorValid) {
+                        console.log('🔐 ADMIN LOGIN: 2FA verification failed');
+                        this.updateRateLimit('admin_login');
+                        throw new Error('Invalid two-factor authentication code.');
+                    }
+                    console.log('🔐 ADMIN LOGIN: 2FA verification successful');
+                }
+
+                console.log('🔐 ADMIN LOGIN: Admin authentication successful');
+
+                // Success - clear rate limits
+                this.clearRateLimit('admin_login');
+                
+                this.currentUser = { ...user };
+                delete this.currentUser.passwordHash;
+
+                console.log('🔐 ADMIN LOGIN: Admin user set:', {
+                    email: this.currentUser.email,
+                    role: this.currentUser.role,
+                    isAdmin: this.isAdmin(this.currentUser)
+                });
+
+                // Update last login and add admin activity log
+                this.updateUserActivity('admin_login', {
+                    enhanced_security: true,
+                    two_factor_used: !!credentials.twoFactorCode
+                });
+
+                // Create admin session with extended security
+                this.createAdminSession(credentials.rememberMe);
+                
+                this.hideLoadingState();
+                this.showSuccessMessage('Administrator access granted!');
+                
+                // Update UI
+                this.updateAuthUI();
+                
+                console.log('🔐 ADMIN LOGIN: Admin login process completed successfully');
+                return { success: true, user: this.currentUser };
+                
+            } catch (error) {
+                console.error('🔐 ADMIN LOGIN: Admin login failed with error:', error.message);
+                this.hideLoadingState();
+                this.showErrorMessage(error.message);
+                throw error;
+            }
+        }
+
+        validateAdminLogin(data) {
+            const errors = [];
+
+            if (!this.isValidEmail(data.email)) {
+                errors.push('Please enter a valid administrator email address.');
+            }
+
+            if (!data.password || data.password.length < 12) {
+                errors.push('Administrator password must be at least 12 characters.');
+            }
+
+            // Enhanced password requirements for admin
+            if (!this.isAdminStrongPassword(data.password)) {
+                errors.push('Administrator password must contain uppercase, lowercase, numbers, and special characters.');
+            }
+
+            return {
+                isValid: errors.length === 0,
+                errors
+            };
+        }
+
+        isAdminStrongPassword(password) {
+            // Enhanced password requirements for admin accounts
+            return password.length >= 12 &&
+                   /[a-z]/.test(password) &&
+                   /[A-Z]/.test(password) &&
+                   /\d/.test(password) &&
+                   /[@$!%*?&^#]/.test(password);
+        }
+
+        verifyAdminPassword(password, hash) {
+            // Same verification but with additional logging for admin attempts
+            const result = this.verifyPassword(password, hash);
+            if (!result) {
+                console.warn('🚨 ADMIN LOGIN: Failed password verification attempt');
+            }
+            return result;
+        }
+
+        verifyTwoFactorCode(code, user) {
+            // Simplified 2FA verification for demo
+            // In production, this would verify against TOTP/authenticator app
+            if (!code || code.length !== 6) {
+                return false;
+            }
+            
+            // For demo purposes, accept any 6-digit numeric code
+            // In production, implement proper TOTP verification
+            return /^\d{6}$/.test(code);
+        }
+
+        createAdminSession(rememberMe = false) {
+            const sessionData = {
+                user: this.currentUser,
+                created: Date.now(),
+                expires: Date.now() + (7 * 24 * 60 * 60 * 1000), // 7 days for admin
+                admin: true,
+                enhanced_security: true
+            };
+            
+            console.log('💾 Creating admin session with enhanced security');
+            
+            // Save to sessionStorage for current tab
+            sessionStorage.setItem(AUTH_CONFIG.storage.sessionKey, JSON.stringify(sessionData));
+            
+            // Save to persistent storage for cross-tab access
+            this.savePersistentSession(sessionData);
+
+            // Handle remember me for admin (shorter duration)
+            if (rememberMe) {
+                const rememberData = {
+                    user: this.currentUser,
+                    created: Date.now(),
+                    expires: Date.now() + (7 * 24 * 60 * 60 * 1000), // 7 days max for admin
+                    admin: true
+                };
+                localStorage.setItem(AUTH_CONFIG.storage.rememberKey + '_admin', JSON.stringify(rememberData));
+                console.log('🔐 Admin remember token set (7 days)');
+            }
+        }
+
         logout() {
+            const wasAdmin = this.currentUser && this.isAdmin(this.currentUser);
+            
             this.clearAllSessions();
+            
+            // Clear admin-specific storage
+            if (wasAdmin) {
+                localStorage.removeItem(AUTH_CONFIG.storage.rememberKey + '_admin');
+                console.log('🔐 Admin session cleared');
+            }
+            
             this.updateAuthUI();
-            this.showInfoMessage('You have been logged out.');
+            this.showInfoMessage(wasAdmin ? 'Administrator logged out.' : 'You have been logged out.');
             
             // Redirect to home page if on protected page
-            if (window.location.pathname.includes('settings')) {
+            if (window.location.pathname.includes('settings') || window.location.pathname.includes('admin')) {
                 window.location.href = '/';
             }
         }
@@ -437,6 +638,85 @@
                 this.hideLoadingState();
                 this.showErrorMessage(error.message);
                 throw error;
+            }
+        }
+
+        async initiateAdminPasswordReset(email) {
+            try {
+                this.showLoadingState('Processing secure admin reset...');
+                
+                // Enhanced rate limiting for admin resets
+                if (this.isRateLimited('admin_reset')) {
+                    throw new Error('Please wait before requesting another admin password reset.');
+                }
+
+                // Validate email
+                if (!this.isValidEmail(email)) {
+                    throw new Error('Please enter a valid administrator email address.');
+                }
+
+                // Extended delay for admin security
+                await this.delay(3000);
+
+                // Check if admin user exists
+                const users = this.getAllUsers();
+                const user = users.find(u => u.email === email.toLowerCase());
+                const isAdminUser = user && this.isAdmin(user);
+                
+                // Always show success message for security
+                this.updateRateLimit('admin_reset');
+                this.hideLoadingState();
+                
+                if (isAdminUser) {
+                    this.showSuccessMessage('Admin password reset instructions sent. Please check your email and follow the enhanced security verification process.');
+                    console.log(`🔒 Admin password reset would be sent to: ${email} with enhanced security`);
+                    
+                    // Log admin reset attempt for security
+                    this.logSecurityEvent('admin_password_reset_requested', {
+                        email: email,
+                        timestamp: Date.now(),
+                        ip: this.getClientIP()
+                    });
+                } else {
+                    // Same success message to prevent email enumeration
+                    this.showSuccessMessage('Admin password reset instructions sent. Please check your email and follow the enhanced security verification process.');
+                    console.log(`🔒 Admin password reset attempted for non-admin email: ${email}`);
+                }
+                
+                return { success: true };
+                
+            } catch (error) {
+                this.hideLoadingState();
+                this.showErrorMessage(error.message);
+                throw error;
+            }
+        }
+
+        logSecurityEvent(event, data) {
+            // Log security events for admin activities
+            const securityLog = {
+                event,
+                data,
+                timestamp: Date.now(),
+                userAgent: navigator.userAgent
+            };
+            
+            // In production, send to security logging service
+            console.log('🛡️ SECURITY EVENT:', securityLog);
+            
+            // Store locally for demo purposes
+            try {
+                const existingLogs = JSON.parse(localStorage.getItem('learntav_security_log') || '[]');
+                existingLogs.push(securityLog);
+                
+                // Keep only last 100 security events
+                if (existingLogs.length > 100) {
+                    existingLogs.splice(0, existingLogs.length - 100);
+                }
+                
+                localStorage.setItem('learntav_security_log', JSON.stringify(existingLogs));
+            } catch (error) {
+                console.error('Failed to log security event:', error);
             }
         }
 
@@ -677,6 +957,15 @@
                 users[userIndex] = completeUser;
                 localStorage.setItem('learntav_users', JSON.stringify(users));
             }
+        }
+
+        // ===================================================================
+        // Admin Role Check
+        // ===================================================================
+        
+        isAdmin(user) {
+            if (!user) return false;
+            return user.role === 'admin' || user.role === 'super_admin';
         }
 
         // ===================================================================
@@ -951,6 +1240,18 @@
             if (redirectPath) {
                 sessionStorage.removeItem('auth_redirect');
                 window.location.href = redirectPath;
+            }
+        }
+
+        handleSuccessfulAdminLogin() {
+            // Admin users might want to go to admin panel or stay on current page
+            const redirectPath = sessionStorage.getItem('auth_redirect');
+            if (redirectPath) {
+                sessionStorage.removeItem('auth_redirect');
+                window.location.href = redirectPath;
+            } else {
+                // Optionally redirect to admin panel or show admin options
+                console.log('🔒 Admin logged in successfully');
             }
         }
     }

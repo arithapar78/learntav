@@ -189,34 +189,52 @@
                                 <span>&times;</span>
                             </button>
                         </div>
+                        
+                        <!-- Authentication Type Selector -->
+                        <div class="auth-type-selector">
+                            <button type="button" class="auth-type-btn auth-type-btn--active" data-auth-type="user" onclick="window.LearnTAVAuthUI.switchAuthType('user')">
+                                <span class="auth-type-icon">👤</span>
+                                <span class="auth-type-text">User Sign-In</span>
+                            </button>
+                            <button type="button" class="auth-type-btn" data-auth-type="admin" onclick="window.LearnTAVAuthUI.switchAuthType('admin')">
+                                <span class="auth-type-icon">🔒</span>
+                                <span class="auth-type-text">Admin Sign-In</span>
+                            </button>
+                        </div>
+
                         <div class="auth-modal__body">
-                            <form id="login-form" class="auth-form" onsubmit="window.LearnTAVAuthUI.handleLogin(event)">
+                            <!-- User Login Form -->
+                            <form id="user-login-form" class="auth-form auth-form--user active" data-auth-form="user" onsubmit="window.LearnTAVAuthUI.handleUserLogin(event)">
+                                <div class="auth-form__intro">
+                                    <p class="auth-form__intro-text">Sign in to access your personalized learning experience</p>
+                                </div>
+                                
                                 <div class="auth-form__group">
-                                    <label class="auth-form__label" for="login-email">Email Address *</label>
-                                    <input type="email" id="login-email" name="email" class="auth-form__input" required>
-                                    <div class="auth-form__error" id="login-email-error"></div>
+                                    <label class="auth-form__label" for="user-login-email">Email Address *</label>
+                                    <input type="email" id="user-login-email" name="email" class="auth-form__input" required>
+                                    <div class="auth-form__error" id="user-login-email-error"></div>
                                 </div>
 
                                 <div class="auth-form__group">
-                                    <label class="auth-form__label" for="login-password">Password *</label>
+                                    <label class="auth-form__label" for="user-login-password">Password *</label>
                                     <div class="auth-form__input-wrapper">
-                                        <input type="password" id="login-password" name="password" class="auth-form__input" required>
-                                        <button type="button" class="auth-form__toggle-password" onclick="window.LearnTAVAuthUI.togglePassword('login-password')">
+                                        <input type="password" id="user-login-password" name="password" class="auth-form__input" required minlength="6">
+                                        <button type="button" class="auth-form__toggle-password" onclick="window.LearnTAVAuthUI.togglePassword('user-login-password')">
                                             <span class="toggle-password-icon">👁️</span>
                                         </button>
                                     </div>
-                                    <div class="auth-form__error" id="login-password-error"></div>
+                                    <div class="auth-form__error" id="user-login-password-error"></div>
                                 </div>
 
                                 <div class="auth-form__row">
                                     <div class="auth-form__group auth-form__group--checkbox">
                                         <label class="auth-form__checkbox-label">
-                                            <input type="checkbox" id="login-remember" name="rememberMe" class="auth-form__checkbox">
+                                            <input type="checkbox" id="user-login-remember" name="rememberMe" class="auth-form__checkbox">
                                             <span class="auth-form__checkbox-custom"></span>
                                             Remember me
                                         </label>
                                     </div>
-                                    <button type="button" class="auth-link" onclick="window.LearnTAVAuthUI.showResetModal()">
+                                    <button type="button" class="auth-link" onclick="window.LearnTAVAuthUI.showResetModal('user')">
                                         Forgot Password?
                                     </button>
                                 </div>
@@ -226,55 +244,177 @@
                                     <span class="auth-btn__loading">Signing In...</span>
                                 </button>
                             </form>
+
+                            <!-- Admin Login Form -->
+                            <form id="admin-login-form" class="auth-form auth-form--admin" data-auth-form="admin" onsubmit="window.LearnTAVAuthUI.handleAdminLogin(event)">
+                                <div class="auth-form__intro auth-form__intro--admin">
+                                    <p class="auth-form__intro-text">🔐 Administrative access requires enhanced security verification</p>
+                                    <div class="auth-security-badge">
+                                        <span class="security-badge-icon">🛡️</span>
+                                        <span class="security-badge-text">Elevated Security Required</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="auth-form__group">
+                                    <label class="auth-form__label" for="admin-login-email">Administrator Email *</label>
+                                    <input type="email" id="admin-login-email" name="email" class="auth-form__input auth-form__input--admin" required>
+                                    <div class="auth-form__error" id="admin-login-email-error"></div>
+                                </div>
+
+                                <div class="auth-form__group">
+                                    <label class="auth-form__label" for="admin-login-password">
+                                        Administrator Password *
+                                        <span class="auth-form__label-note">(Requires: 12+ chars, uppercase, lowercase, numbers, symbols)</span>
+                                    </label>
+                                    <div class="auth-form__input-wrapper">
+                                        <input type="password" id="admin-login-password" name="password" class="auth-form__input auth-form__input--admin" required minlength="12">
+                                        <button type="button" class="auth-form__toggle-password" onclick="window.LearnTAVAuthUI.togglePassword('admin-login-password')">
+                                            <span class="toggle-password-icon">👁️</span>
+                                        </button>
+                                    </div>
+                                    <div class="auth-form__password-requirements" id="admin-password-requirements">
+                                        <div class="requirement" data-requirement="length">✗ At least 12 characters</div>
+                                        <div class="requirement" data-requirement="uppercase">✗ Uppercase letter</div>
+                                        <div class="requirement" data-requirement="lowercase">✗ Lowercase letter</div>
+                                        <div class="requirement" data-requirement="number">✗ Number</div>
+                                        <div class="requirement" data-requirement="symbol">✗ Special character</div>
+                                    </div>
+                                    <div class="auth-form__error" id="admin-login-password-error"></div>
+                                </div>
+
+                                <div class="auth-form__group">
+                                    <label class="auth-form__label" for="admin-2fa-code">
+                                        Two-Factor Authentication Code
+                                        <span class="auth-form__label-note">(Optional - Enter if enabled)</span>
+                                    </label>
+                                    <input type="text" id="admin-2fa-code" name="twoFactorCode" class="auth-form__input auth-form__input--admin auth-form__input--2fa" placeholder="000000" maxlength="6">
+                                    <div class="auth-form__hint">💡 Enter your 6-digit authenticator code if 2FA is enabled</div>
+                                    <div class="auth-form__error" id="admin-2fa-code-error"></div>
+                                </div>
+
+                                <div class="auth-form__row">
+                                    <div class="auth-form__group auth-form__group--checkbox">
+                                        <label class="auth-form__checkbox-label">
+                                            <input type="checkbox" id="admin-login-remember" name="rememberMe" class="auth-form__checkbox">
+                                            <span class="auth-form__checkbox-custom"></span>
+                                            Remember this device (7 days)
+                                        </label>
+                                    </div>
+                                    <button type="button" class="auth-link" onclick="window.LearnTAVAuthUI.showResetModal('admin')">
+                                        Reset Admin Password
+                                    </button>
+                                </div>
+
+                                <button type="submit" class="auth-btn auth-btn--admin auth-btn--large auth-btn--full">
+                                    <span class="auth-btn__text">🔐 Secure Admin Sign In</span>
+                                    <span class="auth-btn__loading">Verifying Credentials...</span>
+                                </button>
+                            </form>
                         </div>
+                        
                         <div class="auth-modal__footer">
-                            <p class="auth-modal__switch">
-                                Don't have an account? 
-                                <button type="button" class="auth-link" onclick="window.LearnTAVAuthUI.showRegisterModal()">Create Account</button>
-                            </p>
+                            <div class="auth-footer-content" data-auth-type="user">
+                                <p class="auth-modal__switch">
+                                    Don't have an account?
+                                    <button type="button" class="auth-link" onclick="window.LearnTAVAuthUI.showRegisterModal()">Create Account</button>
+                                </p>
+                            </div>
+                            <div class="auth-footer-content" data-auth-type="admin" style="display: none;">
+                                <p class="auth-modal__switch auth-modal__switch--admin">
+                                    🔒 Administrative access is restricted to authorized personnel only
+                                </p>
+                                <div class="admin-contact-info">
+                                    <small>Need admin access? Contact your system administrator</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             `;
             
             this.showModal(modalHTML);
-            this.setupRealTimeValidation('login-form');
+            this.setupDualAuthValidation();
+            this.setupAdminPasswordRequirements();
         }
 
         // ===================================================================
         // Password Reset Modal
         // ===================================================================
         
-        showResetModal() {
+        showResetModal(resetType = 'user') {
+            const isAdminReset = resetType === 'admin';
             const modalHTML = `
                 <div class="auth-modal-overlay" onclick="window.LearnTAVAuthUI.closeModal()">
-                    <div class="auth-modal auth-modal--reset" onclick="event.stopPropagation()">
+                    <div class="auth-modal auth-modal--reset ${isAdminReset ? 'auth-modal--admin-reset' : ''}" onclick="event.stopPropagation()">
                         <div class="auth-modal__header">
-                            <h2 class="auth-modal__title">Reset Password</h2>
+                            <h2 class="auth-modal__title ${isAdminReset ? 'auth-modal__title--admin' : ''}">
+                                ${isAdminReset ? '🔒 Reset Administrator Password' : 'Reset Password'}
+                            </h2>
                             <button class="auth-modal__close" onclick="window.LearnTAVAuthUI.closeModal()" aria-label="Close">
                                 <span>&times;</span>
                             </button>
                         </div>
                         <div class="auth-modal__body">
-                            <p class="auth-modal__description">
-                                Enter your email address and we'll send you instructions to reset your password.
-                            </p>
-                            <form id="reset-form" class="auth-form" onsubmit="window.LearnTAVAuthUI.handleReset(event)">
+                            ${isAdminReset ? `
+                                <div class="auth-security-notice">
+                                    <div class="security-notice-icon">🛡️</div>
+                                    <div class="security-notice-content">
+                                        <strong>Enhanced Security Process</strong>
+                                        <p>Administrator password resets require additional verification steps including identity confirmation and security questions.</p>
+                                    </div>
+                                </div>
+                            ` : `
+                                <p class="auth-modal__description">
+                                    Enter your email address and we'll send you instructions to reset your password.
+                                </p>
+                            `}
+                            
+                            <form id="reset-form" class="auth-form ${isAdminReset ? 'auth-form--admin-reset' : ''}" data-reset-type="${resetType}" onsubmit="window.LearnTAVAuthUI.handleReset(event)">
                                 <div class="auth-form__group">
-                                    <label class="auth-form__label" for="reset-email">Email Address *</label>
-                                    <input type="email" id="reset-email" name="email" class="auth-form__input" required>
+                                    <label class="auth-form__label" for="reset-email">
+                                        ${isAdminReset ? 'Administrator Email Address *' : 'Email Address *'}
+                                    </label>
+                                    <input type="email" id="reset-email" name="email" class="auth-form__input ${isAdminReset ? 'auth-form__input--admin' : ''}" required>
                                     <div class="auth-form__error" id="reset-email-error"></div>
                                 </div>
 
-                                <button type="submit" class="auth-btn auth-btn--primary auth-btn--large auth-btn--full">
-                                    <span class="auth-btn__text">Send Reset Instructions</span>
-                                    <span class="auth-btn__loading">Sending...</span>
+                                ${isAdminReset ? `
+                                    <div class="auth-form__group">
+                                        <label class="auth-form__label" for="reset-admin-id">
+                                            Administrator ID (Optional)
+                                            <span class="auth-form__label-note">If you know your admin ID, enter it for faster processing</span>
+                                        </label>
+                                        <input type="text" id="reset-admin-id" name="adminId" class="auth-form__input auth-form__input--admin" placeholder="ADMIN-XXXX">
+                                    </div>
+                                ` : ''}
+
+                                <button type="submit" class="auth-btn ${isAdminReset ? 'auth-btn--admin' : 'auth-btn--primary'} auth-btn--large auth-btn--full">
+                                    <span class="auth-btn__text">
+                                        ${isAdminReset ? '🔐 Send Secure Reset Instructions' : 'Send Reset Instructions'}
+                                    </span>
+                                    <span class="auth-btn__loading">
+                                        ${isAdminReset ? 'Processing Secure Request...' : 'Sending...'}
+                                    </span>
                                 </button>
                             </form>
+                            
+                            ${isAdminReset ? `
+                                <div class="auth-admin-help">
+                                    <div class="admin-help-title">Need Additional Help?</div>
+                                    <div class="admin-help-options">
+                                        <button type="button" class="auth-help-btn" onclick="window.open('/admin/recovery/', '_blank')">
+                                            🔧 Admin Recovery Tools
+                                        </button>
+                                        <button type="button" class="auth-help-btn" onclick="window.open('mailto:admin@learntav.com', '_blank')">
+                                            📧 Contact System Admin
+                                        </button>
+                                    </div>
+                                </div>
+                            ` : ''}
                         </div>
                         <div class="auth-modal__footer">
                             <p class="auth-modal__switch">
-                                Remember your password? 
+                                Remember your password?
                                 <button type="button" class="auth-link" onclick="window.LearnTAVAuthUI.showLoginModal()">Sign In</button>
                             </p>
                         </div>
@@ -318,49 +458,14 @@
         }
 
         async handleLogin(event) {
-            event.preventDefault();
-            
-            console.log('🔐 handleLogin called');
-            console.log('🔐 this.authInstance:', !!this.authInstance);
-            console.log('🔐 window.LearnTAVAuth:', !!window.LearnTAVAuth);
-            
-            const authSystem = this.authInstance || window.LearnTAVAuth;
-            if (!authSystem) {
-                console.error('💥 Authentication system not available!');
-                this.showError('Authentication system not available');
-                return;
-            }
-
+            // Legacy handler - redirect to appropriate handler
             const form = event.target;
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData);
+            const isAdminForm = form.classList.contains('auth-form--admin');
             
-            console.log('🔐 Form data:', {
-                email: data.email,
-                hasPassword: !!data.password,
-                rememberMe: !!data.rememberMe
-            });
-
-            // Show loading state
-            this.setFormLoading(form, true);
-
-            try {
-                console.log('🔐 Calling authSystem.login...');
-                const result = await authSystem.login(data);
-                console.log('🔐 Login successful:', result);
-                
-                this.closeModal();
-                this.showSuccess('Welcome back!');
-                
-                // Handle redirect if needed
-                if (window.LearnTAVAccessControl) {
-                    window.LearnTAVAccessControl.handleSuccessfulLogin();
-                }
-            } catch (error) {
-                console.error('💥 Login error:', error);
-                this.showError(error.message);
-            } finally {
-                this.setFormLoading(form, false);
+            if (isAdminForm) {
+                return this.handleAdminLogin(event);
+            } else {
+                return this.handleUserLogin(event);
             }
         }
 
@@ -376,19 +481,231 @@
             const form = event.target;
             const formData = new FormData(form);
             const email = formData.get('email');
+            const resetType = form.dataset.resetType || 'user';
 
             // Show loading state
             this.setFormLoading(form, true);
 
             try {
-                await authSystem.initiatePasswordReset(email);
-                this.closeModal();
-                this.showSuccess('Reset instructions sent! Check your email.');
+                if (resetType === 'admin') {
+                    await authSystem.initiateAdminPasswordReset(email);
+                    this.closeModal();
+                    this.showSuccess('🔒 Admin password reset instructions sent! Check your email and follow the secure verification process.');
+                } else {
+                    await authSystem.initiatePasswordReset(email);
+                    this.closeModal();
+                    this.showSuccess('Reset instructions sent! Check your email.');
+                }
             } catch (error) {
                 this.showError(error.message);
             } finally {
                 this.setFormLoading(form, false);
             }
+        }
+
+        // ===================================================================
+        // Dual Authentication Methods
+        // ===================================================================
+
+        switchAuthType(authType) {
+            // Update type selector buttons
+            document.querySelectorAll('.auth-type-btn').forEach(btn => {
+                btn.classList.remove('auth-type-btn--active');
+                if (btn.dataset.authType === authType) {
+                    btn.classList.add('auth-type-btn--active');
+                }
+            });
+
+            // Switch forms with animation
+            const forms = document.querySelectorAll('[data-auth-form]');
+            forms.forEach(form => {
+                if (form.dataset.authForm === authType) {
+                    form.style.opacity = '0';
+                    form.style.display = 'block';
+                    setTimeout(() => {
+                        form.style.opacity = '1';
+                        form.classList.add('active');
+                    }, 50);
+                } else {
+                    form.style.opacity = '0';
+                    setTimeout(() => {
+                        form.style.display = 'none';
+                        form.classList.remove('active');
+                    }, 200);
+                }
+            });
+
+            // Switch footer content
+            document.querySelectorAll('.auth-footer-content').forEach(footer => {
+                if (footer.dataset.authType === authType) {
+                    footer.style.display = 'block';
+                } else {
+                    footer.style.display = 'none';
+                }
+            });
+
+            // Update modal title based on auth type
+            const title = document.querySelector('.auth-modal__title');
+            if (title) {
+                title.textContent = authType === 'admin' ? '🔒 Administrator Access' : 'Welcome Back';
+                title.classList.toggle('auth-modal__title--admin', authType === 'admin');
+            }
+
+            // Focus first input of active form
+            setTimeout(() => {
+                const activeForm = document.querySelector(`[data-auth-form="${authType}"].active`);
+                if (activeForm) {
+                    const firstInput = activeForm.querySelector('input:not([type="hidden"]):not([type="checkbox"])');
+                    if (firstInput) firstInput.focus();
+                }
+            }, 250);
+        }
+
+        async handleUserLogin(event) {
+            event.preventDefault();
+            
+            console.log('🔐 handleUserLogin called');
+            
+            const authSystem = this.authInstance || window.LearnTAVAuth;
+            if (!authSystem) {
+                console.error('💥 Authentication system not available!');
+                this.showError('Authentication system not available');
+                return;
+            }
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+            
+            console.log('🔐 User login data:', {
+                email: data.email,
+                hasPassword: !!data.password,
+                rememberMe: !!data.rememberMe
+            });
+
+            // Show loading state
+            this.setFormLoading(form, true);
+
+            try {
+                console.log('🔐 Calling user login...');
+                const result = await authSystem.login(data);
+                console.log('🔐 User login successful:', result);
+                
+                this.closeModal();
+                this.showSuccess(`Welcome back, ${result.user?.fullName || 'User'}!`);
+                
+                // Handle redirect if needed
+                if (window.LearnTAVAccessControl) {
+                    window.LearnTAVAccessControl.handleSuccessfulLogin();
+                }
+            } catch (error) {
+                console.error('💥 User login error:', error);
+                this.showError(error.message || 'Invalid email or password');
+            } finally {
+                this.setFormLoading(form, false);
+            }
+        }
+
+        async handleAdminLogin(event) {
+            event.preventDefault();
+            
+            console.log('🔐 handleAdminLogin called');
+            
+            const authSystem = this.authInstance || window.LearnTAVAuth;
+            if (!authSystem) {
+                console.error('💥 Authentication system not available!');
+                this.showError('Authentication system not available');
+                return;
+            }
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+            
+            // Validate admin password requirements
+            if (!this.validateAdminPassword(data.password)) {
+                this.showError('Password does not meet administrative security requirements');
+                return;
+            }
+            
+            console.log('🔐 Admin login data:', {
+                email: data.email,
+                hasPassword: !!data.password,
+                has2FA: !!data.twoFactorCode,
+                rememberMe: !!data.rememberMe
+            });
+
+            // Mark as admin login attempt
+            data.isAdminLogin = true;
+            data.requireAdminRights = true;
+
+            // Show loading state
+            this.setFormLoading(form, true);
+
+            try {
+                console.log('🔐 Calling admin login...');
+                const result = await authSystem.login(data);
+                console.log('🔐 Admin login successful:', result);
+                
+                this.closeModal();
+                this.showSuccess(`🔒 Administrator access granted. Welcome, ${result.user?.fullName || 'Admin'}!`);
+                
+                // Handle admin redirect
+                if (window.LearnTAVAccessControl) {
+                    window.LearnTAVAccessControl.handleSuccessfulAdminLogin();
+                }
+            } catch (error) {
+                console.error('💥 Admin login error:', error);
+                this.showError(`🔒 Access denied: ${error.message || 'Invalid administrator credentials'}`);
+            } finally {
+                this.setFormLoading(form, false);
+            }
+        }
+
+        setupDualAuthValidation() {
+            // Setup validation for both user and admin forms
+            this.setupRealTimeValidation('user-login-form');
+            this.setupRealTimeValidation('admin-login-form');
+        }
+
+        setupAdminPasswordRequirements() {
+            const adminPasswordInput = document.getElementById('admin-login-password');
+            const requirementsContainer = document.getElementById('admin-password-requirements');
+            
+            if (!adminPasswordInput || !requirementsContainer) return;
+
+            adminPasswordInput.addEventListener('input', () => {
+                const password = adminPasswordInput.value;
+                this.updatePasswordRequirements(password, requirementsContainer);
+            });
+        }
+
+        updatePasswordRequirements(password, container) {
+            const requirements = [
+                { key: 'length', test: password.length >= 12, text: 'At least 12 characters' },
+                { key: 'uppercase', test: /[A-Z]/.test(password), text: 'Uppercase letter' },
+                { key: 'lowercase', test: /[a-z]/.test(password), text: 'Lowercase letter' },
+                { key: 'number', test: /\d/.test(password), text: 'Number' },
+                { key: 'symbol', test: /[@$!%*?&^#]/.test(password), text: 'Special character' }
+            ];
+
+            requirements.forEach(req => {
+                const element = container.querySelector(`[data-requirement="${req.key}"]`);
+                if (element) {
+                    element.textContent = req.test ? `✓ ${req.text}` : `✗ ${req.text}`;
+                    element.classList.toggle('requirement--met', req.test);
+                }
+            });
+        }
+
+        validateAdminPassword(password) {
+            if (!password) return false;
+            
+            return password.length >= 12 &&
+                   /[A-Z]/.test(password) &&
+                   /[a-z]/.test(password) &&
+                   /\d/.test(password) &&
+                   /[@$!%*?&^#]/.test(password);
         }
 
         // ===================================================================
@@ -697,6 +1014,285 @@
 
                 .auth-modal-container--active .auth-modal {
                     transform: scale(1);
+                }
+
+                /* Dual Authentication Styles */
+                .auth-type-selector {
+                    display: flex;
+                    gap: 8px;
+                    padding: 8px;
+                    margin: 0 32px 24px;
+                    background: var(--gray-50, #f9fafb);
+                    border-radius: 12px;
+                    border: 1px solid var(--gray-200, #e5e7eb);
+                }
+
+                .auth-type-btn {
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                    padding: 12px 16px;
+                    border: none;
+                    border-radius: 8px;
+                    background: transparent;
+                    color: var(--text-secondary, #6b7280);
+                    font-weight: 500;
+                    font-size: 14px;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                }
+
+                .auth-type-btn--active {
+                    background: white;
+                    color: var(--primary, #2563eb);
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                    font-weight: 600;
+                }
+
+                .auth-type-btn:hover:not(.auth-type-btn--active) {
+                    color: var(--text-primary, #1f2937);
+                    background: rgba(255, 255, 255, 0.5);
+                }
+
+                .auth-type-icon {
+                    font-size: 16px;
+                }
+
+                .auth-form--user,
+                .auth-form--admin {
+                    display: none;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                }
+
+                .auth-form--user.active,
+                .auth-form--admin.active {
+                    display: block;
+                    opacity: 1;
+                }
+
+                .auth-form__intro {
+                    text-align: center;
+                    margin-bottom: 24px;
+                    padding: 16px;
+                    background: var(--gray-50, #f9fafb);
+                    border-radius: 8px;
+                    border-left: 4px solid var(--primary, #2563eb);
+                }
+
+                .auth-form__intro--admin {
+                    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+                    border-left-color: var(--red-500, #ef4444);
+                }
+
+                .auth-form__intro-text {
+                    margin: 0;
+                    color: var(--text-secondary, #6b7280);
+                    font-size: 14px;
+                    line-height: 1.5;
+                }
+
+                .auth-security-badge {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                    margin-top: 8px;
+                    padding: 6px 12px;
+                    background: rgba(220, 38, 38, 0.1);
+                    border: 1px solid rgba(220, 38, 38, 0.2);
+                    border-radius: 6px;
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: var(--red-700, #b91c1c);
+                }
+
+                .security-badge-icon {
+                    font-size: 14px;
+                }
+
+                .auth-form__input--admin {
+                    border-color: var(--red-300, #fca5a5);
+                    background: rgba(220, 38, 38, 0.02);
+                }
+
+                .auth-form__input--admin:focus {
+                    border-color: var(--red-500, #ef4444);
+                    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+                }
+
+                .auth-form__label-note {
+                    display: block;
+                    font-size: 12px;
+                    font-weight: 400;
+                    color: var(--text-muted, #9ca3af);
+                    margin-top: 4px;
+                }
+
+                .auth-form__password-requirements {
+                    margin-top: 8px;
+                    padding: 12px;
+                    background: var(--gray-50, #f9fafb);
+                    border-radius: 6px;
+                    border: 1px solid var(--gray-200, #e5e7eb);
+                }
+
+                .requirement {
+                    font-size: 12px;
+                    color: var(--error, #dc2626);
+                    margin-bottom: 4px;
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    transition: color 0.2s ease;
+                }
+
+                .requirement:last-child {
+                    margin-bottom: 0;
+                }
+
+                .requirement--met {
+                    color: var(--success, #059669);
+                }
+
+                .auth-form__input--2fa {
+                    text-align: center;
+                    font-family: 'Courier New', monospace;
+                    font-size: 18px;
+                    letter-spacing: 2px;
+                }
+
+                .auth-form__hint {
+                    font-size: 12px;
+                    color: var(--text-muted, #9ca3af);
+                    margin-top: 6px;
+                    text-align: center;
+                }
+
+                .auth-btn--admin {
+                    background: linear-gradient(135deg, var(--red-600, #dc2626), var(--red-700, #b91c1c));
+                    color: white;
+                    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+                }
+
+                .auth-btn--admin:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+                }
+
+                .auth-modal__title--admin {
+                    background: linear-gradient(135deg, var(--red-600, #dc2626), var(--red-800, #991b1b));
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                }
+
+                .auth-modal__switch--admin {
+                    background: rgba(220, 38, 38, 0.1);
+                    padding: 12px;
+                    border-radius: 8px;
+                    border: 1px solid rgba(220, 38, 38, 0.2);
+                    color: var(--red-700, #b91c1c);
+                    font-weight: 500;
+                }
+
+                .admin-contact-info {
+                    margin-top: 8px;
+                    text-align: center;
+                }
+
+                .admin-contact-info small {
+                    color: var(--text-muted, #9ca3af);
+                    font-size: 11px;
+                }
+
+                /* Password Reset Admin Styles */
+                .auth-modal--admin-reset .auth-modal__title {
+                    background: linear-gradient(135deg, var(--red-600, #dc2626), var(--red-800, #991b1b));
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                }
+
+                .auth-security-notice {
+                    display: flex;
+                    gap: 12px;
+                    padding: 16px;
+                    background: rgba(220, 38, 38, 0.1);
+                    border: 1px solid rgba(220, 38, 38, 0.2);
+                    border-radius: 8px;
+                    margin-bottom: 24px;
+                }
+
+                .security-notice-icon {
+                    font-size: 24px;
+                    color: var(--red-600, #dc2626);
+                    flex-shrink: 0;
+                }
+
+                .security-notice-content strong {
+                    color: var(--red-700, #b91c1c);
+                    font-size: 14px;
+                    display: block;
+                    margin-bottom: 4px;
+                }
+
+                .security-notice-content p {
+                    color: var(--red-600, #dc2626);
+                    font-size: 13px;
+                    margin: 0;
+                    line-height: 1.4;
+                }
+
+                .auth-form--admin-reset .auth-form__input {
+                    border-color: var(--red-300, #fca5a5);
+                    background: rgba(220, 38, 38, 0.02);
+                }
+
+                .auth-admin-help {
+                    margin-top: 24px;
+                    padding: 16px;
+                    background: var(--gray-50, #f9fafb);
+                    border-radius: 8px;
+                    border: 1px solid var(--gray-200, #e5e7eb);
+                }
+
+                .admin-help-title {
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: var(--text-primary, #1f2937);
+                    margin-bottom: 12px;
+                    text-align: center;
+                }
+
+                .admin-help-options {
+                    display: flex;
+                    gap: 8px;
+                    justify-content: center;
+                }
+
+                .auth-help-btn {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 8px 12px;
+                    background: white;
+                    border: 1px solid var(--gray-300, #d1d5db);
+                    border-radius: 6px;
+                    color: var(--text-secondary, #6b7280);
+                    font-size: 12px;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    text-decoration: none;
+                }
+
+                .auth-help-btn:hover {
+                    background: var(--primary, #2563eb);
+                    color: white;
+                    border-color: var(--primary, #2563eb);
                 }
 
                 .auth-modal__header {

@@ -399,16 +399,7 @@
                 'settings_updated': 'Settings updated'
             };
             
-            let text = actions[log.event] || 'System event';
-            
-            if (log.userId) {
-                const user = this.getUserById(log.userId);
-                if (user) {
-                    text += `: ${user.email}`;
-                }
-            }
-            
-            return text;
+            return actions[log.event] || 'System event';
         }
 
         formatTimeAgo(timestamp) {
@@ -476,8 +467,8 @@
                     <td>${user.lastLogin ? new Date(user.lastLogin).toLocaleDateString() : 'Never'}</td>
                     <td>
                         <div class="admin-actions">
-                            <button class="admin-btn admin-btn--small admin-btn--secondary" onclick="AdminPanel.editUser('${user.id}')">Edit</button>
-                            <button class="admin-btn admin-btn--small admin-btn--danger" onclick="AdminPanel.suspendUser('${user.id}')">Suspend</button>
+                            <button class="admin-btn admin-btn--small admin-btn--secondary" onclick="window.AdminPanel.editUser('${user.id}')">Edit</button>
+                            <button class="admin-btn admin-btn--small admin-btn--danger" onclick="window.AdminPanel.suspendUser('${user.id}')">Suspend</button>
                         </div>
                     </td>
                 </tr>
@@ -518,7 +509,7 @@
                     <td>${new Date(session.lastActivity).toLocaleString()}</td>
                     <td>
                         <div class="admin-actions">
-                            <button class="admin-btn admin-btn--small admin-btn--danger" onclick="AdminPanel.revokeSession('${session.id}')">Revoke</button>
+                            <button class="admin-btn admin-btn--small admin-btn--danger" onclick="window.AdminPanel.revokeSession('${session.id}')">Revoke</button>
                         </div>
                     </td>
                 </tr>
@@ -550,7 +541,7 @@
                         <span class="admin-activity__icon">${this.getActivityIcon(log.event)}</span>
                         ${log.event.replace(/_/g, ' ')}
                     </td>
-                    <td>${log.userId ? this.getUserById(log.userId)?.email || 'Unknown' : '-'}</td>
+                    <td>${log.userId || '-'}</td>
                     <td>${log.ipAddress || '-'}</td>
                     <td>${log.reason || JSON.stringify(log.data || {})}</td>
                 </tr>
@@ -646,9 +637,6 @@
             return [];
         }
 
-        getUserById(userId) {
-            return null;
-        }
 
         getActiveSessions() {
             return [];
