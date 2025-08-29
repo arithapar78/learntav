@@ -1,7 +1,10 @@
 /**
  * Contact Page JavaScript
  * Handles tab switching, FAQ accordion, and enhanced form interactions
+ * Integrated with Supabase for form submissions
  */
+
+import { submitContactForm } from '../auth/supabase-client.js';
 
 (function() {
     'use strict';
@@ -808,73 +811,90 @@ if (!document.querySelector('#floating-label-styles')) {
         });
     }
     
-    function submitFormData(submissionData, submitBtn, form) {
-        // For a static site, use mailto as the primary method
-        const mailtoFallback = () => {
-            try {
-                const subject = encodeURIComponent(`LearnTAV Contact: ${submissionData.formType || 'General'}`);
-                const body = encodeURIComponent(
-                    Object.keys(submissionData)
-                        .filter(key => !['timestamp', 'userAgent', 'url', 'formType'].includes(key))
-                        .map(key => `${key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}: ${submissionData[key]}`)
-                        .join('\n\n')
-                );
-                window.location.href = `mailto:hello@learntav.com?subject=${subject}&body=${body}`;
-                
-                // Show success message after a brief delay
-                setTimeout(() => {
-                    showSuccessMessage(form);
-                }, 1000);
-                
-            } catch (error) {
-                console.error('Error creating mailto link:', error);
-                showErrorMessage(form, 'Unable to open email client. Please email us directly at hello@learntav.com');
+    async function submitFormData(submissionData, submitBtn, form) {
+        try {
+            // Check for honeypot spam protection
+            if (submissionData.website && submissionData.website.trim() !== '') {
+                throw new Error('Spam detected');
             }
-        };
 
-        // Try to submit via fetch first (for future backend implementation)
-        const tryServerSubmission = async () => {
-            try {
-                const response = await fetch('/api/contact', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(submissionData)
-                });
+            // Submit to Supabase database
+            const result = await submitContactForm(submissionData);
+            
+            if (result.success) {
+                showSuccessMessage(form, result.data);
                 
-                if (response.ok) {
-                    showSuccessMessage(form);
-                } else {
-                    throw new Error('Server response not ok');
+                // Clear form data from localStorage
+                const formId = form.id;
+                const storageKey = `learntav-form-${formId}`;
+                try {
+                    localStorage.removeItem(storageKey);
+                } catch (e) {
+                    console.warn('Could not clear form data from localStorage');
                 }
-            } catch (error) {
-                console.log('Server submission not available, falling back to mailto:', error.message);
-                mailtoFallback();
+                
+                // Track successful submission
+                trackFormSubmission(submissionData.formType, true);
+                
+            } else {
+                throw new Error(result.error || 'Submission failed');
             }
-        };
-
-        // Reset button state after attempt
-        const resetButton = () => {
+            
+        } catch (error) {
+            console.error('Form submission error:', error);
+            
+            // Track failed submission
+            trackFormSubmission(submissionData.formType, false, error.message);
+            
+            // Show error message with fallback options
+            showErrorMessage(form, error.message, submissionData);
+            
+        } finally {
+            // Reset button state
             if (submitBtn) {
                 submitBtn.classList.remove('learntav-btn--loading');
                 submitBtn.disabled = false;
             }
-        };
-
-        // Try server submission first, fallback to mailto
-        setTimeout(() => {
-            tryServerSubmission().finally(resetButton);
-        }, 1000);
+        }
     }
 
-    function showSuccessMessage(form) {
+    function showSuccessMessage(form, submissionData = null) {
+        const formType = submissionData?.form_type || 'general';
+        const responseMessages = {
+            consultation: {
+                title: 'Consultation Booked!',
+                message: 'Thank you for booking your free consultation. We\'ll contact you within 24 hours to schedule your session.'
+            },
+            education: {
+                title: 'Education Inquiry Received!',
+                message: 'Thank you for your interest in our education programs. We\'ll send you detailed information within 24 hours.'
+            },
+            consulting: {
+                title: 'Consulting Request Received!',
+                message: 'Thank you for your consulting request. We\'ll review your project details and respond within 1 business day.'
+            },
+            general: {
+                title: 'Message Sent Successfully!',
+                message: 'Thank you for contacting us. We\'ll get back to you within 24 hours.'
+            }
+        };
+
+        const response = responseMessages[formType] || responseMessages.general;
+        
         const successHTML = `
             <div class="learntav-form__success">
                 <span class="learntav-form__success-icon">✅</span>
                 <div class="learntav-form__success-content">
-                    <h3>Message Sent Successfully!</h3>
-                    <p>Thank you for contacting us. We'll get back to you within 24 hours.</p>
+                    <h3>${response.title}</h3>
+                    <p>${response.message}</p>
+                    <div class="learntav-form__success-actions">
+                        <button onclick="location.reload()" class="learntav-btn learntav-btn--secondary" style="margin-top: 1rem;">
+                            Send Another Message
+                        </button>
+                        <a href="../index.html" class="learntav-btn learntav-btn--outline" style="margin-top: 1rem; margin-left: 1rem;">
+                            Back to Home
+                        </a>
+                    </div>
                 </div>
             </div>
         `;
@@ -882,26 +902,63 @@ if (!document.querySelector('#floating-label-styles')) {
         const formContainer = form.closest('.learntav-form-container');
         if (formContainer) {
             formContainer.innerHTML = successHTML;
+            
+            // Add success animation
+            setTimeout(() => {
+                formContainer.querySelector('.learntav-form__success').classList.add('show');
+            }, 100);
         }
         
         // Reset progress bar
         const progressBar = document.querySelector('.learntav-form-progress');
         if (progressBar) {
-            progressBar.style.width = '0%';
-            progressBar.classList.remove('visible');
+            progressBar.style.width = '100%';
+            setTimeout(() => {
+                progressBar.style.width = '0%';
+                progressBar.classList.remove('visible');
+            }, 2000);
         }
+        
+        // Scroll to success message
+        formContainer?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    function showErrorMessage(form, message) {
+    function showErrorMessage(form, message, submissionData = null) {
+        const isSpam = message.includes('Spam') || message.includes('spam');
+        const isNetworkError = message.includes('fetch') || message.includes('network') || message.includes('offline');
+        
+        let errorMessage = message;
+        let showMailtoFallback = false;
+        
+        if (isSpam) {
+            errorMessage = 'Your submission was flagged by our spam protection. Please try again or contact us directly.';
+        } else if (isNetworkError) {
+            errorMessage = 'Unable to submit form due to network issues. Please check your connection and try again.';
+            showMailtoFallback = true;
+        } else {
+            errorMessage = 'There was an issue submitting your form. Please try again or contact us directly.';
+            showMailtoFallback = true;
+        }
+        
         const errorHTML = `
             <div class="learntav-form__error-global">
                 <span class="learntav-form__error-icon">⚠️</span>
                 <div class="learntav-form__error-content">
                     <h3>Submission Error</h3>
-                    <p>${message}</p>
-                    <button onclick="location.reload()" class="learntav-btn learntav-btn--secondary" style="margin-top: 1rem;">
-                        Try Again
-                    </button>
+                    <p>${errorMessage}</p>
+                    <div class="learntav-form__error-actions">
+                        <button onclick="location.reload()" class="learntav-btn learntav-btn--primary" style="margin-top: 1rem;">
+                            Try Again
+                        </button>
+                        ${showMailtoFallback ? `
+                            <button onclick="contactFormFallback()" class="learntav-btn learntav-btn--secondary" style="margin-top: 1rem; margin-left: 1rem;">
+                                Email Us Directly
+                            </button>
+                        ` : ''}
+                        <a href="mailto:hello@learntav.com" class="learntav-btn learntav-btn--outline" style="margin-top: 1rem; margin-left: 1rem;">
+                            hello@learntav.com
+                        </a>
+                    </div>
                 </div>
             </div>
         `;
@@ -909,7 +966,63 @@ if (!document.querySelector('#floating-label-styles')) {
         const formContainer = form.closest('.learntav-form-container');
         if (formContainer) {
             formContainer.innerHTML = errorHTML;
+            
+            // Store submission data for fallback
+            if (submissionData && showMailtoFallback) {
+                window.lastFormSubmission = submissionData;
+            }
         }
+        
+        // Scroll to error message
+        formContainer?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Global fallback function for mailto
+    window.contactFormFallback = function() {
+        if (!window.lastFormSubmission) return;
+        
+        const submissionData = window.lastFormSubmission;
+        
+        try {
+            const subject = encodeURIComponent(`LearnTAV Contact: ${submissionData.formType || 'General'}`);
+            const body = encodeURIComponent(
+                Object.keys(submissionData)
+                    .filter(key => !['timestamp', 'userAgent', 'url', 'formType', 'website'].includes(key))
+                    .map(key => `${key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}: ${submissionData[key]}`)
+                    .join('\n\n')
+            );
+            window.location.href = `mailto:hello@learntav.com?subject=${subject}&body=${body}`;
+            
+        } catch (error) {
+            console.error('Error creating mailto link:', error);
+            window.open('mailto:hello@learntav.com', '_blank');
+        }
+    };
+
+    // Form submission tracking
+    function trackFormSubmission(formType, success, errorMessage = null) {
+        const eventData = {
+            event_category: 'Form Submission',
+            event_label: formType,
+            value: success ? 1 : 0
+        };
+        
+        if (!success && errorMessage) {
+            eventData.custom_parameter = errorMessage;
+        }
+        
+        // Google Analytics 4
+        if (typeof gtag !== 'undefined') {
+            gtag('event', success ? 'form_submit_success' : 'form_submit_error', eventData);
+        }
+        
+        // Console logging for development
+        console.log('Form submission tracked:', {
+            formType,
+            success,
+            errorMessage,
+            timestamp: new Date().toISOString()
+        });
     }
     
     // Initialize cool form validation on page load

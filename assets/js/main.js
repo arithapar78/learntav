@@ -1,10 +1,14 @@
 /**
  * LearnTAV Website JavaScript
  * Professional interactive functionality for education and consulting website
+ * Integrated with authentication and route protection
  */
 
 // IMMEDIATE DEBUG: Test if JavaScript is loading
 console.log('🚀 DEBUG: JavaScript file is loading!');
+
+// Import route protection system (will be loaded as ES6 module)
+let routeProtectionLoaded = false;
 
 (function() {
     'use strict';
@@ -157,6 +161,7 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
         initializeFormValidation();
         initializeAnimations();
         initializeAccessibility();
+        initializeRouteProtection();
     });
 
     // ===================================================================
@@ -1190,5 +1195,262 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
     const styleSheet = document.createElement('style');
     styleSheet.textContent = additionalStyles;
     document.head.appendChild(styleSheet);
+
+    // ===================================================================
+    // Route Protection Integration
+    // ===================================================================
+    
+    function initializeRouteProtection() {
+        // Load route protection CSS if not already loaded
+        if (!document.querySelector('link[href*="route-protection.css"]')) {
+            const routeProtectionCSS = document.createElement('link');
+            routeProtectionCSS.rel = 'stylesheet';
+            routeProtectionCSS.href = './assets/css/route-protection.css';
+            document.head.appendChild(routeProtectionCSS);
+        }
+        
+        // Check if route protection system is available
+        if (window.routeProtection) {
+            console.log('✅ Route protection system active');
+        } else {
+            console.log('⏳ Route protection system loading...');
+            
+            // Fallback: Basic auth state management
+            initializeFallbackAuthSystem();
+        }
+    }
+    
+    /**
+     * Fallback auth system for when route protection module isn't loaded
+     */
+    function initializeFallbackAuthSystem() {
+        // Basic auth state indicators
+        const authElements = document.querySelectorAll('[data-auth-state]');
+        
+        // Hide auth-required elements by default
+        authElements.forEach(element => {
+            const requiredState = element.dataset.authState;
+            
+            switch (requiredState) {
+                case 'authenticated':
+                case 'admin':
+                    element.style.display = 'none';
+                    break;
+                case 'unauthenticated':
+                    element.style.display = 'block';
+                    break;
+            }
+        });
+        
+        // Add basic protection to admin links
+        const adminLinks = document.querySelectorAll('a[href*="/admin/"]');
+        adminLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Authentication required. Please sign in to access admin features.');
+            });
+        });
+        
+        // Add simple auth modal trigger
+        window.showAuthModal = function() {
+            if (window.authModal && typeof window.authModal.show === 'function') {
+                window.authModal.show();
+            } else {
+                // Simple fallback
+                const authMessage = confirm('Authentication required. Would you like to go to the sign-in page?');
+                if (authMessage) {
+                    window.location.href = '/auth/';
+                }
+            }
+        };
+        
+        console.log('✅ Fallback auth system initialized');
+    }
+    
+    // ===================================================================
+    // Enhanced Navigation with Auth Integration
+    // ===================================================================
+    
+    // Enhance existing navigation with auth-aware functionality
+    const originalHighlightActiveNavLink = highlightActiveNavLink;
+    highlightActiveNavLink = function() {
+        originalHighlightActiveNavLink();
+        
+        // Add auth-based navigation enhancements
+        const navLinks = document.querySelectorAll('.learntav-nav__link');
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            
+            // Mark protected routes
+            if (href && (href.includes('/admin/') || href.includes('/dashboard/'))) {
+                if (!link.classList.contains('nav-protected')) {
+                    link.classList.add('nav-protected');
+                    
+                    // Add protection indicator
+                    const protectedIndicator = document.createElement('span');
+                    protectedIndicator.className = 'nav-protected-indicator';
+                    protectedIndicator.innerHTML = '🔒';
+                    protectedIndicator.title = 'Authentication required';
+                    link.appendChild(protectedIndicator);
+                }
+            }
+        });
+    };
+    
+    // ===================================================================
+    // User Profile Integration
+    // ===================================================================
+    
+    function createUserProfileDropdown() {
+        const navActions = document.querySelector('.learntav-nav__actions');
+        if (!navActions) return;
+        
+        // Create user profile dropdown
+        const userDropdown = document.createElement('div');
+        userDropdown.className = 'user-profile-dropdown';
+        userDropdown.innerHTML = `
+            <button class="user-profile-button" data-auth-state="authenticated">
+                <div class="user-avatar">
+                    <span data-user-name>U</span>
+                </div>
+                <span class="user-name" data-user-name>User</span>
+                <span class="dropdown-arrow">▾</span>
+            </button>
+            <div class="user-profile-menu">
+                <a href="/dashboard/" class="user-profile-menu-item">
+                    📊 Dashboard
+                </a>
+                <a href="/profile/" class="user-profile-menu-item">
+                    👤 Profile
+                </a>
+                <a href="/settings/" class="user-profile-menu-item">
+                    ⚙️ Settings
+                </a>
+                <div class="user-profile-menu-divider"></div>
+                <a href="/admin/dashboard.html" class="user-profile-menu-item" data-auth-state="admin">
+                    👑 Admin Panel
+                </a>
+                <div class="user-profile-menu-divider" data-auth-state="admin"></div>
+                <button class="user-profile-menu-item" onclick="handleSignOut()">
+                    🚪 Sign Out
+                </button>
+            </div>
+        `;
+        
+        // Insert before existing buttons
+        const getStartedBtn = navActions.querySelector('.learntav-btn');
+        if (getStartedBtn) {
+            navActions.insertBefore(userDropdown, getStartedBtn);
+        } else {
+            navActions.appendChild(userDropdown);
+        }
+        
+        // Add dropdown toggle functionality
+        const dropdownButton = userDropdown.querySelector('.user-profile-button');
+        const dropdownMenu = userDropdown.querySelector('.user-profile-menu');
+        
+        dropdownButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle('open');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', () => {
+            userDropdown.classList.remove('open');
+        });
+        
+        // Hide by default (will be shown by route protection system)
+        userDropdown.style.display = 'none';
+    }
+    
+    // Global sign out handler
+    window.handleSignOut = async function() {
+        try {
+            // Try to use the Supabase sign out if available
+            if (window.supabase && window.supabase.auth) {
+                await window.supabase.auth.signOut();
+            }
+            
+            // Clear any local storage auth tokens
+            localStorage.removeItem('supabase.auth.token');
+            sessionStorage.clear();
+            
+            // Redirect to home page
+            window.location.href = '/';
+            
+        } catch (error) {
+            console.error('Sign out error:', error);
+            // Fallback: force redirect
+            window.location.href = '/';
+        }
+    };
+    
+    // ===================================================================
+    // Enhanced Form Integration
+    // ===================================================================
+    
+    // Override form submission to integrate with Supabase
+    const originalSubmitForm = FormValidator.prototype.submitForm;
+    FormValidator.prototype.submitForm = async function() {
+        // Check if this is a contact form and if Supabase integration is available
+        const formType = this.form.querySelector('input[name="form_type"]')?.value;
+        
+        if (formType && window.submitContactForm) {
+            // Use Supabase integration
+            const submitButton = this.form.querySelector('button[type="submit"], input[type="submit"]');
+            const originalText = submitButton.textContent;
+            
+            // Show loading state
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+            submitButton.classList.add('learntav-btn--loading');
+            
+            try {
+                // Collect form data
+                const formData = new FormData(this.form);
+                const submissionData = {
+                    timestamp: new Date().toISOString(),
+                    userAgent: navigator.userAgent,
+                    url: window.location.href
+                };
+                
+                // Convert FormData to object
+                for (let [key, value] of formData.entries()) {
+                    if (key !== 'website') { // Skip honeypot
+                        submissionData[key] = value;
+                    }
+                }
+                
+                // Submit via Supabase
+                const result = await window.submitContactForm(submissionData);
+                
+                if (result.success) {
+                    this.showSuccessMessage();
+                    this.form.reset();
+                } else {
+                    throw new Error(result.error || 'Submission failed');
+                }
+                
+            } catch (error) {
+                console.error('Form submission error:', error);
+                this.showErrorMessage(error.message);
+                
+            } finally {
+                // Reset button state
+                submitButton.disabled = false;
+                submitButton.textContent = originalText;
+                submitButton.classList.remove('learntav-btn--loading');
+            }
+        } else {
+            // Fall back to original submission method
+            return originalSubmitForm.call(this);
+        }
+    };
+    
+    // Initialize user profile dropdown
+    createUserProfileDropdown();
+    
+    // Enhanced navigation highlighting
+    highlightActiveNavLink();
 
 })();
