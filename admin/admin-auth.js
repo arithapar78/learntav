@@ -8,10 +8,10 @@
 
     class AdminAuth {
         constructor() {
-            // Exact credentials as specified
+            // Standardized admin credentials - Fixed credential mismatch issue
             this.adminCredentials = {
                 username: 'admin@learntav.com',
-                password: 'LearningAdmin123*',
+                password: 'AdminPass123!',
                 code: '0410'
             };
             

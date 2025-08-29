@@ -147,8 +147,8 @@
             <h2>🔒 Admin Authentication Test</h2>
             <div class="credentials">
                 <h3>Required Admin Credentials:</h3>
-                <p><strong>Username:</strong> LearnTAV</p>
-                <p><strong>Password:</strong> learning_takes_a_village78</p>
+                <p><strong>Username:</strong> admin@learntav.com</p>
+                <p><strong>Password:</strong> AdminPass123!</p>
                 <p><strong>Code:</strong> 0410</p>
             </div>
             <button class="admin" onclick="testAdminAuth()">🔐 Test Admin Login</button>
@@ -164,8 +164,10 @@
             </div>
             <div class="credentials">
                 <h3>Test User Credentials:</h3>
-                <p><strong>Email:</strong> test@learntav.com</p>
-                <p><strong>Password:</strong> TestPass123!</p>
+                <p><strong>Your Email:</strong> ariquery@gmail.com</p>
+                <p><strong>Your Password:</strong> ZazuR0cks78!</p>
+                <p><strong>Test Email:</strong> test@learntav.com</p>
+                <p><strong>Test Password:</strong> TestPass123!</p>
             </div>
             <button onclick="testUserRegister()">📝 Test User Registration</button>
             <button onclick="testUserLogin()">👤 Test User Login</button>
@@ -184,7 +186,10 @@
 
     <!-- Load Authentication Scripts -->
     <script src="assets/js/auth.js"></script>
+    <script src="assets/js/unified-auth-fix.js"></script>
+    <script src="auth-diagnostic-tool.js"></script>
     <script src="assets/js/auth-ui.js"></script>
+    <script src="assets/js/emergency-fix.js"></script>
     <script src="admin/admin-auth.js"></script>
     <script src="admin/admin-auth-ui.js"></script>
 
@@ -259,8 +264,8 @@
 
             try {
                 const credentials = {
-                    username: 'LearnTAV',
-                    password: 'learning_takes_a_village78',
+                    username: 'admin@learntav.com',
+                    password: 'AdminPass123!',
                     code: '0410'
                 };
 
@@ -318,8 +323,8 @@
 
             try {
                 const credentials = {
-                    email: 'test@learntav.com',
-                    password: 'TestPass123!',
+                    email: 'ariquery@gmail.com',
+                    password: 'ZazuR0cks78!',
                     rememberMe: true
                 };
 

@@ -1144,12 +1144,69 @@
 
         createDefaultAdminUser() {
             try {
-                console.log('🔐 DEBUG: Skipping default admin user creation - using dedicated admin auth system');
-                
-                // Create a test user for demonstration purposes
+                console.log('🔐 Creating required user accounts...');
                 const users = this.getAllUsers();
-                const testUserExists = users.some(user => user.email === 'test@learntav.com');
                 
+                // Create admin user with standardized credentials
+                const adminExists = users.some(user => user.email === 'admin@learntav.com');
+                if (!adminExists) {
+                    console.log('🔐 Creating admin user...');
+                    const adminPasswordHash = this.hashPassword('AdminPass123!');
+                    
+                    const adminUser = {
+                        id: this.generateUserId(),
+                        fullName: 'System Administrator',
+                        email: 'admin@learntav.com',
+                        passwordHash: adminPasswordHash,
+                        role: 'admin',
+                        created: Date.now(),
+                        lastLogin: 0,
+                        verified: true,
+                        activityLog: [{
+                            action: 'account_created',
+                            timestamp: Date.now(),
+                            ip: this.getClientIP(),
+                            userAgent: 'System',
+                            reason: 'Default admin user creation'
+                        }],
+                        settings: this.getDefaultSettings()
+                    };
+                    
+                    this.saveUser(adminUser);
+                    console.log('✅ Admin user created: admin@learntav.com / AdminPass123!');
+                }
+
+                // Create user's personal account
+                const userExists = users.some(user => user.email === 'ariquery@gmail.com');
+                if (!userExists) {
+                    console.log('🔐 Creating personal user account...');
+                    const userPasswordHash = this.hashPassword('ZazuR0cks78!');
+                    
+                    const personalUser = {
+                        id: this.generateUserId(),
+                        fullName: 'Ari Query',
+                        email: 'ariquery@gmail.com',
+                        passwordHash: userPasswordHash,
+                        role: 'admin', // Making user an admin as requested
+                        created: Date.now(),
+                        lastLogin: 0,
+                        verified: true,
+                        activityLog: [{
+                            action: 'account_created',
+                            timestamp: Date.now(),
+                            ip: this.getClientIP(),
+                            userAgent: 'System',
+                            reason: 'Personal user account creation'
+                        }],
+                        settings: this.getDefaultSettings()
+                    };
+                    
+                    this.saveUser(personalUser);
+                    console.log('✅ Personal user created: ariquery@gmail.com / ZazuR0cks78!');
+                }
+                
+                // Create test user for demonstration purposes
+                const testUserExists = users.some(user => user.email === 'test@learntav.com');
                 if (!testUserExists) {
                     console.log('🔐 Creating test user for demo...');
                     const passwordHash = this.hashPassword('TestPass123!');
@@ -1176,6 +1233,8 @@
                     this.saveUser(testUser);
                     console.log('✅ Test user created: test@learntav.com / TestPass123!');
                 }
+
+                console.log('✅ All required user accounts created successfully');
             } catch (error) {
                 console.error('❌ Error in createDefaultAdminUser:', error);
             }
