@@ -1086,7 +1086,6 @@ li {
 .tech-highlight {
   position: relative;
   display: inline-block;
-  cursor: pointer;
   transition: var(--transition-normal);
 }
 

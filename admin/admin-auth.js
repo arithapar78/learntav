@@ -10,8 +10,8 @@
         constructor() {
             // Exact credentials as specified
             this.adminCredentials = {
-                username: 'LearnTAV',
-                password: 'learning_takes_a_village78',
+                username: 'admin@learntav.com',
+                password: 'LearningAdmin123*',
                 code: '0410'
             };
             
