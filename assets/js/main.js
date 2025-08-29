@@ -7,6 +7,345 @@
 // IMMEDIATE DEBUG: Test if JavaScript is loading
 console.log('🚀 DEBUG: JavaScript file is loading!');
 
+// IMMEDIATE GLOBAL FUNCTION: Make showAuthModal available immediately
+let modalDisplaying = false;
+let modalDebounceTimeout = null;
+
+// Define function globally and test immediately
+window.showAuthModal = function(tab = 'signin') {
+    console.log('🔵 DEBUG: Global showAuthModal called with tab:', tab);
+    
+    // Prevent multiple simultaneous calls
+    if (modalDisplaying) {
+        console.log('🔶 DEBUG: Modal already displaying, ignoring duplicate call');
+        return;
+    }
+    
+    // Clear any existing debounce timeout
+    if (modalDebounceTimeout) {
+        clearTimeout(modalDebounceTimeout);
+    }
+    
+    // Debounce multiple rapid calls
+    modalDebounceTimeout = setTimeout(() => {
+        modalDisplaying = true;
+        showModalInternal(tab);
+        modalDebounceTimeout = null;
+    }, 50);
+};
+
+// Immediately test that function is accessible
+console.log('🔵 DEBUG: showAuthModal function defined:', typeof window.showAuthModal);
+console.log('🔵 DEBUG: Function accessibility test:', window.showAuthModal ? 'ACCESSIBLE' : 'NOT ACCESSIBLE');
+
+function showModalInternal(tab = 'signin') {
+    console.log('🟢 DEBUG: Creating modal internally with tab:', tab);
+    
+    // Simple modal creation without dependencies
+    const modalHTML = `
+        <div id="dynamicAuthOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(12px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 1;">
+            <div id="dynamicAuthModal" style="background: white; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); max-width: 460px; width: 90vw; max-height: 90vh; overflow: hidden; position: relative;">
+                <button onclick="hideAuthModal()" style="position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 24px; cursor: pointer; color: #6b7280; z-index: 10; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">×</button>
+                
+                <div style="padding: 40px;">
+                    <h2 style="font-size: 28px; font-weight: 700; color: #111827; margin: 0 0 32px 0; text-align: center;">Welcome Back</h2>
+                    
+                    <!-- Demo Credentials Notice -->
+                    <div style="margin-bottom: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 1px solid #0ea5e9; border-radius: 8px; font-size: 0.9rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; color: #0c4a6e; font-weight: 600;">
+                            <span style="font-size: 1.1rem;">🔧</span>
+                            Demo Mode - Use These Credentials
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; color: #075985;">
+                            <div>
+                                <div style="font-weight: 500; margin-bottom: 0.25rem;">👤 Regular User:</div>
+                                <div style="font-family: 'Courier New', monospace; background: rgba(255,255,255,0.7); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">
+                                    demo@learntav.com<br>
+                                    demo123
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-weight: 500; margin-bottom: 0.25rem;">👑 Admin User:</div>
+                                <div style="font-family: 'Courier New', monospace; background: rgba(255,255,255,0.7); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">
+                                    admin@learntav.com<br>
+                                    admin123
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form onsubmit="handleSimpleSignIn(event)" style="display: flex; flex-direction: column; gap: 20px;">
+                        <div>
+                            <label style="font-weight: 500; color: #374151; font-size: 14px; display: block; margin-bottom: 8px;">Email Address</label>
+                            <input type="email" id="simple-email" placeholder="Enter your email address" required style="width: 100%; padding: 16px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px; outline: none;">
+                        </div>
+                        
+                        <div>
+                            <label style="font-weight: 500; color: #374151; font-size: 14px; display: block; margin-bottom: 8px;">Password</label>
+                            <input type="password" id="simple-password" placeholder="Enter your password" required style="width: 100%; padding: 16px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px; outline: none;">
+                        </div>
+                        
+                        <button type="submit" style="width: 100%; padding: 18px 24px; background: #2563eb; color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer;">
+                            Sign In
+                        </button>
+                        
+                        <div id="simple-error" style="display: none; background: rgba(239, 68, 68, 0.1); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.2); padding: 12px 16px; border-radius: 8px; font-size: 14px;"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Remove existing modal if any
+    const existing = document.querySelector('#dynamicAuthOverlay');
+    if (existing) {
+        existing.remove();
+    }
+    
+    // Add modal to page
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    document.body.style.overflow = 'hidden';
+    
+    console.log('🟢 DEBUG: Simple modal created and displayed');
+}
+
+// Simple global hide function
+window.hideAuthModal = function() {
+    const overlay = document.getElementById('dynamicAuthOverlay');
+    if (overlay) {
+        overlay.remove();
+        document.body.style.overflow = 'auto';
+        modalDisplaying = false;
+        console.log('🟢 DEBUG: Modal hidden');
+    }
+};
+
+// Simple sign in handler
+window.handleSimpleSignIn = async function(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById('simple-email').value.trim();
+    const password = document.getElementById('simple-password').value;
+    const errorDiv = document.getElementById('simple-error');
+    
+    console.log('🟢 DEBUG: Sign in attempt:', { email });
+    
+    // Demo authentication
+    if ((email === 'demo@learntav.com' && password === 'demo123') ||
+        (email === 'admin@learntav.com' && password === 'admin123')) {
+        
+        // Set auth state
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('userRole', email.includes('admin') ? 'admin' : 'user');
+        localStorage.setItem('userEmail', email);
+        
+        alert('✅ Sign in successful! Welcome back!');
+        hideAuthModal();
+        
+        // Redirect after short delay
+        setTimeout(() => {
+            if (email.includes('admin')) {
+                window.location.href = './admin/dashboard.html';
+            } else {
+                window.location.href = './dashboard/index.html';
+            }
+        }, 1000);
+        
+    } else {
+        errorDiv.textContent = '❌ Invalid credentials. Please use the demo credentials shown above.';
+        errorDiv.style.display = 'block';
+    }
+};
+
+console.log('🟢 DEBUG: Global auth functions defined');
+
+// Fix navigation button positioning
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔴 DEBUG: Fixing navigation button positioning');
+    
+    // Find and fix the auth buttons container
+    const authButtons = document.querySelector('.auth-buttons');
+    const navActions = document.querySelector('.learntav-nav__actions');
+    
+    if (authButtons && navActions) {
+        // Add proper CSS to fix layout
+        authButtons.style.cssText = `
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: static;
+            z-index: auto;
+        `;
+        
+        navActions.style.cssText = `
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+        `;
+        
+        // Ensure Sign In button has proper styling
+        const signInButton = authButtons.querySelector('button');
+        if (signInButton) {
+            signInButton.style.cssText = `
+                position: static;
+                z-index: auto;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.5rem 1rem;
+                border: 1px solid #e5e7eb;
+                border-radius: 0.375rem;
+                background: white;
+                color: #374151;
+                font-weight: 500;
+                font-size: 0.875rem;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            `;
+            
+            // Add hover effect
+            signInButton.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = '#f9fafb';
+                this.style.borderColor = '#d1d5db';
+            });
+            
+            signInButton.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = 'white';
+                this.style.borderColor = '#e5e7eb';
+            });
+            
+            console.log('🔴 DEBUG: Sign In button styling fixed');
+        }
+        
+        // Ensure Get Started button has proper styling
+        const getStartedButton = authButtons.querySelector('a.learntav-btn--primary');
+        if (getStartedButton) {
+            getStartedButton.style.cssText = `
+                position: static;
+                z-index: auto;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.5rem 1rem;
+                background: #2563eb;
+                color: white;
+                border-radius: 0.375rem;
+                font-weight: 500;
+                font-size: 0.875rem;
+                text-decoration: none;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            `;
+            
+            console.log('🔴 DEBUG: Get Started button styling fixed');
+        }
+        
+        console.log('🔴 DEBUG: Navigation layout fixed');
+    }
+    
+    // Add comprehensive debugging for Sign In button
+    console.log('🔍 DEBUG: Starting Sign In button investigation...');
+    
+    // Global click listener to handle ONLY the navigation Sign In button
+    document.addEventListener('click', function(e) {
+        const targetTag = e.target.tagName;
+        const targetClass = e.target.className || '';
+        const targetText = e.target.textContent?.trim() || '';
+        const targetOnclick = e.target.getAttribute('onclick') || '';
+        
+        console.log('🔍 GLOBAL CLICK:');
+        console.log('  - Tag:', targetTag);
+        console.log('  - Class:', targetClass);
+        console.log('  - Text:', targetText);
+        console.log('  - Onclick:', targetOnclick);
+        console.log('  - Coords:', e.clientX + ',' + e.clientY);
+        
+        // Only handle the NAVIGATION Sign In button, not form buttons
+        // Check if it's NOT inside an auth modal
+        const isInModal = e.target.closest('#dynamicAuthModal') || e.target.closest('.auth-modal');
+        
+        if (!isInModal) {
+            // Navigation Sign In button detection by onclick attribute
+            if (targetOnclick === 'showAuthModal()') {
+                console.log('🟢 GLOBAL: Navigation Sign In button detected by onclick!');
+                e.preventDefault();
+                e.stopPropagation();
+                showAuthModal();
+                return;
+            }
+            
+            // Navigation Sign In button detection by class and text
+            if (targetClass.includes('learntav-btn--ghost') && targetText === 'Sign In') {
+                console.log('🟢 GLOBAL: Navigation Sign In button detected by class and text!');
+                e.preventDefault();
+                e.stopPropagation();
+                showAuthModal();
+                return;
+            }
+        } else {
+            console.log('🟡 GLOBAL: Click inside modal - allowing normal form behavior');
+        }
+    });
+    
+    const signInButton = document.querySelector('button[onclick="showAuthModal()"]');
+    if (signInButton) {
+        console.log('🟢 DEBUG: Found Sign In button:', {
+            className: signInButton.className,
+            onclick: signInButton.getAttribute('onclick'),
+            text: signInButton.textContent.trim(),
+            style: signInButton.style.cssText,
+            disabled: signInButton.disabled,
+            offsetParent: signInButton.offsetParent?.tagName
+        });
+        
+        // Add multiple event types for debugging
+        signInButton.addEventListener('click', function(e) {
+            console.log('🟢 CLICK EVENT: Sign In button clicked!');
+            e.preventDefault();
+            e.stopPropagation();
+            showAuthModal();
+        });
+        
+        signInButton.addEventListener('mousedown', function(e) {
+            console.log('🟢 MOUSEDOWN: Sign In button pressed');
+        });
+        
+        signInButton.addEventListener('mouseup', function(e) {
+            console.log('🟢 MOUSEUP: Sign In button released');
+        });
+        
+    } else {
+        console.log('🔴 ERROR: Sign In button not found via onclick selector');
+        // Try all possible selectors
+        const alternatives = [
+            'button:contains("Sign In")',
+            '.auth-buttons button',
+            '[data-auth-state="unauthenticated"] button'
+        ];
+        
+        const allButtons = document.querySelectorAll('button');
+        console.log('🔍 DEBUG: Found', allButtons.length, 'total buttons:');
+        allButtons.forEach((btn, index) => {
+            console.log(`  Button ${index}:`, {
+                text: btn.textContent.trim(),
+                onclick: btn.getAttribute('onclick'),
+                className: btn.className
+            });
+            
+            if (btn.textContent.trim() === 'Sign In') {
+                console.log(`🟢 DEBUG: Adding listener to Sign In button ${index}`);
+                btn.addEventListener('click', function(e) {
+                    console.log('🟢 CLICK: Sign In via text search');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showAuthModal();
+                });
+            }
+        });
+    }
+});
+
 // Import route protection system (will be loaded as ES6 module)
 let routeProtectionLoaded = false;
 
@@ -1251,18 +1590,503 @@ let routeProtectionLoaded = false;
             });
         });
         
-        // Add simple auth modal trigger
-        window.showAuthModal = function() {
-            if (window.authModal && typeof window.authModal.show === 'function') {
-                window.authModal.show();
+        // The main showAuthModal function is already defined globally at line 14
+        // No need to redefine it here - removing duplicate
+        
+        function createAndShowAuthModal(tab = 'signin') {
+            console.log('🟡 DEBUG: createAndShowAuthModal called with tab:', tab);
+            
+            // Remove existing modal if any
+            const existingModal = document.querySelector('#dynamicAuthOverlay');
+            if (existingModal) {
+                console.log('🟡 DEBUG: Removing existing modal');
+                existingModal.remove();
+            }
+            
+            // Create modal HTML
+            const modalHTML = `
+                <div id="dynamicAuthOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(12px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; transition: all 0.3s ease;">
+                    <div id="dynamicAuthModal" style="background: white; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); max-width: 460px; width: 90vw; max-height: 90vh; overflow: hidden; position: relative; transform: scale(0.9) translateY(-20px); opacity: 0; transition: all 0.3s ease;">
+                        <button onclick="hideAuthModal()" style="position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 24px; cursor: pointer; color: #6b7280; z-index: 10; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(0, 0, 0, 0.05)'; this.style.color='#374151'" onmouseout="this.style.background='none'; this.style.color='#6b7280'">
+                            ×
+                        </button>
+                        
+                        <div style="padding: 0;">
+                            <div style="padding: 40px 40px 24px 40px; text-align: center; border-bottom: none;">
+                                <h2 style="font-size: 28px; font-weight: 700; color: #111827; margin: 0 0 32px 0; letter-spacing: -0.025em;">Welcome Back</h2>
+                                
+                                <div style="display: flex; background: #f3f4f6; border-radius: 12px; padding: 6px; gap: 4px; margin-bottom: 32px;">
+                                    <button data-tab="signin" onclick="switchAuthTab('signin')" style="background: #2563eb; border: none; padding: 16px 20px; border-radius: 8px; font-weight: 500; font-size: 15px; color: white; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 10px; flex: 1; min-height: 52px; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);">
+                                        <span style="font-size: 18px;">🔐</span>
+                                        Sign In
+                                    </button>
+                                    <button data-tab="signup" onclick="switchAuthTab('signup')" style="background: transparent; border: none; padding: 16px 20px; border-radius: 8px; font-weight: 500; font-size: 15px; color: #6b7280; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 10px; flex: 1; min-height: 52px;" onmouseover="this.style.color='#374151'; this.style.background='rgba(59, 130, 246, 0.08)'" onmouseout="this.style.color='#6b7280'; this.style.background='transparent'">
+                                        <span style="font-size: 18px;">✨</span>
+                                        Create Account
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div style="padding: 0 40px 32px 40px; overflow-y: auto; max-height: calc(90vh - 200px);">
+                                <!-- Sign In Tab -->
+                                <div id="signin-tab" style="display: block;">
+                                    <div style="text-align: left; margin-bottom: 32px;">
+                                        <p style="color: #6b7280; font-size: 16px; margin: 0; line-height: 1.6;">Sign in to access your personalized learning experience</p>
+                                    </div>
+                                    
+                                    <!-- Demo Credentials Notice -->
+                                    <div class="demo-credentials-notice" style="margin-bottom: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 1px solid #0ea5e9; border-radius: 8px; font-size: 0.9rem;">
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; color: #0c4a6e; font-weight: 600;">
+                                            <span style="font-size: 1.1rem;">🔧</span>
+                                            Demo Mode - Use These Credentials
+                                        </div>
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; color: #075985;">
+                                            <div>
+                                                <div style="font-weight: 500; margin-bottom: 0.25rem;">👤 Regular User:</div>
+                                                <div style="font-family: 'Courier New', monospace; background: rgba(255,255,255,0.7); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">
+                                                    demo@learntav.com<br>
+                                                    demo123
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div style="font-weight: 500; margin-bottom: 0.25rem;">👑 Admin User:</div>
+                                                <div style="font-family: 'Courier New', monospace; background: rgba(255,255,255,0.7); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">
+                                                    admin@learntav.com<br>
+                                                    admin123
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 0.75rem; font-size: 0.8rem; color: #0369a1; font-style: italic;">
+                                            💡 This is a demo environment. In production, you would use your real credentials.
+                                        </div>
+                                    </div>
+                                    
+                                    <form id="dynamic-signin-form" onsubmit="handleSignIn(event)" style="display: flex; flex-direction: column; gap: 20px; margin-top: 20px;">
+                                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                                            <label for="dynamic-signin-email" style="font-weight: 500; color: #374151; font-size: 14px;">Email Address *</label>
+                                            <input type="email"
+                                                   id="dynamic-signin-email"
+                                                   name="email"
+                                                   placeholder="Enter your email address"
+                                                   required
+                                                   style="width: 100%; padding: 16px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px; outline: none; transition: border-color 0.2s;"
+                                                   onfocus="this.style.borderColor='#2563eb'; this.style.boxShadow='0 0 0 3px rgba(37, 99, 235, 0.1)'"
+                                                   onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                                        </div>
+                                        
+                                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                                            <label for="dynamic-signin-password" style="font-weight: 500; color: #374151; font-size: 14px;">Password *</label>
+                                            <div style="position: relative;">
+                                                <input type="password"
+                                                       id="dynamic-signin-password"
+                                                       name="password"
+                                                       placeholder="Enter your password"
+                                                       required
+                                                       style="width: 100%; padding: 16px 50px 16px 16px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px; outline: none; transition: border-color 0.2s;"
+                                                       onfocus="this.style.borderColor='#2563eb'; this.style.boxShadow='0 0 0 3px rgba(37, 99, 235, 0.1)'"
+                                                       onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                                                <button type="button" onclick="togglePassword('dynamic-signin-password')" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; padding: 8px; border-radius: 6px; font-size: 16px;">
+                                                    <span class="toggle-show">👁️</span>
+                                                    <span class="toggle-hide" style="display: none;">🙈</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <input type="checkbox" name="remember" id="dynamic-remember-checkbox" style="width: 18px; height: 18px;">
+                                            <label for="dynamic-remember-checkbox" style="font-size: 14px; color: #374151;">Remember me for 30 days</label>
+                                        </div>
+                                        
+                                        <button type="submit" style="width: 100%; padding: 18px 24px; background: #2563eb; color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.2);" onmouseover="this.style.background='#1d4ed8'; this.style.transform='translateY(-1px)'" onmouseout="this.style.background='#2563eb'; this.style.transform='translateY(0)'">
+                                            <span class="button-text">Sign In</span>
+                                        </button>
+                                        
+                                        <div id="dynamic-signin-error" style="display: none; background: rgba(239, 68, 68, 0.1); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.2); padding: 12px 16px; border-radius: 8px; font-size: 14px; margin-top: 16px;"></div>
+                                    </form>
+                                </div>
+                                
+                                <!-- Sign Up Tab -->
+                                <div id="signup-tab" style="display: none;">
+                                    <div style="text-align: left; margin-bottom: 32px;">
+                                        <p style="color: #6b7280; font-size: 16px; margin: 0; line-height: 1.6;">Create your account to start your AI learning journey</p>
+                                    </div>
+                                    
+                                    <form id="dynamic-signup-form" onsubmit="handleSignUp(event)" style="display: flex; flex-direction: column; gap: 20px; margin-top: 20px;">
+                                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                                            <label for="dynamic-signup-fullname" style="font-weight: 500; color: #374151; font-size: 14px;">Full Name *</label>
+                                            <input type="text"
+                                                   id="dynamic-signup-fullname"
+                                                   name="fullName"
+                                                   placeholder="Enter your full name"
+                                                   required
+                                                   style="width: 100%; padding: 16px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px; outline: none; transition: border-color 0.2s;"
+                                                   onfocus="this.style.borderColor='#2563eb'; this.style.boxShadow='0 0 0 3px rgba(37, 99, 235, 0.1)'"
+                                                   onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                                        </div>
+                                        
+                                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                                            <label for="dynamic-signup-email" style="font-weight: 500; color: #374151; font-size: 14px;">Email Address *</label>
+                                            <input type="email"
+                                                   id="dynamic-signup-email"
+                                                   name="email"
+                                                   placeholder="Enter your email address"
+                                                   required
+                                                   style="width: 100%; padding: 16px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px; outline: none; transition: border-color 0.2s;"
+                                                   onfocus="this.style.borderColor='#2563eb'; this.style.boxShadow='0 0 0 3px rgba(37, 99, 235, 0.1)'"
+                                                   onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                                        </div>
+                                        
+                                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                                            <label for="dynamic-signup-password" style="font-weight: 500; color: #374151; font-size: 14px;">Password *</label>
+                                            <div style="position: relative;">
+                                                <input type="password"
+                                                       id="dynamic-signup-password"
+                                                       name="password"
+                                                       placeholder="Create a strong password"
+                                                       required
+                                                       style="width: 100%; padding: 16px 50px 16px 16px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px; outline: none; transition: border-color 0.2s;"
+                                                       onfocus="this.style.borderColor='#2563eb'; this.style.boxShadow='0 0 0 3px rgba(37, 99, 235, 0.1)'"
+                                                       onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                                                <button type="button" onclick="togglePassword('dynamic-signup-password')" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; padding: 8px; border-radius: 6px; font-size: 16px;">
+                                                    <span class="toggle-show">👁️</span>
+                                                    <span class="toggle-hide" style="display: none;">🙈</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                                            <label for="dynamic-signup-confirm-password" style="font-weight: 500; color: #374151; font-size: 14px;">Confirm Password *</label>
+                                            <div style="position: relative;">
+                                                <input type="password"
+                                                       id="dynamic-signup-confirm-password"
+                                                       name="confirmPassword"
+                                                       placeholder="Confirm your password"
+                                                       required
+                                                       style="width: 100%; padding: 16px 50px 16px 16px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px; outline: none; transition: border-color 0.2s;"
+                                                       onfocus="this.style.borderColor='#2563eb'; this.style.boxShadow='0 0 0 3px rgba(37, 99, 235, 0.1)'"
+                                                       onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                                                <button type="button" onclick="togglePassword('dynamic-signup-confirm-password')" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; padding: 8px; border-radius: 6px; font-size: 16px;">
+                                                    <span class="toggle-show">👁️</span>
+                                                    <span class="toggle-hide" style="display: none;">🙈</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <button type="submit" style="width: 100%; padding: 18px 24px; background: #2563eb; color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.2);" onmouseover="this.style.background='#1d4ed8'; this.style.transform='translateY(-1px)'" onmouseout="this.style.background='#2563eb'; this.style.transform='translateY(0)'">
+                                            <span class="button-text">Create Account</span>
+                                        </button>
+                                        
+                                        <div id="dynamic-signup-error" style="display: none; background: rgba(239, 68, 68, 0.1); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.2); padding: 12px 16px; border-radius: 8px; font-size: 14px; margin-top: 16px;"></div>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <div class="auth-modal-footer">
+                                <p class="auth-footer-text">
+                                    Don't have an account?
+                                    <a href="#" class="auth-footer-link" onclick="switchAuthTab('signup')">Create Account</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Inject CSS if not already present
+            if (!document.querySelector('#dynamic-auth-modal-css')) {
+                const authLink = document.createElement('link');
+                authLink.id = 'dynamic-auth-modal-css';
+                authLink.rel = 'stylesheet';
+                authLink.href = './auth/auth.css';
+                document.head.appendChild(authLink);
+                
+                const dynamicLink = document.createElement('link');
+                dynamicLink.id = 'dynamic-auth-modal-dynamic-css';
+                dynamicLink.rel = 'stylesheet';
+                dynamicLink.href = './assets/css/auth-modal-dynamic.css';
+                document.head.appendChild(dynamicLink);
+            }
+            
+            // Add modal to page
+            console.log('🟡 DEBUG: Adding modal HTML to page');
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            
+            // Show modal with animation
+            const overlay = document.getElementById('dynamicAuthOverlay');
+            const modal = document.getElementById('dynamicAuthModal');
+            
+            console.log('🟡 DEBUG: Overlay element:', overlay);
+            console.log('🟡 DEBUG: Modal element:', modal);
+            
+            if (overlay && modal) {
+                overlay.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                
+                setTimeout(() => {
+                    overlay.classList.add('active');
+                    modal.classList.add('active');
+                    console.log('🟡 DEBUG: Modal should now be visible');
+                }, 10);
             } else {
-                // Simple fallback
-                const authMessage = confirm('Authentication required. Would you like to go to the sign-in page?');
-                if (authMessage) {
-                    window.location.href = '/auth/';
+                console.error('🔴 ERROR: Could not find overlay or modal elements');
+            }
+            
+            // Switch to requested tab
+            if (tab === 'signup') {
+                switchAuthTab('signup');
+            }
+            
+            // Close modal when clicking overlay
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    hideAuthModal();
+                }
+            });
+            
+            // Close on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    hideAuthModal();
+                }
+            });
+        }
+        
+        // Global functions for modal interaction
+        window.hideAuthModal = function() {
+            const overlay = document.getElementById('dynamicAuthOverlay');
+            const modal = document.getElementById('dynamicAuthModal');
+            
+            if (!overlay || !modal) return;
+            
+            overlay.classList.remove('active');
+            modal.classList.remove('active');
+            
+            setTimeout(() => {
+                overlay.remove();
+                document.body.style.overflow = 'auto';
+            }, 300);
+        };
+        
+        window.switchAuthTab = function(tabName) {
+            const modal = document.getElementById('dynamicAuthModal');
+            if (!modal) return;
+            
+            // Update tab buttons
+            modal.querySelectorAll('.auth-tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            const newActiveTab = modal.querySelector(`[data-tab="${tabName}"]`);
+            if (newActiveTab) {
+                newActiveTab.classList.add('active');
+            }
+            
+            // Update content
+            modal.querySelectorAll('.auth-tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            const newContent = document.getElementById(`${tabName}-tab`);
+            if (newContent) {
+                newContent.classList.add('active');
+            }
+            
+            // Update header and footer text
+            const headerText = modal.querySelector('.auth-modal-header h2');
+            const footerText = modal.querySelector('.auth-footer-text');
+            const footerLink = modal.querySelector('.auth-footer-link');
+            
+            if (headerText) {
+                headerText.textContent = tabName === 'signin' ? 'Welcome Back' : 'Create Account';
+            }
+            
+            if (footerText && footerLink) {
+                if (tabName === 'signin') {
+                    footerText.innerHTML = `Don't have an account? <a href="#" class="auth-footer-link" onclick="switchAuthTab('signup')">Create Account</a>`;
+                } else {
+                    footerText.innerHTML = `Already have an account? <a href="#" class="auth-footer-link" onclick="switchAuthTab('signin')">Sign In</a>`;
                 }
             }
+            
+            // Clear errors
+            modal.querySelectorAll('.auth-error-message').forEach(el => {
+                el.style.display = 'none';
+            });
         };
+        
+        window.togglePassword = function(inputId) {
+            const input = document.getElementById(inputId);
+            const button = document.querySelector(`[onclick="togglePassword('${inputId}')"]`);
+            
+            if (!input || !button) return;
+            
+            const showIcon = button.querySelector('.toggle-show');
+            const hideIcon = button.querySelector('.toggle-hide');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                showIcon.style.display = 'none';
+                hideIcon.style.display = 'inline';
+            } else {
+                input.type = 'password';
+                showIcon.style.display = 'inline';
+                hideIcon.style.display = 'none';
+            }
+        };
+        
+        window.handleSignIn = async function(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const email = formData.get('email')?.trim();
+            const password = formData.get('password');
+            const rememberMe = formData.get('remember');
+            
+            const submitButton = form.querySelector('.auth-submit-button');
+            const errorElement = document.getElementById('dynamic-signin-error');
+            
+            // Clear previous errors
+            errorElement.style.display = 'none';
+            
+            if (!email || !password) {
+                showAuthError('dynamic-signin-error', 'Please enter both email and password');
+                return;
+            }
+            
+            // Set loading state
+            submitButton.disabled = true;
+            submitButton.querySelector('.button-text').textContent = 'Signing In...';
+            
+            try {
+                // Demo authentication
+                if ((email === 'demo@learntav.com' && password === 'demo123') ||
+                    (email === 'admin@learntav.com' && password === 'admin123')) {
+                    
+                    // Handle remember me
+                    if (rememberMe) {
+                        localStorage.setItem('rememberMe', 'true');
+                        localStorage.setItem('userEmail', email);
+                    }
+                    
+                    // Set auth state
+                    localStorage.setItem('isAuthenticated', 'true');
+                    localStorage.setItem('userRole', email.includes('admin') ? 'admin' : 'user');
+                    localStorage.setItem('userEmail', email);
+                    
+                    showAuthSuccess('Welcome back! Redirecting to your dashboard...');
+                    
+                    setTimeout(() => {
+                        if (email.includes('admin')) {
+                            window.location.href = './admin/dashboard.html';
+                        } else {
+                            window.location.href = './dashboard/index.html';
+                        }
+                    }, 1500);
+                    
+                } else {
+                    showAuthError('dynamic-signin-error', 'Invalid email or password. Please try the demo credentials above.');
+                }
+                
+            } catch (error) {
+                console.error('Sign in error:', error);
+                showAuthError('dynamic-signin-error', 'An error occurred. Please try again.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.querySelector('.button-text').textContent = 'Sign In';
+            }
+        };
+        
+        window.handleSignUp = async function(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const fullName = formData.get('fullName')?.trim();
+            const email = formData.get('email')?.trim();
+            const password = formData.get('password');
+            const confirmPassword = formData.get('confirmPassword');
+            
+            const submitButton = form.querySelector('.auth-submit-button');
+            const errorElement = document.getElementById('dynamic-signup-error');
+            
+            // Clear previous errors
+            errorElement.style.display = 'none';
+            
+            // Basic validation
+            if (!fullName || !email || !password || !confirmPassword) {
+                showAuthError('dynamic-signup-error', 'Please fill in all fields');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showAuthError('dynamic-signup-error', 'Passwords do not match');
+                return;
+            }
+            
+            if (password.length < 8) {
+                showAuthError('dynamic-signup-error', 'Password must be at least 8 characters long');
+                return;
+            }
+            
+            // Set loading state
+            submitButton.disabled = true;
+            submitButton.querySelector('.button-text').textContent = 'Creating Account...';
+            
+            try {
+                // Simulate account creation
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                showAuthSuccess('Account created successfully! Please check your email to verify your account.');
+                
+                setTimeout(() => {
+                    form.reset();
+                    switchAuthTab('signin');
+                    document.getElementById('dynamic-signin-email').value = email;
+                }, 2500);
+                
+            } catch (error) {
+                console.error('Sign up error:', error);
+                showAuthError('dynamic-signup-error', 'Failed to create account. Please try again.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.querySelector('.button-text').textContent = 'Create Account';
+            }
+        };
+        
+        function showAuthError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            if (!errorElement) return;
+            
+            errorElement.innerHTML = `<span class="message-icon">⚠️</span><span class="message-text">${message}</span>`;
+            errorElement.style.display = 'block';
+            
+            setTimeout(() => {
+                errorElement.style.display = 'none';
+            }, 8000);
+        }
+        
+        function showAuthSuccess(message) {
+            const modal = document.getElementById('dynamicAuthModal');
+            if (!modal) return;
+            
+            let successElement = modal.querySelector('.auth-success-message');
+            if (!successElement) {
+                successElement = document.createElement('div');
+                successElement.className = 'auth-success-message';
+                const modalBody = modal.querySelector('.auth-modal-body');
+                if (modalBody) {
+                    modalBody.insertBefore(successElement, modalBody.firstChild);
+                }
+            }
+            
+            successElement.innerHTML = `<span class="message-icon">✅</span><span class="message-text">${message}</span>`;
+            successElement.style.display = 'block';
+            
+            setTimeout(() => {
+                successElement.style.display = 'none';
+            }, 6000);
+        }
         
         console.log('✅ Fallback auth system initialized');
     }

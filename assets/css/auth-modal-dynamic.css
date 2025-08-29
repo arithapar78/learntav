@@ -1,0 +1,129 @@
+/**
+ * Dynamic Authentication Modal CSS
+ * Additional styles for the dynamically created modal
+ */
+
+/* Ensure overlay is hidden initially but can be shown */
+#dynamicAuthOverlay {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+#dynamicAuthOverlay.active {
+  display: flex !important;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Modal animation */
+#dynamicAuthModal {
+  transform: scale(0.9) translateY(-20px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+#dynamicAuthModal.active {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Ensure consistent styling with existing auth modal */
+.password-match-indicator.match {
+  color: #10b981;
+  font-weight: 500;
+}
+
+.password-match-indicator.no-match {
+  color: #ef4444;
+  font-weight: 500;
+}
+
+/* Success message styling to match existing design */
+.auth-success-message {
+  background: rgba(16, 185, 129, 0.1);
+  color: #065f46;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  display: none;
+  animation: slideInDown 0.3s ease;
+}
+
+.auth-success-message .message-icon {
+  margin-right: 8px;
+}
+
+/* Enhanced error message styling */
+.auth-error-message .message-icon {
+  margin-right: 8px;
+}
+
+/* Loading button state */
+.auth-submit-button.loading {
+  pointer-events: none;
+  opacity: 0.8;
+  position: relative;
+}
+
+.auth-submit-button.loading .button-text::after {
+  content: '';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #dynamicAuthModal {
+    width: 95vw;
+    max-height: 95vh;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  #dynamicAuthOverlay {
+    backdrop-filter: none;
+    background: rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  #dynamicAuthOverlay,
+  #dynamicAuthModal {
+    transition: none;
+  }
+  
+  .auth-submit-button.loading .button-text::after {
+    animation: none;
+  }
+}
