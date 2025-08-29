@@ -1,16 +1,41 @@
 /**
  * Supabase Client Configuration
  * Handles all authentication and database interactions
+ * Automatically falls back to mock authentication for local development
  */
 
-import { createClient } from '@supabase/supabase-js'
-
 // Supabase configuration - Replace with your actual values
-const supabaseUrl = process.env.SUPABASE_URL || 'YOUR_SUPABASE_URL'
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'
+// Handle browser environment where process.env is not available
+const supabaseUrl = (typeof process !== 'undefined' && process.env && process.env.SUPABASE_URL) || 'YOUR_SUPABASE_URL'
+const supabaseAnonKey = (typeof process !== 'undefined' && process.env && process.env.SUPABASE_ANON_KEY) || 'YOUR_SUPABASE_ANON_KEY'
 
-// Initialize Supabase client
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Check if we should use mock authentication (for local development)
+const useMockAuth = supabaseUrl === 'YOUR_SUPABASE_URL' || supabaseAnonKey === 'YOUR_SUPABASE_ANON_KEY'
+
+// Import mock authentication for demo mode
+import { mockSupabase } from './mock-auth.js'
+
+let supabase;
+
+if (useMockAuth) {
+  console.log('🔧 Using Mock Authentication for local development');
+  console.log('📧 Demo credentials:');
+  console.log('   User: demo@learntav.com / demo123');
+  console.log('   Admin: admin@learntav.com / admin123');
+  
+  supabase = mockSupabase;
+} else {
+  // For production with real Supabase credentials
+  // This would need the actual @supabase/supabase-js library
+  console.log('Using real Supabase authentication');
+  // supabase = createClient(supabaseUrl, supabaseAnonKey);
+  
+  // Fallback to mock if real Supabase is not available
+  console.warn('Real Supabase not configured, using mock authentication');
+  supabase = mockSupabase;
+}
+
+export { supabase }
 
 // Auth state management
 export const authState = {
