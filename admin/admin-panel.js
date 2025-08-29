@@ -1,6 +1,6 @@
 /**
- * LearnTAV Admin Panel - Simplified Code-Only Access
- * Simple administrative access with code-based authentication only
+ * LearnTAV Admin Panel - Secure Three-Factor Authentication
+ * Administrative access with Username, Password, and Code verification
  */
 
 (function() {
@@ -14,7 +14,6 @@
         constructor() {
             this.currentTab = 'dashboard';
             this.refreshInterval = null;
-            this.adminAccessCode = 'ADMIN2024!'; // The ONLY way to access admin panel
             this.init();
         }
 
@@ -27,156 +26,87 @@
         }
 
         // ===================================================================
-        // Simple Code-Only Authentication
+        // Three-Factor Authentication System
         // ===================================================================
         
         async checkAdminAccess() {
-            console.log('🔐 ADMIN: Starting code-only authentication...');
+            console.log('🔐 ADMIN PANEL: Checking admin access...');
             
-            // Check for admin access code in URL parameters first
-            const urlParams = new URLSearchParams(window.location.search);
-            const accessCode = urlParams.get('code');
-            
-            if (accessCode === this.adminAccessCode) {
-                console.log('✅ ADMIN: Valid access code provided in URL');
-                this.grantAdminAccess();
+            // Check if admin authentication system is available
+            if (!window.LearnTAVAdminAuth) {
+                console.error('💥 Admin authentication system not loaded!');
+                this.showAuthenticationError();
+                return;
+            }
+
+            // Check for existing valid session
+            if (window.LearnTAVAdminAuth.checkExistingSession()) {
+                console.log('✅ ADMIN PANEL: Valid admin session found');
+                this.updateAdminUI();
+                this.loadDashboardData();
                 return;
             }
             
-            // Check for stored admin session
-            const adminSession = localStorage.getItem('admin_session');
-            if (adminSession) {
-                try {
-                    const session = JSON.parse(adminSession);
-                    if (session.expires > Date.now() && session.accessCode === this.adminAccessCode) {
-                        console.log('✅ ADMIN: Valid admin session found');
-                        this.updateAdminUI();
-                        this.loadDashboardData();
-                        return;
-                    }
-                } catch (error) {
-                    console.error('Error parsing admin session:', error);
-                }
+            // No valid session, show authentication form
+            console.log('🔐 ADMIN PANEL: No valid session, showing authentication');
+            this.showAdminAuthentication();
+        }
+
+        showAdminAuthentication() {
+            // Use the dedicated admin auth UI
+            if (window.LearnTAVAdminAuthUI) {
+                window.LearnTAVAdminAuthUI.showAdminLogin();
+            } else {
+                console.error('💥 Admin authentication UI not loaded!');
+                this.showAuthenticationError();
             }
-            
-            // No valid access, show access code prompt
-            console.log('🔐 ADMIN: No valid access found, prompting for code');
-            this.showAccessCodePrompt();
         }
 
-        grantAdminAccess() {
-            // Create admin session - no user account needed
-            const adminSession = {
-                accessCode: this.adminAccessCode,
-                created: Date.now(),
-                expires: Date.now() + 4 * 60 * 60 * 1000 // 4 hours
-            };
-            
-            localStorage.setItem('admin_session', JSON.stringify(adminSession));
-            
-            this.updateAdminUI();
-            this.loadDashboardData();
-            this.showSuccess('Admin panel access granted!');
-        }
-
-        showAccessCodePrompt() {
-            // Create a simple modal for code entry
-            const modalHtml = `
-                <div class="admin-auth-modal" style="
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: rgba(0,0,0,0.8);
+        showAuthenticationError() {
+            document.body.innerHTML = `
+                <div style="
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    z-index: 10000;
+                    min-height: 100vh;
+                    background: #f3f4f6;
+                    font-family: system-ui, -apple-system, sans-serif;
                 ">
-                    <div class="admin-auth-panel" style="
+                    <div style="
                         background: white;
-                        padding: 40px;
-                        border-radius: 12px;
+                        padding: 48px;
+                        border-radius: 16px;
                         text-align: center;
-                        max-width: 400px;
-                        width: 90%;
+                        max-width: 500px;
+                        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
                     ">
-                        <h2 style="margin-bottom: 20px; color: #333;">Admin Access Required</h2>
-                        <p style="margin-bottom: 30px; color: #666;">Enter the admin access code to continue:</p>
-                        <input type="password" id="adminCodeInput" placeholder="Enter access code" style="
-                            width: 100%;
-                            padding: 15px;
-                            border: 2px solid #ddd;
+                        <div style="font-size: 64px; margin-bottom: 24px;">🔒</div>
+                        <h1 style="color: #dc2626; margin-bottom: 16px;">Authentication System Error</h1>
+                        <p style="color: #6b7280; margin-bottom: 32px; line-height: 1.6;">
+                            The admin authentication system failed to load properly. Please contact your system administrator.
+                        </p>
+                        <button onclick="window.location.reload()" style="
+                            background: #2563eb;
+                            color: white;
+                            padding: 12px 24px;
+                            border: none;
                             border-radius: 8px;
-                            font-size: 16px;
-                            margin-bottom: 20px;
-                            text-align: center;
-                        ">
-                        <div>
-                            <button onclick="window.AdminPanel.verifyAccessCode()" style="
-                                background: #2563eb;
-                                color: white;
-                                padding: 12px 24px;
-                                border: none;
-                                border-radius: 8px;
-                                margin-right: 10px;
-                                cursor: pointer;
-                                font-weight: 600;
-                            ">Access Admin Panel</button>
-                            <button onclick="window.AdminPanel.exitToHome()" style="
-                                background: #6b7280;
-                                color: white;
-                                padding: 12px 24px;
-                                border: none;
-                                border-radius: 8px;
-                                cursor: pointer;
-                            ">Exit</button>
-                        </div>
+                            font-weight: 600;
+                            cursor: pointer;
+                            margin-right: 12px;
+                        ">Reload Page</button>
+                        <button onclick="window.location.href = '../index.html'" style="
+                            background: #6b7280;
+                            color: white;
+                            padding: 12px 24px;
+                            border: none;
+                            border-radius: 8px;
+                            cursor: pointer;
+                        ">Go Home</button>
                     </div>
                 </div>
             `;
-            
-            document.body.insertAdjacentHTML('beforeend', modalHtml);
-            
-            // Focus the input and handle enter key
-            const input = document.getElementById('adminCodeInput');
-            input.focus();
-            input.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    this.verifyAccessCode();
-                }
-            });
         }
-
-        verifyAccessCode() {
-            const input = document.getElementById('adminCodeInput');
-            const code = input.value.trim();
-            
-            if (code === this.adminAccessCode) {
-                // Remove the modal
-                document.querySelector('.admin-auth-modal').remove();
-                this.grantAdminAccess();
-            } else if (code) {
-                // Show error
-                input.style.borderColor = '#dc2626';
-                input.value = '';
-                input.placeholder = 'Invalid code - try again';
-                input.focus();
-                
-                // Reset after 2 seconds
-                setTimeout(() => {
-                    input.style.borderColor = '#ddd';
-                    input.placeholder = 'Enter access code';
-                }, 2000);
-            }
-        }
-
-        exitToHome() {
-            window.location.href = '../index.html';
-        }
-
-        // 2FA removed - code-only authentication
 
         // ===================================================================
         // UI Management

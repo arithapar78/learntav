@@ -848,18 +848,37 @@
         }
 
         hashPassword(password) {
-            // Simple hash for demo - use proper hashing in production
+            // Enhanced hash for better consistency - use proper hashing in production
+            if (!password) return '';
+            
             let hash = 0;
-            for (let i = 0; i < password.length; i++) {
-                const char = password.charCodeAt(i);
+            const str = password.toString();
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
                 hash = ((hash << 5) - hash) + char;
-                hash = hash & hash;
+                hash = hash & hash; // Convert to 32bit integer
             }
-            return hash.toString(36);
+            
+            // Ensure consistent string representation
+            const result = Math.abs(hash).toString(36);
+            console.log('🔐 HASH DEBUG: Password hashed to:', result);
+            return result;
         }
 
         verifyPassword(password, hash) {
-            return this.hashPassword(password) === hash;
+            if (!password || !hash) {
+                console.log('🔐 VERIFY DEBUG: Missing password or hash');
+                return false;
+            }
+            
+            const inputHash = this.hashPassword(password);
+            const isValid = inputHash === hash;
+            
+            console.log('🔐 VERIFY DEBUG: Input password hash:', inputHash);
+            console.log('🔐 VERIFY DEBUG: Stored hash:', hash);
+            console.log('🔐 VERIFY DEBUG: Passwords match:', isValid);
+            
+            return isValid;
         }
 
         // ===================================================================
@@ -1125,24 +1144,22 @@
 
         createDefaultAdminUser() {
             try {
-                console.log('🔐 DEBUG: Starting createDefaultAdminUser...');
+                console.log('🔐 DEBUG: Skipping default admin user creation - using dedicated admin auth system');
+                
+                // Create a test user for demonstration purposes
                 const users = this.getAllUsers();
-                console.log('🔐 DEBUG: Found', users.length, 'existing users:', users.map(u => ({email: u.email, role: u.role})));
+                const testUserExists = users.some(user => user.email === 'test@learntav.com');
                 
-                const adminExists = users.some(user => user.role === 'admin' || user.role === 'super_admin');
-                console.log('🔐 DEBUG: Admin user exists:', adminExists);
-                
-                if (!adminExists) {
-                    console.log('🔐 Creating default admin user...');
-                    const passwordHash = this.hashPassword('AdminPass123!');
-                    console.log('🔐 DEBUG: Generated password hash:', passwordHash);
+                if (!testUserExists) {
+                    console.log('🔐 Creating test user for demo...');
+                    const passwordHash = this.hashPassword('TestPass123!');
                     
-                    const adminUser = {
+                    const testUser = {
                         id: this.generateUserId(),
-                        fullName: 'Admin User',
-                        email: 'admin@learntav.com',
+                        fullName: 'Test User',
+                        email: 'test@learntav.com',
                         passwordHash: passwordHash,
-                        role: 'admin',
+                        role: 'member',
                         created: Date.now(),
                         lastLogin: 0,
                         verified: true,
@@ -1151,35 +1168,16 @@
                             timestamp: Date.now(),
                             ip: this.getClientIP(),
                             userAgent: 'System',
-                            reason: 'Default admin user creation'
+                            reason: 'Demo test user creation'
                         }],
                         settings: this.getDefaultSettings()
                     };
                     
-                    console.log('🔐 DEBUG: Admin user object created:', {
-                        id: adminUser.id,
-                        email: adminUser.email,
-                        role: adminUser.role,
-                        hasPasswordHash: !!adminUser.passwordHash
-                    });
-                    
-                    this.saveUser(adminUser);
-                    
-                    // Verify user was saved
-                    const savedUsers = this.getAllUsers();
-                    const savedAdmin = savedUsers.find(u => u.email === 'admin@learntav.com');
-                    console.log('🔐 DEBUG: Admin user verification after save:', {
-                        found: !!savedAdmin,
-                        role: savedAdmin?.role,
-                        hasPasswordHash: !!savedAdmin?.passwordHash
-                    });
-                    
-                    console.log('✅ Default admin user created: admin@learntav.com / AdminPass123!');
-                } else {
-                    console.log('🔐 DEBUG: Admin user already exists, skipping creation');
+                    this.saveUser(testUser);
+                    console.log('✅ Test user created: test@learntav.com / TestPass123!');
                 }
             } catch (error) {
-                console.error('❌ Error creating default admin user:', error);
+                console.error('❌ Error in createDefaultAdminUser:', error);
             }
         }
 
