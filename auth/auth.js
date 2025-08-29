@@ -346,29 +346,62 @@ class AuthModal {
   }
   
   /**
-   * Switch between tabs
+   * Enhanced tab switching with smooth animations
    */
   switchTab(tabName) {
-    // Update tab buttons
-    document.querySelectorAll('.auth-tab-button').forEach(btn => {
+    const currentActiveTab = document.querySelector('.auth-tab-button.active, .auth-tab.active')
+    const newActiveTab = document.querySelector(`[data-tab="${tabName}"]`)
+    const currentContent = document.querySelector('.auth-tab-content.active, .auth-form-container.active')
+    const newContent = document.getElementById(`${tabName}-tab`) || document.getElementById(`${tabName}-form`)
+    
+    // Update tab buttons with animation
+    document.querySelectorAll('.auth-tab-button, .auth-tab').forEach(btn => {
       btn.classList.remove('active')
+      if (btn !== newActiveTab) {
+        btn.style.transform = 'translateY(0)'
+      }
     })
-    document.querySelector(`[data-tab="${tabName}"]`).classList.add('active')
     
-    // Update tab content
-    document.querySelectorAll('.auth-tab-content').forEach(content => {
-      content.classList.remove('active')
-    })
-    document.getElementById(`${tabName}-tab`).classList.add('active')
+    if (newActiveTab) {
+      newActiveTab.classList.add('active')
+      newActiveTab.style.transform = 'translateY(-2px)'
+    }
     
-    // Clear errors
+    // Animate content transition
+    if (currentContent && newContent && currentContent !== newContent) {
+      // Fade out current content
+      currentContent.style.transform = 'translateX(-20px)'
+      currentContent.style.opacity = '0'
+      
+      setTimeout(() => {
+        currentContent.classList.remove('active')
+        newContent.classList.add('active')
+        
+        // Fade in new content
+        newContent.style.transform = 'translateX(20px)'
+        newContent.style.opacity = '0'
+        
+        requestAnimationFrame(() => {
+          newContent.style.transform = 'translateX(0)'
+          newContent.style.opacity = '1'
+        })
+      }, 200)
+    }
+    
+    // Clear errors with animation
     this.clearErrors()
     
-    // Focus first input
+    // Focus first input with delay for animation
     setTimeout(() => {
-      const firstInput = document.querySelector(`#${tabName}-tab input:not([type="checkbox"])`)
-      if (firstInput) firstInput.focus()
-    }, 100)
+      const firstInput = document.querySelector(`#${tabName}-tab input:not([type="checkbox"]), #${tabName}-form input:not([type="checkbox"])`)
+      if (firstInput) {
+        firstInput.focus()
+        firstInput.style.transform = 'scale(1.02)'
+        setTimeout(() => {
+          firstInput.style.transform = 'scale(1)'
+        }, 200)
+      }
+    }, 300)
     
     this.currentTab = tabName
   }
@@ -547,61 +580,147 @@ class AuthModal {
   }
   
   /**
-   * Toggle password visibility
+   * Enhanced password visibility toggle with animations
    */
   togglePasswordVisibility(targetId) {
     const input = document.getElementById(targetId)
     const button = document.querySelector(`[data-target="${targetId}"]`)
-    const showIcon = button.querySelector('.show-text')
-    const hideIcon = button.querySelector('.hide-text')
+    const showIcon = button.querySelector('.show-text, .toggle-show')
+    const hideIcon = button.querySelector('.hide-text, .toggle-hide')
     
-    if (input.type === 'password') {
-      input.type = 'text'
-      showIcon.style.display = 'none'
-      hideIcon.style.display = 'inline'
-    } else {
-      input.type = 'password'
-      showIcon.style.display = 'inline'
-      hideIcon.style.display = 'none'
-    }
+    // Add animation to button
+    button.style.transform = 'scale(0.9) rotate(180deg)'
+    
+    setTimeout(() => {
+      if (input.type === 'password') {
+        input.type = 'text'
+        if (showIcon) showIcon.style.display = 'none'
+        if (hideIcon) hideIcon.style.display = 'inline'
+        
+        // Add visual feedback to input
+        input.style.borderColor = 'var(--auth-warning)'
+        input.style.boxShadow = '0 0 0 3px rgba(245, 158, 11, 0.1)'
+        
+      } else {
+        input.type = 'password'
+        if (showIcon) showIcon.style.display = 'inline'
+        if (hideIcon) hideIcon.style.display = 'none'
+        
+        // Reset input visual feedback
+        input.style.borderColor = ''
+        input.style.boxShadow = ''
+      }
+      
+      // Reset button animation
+      button.style.transform = 'scale(1) rotate(0deg)'
+    }, 150)
+    
+    // Add haptic-like feedback
+    button.style.background = 'var(--auth-primary)'
+    button.style.color = 'var(--auth-white)'
+    setTimeout(() => {
+      button.style.background = ''
+      button.style.color = ''
+    }, 200)
   }
   
   /**
-   * Set loading state for button
+   * Enhanced loading state for button with animations
    */
   setLoadingState(button, loading) {
-    const buttonText = button.querySelector('.button-text')
+    const buttonContent = button.querySelector('.button-content')
     const buttonLoader = button.querySelector('.button-loader')
+    const buttonText = button.querySelector('.button-text')
+    const buttonIcon = button.querySelector('.button-icon')
     
     if (loading) {
       button.disabled = true
       button.classList.add('loading')
-      buttonText.style.display = 'none'
-      buttonLoader.style.display = 'inline'
+      
+      // Animate content out
+      if (buttonContent) {
+        buttonContent.style.transform = 'translateY(-20px)'
+        buttonContent.style.opacity = '0'
+        setTimeout(() => {
+          buttonContent.style.display = 'none'
+          if (buttonLoader) {
+            buttonLoader.style.display = 'flex'
+            buttonLoader.style.transform = 'translateY(20px)'
+            buttonLoader.style.opacity = '0'
+            requestAnimationFrame(() => {
+              buttonLoader.style.transform = 'translateY(0)'
+              buttonLoader.style.opacity = '1'
+            })
+          }
+        }, 150)
+      }
+      
+      // Add loading animation class
+      button.style.background = 'linear-gradient(135deg, var(--auth-primary-light), var(--auth-primary))'
+      
     } else {
       button.disabled = false
       button.classList.remove('loading')
-      buttonText.style.display = 'inline'
-      buttonLoader.style.display = 'none'
+      
+      // Animate content back in
+      if (buttonLoader) {
+        buttonLoader.style.transform = 'translateY(-20px)'
+        buttonLoader.style.opacity = '0'
+        setTimeout(() => {
+          buttonLoader.style.display = 'none'
+          if (buttonContent) {
+            buttonContent.style.display = 'flex'
+            buttonContent.style.transform = 'translateY(20px)'
+            buttonContent.style.opacity = '0'
+            requestAnimationFrame(() => {
+              buttonContent.style.transform = 'translateY(0)'
+              buttonContent.style.opacity = '1'
+            })
+          }
+        }, 150)
+      }
+      
+      // Reset button styles
+      button.style.background = ''
     }
   }
   
   /**
-   * Show error message
+   * Enhanced error message display with animations
    */
   showError(elementId, message) {
     const errorElement = document.getElementById(elementId)
-    errorElement.textContent = message
-    errorElement.style.display = 'block'
     
-    // Auto-hide after 10 seconds
+    // Set message content with icon
+    const messageIcon = '⚠️'
+    errorElement.innerHTML = `<span class="message-icon">${messageIcon}</span><span class="message-text">${message}</span>`
+    
+    // Animate in
+    errorElement.style.display = 'block'
+    errorElement.style.transform = 'translateY(-10px) scale(0.95)'
+    errorElement.style.opacity = '0'
+    
+    requestAnimationFrame(() => {
+      errorElement.style.transform = 'translateY(0) scale(1)'
+      errorElement.style.opacity = '1'
+    })
+    
+    // Add shake animation for emphasis
+    errorElement.style.animation = 'shake 0.5s ease-in-out'
+    
+    // Auto-hide after 8 seconds with fade out
     setTimeout(() => {
-      errorElement.style.display = 'none'
-    }, 10000)
+      errorElement.style.transform = 'translateY(-10px) scale(0.95)'
+      errorElement.style.opacity = '0'
+      setTimeout(() => {
+        errorElement.style.display = 'none'
+        errorElement.style.animation = ''
+      }, 300)
+    }, 8000)
   }
   
   /**
-   * Show success message
+   * Enhanced success message with animations
    */
   showSuccess(message) {
     // Create or update success element
@@ -609,16 +728,38 @@ class AuthModal {
     if (!successElement) {
       successElement = document.createElement('div')
       successElement.className = 'auth-success-message'
-      document.querySelector('.auth-modal-body').prepend(successElement)
+      const modalBody = document.querySelector('.auth-modal-body') || document.querySelector('.auth-card')
+      if (modalBody) {
+        modalBody.insertBefore(successElement, modalBody.firstChild)
+      }
     }
     
-    successElement.textContent = message
-    successElement.style.display = 'block'
+    // Set message content with icon
+    const messageIcon = '✅'
+    successElement.innerHTML = `<span class="message-icon">${messageIcon}</span><span class="message-text">${message}</span>`
     
-    // Auto-hide after 5 seconds
+    // Animate in
+    successElement.style.display = 'block'
+    successElement.style.transform = 'translateY(-10px) scale(0.95)'
+    successElement.style.opacity = '0'
+    
+    requestAnimationFrame(() => {
+      successElement.style.transform = 'translateY(0) scale(1)'
+      successElement.style.opacity = '1'
+    })
+    
+    // Add success pulse animation
+    successElement.style.animation = 'successPulse 0.6s ease-out'
+    
+    // Auto-hide after 6 seconds with fade out
     setTimeout(() => {
-      successElement.style.display = 'none'
-    }, 5000)
+      successElement.style.transform = 'translateY(-10px) scale(0.95)'
+      successElement.style.opacity = '0'
+      setTimeout(() => {
+        successElement.style.display = 'none'
+        successElement.style.animation = ''
+      }, 300)
+    }, 6000)
   }
   
   /**
