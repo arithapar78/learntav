@@ -114,7 +114,7 @@
                             text-align: center;
                         ">
                         <div>
-                            <button onclick="AdminPanel.verifyAccessCode()" style="
+                            <button onclick="window.AdminPanel.verifyAccessCode()" style="
                                 background: #2563eb;
                                 color: white;
                                 padding: 12px 24px;
@@ -124,7 +124,7 @@
                                 cursor: pointer;
                                 font-weight: 600;
                             ">Access Admin Panel</button>
-                            <button onclick="AdminPanel.exitToHome()" style="
+                            <button onclick="window.AdminPanel.exitToHome()" style="
                                 background: #6b7280;
                                 color: white;
                                 padding: 12px 24px;
@@ -599,15 +599,15 @@
         revokeAllSessions() {
             if (confirm('Are you sure you want to revoke ALL active sessions? This will log out all users.')) {
                 if (window.LearnTAVSecurity?.sessionManager) {
-                    // Revoke all sessions except current admin
+                    // Revoke all user sessions (admin has no user sessions)
                     const sessionManager = window.LearnTAVSecurity.sessionManager;
                     sessionManager.sessions.forEach((session, sessionId) => {
-                        if (session.userId !== this.currentAdmin.id) {
-                            sessionManager.destroySession(sessionId);
-                        }
+                        sessionManager.destroySession(sessionId);
                     });
                     this.loadSessionsData();
                     this.showSuccess('All user sessions revoked successfully');
+                } else {
+                    this.showInfo('No active sessions to revoke');
                 }
             }
         }
