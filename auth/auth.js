@@ -8,7 +8,7 @@ import { PasswordValidator } from '../assets/js/password-validator.js'
 
 class AuthModal {
   constructor() {
-    this.isOpen = false
+    this.isOpen = true // Modal is shown by default on auth page
     this.currentTab = 'signin'
     this.passwordValidator = new PasswordValidator()
     this.modal = null
@@ -20,7 +20,7 @@ class AuthModal {
    * Initialize the authentication modal
    */
   init() {
-    this.createModal()
+    this.getModalElements()
     this.bindEvents()
     this.setupPasswordValidation()
     
@@ -29,208 +29,13 @@ class AuthModal {
   }
   
   /**
-   * Create modal HTML structure
+   * Get existing modal elements from HTML
    */
-  createModal() {
-    const modalHTML = `
-      <div id="auth-overlay" class="auth-overlay">
-        <div id="auth-modal" class="auth-modal">
-          <div class="auth-modal-content">
-            <div class="auth-modal-header">
-              <div class="auth-tabs">
-                <button class="auth-tab-button active" data-tab="signin" type="button">
-                  <span class="tab-icon">🔐</span>
-                  Sign In
-                </button>
-                <button class="auth-tab-button" data-tab="signup" type="button">
-                  <span class="tab-icon">👤</span>
-                  Create Account
-                </button>
-              </div>
-              <button class="auth-close-button" type="button" aria-label="Close authentication modal">
-                <span>&times;</span>
-              </button>
-            </div>
-            
-            <div class="auth-modal-body">
-              <!-- Sign In Form -->
-              <div id="signin-tab" class="auth-tab-content active">
-                <div class="auth-form-header">
-                  <h2>Welcome Back!</h2>
-                  <p>Sign in to access your personalized learning experience</p>
-                </div>
-                
-                <form id="signin-form" class="auth-form" novalidate>
-                  <div class="auth-form-group">
-                    <label for="signin-email" class="auth-form-label">Email Address</label>
-                    <div class="auth-input-wrapper">
-                      <input type="email" 
-                             id="signin-email" 
-                             name="email" 
-                             class="auth-form-input" 
-                             placeholder="your@email.com"
-                             required 
-                             autocomplete="email">
-                      <span class="auth-input-icon">📧</span>
-                    </div>
-                  </div>
-                  
-                  <div class="auth-form-group">
-                    <label for="signin-password" class="auth-form-label">Password</label>
-                    <div class="auth-input-wrapper">
-                      <input type="password" 
-                             id="signin-password" 
-                             name="password" 
-                             class="auth-form-input" 
-                             placeholder="Enter your password"
-                             required 
-                             autocomplete="current-password">
-                      <span class="auth-input-icon">🔒</span>
-                      <button type="button" class="auth-password-toggle" data-target="signin-password">
-                        <span class="show-text">👁️</span>
-                        <span class="hide-text" style="display: none;">🙈</span>
-                      </button>
-                    </div>
-                  </div>
-                  
-                  <div class="auth-form-options">
-                    <label class="auth-checkbox-wrapper">
-                      <input type="checkbox" name="remember" class="auth-checkbox">
-                      <span class="auth-checkmark"></span>
-                      <span class="auth-checkbox-label">Remember me</span>
-                    </label>
-                    <button type="button" class="auth-forgot-password" id="forgot-password-btn">
-                      Forgot Password?
-                    </button>
-                  </div>
-                  
-                  <div class="auth-form-actions">
-                    <button type="submit" class="auth-submit-button auth-submit-primary">
-                      <span class="button-text">Sign In</span>
-                      <span class="button-loader" style="display: none;">🔄</span>
-                    </button>
-                  </div>
-                  
-                  <div class="auth-error-message" id="signin-error" style="display: none;"></div>
-                </form>
-                
-                <div class="auth-social-login">
-                  <div class="auth-divider">
-                    <span>or continue with</span>
-                  </div>
-                  <div class="auth-social-buttons">
-                    <button type="button" class="auth-social-button" data-provider="google">
-                      <span class="social-icon">🔍</span>
-                      Google
-                    </button>
-                    <button type="button" class="auth-social-button" data-provider="github">
-                      <span class="social-icon">🐱</span>
-                      GitHub
-                    </button>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Sign Up Form -->
-              <div id="signup-tab" class="auth-tab-content">
-                <div class="auth-form-header">
-                  <h2>Join LearnTAV</h2>
-                  <p>Create your account to start your AI learning journey</p>
-                </div>
-                
-                <form id="signup-form" class="auth-form" novalidate>
-                  <div class="auth-form-group">
-                    <label for="signup-fullname" class="auth-form-label">Full Name</label>
-                    <div class="auth-input-wrapper">
-                      <input type="text" 
-                             id="signup-fullname" 
-                             name="fullName" 
-                             class="auth-form-input" 
-                             placeholder="Your full name"
-                             required 
-                             autocomplete="name">
-                      <span class="auth-input-icon">👤</span>
-                    </div>
-                  </div>
-                  
-                  <div class="auth-form-group">
-                    <label for="signup-email" class="auth-form-label">Email Address</label>
-                    <div class="auth-input-wrapper">
-                      <input type="email" 
-                             id="signup-email" 
-                             name="email" 
-                             class="auth-form-input" 
-                             placeholder="your@email.com"
-                             required 
-                             autocomplete="email">
-                      <span class="auth-input-icon">📧</span>
-                    </div>
-                  </div>
-                  
-                  <div class="auth-form-group">
-                    <label for="signup-password" class="auth-form-label">Password</label>
-                    <div class="auth-input-wrapper">
-                      <input type="password" 
-                             id="signup-password" 
-                             name="password" 
-                             class="auth-form-input" 
-                             placeholder="Create a strong password"
-                             required 
-                             autocomplete="new-password">
-                      <span class="auth-input-icon">🔒</span>
-                      <button type="button" class="auth-password-toggle" data-target="signup-password">
-                        <span class="show-text">👁️</span>
-                        <span class="hide-text" style="display: none;">🙈</span>
-                      </button>
-                    </div>
-                    <div id="signup-password-requirements" class="password-requirements-container"></div>
-                  </div>
-                  
-                  <div class="auth-form-group">
-                    <label for="signup-confirm-password" class="auth-form-label">Confirm Password</label>
-                    <div class="auth-input-wrapper">
-                      <input type="password" 
-                             id="signup-confirm-password" 
-                             name="confirmPassword" 
-                             class="auth-form-input" 
-                             placeholder="Confirm your password"
-                             required 
-                             autocomplete="new-password">
-                      <span class="auth-input-icon">🔐</span>
-                    </div>
-                    <div id="signup-password-match" class="password-match-container"></div>
-                  </div>
-                  
-                  <div class="auth-form-actions">
-                    <button type="submit" class="auth-submit-button auth-submit-primary" disabled>
-                      <span class="button-text">Create Account</span>
-                      <span class="button-loader" style="display: none;">🔄</span>
-                    </button>
-                  </div>
-                  
-                  <div class="auth-error-message" id="signup-error" style="display: none;"></div>
-                </form>
-              </div>
-            </div>
-            
-            <div class="auth-modal-footer">
-              <p class="auth-footer-text">
-                Not a user? 
-                <a href="/admin/index.html" class="auth-admin-link">Access Admin Panel</a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    `
-    
-    // Insert modal into document
-    document.body.insertAdjacentHTML('beforeend', modalHTML)
-    
-    // Get references
-    this.modal = document.getElementById('auth-modal')
-    this.overlay = document.getElementById('auth-overlay')
+  getModalElements() {
+    this.modal = document.querySelector('.auth-modal')
+    this.overlay = document.querySelector('.auth-overlay')
   }
+  
   
   /**
    * Bind event listeners
@@ -239,51 +44,79 @@ class AuthModal {
     // Tab switching
     document.querySelectorAll('.auth-tab-button').forEach(button => {
       button.addEventListener('click', (e) => {
-        this.switchTab(e.target.dataset.tab)
+        const tabName = e.target.closest('.auth-tab-button').dataset.tab
+        this.switchTab(tabName)
       })
     })
     
     // Close modal
-    document.querySelector('.auth-close-button').addEventListener('click', () => {
-      this.hide()
-    })
+    const closeButton = document.querySelector('.auth-close-button')
+    if (closeButton) {
+      closeButton.addEventListener('click', () => {
+        this.hide()
+      })
+    }
     
     // Close modal when clicking overlay
-    this.overlay.addEventListener('click', (e) => {
-      if (e.target === this.overlay) {
-        this.hide()
-      }
-    })
+    if (this.overlay) {
+      this.overlay.addEventListener('click', (e) => {
+        if (e.target === this.overlay) {
+          this.hide()
+        }
+      })
+    }
     
     // Form submissions
-    document.getElementById('signin-form').addEventListener('submit', (e) => {
-      e.preventDefault()
-      this.handleSignIn(new FormData(e.target))
-    })
+    const signinForm = document.getElementById('signin-form')
+    if (signinForm) {
+      signinForm.addEventListener('submit', (e) => {
+        e.preventDefault()
+        this.handleSignIn(new FormData(e.target))
+      })
+    }
     
-    document.getElementById('signup-form').addEventListener('submit', (e) => {
-      e.preventDefault()
-      this.handleSignUp(new FormData(e.target))
-    })
+    const signupForm = document.getElementById('signup-form')
+    if (signupForm) {
+      signupForm.addEventListener('submit', (e) => {
+        e.preventDefault()
+        this.handleSignUp(new FormData(e.target))
+      })
+    }
     
     // Forgot password
-    document.getElementById('forgot-password-btn').addEventListener('click', () => {
-      this.handleForgotPassword()
-    })
+    const forgotBtn = document.getElementById('forgot-password-btn')
+    if (forgotBtn) {
+      forgotBtn.addEventListener('click', () => {
+        this.handleForgotPassword()
+      })
+    }
     
     // Password toggles
     document.querySelectorAll('.auth-password-toggle').forEach(button => {
       button.addEventListener('click', (e) => {
-        this.togglePasswordVisibility(e.target.dataset.target)
+        const target = e.target.closest('.auth-password-toggle').dataset.target
+        this.togglePasswordVisibility(target)
       })
     })
     
     // Social login buttons
     document.querySelectorAll('.auth-social-button').forEach(button => {
       button.addEventListener('click', (e) => {
-        this.handleSocialLogin(e.target.dataset.provider)
+        const provider = e.target.closest('.auth-social-button').dataset.provider
+        if (provider) {
+          this.handleSocialLogin(provider)
+        }
       })
     })
+    
+    // Create Account link in footer
+    const createAccountLink = document.getElementById('create-account-link')
+    if (createAccountLink) {
+      createAccountLink.addEventListener('click', (e) => {
+        e.preventDefault()
+        this.switchTab('signup')
+      })
+    }
     
     // Escape key to close
     document.addEventListener('keydown', (e) => {
@@ -349,59 +182,36 @@ class AuthModal {
    * Enhanced tab switching with smooth animations
    */
   switchTab(tabName) {
-    const currentActiveTab = document.querySelector('.auth-tab-button.active, .auth-tab.active')
-    const newActiveTab = document.querySelector(`[data-tab="${tabName}"]`)
-    const currentContent = document.querySelector('.auth-tab-content.active, .auth-form-container.active')
-    const newContent = document.getElementById(`${tabName}-tab`) || document.getElementById(`${tabName}-form`)
-    
-    // Update tab buttons with animation
-    document.querySelectorAll('.auth-tab-button, .auth-tab').forEach(btn => {
+    // Update tab buttons
+    document.querySelectorAll('.auth-tab-button').forEach(btn => {
       btn.classList.remove('active')
-      if (btn !== newActiveTab) {
-        btn.style.transform = 'translateY(0)'
-      }
     })
     
+    const newActiveTab = document.querySelector(`[data-tab="${tabName}"]`)
     if (newActiveTab) {
       newActiveTab.classList.add('active')
-      newActiveTab.style.transform = 'translateY(-2px)'
     }
     
-    // Animate content transition
-    if (currentContent && newContent && currentContent !== newContent) {
-      // Fade out current content
-      currentContent.style.transform = 'translateX(-20px)'
-      currentContent.style.opacity = '0'
-      
-      setTimeout(() => {
-        currentContent.classList.remove('active')
-        newContent.classList.add('active')
-        
-        // Fade in new content
-        newContent.style.transform = 'translateX(20px)'
-        newContent.style.opacity = '0'
-        
-        requestAnimationFrame(() => {
-          newContent.style.transform = 'translateX(0)'
-          newContent.style.opacity = '1'
-        })
-      }, 200)
+    // Update content
+    document.querySelectorAll('.auth-tab-content').forEach(content => {
+      content.classList.remove('active')
+    })
+    
+    const newContent = document.getElementById(`${tabName}-tab`)
+    if (newContent) {
+      newContent.classList.add('active')
     }
     
-    // Clear errors with animation
+    // Clear errors
     this.clearErrors()
     
-    // Focus first input with delay for animation
+    // Focus first input
     setTimeout(() => {
-      const firstInput = document.querySelector(`#${tabName}-tab input:not([type="checkbox"]), #${tabName}-form input:not([type="checkbox"])`)
+      const firstInput = document.querySelector(`#${tabName}-tab input:not([type="checkbox"])`)
       if (firstInput) {
         firstInput.focus()
-        firstInput.style.transform = 'scale(1.02)'
-        setTimeout(() => {
-          firstInput.style.transform = 'scale(1)'
-        }, 200)
       }
-    }, 300)
+    }, 100)
     
     this.currentTab = tabName
   }
@@ -433,16 +243,8 @@ class AuthModal {
    * Hide the modal
    */
   hide() {
-    if (!this.isOpen) return
-    
-    this.isOpen = false
-    this.overlay.classList.remove('active')
-    this.modal.classList.remove('active')
-    document.body.style.overflow = ''
-    
-    // Clear forms and errors
-    this.clearForms()
-    this.clearErrors()
+    // For auth page, redirect to home instead of hiding
+    window.location.href = '../index.html'
   }
   
   /**
@@ -585,103 +387,41 @@ class AuthModal {
   togglePasswordVisibility(targetId) {
     const input = document.getElementById(targetId)
     const button = document.querySelector(`[data-target="${targetId}"]`)
-    const showIcon = button.querySelector('.show-text, .toggle-show')
-    const hideIcon = button.querySelector('.hide-text, .toggle-hide')
     
-    // Add animation to button
-    button.style.transform = 'scale(0.9) rotate(180deg)'
+    if (!input || !button) return
     
-    setTimeout(() => {
-      if (input.type === 'password') {
-        input.type = 'text'
-        if (showIcon) showIcon.style.display = 'none'
-        if (hideIcon) hideIcon.style.display = 'inline'
-        
-        // Add visual feedback to input
-        input.style.borderColor = 'var(--auth-warning)'
-        input.style.boxShadow = '0 0 0 3px rgba(245, 158, 11, 0.1)'
-        
-      } else {
-        input.type = 'password'
-        if (showIcon) showIcon.style.display = 'inline'
-        if (hideIcon) hideIcon.style.display = 'none'
-        
-        // Reset input visual feedback
-        input.style.borderColor = ''
-        input.style.boxShadow = ''
-      }
-      
-      // Reset button animation
-      button.style.transform = 'scale(1) rotate(0deg)'
-    }, 150)
-    
-    // Add haptic-like feedback
-    button.style.background = 'var(--auth-primary)'
-    button.style.color = 'var(--auth-white)'
-    setTimeout(() => {
-      button.style.background = ''
-      button.style.color = ''
-    }, 200)
+    if (input.type === 'password') {
+      input.type = 'text'
+      button.textContent = '🙈'
+    } else {
+      input.type = 'password'
+      button.textContent = '👁️'
+    }
   }
   
   /**
    * Enhanced loading state for button with animations
    */
   setLoadingState(button, loading) {
-    const buttonContent = button.querySelector('.button-content')
-    const buttonLoader = button.querySelector('.button-loader')
     const buttonText = button.querySelector('.button-text')
-    const buttonIcon = button.querySelector('.button-icon')
     
     if (loading) {
       button.disabled = true
       button.classList.add('loading')
-      
-      // Animate content out
-      if (buttonContent) {
-        buttonContent.style.transform = 'translateY(-20px)'
-        buttonContent.style.opacity = '0'
-        setTimeout(() => {
-          buttonContent.style.display = 'none'
-          if (buttonLoader) {
-            buttonLoader.style.display = 'flex'
-            buttonLoader.style.transform = 'translateY(20px)'
-            buttonLoader.style.opacity = '0'
-            requestAnimationFrame(() => {
-              buttonLoader.style.transform = 'translateY(0)'
-              buttonLoader.style.opacity = '1'
-            })
-          }
-        }, 150)
+      if (buttonText) {
+        buttonText.textContent = 'Processing...'
       }
-      
-      // Add loading animation class
-      button.style.background = 'linear-gradient(135deg, var(--auth-primary-light), var(--auth-primary))'
-      
     } else {
       button.disabled = false
       button.classList.remove('loading')
-      
-      // Animate content back in
-      if (buttonLoader) {
-        buttonLoader.style.transform = 'translateY(-20px)'
-        buttonLoader.style.opacity = '0'
-        setTimeout(() => {
-          buttonLoader.style.display = 'none'
-          if (buttonContent) {
-            buttonContent.style.display = 'flex'
-            buttonContent.style.transform = 'translateY(20px)'
-            buttonContent.style.opacity = '0'
-            requestAnimationFrame(() => {
-              buttonContent.style.transform = 'translateY(0)'
-              buttonContent.style.opacity = '1'
-            })
-          }
-        }, 150)
+      if (buttonText) {
+        // Reset text based on form type
+        if (button.closest('#signin-form')) {
+          buttonText.textContent = 'Sign In'
+        } else if (button.closest('#signup-form')) {
+          buttonText.textContent = 'Create Account'
+        }
       }
-      
-      // Reset button styles
-      button.style.background = ''
     }
   }
   
