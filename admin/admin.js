@@ -30,9 +30,23 @@ class AdminPanel {
       this.handleLogin()
     })
     
-    // Numeric keypad
+    // Numeric keypad - prevent double clicks and add debounce
     document.querySelectorAll('.keypad-key').forEach(key => {
+      let isProcessing = false;
+      
       key.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Prevent double clicks
+        if (isProcessing) return;
+        isProcessing = true;
+        
+        // Reset processing flag after short delay
+        setTimeout(() => {
+          isProcessing = false;
+        }, 200);
+        
         const value = e.target.dataset.value
         const action = e.target.dataset.action
         

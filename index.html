@@ -79,14 +79,8 @@
                 </div>
                 
                 <div class="learntav-nav__actions">
-                    <!-- Authentication Buttons -->
-                    <div class="auth-buttons" data-auth-state="unauthenticated">
-                        <button class="learntav-btn learntav-btn--ghost" onclick="showAuthModal()">Sign In</button>
-                        <a href="contact/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
-                    </div>
-                    
-                    <!-- User Profile Dropdown (populated by route protection) -->
-                    <!-- This will be created dynamically by the route protection system -->
+                    <!-- Navigation Actions -->
+                    <a href="ai-tools/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
                     
                     <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
                         <span class="learntav-nav__toggle-line"></span>
@@ -224,7 +218,7 @@
                     </ul>
                     <div class="learntav-service-card__actions">
                         <a href="education/index.html" class="learntav-btn learntav-btn--primary">Learn More</a>
-                        <a href="contact/index.html?form=education" class="learntav-btn learntav-btn--ghost">Get Started</a>
+                        <a href="ai-tools/index.html" class="learntav-btn learntav-btn--ghost">Get Started</a>
                     </div>
                 </div>
 
@@ -288,7 +282,7 @@
                     </ul>
                     <div class="learntav-service-card__actions">
                         <a href="education/vibe-coding-101/index.html" class="learntav-btn learntav-btn--primary">Learn More</a>
-                        <a href="contact/index.html?form=vibe-coding" class="learntav-btn learntav-btn--ghost">Join the Vibe</a>
+                        <a href="ai-tools/index.html" class="learntav-btn learntav-btn--ghost">Get Started</a>
                     </div>
                 </div>
             </div>
@@ -493,7 +487,7 @@
             <p>Our motto reflects the collaborative spirit of education and growth. Just like raising a child, learning complex technologies like AI requires a supportive community, shared knowledge, and collective wisdom.</p>
             <p>At LearnTAV, we believe that the best learning happens when people come together, share experiences, and support each other's journey toward technological mastery.</p>
             <div class="learntav-cta__actions">
-                <a href="contact/index.html" class="learntav-btn learntav-btn--primary">Join Our Village</a>
+                <a href="ai-tools/index.html" class="learntav-btn learntav-btn--primary">Get Started with AI Tools</a>
             </div>
         </div>
     </div>
@@ -859,10 +853,7 @@
         }
 
         function getAIResponse(userMessage) {
-            // Check for exact admin phrase first (case-sensitive)
-            if (userMessage.trim() === "Zazu is a cool Admin") {
-                return "I see, here you go, <a href='admin/index.html' target='_blank' style='color: #2563eb; text-decoration: underline;'>Admin Panel</a>";
-            }
+            // Admin access removed - no longer available through chatbot
             
             const message = userMessage.toLowerCase();
             
@@ -984,7 +975,7 @@
                                  <li>✅ Venture creation guidance</li>
                              </ul>
                              <div style="text-align: center;">
-                                 <a href="education/index.html" class="learntav-btn learntav-btn--primary" onclick="closePopup()">Explore Education</a>
+                                 <a href="ai-tools/index.html" class="learntav-btn learntav-btn--primary" onclick="closePopup()">Get Started with AI Tools</a>
                              </div>`,
                             `<p>Understand, measure, and optimize your AI adoption's environmental footprint!</p>
                              <ul style="text-align: left; margin: 20px 0;">
@@ -1014,7 +1005,7 @@
                                  <li>🌟 Beginner-friendly environment</li>
                              </ul>
                              <div style="text-align: center;">
-                                 <a href="education/vibe-coding-101/index.html" class="learntav-btn learntav-btn--primary" onclick="closePopup()">Learn More</a>
+                                 <a href="ai-tools/index.html" class="learntav-btn learntav-btn--primary" onclick="closePopup()">Get Started with AI Tools</a>
                              </div>`
                         ];
                         showPopup(titles[index], contents[index]);
