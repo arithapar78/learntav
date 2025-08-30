@@ -77,8 +77,102 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         console.log('🔴 DEBUG: Navigation layout initialized');
+        
+        // Initialize profile button system on all pages
+        initializeProfileButton();
     }
 });
+
+// ===================================================================
+// Universal Profile Button System
+// ===================================================================
+function initializeProfileButton() {
+    const userName = localStorage.getItem('user_name');
+    if (userName && !isAdminPage()) {
+        addProfileButton(userName);
+    }
+}
+
+function isAdminPage() {
+    return window.location.pathname.includes('/admin/');
+}
+
+function addProfileButton(name) {
+    const navActions = document.querySelector('.learntav-nav__actions');
+    if (!navActions) return;
+    
+    // Remove existing profile button if any
+    const existingProfileBtn = document.getElementById('profile-button');
+    if (existingProfileBtn) {
+        existingProfileBtn.remove();
+    }
+    
+    // Determine the correct relative path to profile
+    let profilePath = 'profile/index.html';
+    const currentPath = window.location.pathname;
+    
+    // Adjust path based on directory depth
+    if (currentPath.includes('/education/') ||
+        currentPath.includes('/consulting/') ||
+        currentPath.includes('/about/') ||
+        currentPath.includes('/resources/') ||
+        currentPath.includes('/ai-tools/') ||
+        currentPath.includes('/contact/') ||
+        currentPath.includes('/dashboard/') ||
+        currentPath.includes('/settings/') ||
+        currentPath.includes('/legal/')) {
+        profilePath = '../profile/index.html';
+    } else if (currentPath.includes('/vibe-coding-101/') ||
+               currentPath.includes('/paths/') ||
+               currentPath.includes('/approach/') ||
+               currentPath.includes('/team/') ||
+               currentPath.includes('/case-studies/') ||
+               currentPath.includes('/blog/') ||
+               currentPath.includes('/guides/') ||
+               currentPath.includes('/newsletter/') ||
+               currentPath.includes('/tools/') ||
+               currentPath.includes('/power-tracker/') ||
+               currentPath.includes('/prompt-energy-optimizer/') ||
+               currentPath.includes('/privacy/') ||
+               currentPath.includes('/terms/') ||
+               currentPath.includes('/cookies/')) {
+        profilePath = '../../profile/index.html';
+    }
+    
+    // Create profile button
+    const profileBtn = document.createElement('a');
+    profileBtn.id = 'profile-button';
+    profileBtn.href = profilePath;
+    profileBtn.className = 'learntav-btn learntav-btn--secondary profile-btn';
+    profileBtn.innerHTML = `👤 ${name.split(' ')[0]}`;
+    profileBtn.title = `Profile: ${name}`;
+    
+    // Find the Get Started button and insert profile button before it
+    const getStartedBtn = navActions.querySelector('a.learntav-btn--primary');
+    const toggle = navActions.querySelector('.learntav-nav__toggle');
+    
+    if (getStartedBtn) {
+        navActions.insertBefore(profileBtn, getStartedBtn);
+    } else if (toggle) {
+        navActions.insertBefore(profileBtn, toggle);
+    } else {
+        navActions.appendChild(profileBtn);
+    }
+    
+    console.log('🔴 DEBUG: Profile button added for:', name);
+}
+
+// Make sure profile button is added when name is submitted on any page
+function handleGlobalNameEntry(name) {
+    // Store name
+    localStorage.setItem('user_name', name);
+    localStorage.setItem('user_first_visit', 'false');
+    
+    // Add profile button
+    if (!isAdminPage()) {
+        addProfileButton(name);
+    }
+}
 
 (function() {
     'use strict';

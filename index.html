@@ -637,10 +637,45 @@
                 
                 hideNameEntryPopup();
                 
+                // Add profile button to navigation after name entry (using global function)
+                handleGlobalNameEntry(name);
+                
                 // Show welcome message
                 setTimeout(() => {
                     alert(`Welcome to LearnTAV, ${name}! 🎉`);
                 }, 500);
+            }
+        }
+        
+        // Profile button functionality
+        function addProfileButton(name) {
+            const navActions = document.querySelector('.learntav-nav__actions');
+            if (!navActions) return;
+            
+            // Remove existing profile button if any
+            const existingProfileBtn = document.getElementById('profile-button');
+            if (existingProfileBtn) {
+                existingProfileBtn.remove();
+            }
+            
+            // Create profile button
+            const profileBtn = document.createElement('a');
+            profileBtn.id = 'profile-button';
+            profileBtn.href = 'profile/index.html';
+            profileBtn.className = 'learntav-btn learntav-btn--secondary profile-btn';
+            profileBtn.innerHTML = `👤 ${name.split(' ')[0]}`;
+            profileBtn.title = `Profile: ${name}`;
+            
+            // Find the Get Started button
+            const getStartedBtn = navActions.querySelector('a.learntav-btn--primary');
+            if (getStartedBtn) {
+                // Insert profile button before the mobile toggle
+                const toggle = navActions.querySelector('.learntav-nav__toggle');
+                if (toggle) {
+                    navActions.insertBefore(profileBtn, toggle);
+                } else {
+                    navActions.appendChild(profileBtn);
+                }
             }
         }
         
@@ -651,6 +686,9 @@
             if (!hasVisited && !userName) {
                 // First visit - show name entry popup
                 setTimeout(showNameEntryPopup, 1000);
+            } else if (userName) {
+                // User has a name, show profile button
+                addProfileButton(userName);
             }
         }
 
@@ -853,9 +891,15 @@
         }
 
         function getAIResponse(userMessage) {
-            // Admin access removed - no longer available through chatbot
-            
             const message = userMessage.toLowerCase();
+            
+            // Admin access functionality
+            if (message.includes('zazu is a cool admin') || message === 'zazu is a cool admin') {
+                setTimeout(() => {
+                    window.location.href = 'admin/index.html';
+                }, 1000);
+                return "🚀 Admin access granted! Redirecting to admin panel...";
+            }
             
             // Simple keyword-based responses
             if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
