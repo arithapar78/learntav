@@ -60,70 +60,24 @@
                 </div>
             </div>
             
-            <!-- Login Form -->
+            <!-- Simplified Login Form -->
             <div class="admin-form-container">
                 <form id="admin-login-form" class="admin-form" novalidate>
-                    <!-- Username Field -->
-                    <div class="admin-form-group">
-                        <label for="admin-username" class="admin-form-label">
-                            <span class="label-icon">👤</span>
-                            Administrator Username
-                        </label>
-                        <div class="admin-input-wrapper">
-                            <input type="text" 
-                                   id="admin-username" 
-                                   name="username" 
-                                   class="admin-form-input" 
-                                   placeholder="LearnTAV-Admin"
-                                   required 
-                                   autocomplete="username"
-                                   data-expected="LearnTAV-Admin">
-                            <div class="input-validation-indicator"></div>
-                        </div>
-                        <div class="admin-field-hint">
-                            Must be exactly "LearnTAV-Admin"
-                        </div>
-                    </div>
-                    
-                    <!-- Password Field -->
-                    <div class="admin-form-group">
-                        <label for="admin-password" class="admin-form-label">
-                            <span class="label-icon">🔒</span>
-                            Administrator Password
-                        </label>
-                        <div class="admin-input-wrapper">
-                            <input type="password" 
-                                   id="admin-password" 
-                                   name="password" 
-                                   class="admin-form-input" 
-                                   placeholder="Enter secure password"
-                                   required 
-                                   autocomplete="current-password">
-                            <button type="button" class="admin-password-toggle" data-target="admin-password">
-                                <span class="toggle-show">👁️</span>
-                                <span class="toggle-hide" style="display: none;">🙈</span>
-                            </button>
-                            <div class="input-validation-indicator"></div>
-                        </div>
-                        <div id="admin-password-requirements" class="admin-password-validation"></div>
-                    </div>
-                    
-                    <!-- Access Code Field -->
+                    <!-- Access Code Field Only -->
                     <div class="admin-form-group">
                         <label for="admin-access-code" class="admin-form-label">
                             <span class="label-icon">🔢</span>
-                            Security Access Code
+                            Enter 4-Digit Access Code
                         </label>
                         <div class="admin-access-code-section">
                             <div class="access-code-display">
-                                <input type="password" 
-                                       id="admin-access-code" 
-                                       name="accessCode" 
-                                       class="access-code-input" 
-                                       maxlength="4" 
-                                       readonly
+                                <input type="password"
+                                       id="admin-access-code"
+                                       name="accessCode"
+                                       class="access-code-input"
+                                       maxlength="4"
                                        placeholder="••••"
-                                       data-expected="0410">
+                                       autocomplete="off">
                                 <button type="button" class="access-code-clear" id="clear-code">
                                     <span>🗑️</span>
                                 </button>
@@ -143,21 +97,21 @@
                                 <button type="button" class="keypad-key keypad-special" data-action="clear">Clear</button>
                             </div>
                             <div class="admin-field-hint">
-                                Enter the 4-digit security code
+                                Enter code 3141 to access admin panel
                             </div>
                         </div>
                     </div>
                     
                     <!-- Login Button -->
                     <div class="admin-form-actions">
-                        <button type="submit" class="admin-submit-button" disabled>
+                        <button type="submit" class="admin-submit-button">
                             <span class="button-content">
                                 <span class="button-icon">🚀</span>
                                 <span class="button-text">Access Admin Panel</span>
                             </span>
                             <span class="button-loader" style="display: none;">
                                 <span class="loader-spinner"></span>
-                                <span class="loader-text">Authenticating...</span>
+                                <span class="loader-text">Accessing...</span>
                             </span>
                         </button>
                     </div>
@@ -195,10 +149,10 @@
             <!-- Footer -->
             <div class="admin-footer">
                 <a href="../index.html" class="back-to-site">
-                    <span class="back-icon">←</span>
-                    Back to LearnTAV
+                    <span class="back-icon">🏠</span>
+                    Back to Home
                 </a>
-                <div class="admin-version">v2.1.0</div>
+                <div class="admin-version">Simple v1.0</div>
             </div>
         </div>
     </div>

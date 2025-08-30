@@ -466,6 +466,24 @@
         </div>
     </footer>
 
+    <!-- Name Entry Popup Modal -->
+    <div class="name-entry-overlay" id="nameEntryOverlay"></div>
+    <div class="name-entry-popup" id="nameEntryPopup">
+        <div class="name-entry-content">
+            <div class="name-entry-header">
+                <h3>Welcome to LearnTAV! 🚀</h3>
+                <p>Please enter your name to personalize your experience</p>
+            </div>
+            <form id="nameEntryForm" class="name-entry-form">
+                <div class="name-entry-field">
+                    <label for="userName">Your Full Name</label>
+                    <input type="text" id="userName" name="userName" placeholder="Enter your full name" required>
+                </div>
+                <button type="submit" class="name-entry-submit">Continue</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Motto Popup Modal -->
     <div class="motto-popup-overlay" id="mottoPopupOverlay" onclick="hideMottoPopup()"></div>
     <div class="motto-popup" id="mottoPopup">
@@ -553,11 +571,7 @@
     <!-- Scroll animations are now handled in main.js and main.css -->
     
     <!-- JavaScript -->
-    <script type="module" src="assets/js/accessibility-utils.js"></script>
-    <script type="module" src="assets/js/route-protection.js"></script>
-    <script type="module" src="assets/js/auth-modal.js"></script>
-    <script type="module" src="auth/supabase-client.js"></script>
-    <script type="module" src="auth/auth.js"></script>
+    <script src="assets/js/accessibility-utils.js"></script>
     <script src="assets/js/main.js"></script>
     <script>
         // Motto popup functionality
@@ -580,6 +594,72 @@
             }
         });
         
+        // Name entry popup functionality
+        function showNameEntryPopup() {
+            const overlay = document.getElementById('nameEntryOverlay');
+            const popup = document.getElementById('nameEntryPopup');
+            
+            overlay.classList.add('active');
+            popup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Focus on input
+            setTimeout(() => {
+                document.getElementById('userName').focus();
+            }, 300);
+        }
+        
+        function hideNameEntryPopup() {
+            const overlay = document.getElementById('nameEntryOverlay');
+            const popup = document.getElementById('nameEntryPopup');
+            
+            overlay.classList.remove('active');
+            popup.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function handleNameSubmission(event) {
+            event.preventDefault();
+            
+            const nameInput = document.getElementById('userName');
+            const name = nameInput.value.trim();
+            
+            if (name) {
+                // Store name in localStorage and database
+                localStorage.setItem('user_name', name);
+                localStorage.setItem('user_first_visit', 'false');
+                
+                // Simple database storage simulation
+                try {
+                    const userData = {
+                        name: name,
+                        timestamp: new Date().toISOString(),
+                        userAgent: navigator.userAgent
+                    };
+                    localStorage.setItem('user_data', JSON.stringify(userData));
+                } catch (error) {
+                    console.log('Could not store user data:', error);
+                }
+                
+                hideNameEntryPopup();
+                
+                // Show welcome message
+                setTimeout(() => {
+                    alert(`Welcome to LearnTAV, ${name}! 🎉`);
+                }, 500);
+            }
+        }
+        
+        function checkFirstVisit() {
+            const hasVisited = localStorage.getItem('user_first_visit');
+            const userName = localStorage.getItem('user_name');
+            
+            if (!hasVisited && !userName) {
+                // First visit - show name entry popup
+                setTimeout(showNameEntryPopup, 1000);
+            }
+        }
+
         // Add tech highlight effects to key phrases
         document.addEventListener('DOMContentLoaded', function() {
             const phrases = ['AI education', 'without coding', 'sustainable technology', 'professional education'];
@@ -593,6 +673,15 @@
             // Initialize cool features
             initChatbot();
             initPopupSystem();
+            
+            // Check if this is first visit
+            checkFirstVisit();
+            
+            // Setup name entry form
+            const nameForm = document.getElementById('nameEntryForm');
+            if (nameForm) {
+                nameForm.addEventListener('submit', handleNameSubmission);
+            }
         });
 
         // ===================================================================
@@ -770,6 +859,11 @@
         }
 
         function getAIResponse(userMessage) {
+            // Check for exact admin phrase first (case-sensitive)
+            if (userMessage.trim() === "Zazu is a cool Admin") {
+                return "I see, here you go, <a href='admin/index.html' target='_blank' style='color: #2563eb; text-decoration: underline;'>Admin Panel</a>";
+            }
+            
             const message = userMessage.toLowerCase();
             
             // Simple keyword-based responses

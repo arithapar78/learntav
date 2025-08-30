@@ -16,7 +16,6 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/route-protection.css">
     <link rel="stylesheet" href="../assets/css/responsive-accessibility.css">
     
     <style>
@@ -251,8 +250,15 @@
         <div id="dashboardContent" class="protected-content" style="display: none;">
             <div class="dashboard-header">
                 <div class="learntav-container">
-                    <h1 class="dashboard-title">Welcome back, <span data-user-name>User</span>!</h1>
-                    <p class="dashboard-subtitle">Your learning journey continues here</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div>
+                            <h1 class="dashboard-title">Welcome back, <span data-user-name>User</span>!</h1>
+                            <p class="dashboard-subtitle">Your learning journey continues here</p>
+                        </div>
+                        <a href="../index.html" class="action-btn" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: #007bff; color: white; text-decoration: none; border-radius: 8px; font-weight: 500; transition: background-color 0.2s ease;">
+                            🏠 Back to Home
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -372,119 +378,38 @@
     </main>
 
     <!-- JavaScript -->
-    <script type="module" src="../assets/js/route-protection.js"></script>
-    <script type="module" src="../auth/supabase-client.js"></script>
     <script src="../assets/js/main.js"></script>
     
     <script>
-        // Dashboard-specific JavaScript
+        // Simple Dashboard JavaScript
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize dashboard
-            initializeDashboard();
-        });
-
-        async function initializeDashboard() {
+            // Show dashboard content immediately (no auth check needed)
             const loadingState = document.getElementById('loadingState');
             const dashboardContent = document.getElementById('dashboardContent');
             
-            try {
-                // Wait for route protection to initialize
-                await waitForAuth();
-                
-                // Load user profile data
-                await loadUserProfile();
-                
-                // Show dashboard content
-                loadingState.style.display = 'none';
-                dashboardContent.style.display = 'block';
-                
-                // Update member since date
-                updateMemberSince();
-                
-            } catch (error) {
-                console.error('Dashboard initialization error:', error);
-                
-                // Show error state
-                loadingState.innerHTML = `
-                    <div style="text-align: center;">
-                        <p style="color: #dc3545; font-weight: 500;">Authentication required</p>
-                        <button onclick="showAuthModal()" class="action-btn">Sign In</button>
-                    </div>
-                `;
-            }
-        }
-
-        function waitForAuth() {
-            return new Promise((resolve, reject) => {
-                let attempts = 0;
-                const maxAttempts = 50; // 5 seconds
-
-                const checkAuth = () => {
-                    attempts++;
-                    
-                    // Check if route protection is loaded and user is authenticated
-                    if (window.routeProtection && window.routeProtection.isInitialized) {
-                        // Import authState dynamically
-                        import('../auth/supabase-client.js').then(({ authState, isAuthenticated }) => {
-                            if (isAuthenticated()) {
-                                resolve();
-                            } else {
-                                reject(new Error('User not authenticated'));
-                            }
-                        }).catch(reject);
-                        return;
-                    }
-                    
-                    if (attempts >= maxAttempts) {
-                        reject(new Error('Authentication timeout'));
-                        return;
-                    }
-                    
-                    setTimeout(checkAuth, 100);
-                };
-                
-                checkAuth();
+            // Get user name from localStorage (set by name entry popup)
+            const userName = localStorage.getItem('userName') || 'User';
+            
+            // Update all user name elements
+            const userNameElements = document.querySelectorAll('[data-user-name]');
+            userNameElements.forEach(el => {
+                el.textContent = userName;
             });
-        }
-
-        async function loadUserProfile() {
-            try {
-                // This would normally fetch from Supabase
-                // For now, we'll use the route protection data
-                const userNameElements = document.querySelectorAll('[data-user-name]');
-                const userEmailElements = document.querySelectorAll('[data-user-email]');
-                const userRoleElements = document.querySelectorAll('[data-user-role]');
-                
-                // Simulate loading user data
-                setTimeout(() => {
-                    userNameElements.forEach(el => {
-                        if (el.textContent === 'Loading...' || el.textContent === 'User') {
-                            el.textContent = 'LearnTAV Student'; // Fallback name
-                        }
-                    });
-                    
-                    userEmailElements.forEach(el => {
-                        if (el.textContent === 'Loading...') {
-                            el.textContent = 'user@example.com'; // Fallback email
-                        }
-                    });
-                    
-                    userRoleElements.forEach(el => {
-                        if (el.textContent === 'Loading...') {
-                            el.textContent = 'Student'; // Fallback role
-                        }
-                    });
-                }, 500);
-                
-            } catch (error) {
-                console.error('Error loading user profile:', error);
-            }
-        }
-
-        function updateMemberSince() {
+            
+            // Set default user data
+            const userEmailElements = document.querySelectorAll('[data-user-email]');
+            userEmailElements.forEach(el => {
+                el.textContent = 'user@learntav.com';
+            });
+            
+            const userRoleElements = document.querySelectorAll('[data-user-role]');
+            userRoleElements.forEach(el => {
+                el.textContent = 'Student';
+            });
+            
+            // Update member since date
             const memberSinceElement = document.getElementById('memberSince');
             if (memberSinceElement) {
-                // Simulate member since date
                 const memberDate = new Date();
                 memberDate.setMonth(memberDate.getMonth() - 3); // 3 months ago
                 memberSinceElement.textContent = memberDate.toLocaleDateString('en-US', {
@@ -492,37 +417,10 @@
                     month: 'long'
                 });
             }
-        }
-
-        // Global auth modal trigger (fallback)
-        window.showAuthModal = function() {
-            alert('Please sign in to access your dashboard. You will be redirected to the authentication page.');
-            window.location.href = '../auth/';
-        };
-
-        // Listen for route protection events
-        window.addEventListener('routeProtectionUpdated', (e) => {
-            const { isAuthenticated, isAdmin, user } = e.detail;
             
-            if (!isAuthenticated) {
-                // Redirect to home if not authenticated
-                window.location.href = '../';
-            } else {
-                // Update user information if available
-                if (user) {
-                    const userNameElements = document.querySelectorAll('[data-user-name]');
-                    const userEmailElements = document.querySelectorAll('[data-user-email]');
-                    const userRoleElements = document.querySelectorAll('[data-user-role]');
-                    
-                    const userName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
-                    const userEmail = user.email || '';
-                    const userRole = isAdmin ? 'Administrator' : 'Student';
-                    
-                    userNameElements.forEach(el => el.textContent = userName);
-                    userEmailElements.forEach(el => el.textContent = userEmail);
-                    userRoleElements.forEach(el => el.textContent = userRole);
-                }
-            }
+            // Show dashboard content
+            loadingState.style.display = 'none';
+            dashboardContent.style.display = 'block';
         });
     </script>
 </body>

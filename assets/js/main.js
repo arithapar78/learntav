@@ -159,13 +159,50 @@ window.handleSimpleSignIn = async function(event) {
 
 console.log('🟢 DEBUG: Global auth functions defined');
 
-// Fix navigation button positioning
+// Enhanced error handling and diagnostic logging
+function logDiagnostic(category, message, data = null) {
+    console.log(`🔧 ${category.toUpperCase()}: ${message}`, data || '');
+}
+
+function safeInsertBefore(newNode, referenceNode, parentNode) {
+    try {
+        if (parentNode && referenceNode && parentNode.contains(referenceNode)) {
+            parentNode.insertBefore(newNode, referenceNode);
+            logDiagnostic('DOM', 'Successfully inserted node before reference');
+            return true;
+        } else {
+            logDiagnostic('DOM', 'Reference node not found, appending instead');
+            if (parentNode) {
+                parentNode.appendChild(newNode);
+                return true;
+            }
+        }
+    } catch (error) {
+        logDiagnostic('DOM', 'Insert failed, falling back to append', error.message);
+        try {
+            if (parentNode) {
+                parentNode.appendChild(newNode);
+                return true;
+            }
+        } catch (fallbackError) {
+            logDiagnostic('DOM', 'All insertion methods failed', fallbackError.message);
+        }
+    }
+    return false;
+}
+
+// Fix navigation button positioning with enhanced error handling
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔴 DEBUG: Fixing navigation button positioning');
+    logDiagnostic('INIT', 'Starting navigation button positioning fix');
     
     // Find and fix the auth buttons container
     const authButtons = document.querySelector('.auth-buttons');
     const navActions = document.querySelector('.learntav-nav__actions');
+    
+    logDiagnostic('DOM', 'Found elements', {
+        authButtons: !!authButtons,
+        navActions: !!navActions
+    });
     
     if (authButtons && navActions) {
         // Add proper CSS to fix layout
@@ -380,15 +417,19 @@ let routeProtectionLoaded = false;
         };
     }
     
-    // DEBUG: Track animation system status
+    // Enhanced DEBUG: Track animation system status with diagnostic logging
     window.LEARNTAV_DEBUG = {
         animationSystemLoaded: false,
         elementsFound: 0,
         elementsAnimated: 0,
         failsafeTriggered: false,
         intersectionObserverSupported: false,
+        offsetIssuesDetected: 0,
         log: function(message, data) {
             console.log('🐛 ANIMATION DEBUG:', message, data || '');
+        },
+        logDiagnostic: function(message, data) {
+            logDiagnostic('ANIMATION', message, data);
         }
     };
     
@@ -411,13 +452,27 @@ let routeProtectionLoaded = false;
             
             // CSS class-controlled initial state - no JavaScript style manipulation
             if (document.body.classList.contains('enable-scroll-animations')) {
+                // Use both rect and offset methods for better positioning detection
                 const rect = el.getBoundingClientRect();
+                const offsetTop = el.offsetTop;
+                const offsetHeight = el.offsetHeight;
+                
+                // Diagnostic logging for offset issues
+                if (offsetTop === 0 && el.tagName !== 'HTML' && el.tagName !== 'BODY') {
+                    window.LEARNTAV_DEBUG.offsetIssuesDetected++;
+                    window.LEARNTAV_DEBUG.logDiagnostic(`Element ${index} has offsetTop=0, potential positioning issue`, {
+                        tagName: el.tagName,
+                        className: el.className,
+                        offsetParent: el.offsetParent?.tagName || 'null'
+                    });
+                }
+                
                 const isInitiallyInView = rect.top < window.innerHeight && rect.bottom > 0;
                 
                 if (!isInitiallyInView) {
                     // Mark elements as hidden via CSS class only
                     el.classList.add('animate-pending');
-                    window.LEARNTAV_DEBUG.log(`JS: Marked element ${index} as animate-pending`);
+                    window.LEARNTAV_DEBUG.log(`JS: Marked element ${index} as animate-pending (rect.top: ${Math.round(rect.top)}, offsetTop: ${offsetTop})`);
                 } else {
                     // Elements initially in view start visible
                     el.classList.add('animate-in');
@@ -963,15 +1018,28 @@ let routeProtectionLoaded = false;
             
             animatedElements.forEach((el, index) => {
                 if (!el.classList.contains('animate-in')) {
-                    // Use offsetTop instead of getBoundingClientRect to avoid transform issues
+                    // Enhanced positioning detection - use both methods
+                    const rect = el.getBoundingClientRect();
                     const elementTop = el.offsetTop;
                     const elementHeight = el.offsetHeight;
                     const elementBottom = elementTop + elementHeight;
                     
-                    // Calculate if element is in viewport using offset positioning
-                    const isInViewport = (elementBottom > scrollTop + 100) && (elementTop < scrollTop + windowHeight - 100);
+                    // Fallback to getBoundingClientRect if offsetTop is problematic
+                    let isInViewport;
+                    if (elementTop === 0 && el.tagName !== 'HTML' && el.tagName !== 'BODY') {
+                        // Use rect-based calculation as fallback
+                        isInViewport = rect.top < (windowHeight - 100) && rect.bottom > 100;
+                        window.LEARNTAV_DEBUG.logDiagnostic(`Using rect fallback for element ${index}`, {
+                            rectTop: Math.round(rect.top),
+                            rectBottom: Math.round(rect.bottom),
+                            isInViewport
+                        });
+                    } else {
+                        // Calculate if element is in viewport using offset positioning
+                        isInViewport = (elementBottom > scrollTop + 100) && (elementTop < scrollTop + windowHeight - 100);
+                    }
                     
-                    window.LEARNTAV_DEBUG.log(`🔍 OFFSET check element ${index}: offsetTop=${elementTop}, scrollTop=${scrollTop}, windowHeight=${windowHeight}, inViewport=${isInViewport}`);
+                    window.LEARNTAV_DEBUG.log(`🔍 ENHANCED check element ${index}: offsetTop=${elementTop}, rectTop=${Math.round(rect.top)}, scrollTop=${scrollTop}, windowHeight=${windowHeight}, inViewport=${isInViewport}`);
                     
                     if (isInViewport) {
                         // Add staggered delay
@@ -986,7 +1054,7 @@ let routeProtectionLoaded = false;
                                 el.classList.remove('animate-pending');
                                 el.classList.add('animate-in');
                                 window.LEARNTAV_DEBUG.elementsAnimated++;
-                                window.LEARNTAV_DEBUG.log(`✅ OFFSET: Animated element ${index} (delay: ${baseDelay}ms)`);
+                                window.LEARNTAV_DEBUG.log(`✅ ENHANCED: Animated element ${index} (delay: ${baseDelay}ms)`);
                             }
                         }, baseDelay);
                     }
@@ -1226,7 +1294,7 @@ let routeProtectionLoaded = false;
     // ===================================================================
     
     function initializeDownloadSystem() {
-        console.log('💾 DEBUG: Initializing download system...');
+        logDiagnostic('DOWNLOAD', 'Initializing download system...');
         
         // Add event listeners to all download buttons
         const downloadButtons = document.querySelectorAll('.btn-purchase, .learntav-btn[href*="power-tracker"], .learntav-btn[href*="prompt-energy-optimizer"]');
@@ -1244,7 +1312,7 @@ let routeProtectionLoaded = false;
             });
         });
         
-        console.log('✅ DEBUG: Download system initialized');
+        logDiagnostic('DOWNLOAD', 'Download system initialized successfully');
     }
     
     // New function for direct downloads

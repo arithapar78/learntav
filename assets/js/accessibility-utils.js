@@ -710,11 +710,7 @@ document.addEventListener('DOMContentLoaded', function() {
   window.announce = (message, urgent) => accessibilityManager.announce(message, urgent)
 })
 
-// Export for ES6 modules
-export default AccessibilityManager
-export { AccessibilityManager }
-
-// Make available globally for non-module usage
+// Make available globally
 if (typeof window !== 'undefined') {
   window.AccessibilityManager = AccessibilityManager
 }

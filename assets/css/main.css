@@ -2835,3 +2835,124 @@ li {
     right: 20px;
   }
 }
+
+/* ===================================================================
+ Name Entry Popup Styles
+ =================================================================== */
+.name-entry-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.name-entry-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.name-entry-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  max-width: 460px;
+  width: 90vw;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.name-entry-popup.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.name-entry-content {
+  padding: 40px;
+}
+
+.name-entry-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.name-entry-header h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 12px 0;
+}
+
+.name-entry-header p {
+  font-size: 16px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.name-entry-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.name-entry-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.name-entry-field label {
+  font-weight: 500;
+  color: #374151;
+  font-size: 14px;
+}
+
+.name-entry-field input {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.name-entry-field input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.name-entry-submit {
+  width: 100%;
+  padding: 16px 24px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.name-entry-submit:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.name-entry-submit:active {
+  transform: translateY(0);
+}
