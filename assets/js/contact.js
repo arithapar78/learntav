@@ -1,10 +1,8 @@
 /**
  * Contact Page JavaScript
  * Handles tab switching, FAQ accordion, and enhanced form interactions
- * Integrated with Supabase for form submissions
+ * Integrated with LearnTAV Form Handler API for form submissions
  */
-
-import { submitContactForm } from '../auth/supabase-client.js';
 
 (function() {
     'use strict';
@@ -818,11 +816,35 @@ if (!document.querySelector('#floating-label-styles')) {
                 throw new Error('Spam detected');
             }
 
-            // Submit to Supabase database
-            const result = await submitContactForm(submissionData);
+            console.log('Submitting form data to LearnTAV API:', submissionData.formType);
+
+            // Prepare form data for API
+            const formData = new FormData();
+            Object.keys(submissionData).forEach(key => {
+                if (key !== '_metadata' && submissionData[key] !== null && submissionData[key] !== undefined) {
+                    formData.append(key, submissionData[key]);
+                }
+            });
+
+            // Submit to LearnTAV Form Handler API
+            const response = await fetch('/api/form-handler', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`HTTP ${response.status}: ${errorText}`);
+            }
+
+            const result = await response.json();
             
-            if (result.success) {
-                showSuccessMessage(form, result.data);
+            if (result.success && result.gmailUrl) {
+                // Show success message briefly before redirect
+                showSuccessMessage(form, { form_type: submissionData.formType });
                 
                 // Clear form data from localStorage
                 const formId = form.id;
@@ -836,8 +858,14 @@ if (!document.querySelector('#floating-label-styles')) {
                 // Track successful submission
                 trackFormSubmission(submissionData.formType, true);
                 
+                // Redirect to Gmail after short delay
+                setTimeout(() => {
+                    window.open(result.gmailUrl, '_blank');
+                    showFinalSuccessMessage(form, submissionData.formType);
+                }, 2000);
+                
             } else {
-                throw new Error(result.error || 'Submission failed');
+                throw new Error(result.error || 'Form submission failed');
             }
             
         } catch (error) {
@@ -862,33 +890,81 @@ if (!document.querySelector('#floating-label-styles')) {
         const formType = submissionData?.form_type || 'general';
         const responseMessages = {
             consultation: {
-                title: 'Consultation Booked!',
-                message: 'Thank you for booking your free consultation. We\'ll contact you within 24 hours to schedule your session.'
+                title: 'Consultation Request Sent!',
+                message: 'Redirecting to Gmail to compose your message... We\'ll respond within 24 hours to schedule your session.'
             },
             education: {
-                title: 'Education Inquiry Received!',
-                message: 'Thank you for your interest in our education programs. We\'ll send you detailed information within 24 hours.'
+                title: 'Education Inquiry Sent!',
+                message: 'Redirecting to Gmail to compose your message... We\'ll send detailed program information within 24 hours.'
             },
             consulting: {
-                title: 'Consulting Request Received!',
-                message: 'Thank you for your consulting request. We\'ll review your project details and respond within 1 business day.'
+                title: 'Consulting Request Sent!',
+                message: 'Redirecting to Gmail to compose your message... We\'ll review your project and respond within 1 business day.'
             },
             general: {
                 title: 'Message Sent Successfully!',
-                message: 'Thank you for contacting us. We\'ll get back to you within 24 hours.'
+                message: 'Redirecting to Gmail to compose your message... We\'ll get back to you within 24 hours.'
             }
         };
 
         const response = responseMessages[formType] || responseMessages.general;
         
         const successHTML = `
-            <div class="learntav-form__success">
+            <div class="learntav-form__success" style="animation: successPulse 0.8s ease-out;">
                 <span class="learntav-form__success-icon">✅</span>
                 <div class="learntav-form__success-content">
                     <h3>${response.title}</h3>
                     <p>${response.message}</p>
+                    <div class="loading-spinner" style="margin: 20px auto; width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid white; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                </div>
+            </div>
+        `;
+        
+        const formContainer = form.closest('.learntav-form-container');
+        if (formContainer) {
+            formContainer.innerHTML = successHTML;
+        }
+        
+        // Reset progress bar
+        const progressBar = document.querySelector('.learntav-form-progress');
+        if (progressBar) {
+            progressBar.style.width = '100%';
+        }
+        
+        // Scroll to success message
+        formContainer?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function showFinalSuccessMessage(form, formType) {
+        const responseMessages = {
+            consultation: {
+                title: 'Consultation Request Completed!',
+                message: 'Your consultation request has been sent via Gmail. We\'ll contact you within 24 hours to schedule your free session.'
+            },
+            education: {
+                title: 'Education Inquiry Completed!',
+                message: 'Your education inquiry has been sent via Gmail. We\'ll send you detailed program information within 24 hours.'
+            },
+            consulting: {
+                title: 'Consulting Request Completed!',
+                message: 'Your consulting request has been sent via Gmail. We\'ll review your project details and respond within 1 business day.'
+            },
+            general: {
+                title: 'Message Sent Successfully!',
+                message: 'Your message has been sent via Gmail. We\'ll get back to you within 24 hours.'
+            }
+        };
+
+        const response = responseMessages[formType] || responseMessages.general;
+        
+        const finalHTML = `
+            <div class="learntav-form__success">
+                <span class="learntav-form__success-icon" style="font-size: 3rem; margin-bottom: 1rem;">🎉</span>
+                <div class="learntav-form__success-content">
+                    <h3>${response.title}</h3>
+                    <p>${response.message}</p>
                     <div class="learntav-form__success-actions">
-                        <button onclick="location.reload()" class="learntav-btn learntav-btn--secondary" style="margin-top: 1rem;">
+                        <button onclick="location.reload()" class="learntav-btn learntav-btn--primary" style="margin-top: 1rem;">
                             Send Another Message
                         </button>
                         <a href="../index.html" class="learntav-btn learntav-btn--outline" style="margin-top: 1rem; margin-left: 1rem;">
@@ -901,26 +977,17 @@ if (!document.querySelector('#floating-label-styles')) {
         
         const formContainer = form.closest('.learntav-form-container');
         if (formContainer) {
-            formContainer.innerHTML = successHTML;
-            
-            // Add success animation
-            setTimeout(() => {
-                formContainer.querySelector('.learntav-form__success').classList.add('show');
-            }, 100);
+            formContainer.innerHTML = finalHTML;
         }
-        
+
         // Reset progress bar
         const progressBar = document.querySelector('.learntav-form-progress');
         if (progressBar) {
-            progressBar.style.width = '100%';
             setTimeout(() => {
                 progressBar.style.width = '0%';
                 progressBar.classList.remove('visible');
             }, 2000);
         }
-        
-        // Scroll to success message
-        formContainer?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     function showErrorMessage(form, message, submissionData = null) {
@@ -984,14 +1051,103 @@ if (!document.querySelector('#floating-label-styles')) {
         const submissionData = window.lastFormSubmission;
         
         try {
-            const subject = encodeURIComponent(`LearnTAV Contact: ${submissionData.formType || 'General'}`);
-            const body = encodeURIComponent(
-                Object.keys(submissionData)
-                    .filter(key => !['timestamp', 'userAgent', 'url', 'formType', 'website'].includes(key))
-                    .map(key => `${key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}: ${submissionData[key]}`)
-                    .join('\n\n')
-            );
-            window.location.href = `mailto:hello@learntav.com?subject=${subject}&body=${body}`;
+            const formTypeLabels = {
+                consultation: 'Free Consultation Request',
+                education: 'Education Program Inquiry',
+                consulting: 'Consulting Services Request',
+                general: 'General Contact'
+            };
+
+            const subject = encodeURIComponent(`${formTypeLabels[submissionData.formType] || 'LearnTAV Contact'}`);
+            
+            let body = '';
+            if (submissionData.formType === 'consultation') {
+                body = `Hi,
+
+This is ${submissionData.name} reaching out to LearnTAV to request a free consultation.
+
+Contact Information:
+• Name: ${submissionData.name}
+• Email: ${submissionData.email}
+${submissionData.company ? `• Company: ${submissionData.company}` : ''}
+${submissionData.phone ? `• Phone: ${submissionData.phone}` : ''}
+
+Service Interest: ${submissionData.service_interest || 'Not specified'}
+${submissionData.timeline ? `Timeline: ${submissionData.timeline}` : ''}
+${submissionData.budget ? `Budget Range: ${submissionData.budget}` : ''}
+
+Goals & Challenges:
+${submissionData.goals || 'Not provided'}
+
+Looking forward to discussing how LearnTAV can help achieve my goals.
+
+Best regards,
+${submissionData.name}`;
+
+            } else if (submissionData.formType === 'education') {
+                body = `Hi,
+
+This is ${submissionData.name} reaching out to LearnTAV regarding your education programs.
+
+Contact Information:
+• Name: ${submissionData.name}
+• Email: ${submissionData.email}
+${submissionData.phone ? `• Phone: ${submissionData.phone}` : ''}
+
+Program Details:
+• Experience Level: ${submissionData.experience_level || 'Not specified'}
+• Program Interest: ${submissionData.program_interest || 'Not specified'}
+${submissionData.learning_format ? `• Preferred Format: ${submissionData.learning_format}` : ''}
+
+Learning Goals:
+${submissionData.learning_goals || 'Not provided'}
+
+I would appreciate detailed information about the programs and next steps.
+
+Best regards,
+${submissionData.name}`;
+
+            } else if (submissionData.formType === 'consulting') {
+                body = `Hi,
+
+This is ${submissionData.name}${submissionData.company ? ` from ${submissionData.company}` : ''} reaching out to LearnTAV regarding consulting services.
+
+Contact Information:
+• Name: ${submissionData.name}
+• Email: ${submissionData.email}
+${submissionData.company ? `• Company: ${submissionData.company}` : ''}
+${submissionData.phone ? `• Phone: ${submissionData.phone}` : ''}
+
+Project Details:
+• Service Needed: ${submissionData.service_type || 'Not specified'}
+${submissionData.timeline ? `• Timeline: ${submissionData.timeline}` : ''}
+${submissionData.budget ? `• Budget Range: ${submissionData.budget}` : ''}
+
+Project Description:
+${submissionData.project_description || 'Not provided'}
+
+I would like to discuss this project and explore how LearnTAV can help.
+
+Best regards,
+${submissionData.name}`;
+
+            } else {
+                body = `Hi,
+
+This is ${submissionData.name} reaching out to LearnTAV.
+
+Subject: ${submissionData.subject || 'General Inquiry'}
+
+Message:
+${submissionData.message || 'Not provided'}
+
+Please contact me at ${submissionData.email} with any questions.
+
+Best regards,
+${submissionData.name}`;
+            }
+
+            window.open(`mailto:hello@learntav.com?subject=${subject}&body=${encodeURIComponent(body)}`, '_blank');
             
         } catch (error) {
             console.error('Error creating mailto link:', error);
