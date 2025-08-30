@@ -275,6 +275,63 @@
                 width: 100%;
             }
         }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e0;
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #007bff;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .settings-group {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .settings-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
     </style>
 </head>
 <body>
@@ -293,7 +350,8 @@
                     <a href="../resources/index.html" class="learntav-nav__link">Resources</a>
                     <a href="../ai-tools/index.html" class="learntav-nav__link">AI Tools</a>
                     <a href="../contact/index.html" class="learntav-nav__link">Contact</a>
-                    <a href="../dashboard/index.html" class="learntav-nav__link nav-protected">Dashboard 🔒</a>
+                    <!-- Dashboard link only visible for admin users -->
+                    <a href="../dashboard/index.html" class="learntav-nav__link nav-protected" id="admin-dashboard-link" style="display: none;">Dashboard 🔒</a>
                 </div>
                 
                 <div class="learntav-nav__actions">
@@ -312,8 +370,8 @@
     <main class="profile">
         <div class="profile-header">
             <div class="learntav-container">
-                <h1 class="profile-title">Profile Settings</h1>
-                <p class="profile-subtitle">Manage your account information and preferences</p>
+                <h1 class="profile-title">Profile & Settings</h1>
+                <p class="profile-subtitle">Manage your account information, preferences, and settings</p>
             </div>
         </div>
 
@@ -365,6 +423,14 @@
                                     <label for="email" class="form-label">Email Address</label>
                                     <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com" required disabled>
                                     <small style="color: #6b7280; font-size: 0.75rem;">Email cannot be changed. Contact support if needed.</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email-visibility" class="form-label">Email Visibility</label>
+                                    <select id="email-visibility" name="emailVisibility" class="form-input form-select">
+                                        <option value="private">Keep email private</option>
+                                        <option value="visible">Show email to others</option>
+                                    </select>
+                                    <small style="color: #6b7280; font-size: 0.75rem;">Choose whether others can see your email address</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone" class="form-label">Phone Number (Optional)</label>
@@ -446,6 +512,92 @@
                             </div>
                         </div>
 
+                        <!-- Settings Section -->
+                        <div class="profile-section">
+                            <h2 class="section-title">Account Settings</h2>
+                            
+                            <!-- Notifications -->
+                            <div class="settings-group" style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #f3f4f6;">
+                                <h3 style="font-size: 1.125rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Notifications</h3>
+                                <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem;">Choose how you want to receive updates</p>
+                                
+                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0;">
+                                    <div>
+                                        <div style="font-weight: 500; color: #1f2937; margin-bottom: 0.25rem;">Email Notifications</div>
+                                        <div style="color: #6b7280; font-size: 0.875rem;">Receive course updates and newsletters</div>
+                                    </div>
+                                    <label class="toggle-switch" style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                                        <input type="checkbox" id="email-notifications" checked style="opacity: 0; width: 0; height: 0;">
+                                        <span class="toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #007bff; transition: 0.3s; border-radius: 24px;"></span>
+                                    </label>
+                                </div>
+
+                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0;">
+                                    <div>
+                                        <div style="font-weight: 500; color: #1f2937; margin-bottom: 0.25rem;">Marketing Communications</div>
+                                        <div style="color: #6b7280; font-size: 0.875rem;">Special offers and product updates</div>
+                                    </div>
+                                    <label class="toggle-switch" style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                                        <input type="checkbox" id="marketing-notifications" style="opacity: 0; width: 0; height: 0;">
+                                        <span class="toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e0; transition: 0.3s; border-radius: 24px;"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Privacy -->
+                            <div class="settings-group" style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #f3f4f6;">
+                                <h3 style="font-size: 1.125rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Privacy</h3>
+                                <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem;">Control your privacy preferences</p>
+                                
+                                <div class="form-group">
+                                    <label for="profile-visibility" class="form-label">Profile Visibility</label>
+                                    <select id="profile-visibility" name="profileVisibility" class="form-input form-select">
+                                        <option value="private">Private (Only me)</option>
+                                        <option value="instructors">LearnTAV Instructors</option>
+                                        <option value="students">Other Students</option>
+                                        <option value="public">Public</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Learning Preferences -->
+                            <div class="settings-group" style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #f3f4f6;">
+                                <h3 style="font-size: 1.125rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Learning Preferences</h3>
+                                <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem;">Customize your learning experience</p>
+                                
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="theme-preference" class="form-label">Theme</label>
+                                        <select id="theme-preference" name="themePreference" class="form-input form-select">
+                                            <option value="light">Light Theme</option>
+                                            <option value="dark">Dark Theme (Coming Soon)</option>
+                                            <option value="auto">Auto (System)</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="learning-reminder-time" class="form-label">Daily Learning Reminder</label>
+                                        <input type="time" id="learning-reminder-time" name="learningReminderTime" class="form-input" value="18:00">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Security -->
+                            <div class="settings-group">
+                                <h3 style="font-size: 1.125rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Security</h3>
+                                <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem;">Manage your account security</p>
+                                
+                                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                    <button type="button" class="btn btn-outline" id="change-password-btn">
+                                        🔑 Change Password
+                                    </button>
+                                    <button type="button" class="btn btn-outline" id="setup-2fa-btn">
+                                        🛡️ Set Up 2FA
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Form Actions -->
                         <div class="form-actions">
                             <button type="button" class="btn btn-outline" id="cancel-changes">
@@ -478,6 +630,7 @@
                 firstName: 'LearnTAV',
                 lastName: 'Student',
                 email: 'user@example.com',
+                emailVisibility: 'private',
                 phone: '',
                 company: '',
                 jobTitle: '',
@@ -485,7 +638,12 @@
                 experienceLevel: '',
                 learningGoals: '',
                 preferredTopics: [],
-                communicationPreference: 'email'
+                communicationPreference: 'email',
+                emailNotifications: true,
+                marketingNotifications: false,
+                profileVisibility: 'private',
+                themePreference: 'light',
+                learningReminderTime: '18:00'
             };
 
             // Populate form fields
@@ -506,11 +664,29 @@
 
             // Update sidebar display
             document.getElementById('profile-display-name').textContent = `${profileData.firstName} ${profileData.lastName}`;
-            document.getElementById('profile-display-email').textContent = profileData.email;
+            
+            // Show/hide email based on visibility setting
+            const emailElement = document.getElementById('profile-display-email');
+            if (profileData.emailVisibility === 'visible') {
+                emailElement.textContent = profileData.email;
+            } else {
+                emailElement.textContent = 'Email hidden';
+            }
             
             // Set avatar initials
             const initials = `${profileData.firstName.charAt(0)}${profileData.lastName.charAt(0)}`;
             document.getElementById('profile-avatar').textContent = initials;
+
+            // Handle toggle switches
+            const emailNotificationsToggle = document.getElementById('email-notifications');
+            const marketingNotificationsToggle = document.getElementById('marketing-notifications');
+            
+            if (emailNotificationsToggle) {
+                emailNotificationsToggle.checked = profileData.emailNotifications;
+            }
+            if (marketingNotificationsToggle) {
+                marketingNotificationsToggle.checked = profileData.marketingNotifications;
+            }
         }
 
         function setupFormHandlers() {
@@ -578,6 +754,63 @@
                     reader.readAsDataURL(file);
                 }
             });
+
+            // Handle settings toggles
+            const settingsToggles = document.querySelectorAll('input[type="checkbox"]');
+            settingsToggles.forEach(toggle => {
+                toggle.addEventListener('change', function() {
+                    if (this.id === 'email-notifications' || this.id === 'marketing-notifications') {
+                        showSuccessMessage();
+                    }
+                });
+            });
+
+            // Handle email visibility change
+            const emailVisibilitySelect = document.getElementById('email-visibility');
+            if (emailVisibilitySelect) {
+                emailVisibilitySelect.addEventListener('change', function() {
+                    const email = document.getElementById('email').value || 'user@example.com';
+                    const emailElement = document.getElementById('profile-display-email');
+                    if (this.value === 'visible') {
+                        emailElement.textContent = email;
+                    } else {
+                        emailElement.textContent = 'Email hidden';
+                    }
+                    showSuccessMessage();
+                });
+            }
+
+            // Handle other settings changes
+            const settingsInputs = document.querySelectorAll('#profile-visibility, #theme-preference, #learning-reminder-time');
+            settingsInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    showSuccessMessage();
+                });
+            });
+
+            // Handle security buttons
+            const changePasswordBtn = document.getElementById('change-password-btn');
+            const setup2faBtn = document.getElementById('setup-2fa-btn');
+
+            if (changePasswordBtn) {
+                changePasswordBtn.addEventListener('click', function() {
+                    alert('Change password functionality coming soon! Please contact support if you need to change your password.');
+                });
+            }
+
+            if (setup2faBtn) {
+                setup2faBtn.addEventListener('click', function() {
+                    alert('Two-factor authentication setup coming soon! This will add an extra layer of security to your account.');
+                });
+            }
+
+
+            function showSuccessMessage() {
+                successMsg.style.display = 'block';
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 3000);
+            }
         }
     </script>
 </body>
