@@ -25,36 +25,167 @@ function logAdminAccess(userId, action, details) {
     return Promise.resolve();
 }
 
-// Mock Supabase client
+// Mock data for demonstration
+const mockUsers = [
+    {
+        id: 'user-1',
+        full_name: 'John Smith',
+        email: 'john@example.com',
+        role: 'user',
+        created_at: '2024-01-15T10:30:00Z',
+        updated_at: '2024-01-15T10:30:00Z'
+    },
+    {
+        id: 'user-2',
+        full_name: 'Sarah Johnson',
+        email: 'sarah@example.com',
+        role: 'user',
+        created_at: '2024-02-20T14:20:00Z',
+        updated_at: '2024-02-20T14:20:00Z'
+    },
+    {
+        id: 'user-3',
+        full_name: 'Mike Davis',
+        email: 'mike@example.com',
+        role: 'admin',
+        created_at: '2024-03-10T09:15:00Z',
+        updated_at: '2024-03-10T09:15:00Z'
+    }
+];
+
+const mockFormSubmissions = [
+    {
+        id: 'form-1',
+        name: 'Alice Wilson',
+        email: 'alice@example.com',
+        subject: 'Consultation Request',
+        message: 'I would like to schedule a consultation for my upcoming project. Please let me know your availability.',
+        form_type: 'consultation',
+        status: 'unread',
+        submitted_at: '2024-08-30T15:30:00Z',
+        metadata: { source: 'website', referrer: 'google' }
+    },
+    {
+        id: 'form-2',
+        name: 'Bob Chen',
+        email: 'bob.chen@company.com',
+        subject: 'Partnership Inquiry',
+        message: 'We are interested in exploring a potential partnership. Could we schedule a call to discuss?',
+        form_type: 'consulting',
+        status: 'read',
+        submitted_at: '2024-08-29T11:45:00Z',
+        metadata: { source: 'linkedin', company: 'TechCorp' }
+    },
+    {
+        id: 'form-3',
+        name: 'Emma Rodriguez',
+        email: 'emma.r@university.edu',
+        subject: 'Educational Program Question',
+        message: 'I am interested in your TAV certification program. What are the prerequisites and timeline?',
+        form_type: 'education',
+        status: 'unread',
+        submitted_at: '2024-08-31T08:20:00Z',
+        metadata: { source: 'newsletter', student: true }
+    },
+    {
+        id: 'form-4',
+        name: 'David Kim',
+        email: 'david@startup.io',
+        subject: 'General Inquiry',
+        message: 'Hi, I came across your website and would like to learn more about your services.',
+        form_type: 'general',
+        status: 'responded',
+        submitted_at: '2024-08-28T16:10:00Z',
+        metadata: { source: 'website', page: 'services' }
+    },
+    {
+        id: 'form-5',
+        name: 'Lisa Thompson',
+        email: 'lisa.thompson@enterprise.com',
+        subject: 'Enterprise Solutions',
+        message: 'We are a large organization looking for enterprise-level TAV solutions. Can we discuss pricing and implementation?',
+        form_type: 'consulting',
+        status: 'unread',
+        submitted_at: '2024-08-31T10:55:00Z',
+        metadata: { source: 'referral', company: 'Enterprise Corp', employees: '500+' }
+    }
+];
+
+// Mock Supabase client with realistic data
 const supabase = {
     from: (table) => ({
-        select: (columns = '*', options = {}) => ({
-            order: (column, order = {}) => ({
-                limit: (limit) => ({
-                    range: (start, end) => ({
-                        eq: (column, value) => ({
-                            or: (condition) => ({
-                                gte: (column, value) => Promise.resolve({
-                                    data: [],
-                                    error: null,
-                                    count: 0
+        select: (columns = '*', options = {}) => {
+            const mockQuery = {
+                order: (column, order = {}) => ({
+                    limit: (limit) => ({
+                        range: (start, end) => ({
+                            eq: (column, value) => ({
+                                or: (condition) => ({
+                                    gte: (column, value) => {
+                                        let data = table === 'profiles' ? mockUsers :
+                                                  table === 'contact_submissions' ? mockFormSubmissions : [];
+                                        return Promise.resolve({
+                                            data: data.slice(start, end + 1),
+                                            error: null,
+                                            count: data.length
+                                        });
+                                    }
                                 })
-                            })
+                            }),
+                            single: () => {
+                                const data = table === 'profiles' ? mockUsers :
+                                            table === 'contact_submissions' ? mockFormSubmissions : [];
+                                return Promise.resolve({
+                                    data: data[0] || null,
+                                    error: null
+                                });
+                            }
                         })
-                    })
-                })
-            }),
-            eq: (column, value) => ({
-                single: () => Promise.resolve({
+                    }),
+                    range: (start, end) => {
+                        let data = table === 'profiles' ? mockUsers :
+                                  table === 'contact_submissions' ? mockFormSubmissions : [];
+                        return Promise.resolve({
+                            data: data.slice(start, end + 1),
+                            error: null,
+                            count: data.length
+                        });
+                    }
+                }),
+                eq: (column, value) => ({
+                    single: () => {
+                        let data = table === 'profiles' ? mockUsers :
+                                  table === 'contact_submissions' ? mockFormSubmissions : [];
+                        const found = data.find(item => item[column] === value);
+                        return Promise.resolve({
+                            data: found || null,
+                            error: null
+                        });
+                    }
+                }),
+                gte: (column, value) => {
+                    let data = table === 'profiles' ? mockUsers :
+                              table === 'contact_submissions' ? mockFormSubmissions : [];
+                    return Promise.resolve({
+                        data: data,
+                        error: null,
+                        count: data.length
+                    });
+                }
+            };
+
+            // Handle count-only queries
+            if (options.count === 'exact' && options.head) {
+                let data = table === 'profiles' ? mockUsers :
+                          table === 'contact_submissions' ? mockFormSubmissions : [];
+                return Promise.resolve({
                     data: null,
-                    error: null
-                })
-            }),
-            gte: (column, value) => Promise.resolve({
-                data: [],
-                error: null,
-                count: 0
-            })
+                    error: null,
+                    count: data.length
+                });
+            }
+
+            return mockQuery;
         }),
         insert: (data) => Promise.resolve({ data: null, error: null }),
         update: (data) => ({

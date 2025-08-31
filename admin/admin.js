@@ -33,31 +33,58 @@ class AdminPanel {
     // Numeric keypad - prevent double clicks and add debounce
     document.querySelectorAll('.keypad-key').forEach(key => {
       let isProcessing = false;
+      let lastProcessTime = 0;
       
-      key.addEventListener('click', (e) => {
+      const handleKeypadClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
+        e.stopImmediatePropagation();
         
-        // Prevent double clicks
-        if (isProcessing) return;
+        const now = Date.now();
+        
+        // Prevent rapid successive clicks (debounce with minimum 250ms between clicks)
+        if (isProcessing || (now - lastProcessTime < 250)) {
+          return;
+        }
+        
         isProcessing = true;
+        lastProcessTime = now;
         
-        // Reset processing flag after short delay
+        const value = e.target.dataset.value || e.currentTarget.dataset.value;
+        const action = e.target.dataset.action || e.currentTarget.dataset.action;
+        
+        try {
+          if (value) {
+            this.addDigit(value);
+          } else if (action === 'backspace') {
+            this.removeDigit();
+          } else if (action === 'clear') {
+            this.clearAccessCode();
+          }
+        } catch (error) {
+          console.error('Keypad input error:', error);
+        }
+        
+        // Reset processing flag after delay
         setTimeout(() => {
           isProcessing = false;
-        }, 200);
-        
-        const value = e.target.dataset.value
-        const action = e.target.dataset.action
-        
-        if (value) {
-          this.addDigit(value)
-        } else if (action === 'backspace') {
-          this.removeDigit()
-        } else if (action === 'clear') {
-          this.clearAccessCode()
-        }
-      })
+        }, 300);
+      };
+      
+      // Remove any existing event listeners to prevent duplicates
+      key.removeEventListener('click', handleKeypadClick);
+      
+      // Add single event listener
+      key.addEventListener('click', handleKeypadClick, { once: false, passive: false });
+      
+      // Prevent other event types that might cause double firing
+      key.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+      }, { passive: false });
+      
+      key.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+      });
     })
     
     // Clear button
@@ -72,11 +99,37 @@ class AdminPanel {
       }
     })
     
-    // Allow direct input in the access code field
+    // Allow direct input in the access code field with debounce
     const accessCodeInput = document.getElementById('admin-access-code')
+    let inputTimeout;
+    
     accessCodeInput.addEventListener('input', (e) => {
-      this.accessCode = e.target.value
-      this.updateAccessCodeDisplay()
+      // Clear previous timeout to debounce rapid input
+      clearTimeout(inputTimeout);
+      
+      inputTimeout = setTimeout(() => {
+        // Only update if the value has actually changed
+        const newValue = e.target.value.slice(0, 4); // Limit to 4 digits
+        if (newValue !== this.accessCode) {
+          this.accessCode = newValue;
+          this.updateAccessCodeDisplay();
+        }
+      }, 50); // Small debounce delay
+    })
+    
+    // Prevent rapid key repeats on keydown
+    accessCodeInput.addEventListener('keydown', (e) => {
+      // Allow digits, backspace, delete, tab, enter
+      if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'Tab', 'Enter'].includes(e.key)) {
+        e.preventDefault();
+        return;
+      }
+      
+      // Prevent input if already at max length and trying to add more digits
+      if (e.target.value.length >= 4 && /[0-9]/.test(e.key)) {
+        e.preventDefault();
+        return;
+      }
     })
   }
   
