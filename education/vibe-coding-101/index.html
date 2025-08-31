@@ -695,205 +695,29 @@
     <!-- JavaScript -->
     <script src="../../assets/js/main.js"></script>
     <script>
-        // Enrollment form handling with API integration
-        document.getElementById('enrollmentForm').addEventListener('submit', async function(e) {
+        // Enrollment form handling
+        document.getElementById('enrollmentForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
             
-            try {
-                // Add loading state
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Submitting...';
-                submitBtn.style.cursor = 'not-allowed';
-                
-                // Get form data
-                const formData = new FormData(this);
-                formData.set('form_type', 'vibe_coding_101');
-                
-                // Basic client-side validation
-                const required = ['studentName', 'studentAge', 'parentName', 'email', 'learningStyle', 'goals'];
-                const missing = required.filter(field => !formData.get(field)?.trim());
-                
-                if (missing.length > 0) {
-                    throw new Error(`Please fill in all required fields: ${missing.join(', ')}`);
-                }
-                
-                // Validate email format
-                const email = formData.get('email');
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    throw new Error('Please enter a valid email address');
-                }
-                
-                // Validate student age
-                const age = parseInt(formData.get('studentAge'));
-                if (!age || age < 6 || age > 18) {
-                    throw new Error('Student age must be between 6 and 18');
-                }
-                
-                console.log('Submitting Vibe Coding 101 enrollment...');
-                
-                // Submit to API
-                const response = await fetch('/api/form-handler', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                });
-                
-                const result = await response.json();
-                
-                if (result.success && result.gmailUrl) {
-                    // Show success message briefly before redirect
-                    showSuccessMessage('Enrollment submitted successfully! Redirecting to compose email...');
-                    
-                    // Track successful submission
-                    if (typeof gtag !== 'undefined') {
-                        gtag('event', 'form_submit', {
-                            'event_category': 'Enrollment',
-                            'event_label': 'Vibe Coding 101',
-                            'value': 1
-                        });
-                    }
-                    
-                    // Redirect to Gmail after short delay
-                    setTimeout(() => {
-                        window.open(result.gmailUrl, '_blank');
-                        // Show final success message
-                        showFinalSuccessMessage();
-                    }, 1500);
-                    
-                } else {
-                    throw new Error(result.error || 'Enrollment submission failed');
-                }
-                
-            } catch (error) {
-                console.error('Enrollment submission error:', error);
-                
-                // Track failed submission
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'form_error', {
-                        'event_category': 'Enrollment',
-                        'event_label': 'Vibe Coding 101',
-                        'error_message': error.message
-                    });
-                }
-                
-                // Show error with fallback options
-                showErrorMessage(error.message);
-                
-            } finally {
-                // Reset button state
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
-                submitBtn.style.cursor = 'pointer';
+            // Simple validation
+            if (!data.studentName || !data.email || !data.learningStyle || !data.goals) {
+                alert('Please fill in all required fields.');
+                return;
             }
+            
+            // Show success message
+            alert('Thank you for enrolling in Vibe Coding 101! We\'ll contact you within 24 hours to confirm your spot and schedule your sessions.');
+            
+            // In a real application, you would send this data to a server
+            console.log('Enrollment data:', data);
+            
+            // Reset form
+            this.reset();
         });
-        
-        // Success message display
-        function showSuccessMessage(message) {
-            const form = document.getElementById('enrollmentForm');
-            const successDiv = document.createElement('div');
-            successDiv.className = 'enrollment-success-message';
-            successDiv.innerHTML = `
-                <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; margin: 20px 0; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
-                    <div style="font-size: 2rem; margin-bottom: 10px;">✅</div>
-                    <h3 style="margin: 0 0 10px 0; font-size: 1.5rem;">Success!</h3>
-                    <p style="margin: 0; opacity: 0.9;">${message}</p>
-                </div>
-            `;
-            form.parentNode.insertBefore(successDiv, form.nextSibling);
-        }
-        
-        // Final success message after Gmail redirect
-        function showFinalSuccessMessage() {
-            const form = document.getElementById('enrollmentForm');
-            form.innerHTML = `
-                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 16px; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 20px;">🎉</div>
-                    <h2 style="margin: 0 0 15px 0; font-size: 2rem;">Enrollment Submitted!</h2>
-                    <p style="margin: 0 0 20px 0; font-size: 1.1rem; opacity: 0.9;">
-                        Your enrollment for Vibe Coding 101 has been submitted successfully. We've opened Gmail for you to send us your details.
-                    </p>
-                    <p style="margin: 0; font-size: 1rem; opacity: 0.8;">
-                        We'll contact you within 24 hours to confirm your spot and schedule your sessions.
-                    </p>
-                    <div style="margin-top: 30px;">
-                        <a href="#" onclick="location.reload()" style="background: rgba(255,255,255,0.2); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block; margin-right: 10px;">
-                            Enroll Another Student
-                        </a>
-                        <a href="../index.html" style="background: rgba(255,255,255,0.1); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">
-                            View All Programs
-                        </a>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // Error message display with fallback options
-        function showErrorMessage(message) {
-            const form = document.getElementById('enrollmentForm');
-            const existingError = form.parentNode.querySelector('.enrollment-error-message');
-            if (existingError) existingError.remove();
-            
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'enrollment-error-message';
-            errorDiv.innerHTML = `
-                <div style="background: #fff; border: 2px solid #ef4444; border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center;">
-                    <div style="color: #ef4444; font-size: 2rem; margin-bottom: 10px;">⚠️</div>
-                    <h3 style="color: #ef4444; margin: 0 0 10px 0;">Enrollment Error</h3>
-                    <p style="color: #374151; margin: 0 0 20px 0;">${message}</p>
-                    <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                        <button onclick="location.reload()" style="background: #667eea; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">
-                            Try Again
-                        </button>
-                        <button onclick="enrollmentFormFallback()" style="background: #10b981; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">
-                            Email Us Directly
-                        </button>
-                        <a href="mailto:hello@learntav.com" style="background: #6b7280; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">
-                            hello@learntav.com
-                        </a>
-                    </div>
-                </div>
-            `;
-            form.parentNode.insertBefore(errorDiv, form.nextSibling);
-        }
-        
-        // Fallback function for direct email
-        window.enrollmentFormFallback = function() {
-            const form = document.getElementById('enrollmentForm');
-            const formData = new FormData(form);
-            
-            try {
-                const subject = encodeURIComponent('Vibe Coding 101 Enrollment - ' + (formData.get('studentName') || 'New Student'));
-                const body = encodeURIComponent(`Hi,
-
-This is ${formData.get('parentName')}, parent of ${formData.get('studentName')} (${formData.get('studentAge')} years old) reaching out to Learn TAV because I want to enroll my child in Vibe Coding 101.
-
-Student Details:
-• Name: ${formData.get('studentName')}
-• Age: ${formData.get('studentAge')} years old
-• Experience Level: ${formData.get('experience') || 'Not specified'}
-• Learning Style Preference: ${formData.get('learningStyle')}
-• Preferred Timing: ${formData.get('timing') || 'Flexible'}
-
-Goals: ${formData.get('goals')}
-
-Please contact me at ${formData.get('email')}${formData.get('phone') ? ` or ${formData.get('phone')}` : ''} to discuss enrollment and scheduling.
-
-Best regards,
-${formData.get('parentName')}`);
-                
-                window.open(`mailto:hello@learntav.com?subject=${subject}&body=${body}`, '_blank');
-                
-            } catch (error) {
-                console.error('Error creating mailto link:', error);
-                window.open('mailto:hello@learntav.com', '_blank');
-            }
-        };
         
         // Smooth scrolling for enrollment link
         document.querySelectorAll('a[href="#enrollment"]').forEach(link => {
@@ -903,20 +727,6 @@ ${formData.get('parentName')}`);
                     behavior: 'smooth'
                 });
             });
-        });
-        
-        // Form validation enhancements
-        document.getElementById('enrollmentForm').addEventListener('input', function(e) {
-            const field = e.target;
-            if (field.type === 'email') {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                field.style.borderColor = emailRegex.test(field.value) ? '#10b981' : '#ef4444';
-            } else if (field.name === 'studentAge') {
-                const age = parseInt(field.value);
-                field.style.borderColor = (age >= 6 && age <= 18) ? '#10b981' : '#ef4444';
-            } else if (field.required && field.value.trim()) {
-                field.style.borderColor = '#10b981';
-            }
         });
     </script>
 </body>
