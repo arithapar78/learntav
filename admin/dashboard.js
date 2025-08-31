@@ -5,7 +5,7 @@
 
 // Mock auth system for demo purposes
 const mockAuth = {
-    user: { id: 'demo-admin', email: 'admin@learntav.com', role: 'admin' },
+    user: { id: 'admin', email: '', role: 'admin' },
     isAuthenticated: true
 };
 
@@ -25,91 +25,9 @@ function logAdminAccess(userId, action, details) {
     return Promise.resolve();
 }
 
-// Mock data for demonstration
-const mockUsers = [
-    {
-        id: 'user-1',
-        full_name: 'John Smith',
-        email: 'john@example.com',
-        role: 'user',
-        created_at: '2024-01-15T10:30:00Z',
-        updated_at: '2024-01-15T10:30:00Z'
-    },
-    {
-        id: 'user-2',
-        full_name: 'Sarah Johnson',
-        email: 'sarah@example.com',
-        role: 'user',
-        created_at: '2024-02-20T14:20:00Z',
-        updated_at: '2024-02-20T14:20:00Z'
-    },
-    {
-        id: 'user-3',
-        full_name: 'Mike Davis',
-        email: 'mike@example.com',
-        role: 'admin',
-        created_at: '2024-03-10T09:15:00Z',
-        updated_at: '2024-03-10T09:15:00Z'
-    }
-];
-
-const mockFormSubmissions = [
-    {
-        id: 'form-1',
-        name: 'Alice Wilson',
-        email: 'alice@example.com',
-        subject: 'Consultation Request',
-        message: 'I would like to schedule a consultation for my upcoming project. Please let me know your availability.',
-        form_type: 'consultation',
-        status: 'unread',
-        submitted_at: '2024-08-30T15:30:00Z',
-        metadata: { source: 'website', referrer: 'google' }
-    },
-    {
-        id: 'form-2',
-        name: 'Bob Chen',
-        email: 'bob.chen@company.com',
-        subject: 'Partnership Inquiry',
-        message: 'We are interested in exploring a potential partnership. Could we schedule a call to discuss?',
-        form_type: 'consulting',
-        status: 'read',
-        submitted_at: '2024-08-29T11:45:00Z',
-        metadata: { source: 'linkedin', company: 'TechCorp' }
-    },
-    {
-        id: 'form-3',
-        name: 'Emma Rodriguez',
-        email: 'emma.r@university.edu',
-        subject: 'Educational Program Question',
-        message: 'I am interested in your TAV certification program. What are the prerequisites and timeline?',
-        form_type: 'education',
-        status: 'unread',
-        submitted_at: '2024-08-31T08:20:00Z',
-        metadata: { source: 'newsletter', student: true }
-    },
-    {
-        id: 'form-4',
-        name: 'David Kim',
-        email: 'david@startup.io',
-        subject: 'General Inquiry',
-        message: 'Hi, I came across your website and would like to learn more about your services.',
-        form_type: 'general',
-        status: 'responded',
-        submitted_at: '2024-08-28T16:10:00Z',
-        metadata: { source: 'website', page: 'services' }
-    },
-    {
-        id: 'form-5',
-        name: 'Lisa Thompson',
-        email: 'lisa.thompson@enterprise.com',
-        subject: 'Enterprise Solutions',
-        message: 'We are a large organization looking for enterprise-level TAV solutions. Can we discuss pricing and implementation?',
-        form_type: 'consulting',
-        status: 'unread',
-        submitted_at: '2024-08-31T10:55:00Z',
-        metadata: { source: 'referral', company: 'Enterprise Corp', employees: '500+' }
-    }
-];
+// Empty data arrays - will show real data when available
+const mockUsers = [];
+const mockFormSubmissions = [];
 
 // Mock Supabase client with realistic data
 const supabase = {
@@ -454,9 +372,15 @@ class AdminDashboard {
       // Update UI
       document.getElementById('total-users-stat').textContent = totalUsers || 0
       
-      // Calculate percentage change (mock for now)
-      const changePercent = monthlyUsers ? Math.round((monthlyUsers / Math.max(totalUsers - monthlyUsers, 1)) * 100) : 0
-      document.getElementById('users-change').textContent = `+${changePercent}% this month`
+      // Show appropriate message based on data
+      if (totalUsers === 0) {
+        document.getElementById('users-change').textContent = 'No users yet'
+      } else if (monthlyUsers > 0) {
+        const changePercent = Math.round((monthlyUsers / Math.max(totalUsers - monthlyUsers, 1)) * 100)
+        document.getElementById('users-change').textContent = `+${changePercent}% this month`
+      } else {
+        document.getElementById('users-change').textContent = 'No new users this month'
+      }
       
     } catch (error) {
       console.error('Error loading user stats:', error)
@@ -490,9 +414,15 @@ class AdminDashboard {
       // Update UI
       document.getElementById('total-submissions-stat').textContent = totalSubmissions || 0
       
-      // Calculate percentage change
-      const changePercent = weeklySubmissions ? Math.round((weeklySubmissions / Math.max(totalSubmissions - weeklySubmissions, 1)) * 100) : 0
-      document.getElementById('submissions-change').textContent = `+${changePercent}% this week`
+      // Show appropriate message based on data
+      if (totalSubmissions === 0) {
+        document.getElementById('submissions-change').textContent = 'No submissions yet'
+      } else if (weeklySubmissions > 0) {
+        const changePercent = Math.round((weeklySubmissions / Math.max(totalSubmissions - weeklySubmissions, 1)) * 100)
+        document.getElementById('submissions-change').textContent = `+${changePercent}% this week`
+      } else {
+        document.getElementById('submissions-change').textContent = 'No new submissions this week'
+      }
       
     } catch (error) {
       console.error('Error loading form stats:', error)
@@ -505,13 +435,10 @@ class AdminDashboard {
    */
   async loadSystemStats() {
     try {
-      // Mock active sessions (would need real-time data in production)
-      const activeSessions = Math.floor(Math.random() * 50) + 10
-      document.getElementById('active-sessions-stat').textContent = activeSessions
-      
-      // System status (would check actual services in production)
+      // No mock data - show actual system status
+      document.getElementById('active-sessions-stat').textContent = '0'
       document.getElementById('system-status-stat').textContent = 'Online'
-      document.getElementById('status-change').textContent = 'All systems operational'
+      document.getElementById('status-change').textContent = 'System operational'
       
     } catch (error) {
       console.error('Error loading system stats:', error)
@@ -534,7 +461,7 @@ class AdminDashboard {
       const activityList = document.getElementById('recent-activity-list')
       
       if (!activities || activities.length === 0) {
-        activityList.innerHTML = '<div class="activity-empty">No recent activity</div>'
+        activityList.innerHTML = '<div class="activity-empty">No activity to display yet</div>'
         return
       }
       
@@ -604,7 +531,7 @@ class AdminDashboard {
     const tbody = document.getElementById('users-table-body')
     
     if (!users || users.length === 0) {
-      tbody.innerHTML = '<tr class="empty-row"><td colspan="7"><div class="table-empty">No users found</div></td></tr>'
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="7"><div class="table-empty">No users registered yet</div></td></tr>'
       return
     }
     
@@ -692,7 +619,7 @@ class AdminDashboard {
     const tbody = document.getElementById('forms-table-body')
     
     if (!forms || forms.length === 0) {
-      tbody.innerHTML = '<tr class="empty-row"><td colspan="7"><div class="table-empty">No form submissions found</div></td></tr>'
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="7"><div class="table-empty">No form submissions received yet</div></td></tr>'
       return
     }
     

@@ -397,22 +397,21 @@
                 el.textContent = userName;
             });
             
-            // Set default user data
+            // Set default user data - no placeholder emails
             const userEmailElements = document.querySelectorAll('[data-user-email]');
             userEmailElements.forEach(el => {
-                el.textContent = 'user@learntav.com';
+                el.textContent = 'No email set';
             });
             
             const userRoleElements = document.querySelectorAll('[data-user-role]');
             userRoleElements.forEach(el => {
-                el.textContent = 'Student';
+                el.textContent = 'User';
             });
             
-            // Update member since date
+            // Update member since date - show current date as start
             const memberSinceElement = document.getElementById('memberSince');
             if (memberSinceElement) {
                 const memberDate = new Date();
-                memberDate.setMonth(memberDate.getMonth() - 3); // 3 months ago
                 memberSinceElement.textContent = memberDate.toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long'

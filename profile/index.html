@@ -625,11 +625,11 @@
 
         async function loadUserProfile() {
             // This would normally load from Supabase
-            // For now, we'll use placeholder data
+            // No placeholder data - use empty values
             const profileData = {
-                firstName: 'LearnTAV',
-                lastName: 'Student',
-                email: 'user@example.com',
+                firstName: '',
+                lastName: '',
+                email: '',
                 emailVisibility: 'private',
                 phone: '',
                 company: '',
@@ -663,18 +663,21 @@
             });
 
             // Update sidebar display
-            document.getElementById('profile-display-name').textContent = `${profileData.firstName} ${profileData.lastName}`;
+            const fullName = `${profileData.firstName} ${profileData.lastName}`.trim();
+            document.getElementById('profile-display-name').textContent = fullName || 'No name set';
             
             // Show/hide email based on visibility setting
             const emailElement = document.getElementById('profile-display-email');
-            if (profileData.emailVisibility === 'visible') {
+            if (profileData.emailVisibility === 'visible' && profileData.email) {
                 emailElement.textContent = profileData.email;
             } else {
-                emailElement.textContent = 'Email hidden';
+                emailElement.textContent = 'No email set';
             }
             
             // Set avatar initials
-            const initials = `${profileData.firstName.charAt(0)}${profileData.lastName.charAt(0)}`;
+            const initials = profileData.firstName && profileData.lastName
+                ? `${profileData.firstName.charAt(0)}${profileData.lastName.charAt(0)}`
+                : '👤';
             document.getElementById('profile-avatar').textContent = initials;
 
             // Handle toggle switches
@@ -719,10 +722,13 @@
                     successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     
                     // Update sidebar display
-                    document.getElementById('profile-display-name').textContent = `${profileData.firstName} ${profileData.lastName}`;
+                    const fullName = `${profileData.firstName} ${profileData.lastName}`.trim();
+                    document.getElementById('profile-display-name').textContent = fullName || 'No name set';
                     
                     // Update avatar initials
-                    const initials = `${profileData.firstName.charAt(0)}${profileData.lastName.charAt(0)}`;
+                    const initials = profileData.firstName && profileData.lastName
+                        ? `${profileData.firstName.charAt(0)}${profileData.lastName.charAt(0)}`
+                        : '👤';
                     document.getElementById('profile-avatar').textContent = initials;
 
                 } catch (error) {
@@ -769,12 +775,12 @@
             const emailVisibilitySelect = document.getElementById('email-visibility');
             if (emailVisibilitySelect) {
                 emailVisibilitySelect.addEventListener('change', function() {
-                    const email = document.getElementById('email').value || 'user@example.com';
+                    const email = document.getElementById('email').value;
                     const emailElement = document.getElementById('profile-display-email');
-                    if (this.value === 'visible') {
+                    if (this.value === 'visible' && email) {
                         emailElement.textContent = email;
                     } else {
-                        emailElement.textContent = 'Email hidden';
+                        emailElement.textContent = 'No email set';
                     }
                     showSuccessMessage();
                 });
