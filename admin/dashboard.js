@@ -113,85 +113,80 @@ const mockFormSubmissions = [
 
 // Mock Supabase client with realistic data
 const supabase = {
-    from: (table) => ({
-        select: (columns = '*', options = {}) => {
-            const mockQuery = {
-                order: (column, order = {}) => ({
-                    limit: (limit) => ({
-                        range: (start, end) => ({
-                            eq: (column, value) => ({
-                                or: (condition) => ({
-                                    gte: (column, value) => {
-                                        let data = table === 'profiles' ? mockUsers :
-                                                  table === 'contact_submissions' ? mockFormSubmissions : [];
-                                        return Promise.resolve({
-                                            data: data.slice(start, end + 1),
-                                            error: null,
-                                            count: data.length
-                                        });
-                                    }
-                                })
-                            }),
-                            single: () => {
-                                const data = table === 'profiles' ? mockUsers :
-                                            table === 'contact_submissions' ? mockFormSubmissions : [];
-                                return Promise.resolve({
-                                    data: data[0] || null,
-                                    error: null
-                                });
-                            }
-                        })
-                    }),
-                    range: (start, end) => {
-                        let data = table === 'profiles' ? mockUsers :
-                                  table === 'contact_submissions' ? mockFormSubmissions : [];
-                        return Promise.resolve({
-                            data: data.slice(start, end + 1),
-                            error: null,
-                            count: data.length
-                        });
+    from: (table) => {
+        const getData = () => {
+            return table === 'profiles' ? mockUsers :
+                   table === 'contact_submissions' ? mockFormSubmissions :
+                   table === 'admin_logs' ? [] : [];
+        };
+
+        const createChainableQuery = (initialData = null) => {
+            const data = initialData || getData();
+            
+            return {
+                select: (columns = '*', options = {}) => {
+                    if (options.count === 'exact' && options.head) {
+                        return {
+                            gte: (column, value) => Promise.resolve({
+                                data: null,
+                                error: null,
+                                count: data.length
+                            })
+                        };
                     }
+                    return createChainableQuery(data);
+                },
+                order: (column, order = {}) => createChainableQuery(data),
+                limit: (limit) => createChainableQuery(data.slice(0, limit)),
+                range: (start, end) => Promise.resolve({
+                    data: data.slice(start, end + 1),
+                    error: null,
+                    count: data.length
                 }),
-                eq: (column, value) => ({
-                    single: () => {
-                        let data = table === 'profiles' ? mockUsers :
-                                  table === 'contact_submissions' ? mockFormSubmissions : [];
-                        const found = data.find(item => item[column] === value);
-                        return Promise.resolve({
-                            data: found || null,
-                            error: null
-                        });
-                    }
-                }),
+                eq: (column, value) => {
+                    const filtered = data.filter(item => item[column] === value);
+                    const query = createChainableQuery(filtered);
+                    query.single = () => Promise.resolve({
+                        data: filtered[0] || null,
+                        error: null
+                    });
+                    return query;
+                },
                 gte: (column, value) => {
-                    let data = table === 'profiles' ? mockUsers :
-                              table === 'contact_submissions' ? mockFormSubmissions : [];
+                    // For date filtering, just return all data for demo
                     return Promise.resolve({
                         data: data,
                         error: null,
                         count: data.length
                     });
-                }
+                },
+                or: (condition) => createChainableQuery(data),
+                single: () => Promise.resolve({
+                    data: data[0] || null,
+                    error: null
+                })
             };
+        };
 
-            // Handle count-only queries
-            if (options.count === 'exact' && options.head) {
-                let data = table === 'profiles' ? mockUsers :
-                          table === 'contact_submissions' ? mockFormSubmissions : [];
-                return Promise.resolve({
-                    data: null,
-                    error: null,
-                    count: data.length
-                });
-            }
-
-            return mockQuery;
-        }),
-        insert: (data) => Promise.resolve({ data: null, error: null }),
-        update: (data) => ({
-            eq: (column, value) => Promise.resolve({ data: null, error: null })
-        })
-    })
+        return {
+            select: (columns = '*', options = {}) => {
+                if (options.count === 'exact' && options.head) {
+                    return {
+                        gte: (column, value) => Promise.resolve({
+                            data: null,
+                            error: null,
+                            count: getData().length
+                        })
+                    };
+                }
+                return createChainableQuery();
+            },
+            insert: (data) => Promise.resolve({ data: null, error: null }),
+            update: (data) => ({
+                eq: (column, value) => Promise.resolve({ data: null, error: null })
+            })
+        };
+    }
 };
 
 const authState = mockAuth;
@@ -1198,6 +1193,254 @@ class AdminDashboard {
         this.loadRecentActivity()
       }
     }, 60000)
+  }
+
+  /**
+   * Load analytics data
+   */
+  async loadAnalyticsData() {
+    console.log('Loading analytics data...')
+    // Mock implementation for analytics
+  }
+
+  /**
+   * Save settings
+   */
+  async saveSettings() {
+    try {
+      this.showLoading('Saving settings...')
+      // Mock save operation
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      this.showSuccess('Settings saved successfully')
+    } catch (error) {
+      console.error('Error saving settings:', error)
+      this.showError('Failed to save settings')
+    } finally {
+      this.hideLoading()
+    }
+  }
+
+  /**
+   * Reset settings to default
+   */
+  async resetSettings() {
+    if (confirm('Are you sure you want to reset all settings to default?')) {
+      try {
+        this.showLoading('Resetting settings...')
+        // Mock reset operation
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        this.showSuccess('Settings reset to default')
+      } catch (error) {
+        console.error('Error resetting settings:', error)
+        this.showError('Failed to reset settings')
+      } finally {
+        this.hideLoading()
+      }
+    }
+  }
+
+  /**
+   * Clear logs
+   */
+  async clearLogs() {
+    if (confirm('Are you sure you want to clear all logs?')) {
+      try {
+        this.showLoading('Clearing logs...')
+        // Mock clear operation
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        this.showSuccess('Logs cleared successfully')
+      } catch (error) {
+        console.error('Error clearing logs:', error)
+        this.showError('Failed to clear logs')
+      } finally {
+        this.hideLoading()
+      }
+    }
+  }
+
+  /**
+   * Backup data
+   */
+  async backupData() {
+    try {
+      this.showLoading('Creating backup...')
+      // Mock backup operation
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      this.showSuccess('Backup created successfully')
+    } catch (error) {
+      console.error('Error creating backup:', error)
+      this.showError('Failed to create backup')
+    } finally {
+      this.hideLoading()
+    }
+  }
+
+  /**
+   * Edit user
+   */
+  async editUser(userId) {
+    try {
+      const { data: user, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single()
+      
+      if (error) throw error
+      
+      this.showModal('Edit User', this.renderUserEditForm(user), 'Save Changes', () => {
+        this.saveUserChanges(userId)
+      })
+    } catch (error) {
+      console.error('Error editing user:', error)
+      this.showError('Failed to load user for editing')
+    }
+  }
+
+  /**
+   * Delete user
+   */
+  async deleteUser(userId) {
+    if (confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+      try {
+        this.showLoading('Deleting user...')
+        // Mock delete operation
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        this.showSuccess('User deleted successfully')
+        this.loadUsersData()
+      } catch (error) {
+        console.error('Error deleting user:', error)
+        this.showError('Failed to delete user')
+      } finally {
+        this.hideLoading()
+      }
+    }
+  }
+
+  /**
+   * Reply to form submission
+   */
+  async replyToForm(formId) {
+    try {
+      const { data: form, error } = await supabase
+        .from('contact_submissions')
+        .select('*')
+        .eq('id', formId)
+        .single()
+      
+      if (error) throw error
+      
+      this.showModal('Reply to Form', this.renderReplyForm(form), 'Send Reply', () => {
+        this.sendFormReply(formId)
+      })
+    } catch (error) {
+      console.error('Error loading form for reply:', error)
+      this.showError('Failed to load form for reply')
+    }
+  }
+
+  /**
+   * Delete form submission
+   */
+  async deleteForm(formId) {
+    if (confirm('Are you sure you want to delete this form submission?')) {
+      try {
+        this.showLoading('Deleting form submission...')
+        // Mock delete operation
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        this.showSuccess('Form submission deleted successfully')
+        this.loadFormsData()
+      } catch (error) {
+        console.error('Error deleting form:', error)
+        this.showError('Failed to delete form submission')
+      } finally {
+        this.hideLoading()
+      }
+    }
+  }
+
+  /**
+   * Render user edit form
+   */
+  renderUserEditForm(user) {
+    return `
+      <div class="edit-form">
+        <div class="form-group">
+          <label for="edit-user-name">Full Name:</label>
+          <input type="text" id="edit-user-name" value="${user.full_name || ''}" />
+        </div>
+        <div class="form-group">
+          <label for="edit-user-email">Email:</label>
+          <input type="email" id="edit-user-email" value="${user.email}" />
+        </div>
+        <div class="form-group">
+          <label for="edit-user-role">Role:</label>
+          <select id="edit-user-role">
+            <option value="user" ${user.role === 'user' ? 'selected' : ''}>User</option>
+            <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Admin</option>
+          </select>
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Render reply form
+   */
+  renderReplyForm(form) {
+    return `
+      <div class="reply-form">
+        <div class="form-group">
+          <label>To: ${form.email}</label>
+        </div>
+        <div class="form-group">
+          <label for="reply-subject">Subject:</label>
+          <input type="text" id="reply-subject" value="Re: ${form.subject || 'Your inquiry'}" />
+        </div>
+        <div class="form-group">
+          <label for="reply-message">Message:</label>
+          <textarea id="reply-message" rows="6" placeholder="Type your reply here..."></textarea>
+        </div>
+      </div>
+    `
+  }
+
+  /**
+   * Save user changes
+   */
+  async saveUserChanges(userId) {
+    try {
+      this.showLoading('Saving changes...')
+      // Mock save operation
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      this.showSuccess('User updated successfully')
+      this.closeModal()
+      this.loadUsersData()
+    } catch (error) {
+      console.error('Error saving user changes:', error)
+      this.showError('Failed to save user changes')
+    } finally {
+      this.hideLoading()
+    }
+  }
+
+  /**
+   * Send form reply
+   */
+  async sendFormReply(formId) {
+    try {
+      this.showLoading('Sending reply...')
+      // Mock send operation
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      this.showSuccess('Reply sent successfully')
+      this.closeModal()
+      this.loadFormsData()
+    } catch (error) {
+      console.error('Error sending reply:', error)
+      this.showError('Failed to send reply')
+    } finally {
+      this.hideLoading()
+    }
   }
 }
 
