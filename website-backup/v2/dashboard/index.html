@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LearnTAV User Dashboard - Manage your learning progress and account">
+    <title>Dashboard - LearnTAV</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive-accessibility.css">
+    
+    <style>
+        .dashboard {
+            min-height: 100vh;
+            padding-top: 80px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .dashboard-header {
+            background: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin: 0 0 0.5rem 0;
+        }
+        
+        .dashboard-subtitle {
+            color: #718096;
+            margin: 0;
+        }
+        
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-icon {
+            font-size: 2rem;
+            padding: 0.75rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin: 0;
+        }
+        
+        .card-content {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+        
+        .profile-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .profile-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        
+        .profile-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .profile-value {
+            font-weight: 500;
+            color: #1a202c;
+        }
+        
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+        
+        .action-btn:hover {
+            background: #0056b3;
+            color: white;
+        }
+        
+        .action-btn--secondary {
+            background: #6c757d;
+        }
+        
+        .action-btn--secondary:hover {
+            background: #545b62;
+        }
+        
+        .protected-content {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .loading-state {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-content {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .dashboard-card {
+                padding: 1.5rem;
+            }
+            
+            .quick-actions {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                justify-content: center;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="learntav-nav" id="mainNav">
+        <div class="learntav-container">
+            <div class="learntav-nav__container">
+                <a href="../index.html" class="learntav-nav__logo">
+                    <span class="learntav-nav__logo-text">LearnTAV</span>
+                </a>
+                
+                <div class="learntav-nav__menu" id="navMenu">
+                    <a href="../education/index.html" class="learntav-nav__link">Education</a>
+                    <a href="../consulting/index.html" class="learntav-nav__link">Consulting</a>
+                    <a href="../about/index.html" class="learntav-nav__link">About</a>
+                    <a href="../resources/index.html" class="learntav-nav__link">Resources</a>
+                    <a href="../ai-tools/index.html" class="learntav-nav__link">AI Tools</a>
+                    <a href="../contact/index.html" class="learntav-nav__link">Contact</a>
+                    <!-- Dashboard link only visible for admin users -->
+                    <a href="../dashboard/index.html" class="learntav-nav__link learntav-nav__link--active nav-protected" id="admin-dashboard-link" style="display: none;">Dashboard 🔒</a>
+                </div>
+                
+                <div class="learntav-nav__actions">
+                    <!-- This will be populated by route protection system -->
+                    <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content -->
+    <main class="dashboard">
+        <!-- Loading State (shown while checking authentication) -->
+        <div id="loadingState" class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Verifying access...</p>
+        </div>
+
+        <!-- Dashboard Content (shown after authentication verified) -->
+        <div id="dashboardContent" class="protected-content" style="display: none;">
+            <div class="dashboard-header">
+                <div class="learntav-container">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div>
+                            <h1 class="dashboard-title">Welcome back, <span data-user-name>User</span>!</h1>
+                            <p class="dashboard-subtitle">Your learning journey continues here</p>
+                        </div>
+                        <a href="../index.html" class="action-btn" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: #007bff; color: white; text-decoration: none; border-radius: 8px; font-weight: 500; transition: background-color 0.2s ease;">
+                            🏠 Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="learntav-container">
+                <div class="dashboard-content">
+                    <!-- Profile Information -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon">👤</div>
+                            <h2 class="card-title">Profile Information</h2>
+                        </div>
+                        <div class="card-content">
+                            <div class="profile-info">
+                                <div class="profile-field">
+                                    <span class="profile-label">Full Name</span>
+                                    <span class="profile-value" data-user-name>Loading...</span>
+                                </div>
+                                <div class="profile-field">
+                                    <span class="profile-label">Email</span>
+                                    <span class="profile-value" data-user-email>Loading...</span>
+                                </div>
+                                <div class="profile-field">
+                                    <span class="profile-label">Role</span>
+                                    <span class="profile-value" data-user-role>Loading...</span>
+                                </div>
+                                <div class="profile-field">
+                                    <span class="profile-label">Member Since</span>
+                                    <span class="profile-value" id="memberSince">Loading...</span>
+                                </div>
+                            </div>
+                            <div class="quick-actions">
+                                <a href="../profile/index.html" class="action-btn">
+                                    ✏️ Edit Profile
+                                </a>
+                                <a href="../settings/index.html" class="action-btn action-btn--secondary">
+                                    ⚙️ Settings
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Learning Progress -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon">📚</div>
+                            <h2 class="card-title">Learning Progress</h2>
+                        </div>
+                        <div class="card-content">
+                            <p>Track your progress through our education programs and see your achievements.</p>
+                            <div class="quick-actions">
+                                <a href="../education/index.html" class="action-btn">
+                                    🚀 Start Learning
+                                </a>
+                                <a href="#" class="action-btn action-btn--secondary">
+                                    📊 View Progress
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon">⚡</div>
+                            <h2 class="card-title">Quick Actions</h2>
+                        </div>
+                        <div class="card-content">
+                            <p>Common tasks and quick links to get things done faster.</p>
+                            <div class="quick-actions">
+                                <a href="../contact/index.html?form=consultation" class="action-btn">
+                                    📞 Book Consultation
+                                </a>
+                                <a href="../resources/index.html" class="action-btn action-btn--secondary">
+                                    📖 Browse Resources
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon">🕒</div>
+                            <h2 class="card-title">Recent Activity</h2>
+                        </div>
+                        <div class="card-content">
+                            <p>Your recent interactions and progress updates will appear here.</p>
+                            <div class="quick-actions">
+                                <a href="#" class="action-btn action-btn--secondary">
+                                    📋 View All Activity
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Admin Access (only shown for admin users) -->
+                    <div class="dashboard-card" data-auth-state="admin" style="display: none;">
+                        <div class="card-header">
+                            <div class="card-icon">👑</div>
+                            <h2 class="card-title">Admin Access</h2>
+                        </div>
+                        <div class="card-content">
+                            <p>Administrative tools and controls for managing the platform.</p>
+                            <div class="quick-actions">
+                                <a href="../admin/dashboard.html" class="action-btn">
+                                    🔧 Admin Panel
+                                </a>
+                                <a href="../admin/index.html" class="action-btn action-btn--secondary">
+                                    🔐 Admin Login
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="../assets/js/main.js"></script>
+    
+    <script>
+        // Simple Dashboard JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show dashboard content immediately (no auth check needed)
+            const loadingState = document.getElementById('loadingState');
+            const dashboardContent = document.getElementById('dashboardContent');
+            
+            // Get user name from localStorage (set by name entry popup)
+            const userName = localStorage.getItem('userName') || 'User';
+            
+            // Update all user name elements
+            const userNameElements = document.querySelectorAll('[data-user-name]');
+            userNameElements.forEach(el => {
+                el.textContent = userName;
+            });
+            
+            // Set default user data
+            const userEmailElements = document.querySelectorAll('[data-user-email]');
+            userEmailElements.forEach(el => {
+                el.textContent = 'user@learntav.com';
+            });
+            
+            const userRoleElements = document.querySelectorAll('[data-user-role]');
+            userRoleElements.forEach(el => {
+                el.textContent = 'Student';
+            });
+            
+            // Update member since date
+            const memberSinceElement = document.getElementById('memberSince');
+            if (memberSinceElement) {
+                const memberDate = new Date();
+                memberDate.setMonth(memberDate.getMonth() - 3); // 3 months ago
+                memberSinceElement.textContent = memberDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long'
+                });
+            }
+            
+            // Show dashboard content
+            loadingState.style.display = 'none';
+            dashboardContent.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

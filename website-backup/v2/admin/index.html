@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LearnTAV Admin Panel - Secure administrator access">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <title>Admin Access - LearnTAV</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive-accessibility.css">
+    <link rel="stylesheet" href="admin.css">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+</head>
+<body class="admin-login-body">
+    <!-- Background Animation -->
+    <div class="admin-background">
+        <div class="admin-particles">
+            <div class="particle" style="--delay: 0s; --duration: 20s;"></div>
+            <div class="particle" style="--delay: 2s; --duration: 18s;"></div>
+            <div class="particle" style="--delay: 4s; --duration: 22s;"></div>
+            <div class="particle" style="--delay: 6s; --duration: 16s;"></div>
+            <div class="particle" style="--delay: 8s; --duration: 24s;"></div>
+            <div class="particle" style="--delay: 10s; --duration: 19s;"></div>
+        </div>
+        <div class="admin-grid"></div>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="admin-login-container">
+        <div class="admin-login-card">
+            <!-- Header -->
+            <div class="admin-header">
+                <div class="admin-logo">
+                    <div class="admin-logo-icon">🛡️</div>
+                    <h1>LearnTAV Admin Panel</h1>
+                </div>
+                <p class="admin-subtitle">Secure Administrator Access</p>
+                <div class="admin-security-badge">
+                    <span class="security-icon">🔐</span>
+                    <span class="security-text">Multi-Factor Authentication Required</span>
+                </div>
+            </div>
+            
+            <!-- Simplified Login Form -->
+            <div class="admin-form-container">
+                <form id="admin-login-form" class="admin-form" novalidate>
+                    <!-- Access Code Field Only -->
+                    <div class="admin-form-group">
+                        <label for="admin-access-code" class="admin-form-label">
+                            <span class="label-icon">🔢</span>
+                            Enter 4-Digit Access Code
+                        </label>
+                        <div class="admin-access-code-section">
+                            <div class="access-code-display">
+                                <input type="password"
+                                       id="admin-access-code"
+                                       name="accessCode"
+                                       class="access-code-input"
+                                       maxlength="4"
+                                       placeholder="••••"
+                                       autocomplete="off">
+                                <button type="button" class="access-code-clear" id="clear-code">
+                                    <span>🗑️</span>
+                                </button>
+                            </div>
+                            <div class="numeric-keypad">
+                                <button type="button" class="keypad-key" data-value="1">1</button>
+                                <button type="button" class="keypad-key" data-value="2">2</button>
+                                <button type="button" class="keypad-key" data-value="3">3</button>
+                                <button type="button" class="keypad-key" data-value="4">4</button>
+                                <button type="button" class="keypad-key" data-value="5">5</button>
+                                <button type="button" class="keypad-key" data-value="6">6</button>
+                                <button type="button" class="keypad-key" data-value="7">7</button>
+                                <button type="button" class="keypad-key" data-value="8">8</button>
+                                <button type="button" class="keypad-key" data-value="9">9</button>
+                                <button type="button" class="keypad-key keypad-special" data-action="backspace">⌫</button>
+                                <button type="button" class="keypad-key" data-value="0">0</button>
+                                <button type="button" class="keypad-key keypad-special" data-action="clear">Clear</button>
+                            </div>
+                            <div class="admin-field-hint">
+                                Enter the 4-digit access code to proceed
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Login Button -->
+                    <div class="admin-form-actions">
+                        <button type="submit" class="admin-submit-button">
+                            <span class="button-content">
+                                <span class="button-icon">🚀</span>
+                                <span class="button-text">Access Admin Panel</span>
+                            </span>
+                            <span class="button-loader" style="display: none;">
+                                <span class="loader-spinner"></span>
+                                <span class="loader-text">Accessing...</span>
+                            </span>
+                        </button>
+                    </div>
+                    
+                    <!-- Error Display -->
+                    <div id="admin-error-message" class="admin-error-message" style="display: none;">
+                        <span class="error-icon">⚠️</span>
+                        <span class="error-text"></span>
+                    </div>
+                    
+                    <!-- Success Display -->
+                    <div id="admin-success-message" class="admin-success-message" style="display: none;">
+                        <span class="success-icon">✅</span>
+                        <span class="success-text"></span>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Security Info -->
+            <div class="admin-security-info">
+                <div class="security-feature">
+                    <span class="feature-icon">🔐</span>
+                    <span class="feature-text">Multi-factor authentication</span>
+                </div>
+                <div class="security-feature">
+                    <span class="feature-icon">🛡️</span>
+                    <span class="feature-text">Encrypted connections</span>
+                </div>
+                <div class="security-feature">
+                    <span class="feature-icon">📊</span>
+                    <span class="feature-text">Access logging</span>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="admin-footer">
+                <a href="../index.html" class="back-to-site">
+                    <span class="back-icon">🏠</span>
+                    Back to Home
+                </a>
+                <div class="admin-version">Simple v1.0</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div id="admin-loading-overlay" class="admin-loading-overlay" style="display: none;">
+        <div class="admin-loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-message">
+                <h3>Authenticating Administrator</h3>
+                <p>Verifying credentials and security tokens...</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script type="module" src="admin.js"></script>
+    
+    <!-- Analytics and Security -->
+    <script>
+        // Log admin access attempt
+        console.log('Admin panel accessed at:', new Date().toISOString());
+        
+        // Prevent right-click context menu in production
+        if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+            document.addEventListener('contextmenu', e => e.preventDefault());
+        }
+        
+        // Add security headers warning for development
+        if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+            console.warn('⚠️ Admin panel should be served over HTTPS in production');
+        }
+        
+        // Keyboard shortcuts for accessibility
+        document.addEventListener('keydown', function(e) {
+            // Alt + L to focus username
+            if (e.altKey && e.key === 'l') {
+                e.preventDefault();
+                document.getElementById('admin-username').focus();
+            }
+            // Alt + P to focus password
+            if (e.altKey && e.key === 'p') {
+                e.preventDefault();
+                document.getElementById('admin-password').focus();
+            }
+            // Alt + C to focus access code
+            if (e.altKey && e.key === 'c') {
+                e.preventDefault();
+                document.getElementById('admin-access-code').focus();
+            }
+        });
+    </script>
+</body>
+</html>
