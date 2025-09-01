@@ -3,111 +3,68 @@
  * Handles dashboard functionality, data management, and UI interactions
  */
 
-// Mock auth system for demo purposes
-const mockAuth = {
-    user: { id: 'admin', email: '', role: 'admin' },
-    isAuthenticated: true
+import { supabase, auth, db } from '../assets/auth/supabase-client.js';
+
+// Auth state management
+let authState = {
+    user: null,
+    isAuthenticated: false,
+    isAdmin: false
 };
 
-// Mock functions to replace missing Supabase imports
-function requireAdmin() {
-    return mockAuth.isAuthenticated;
-}
+// Authentication functions
+async function requireAdmin() {
+    try {
+        // Check if user is authenticated
+        const { user, error } = await auth.getUser();
+        if (error || !user) {
+            window.location.href = './index.html';
+            return false;
+        }
 
-function signOut() {
-    localStorage.removeItem('isAuthenticated');
-    localStorage.removeItem('userRole');
-    return Promise.resolve();
-}
+        // Check if user is admin
+        const { isAdmin, error: adminError } = await db.isAdmin(user.id);
+        if (adminError || !isAdmin) {
+            alert('Access denied. Admin privileges required.');
+            window.location.href = '../index.html';
+            return false;
+        }
 
-function logAdminAccess(userId, action, details) {
-    console.log('Admin Action:', { userId, action, details });
-    return Promise.resolve();
-}
-
-// Empty data arrays - will show real data when available
-const mockUsers = [];
-const mockFormSubmissions = [];
-
-// Mock Supabase client with realistic data
-const supabase = {
-    from: (table) => {
-        const getData = () => {
-            return table === 'profiles' ? mockUsers :
-                   table === 'contact_submissions' ? mockFormSubmissions :
-                   table === 'admin_logs' ? [] : [];
-        };
-
-        const createChainableQuery = (initialData = null) => {
-            const data = initialData || getData();
-            
-            return {
-                select: (columns = '*', options = {}) => {
-                    if (options.count === 'exact' && options.head) {
-                        return {
-                            gte: (column, value) => Promise.resolve({
-                                data: null,
-                                error: null,
-                                count: data.length
-                            })
-                        };
-                    }
-                    return createChainableQuery(data);
-                },
-                order: (column, order = {}) => createChainableQuery(data),
-                limit: (limit) => createChainableQuery(data.slice(0, limit)),
-                range: (start, end) => Promise.resolve({
-                    data: data.slice(start, end + 1),
-                    error: null,
-                    count: data.length
-                }),
-                eq: (column, value) => {
-                    const filtered = data.filter(item => item[column] === value);
-                    const query = createChainableQuery(filtered);
-                    query.single = () => Promise.resolve({
-                        data: filtered[0] || null,
-                        error: null
-                    });
-                    return query;
-                },
-                gte: (column, value) => {
-                    // For date filtering, just return all data for demo
-                    return Promise.resolve({
-                        data: data,
-                        error: null,
-                        count: data.length
-                    });
-                },
-                or: (condition) => createChainableQuery(data),
-                single: () => Promise.resolve({
-                    data: data[0] || null,
-                    error: null
-                })
-            };
-        };
-
-        return {
-            select: (columns = '*', options = {}) => {
-                if (options.count === 'exact' && options.head) {
-                    return {
-                        gte: (column, value) => Promise.resolve({
-                            data: null,
-                            error: null,
-                            count: getData().length
-                        })
-                    };
-                }
-                return createChainableQuery();
-            },
-            insert: (data) => Promise.resolve({ data: null, error: null }),
-            update: (data) => ({
-                eq: (column, value) => Promise.resolve({ data: null, error: null })
-            })
-        };
+        authState.user = user;
+        authState.isAuthenticated = true;
+        authState.isAdmin = isAdmin;
+        return true;
+    } catch (error) {
+        console.error('Auth check failed:', error);
+        window.location.href = './index.html';
+        return false;
     }
-};
+}
 
-const authState = mockAuth;
+async function signOut() {
+    try {
+        await auth.signOut();
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('userRole');
+        return Promise.resolve();
+    } catch (error) {
+        console.error('Sign out failed:', error);
+        return Promise.reject(error);
+    }
+}
+
+async function logAdminAccess(userId, action, details) {
+    try {
+        await supabase.from('admin_logs').insert([{
+            user_id: userId,
+            action: action,
+            details: details,
+            created_at: new Date().toISOString()
+        }]);
+    } catch (error) {
+        console.error('Failed to log admin access:', error);
+    }
+}
 
 class AdminDashboard {
   constructor() {
@@ -138,8 +95,14 @@ class AdminDashboard {
     }
     
     this.bindEvents()
+    await this.loadAdminCode()
     await this.loadDashboardData()
     this.startAutoRefresh()
+    
+    // Update admin name
+    if (authState.user?.email) {
+      document.getElementById('admin-name').textContent = authState.user.email
+    }
     
     // Log dashboard access
     await logAdminAccess(authState.user.id, 'dashboard_access', {
@@ -334,6 +297,8 @@ class AdminDashboard {
       await Promise.all([
         this.loadUserStats(),
         this.loadFormStats(),
+        this.loadEnrollmentStats(),
+        this.loadConsultStats(),
         this.loadSystemStats(),
         this.loadRecentActivity()
       ])
@@ -344,6 +309,60 @@ class AdminDashboard {
       this.hideLoading()
     }
   }
+
+  /**
+   * Load admin code from database
+   */
+  async loadAdminCode() {
+    try {
+      const { data, error } = await db.getSetting('admin_code')
+      
+      if (error) {
+        console.error('Error loading admin code:', error)
+        document.getElementById('admin-code-value').textContent = 'Error'
+        return
+      }
+      
+      document.getElementById('admin-code-value').textContent = data?.value || 'Not set'
+    } catch (error) {
+      console.error('Error loading admin code:', error)
+      document.getElementById('admin-code-value').textContent = 'Error'
+    }
+  }
+
+  /**
+   * Load enrollment statistics
+   */
+  async loadEnrollmentStats() {
+    try {
+      const { data: enrollments, error } = await db.getEnrollments({ limit: 100 })
+      
+      if (error) throw error
+      
+      // You can add enrollment-specific stats here
+      console.log('Enrollments loaded:', enrollments?.length || 0)
+      
+    } catch (error) {
+      console.error('Error loading enrollment stats:', error)
+    }
+  }
+
+  /**
+   * Load consult statistics
+   */
+  async loadConsultStats() {
+    try {
+      const { data: consults, error } = await db.getConsults({ limit: 100 })
+      
+      if (error) throw error
+      
+      // You can add consult-specific stats here
+      console.log('Consults loaded:', consults?.length || 0)
+      
+    } catch (error) {
+      console.error('Error loading consult stats:', error)
+    }
+  }
   
   /**
    * Load user statistics
@@ -352,7 +371,7 @@ class AdminDashboard {
     try {
       // Get total users count
       const { count: totalUsers, error: usersError } = await supabase
-        .from('profiles')
+        .from('users')
         .select('*', { count: 'exact', head: true })
       
       if (usersError) throw usersError
@@ -363,7 +382,7 @@ class AdminDashboard {
       thisMonth.setHours(0, 0, 0, 0)
       
       const { count: monthlyUsers, error: monthlyError } = await supabase
-        .from('profiles')
+        .from('users')
         .select('*', { count: 'exact', head: true })
         .gte('created_at', thisMonth.toISOString())
       
@@ -493,7 +512,7 @@ class AdminDashboard {
     
     try {
       let query = supabase
-        .from('profiles')
+        .from('users')
         .select('*', { count: 'exact' })
         .order('created_at', { ascending: false })
         .range(
@@ -508,7 +527,7 @@ class AdminDashboard {
       
       // Apply search
       if (this.searchTerms.users) {
-        query = query.or(`full_name.ilike.%${this.searchTerms.users}%,email.ilike.%${this.searchTerms.users}%`)
+        query = query.or(`name.ilike.%${this.searchTerms.users}%,email.ilike.%${this.searchTerms.users}%`)
       }
       
       const { data: users, error, count } = await query
@@ -540,16 +559,16 @@ class AdminDashboard {
         <td><input type="checkbox" class="user-checkbox" data-id="${user.id}"></td>
         <td>
           <div class="user-info">
-            <div class="user-avatar">${user.full_name ? user.full_name.charAt(0).toUpperCase() : '?'}</div>
+            <div class="user-avatar">${user.name ? user.name.charAt(0).toUpperCase() : '?'}</div>
             <div class="user-details">
-              <div class="user-name">${user.full_name || 'No name'}</div>
+              <div class="user-name">${user.name || 'No name'}</div>
               <div class="user-id">ID: ${user.id.substring(0, 8)}...</div>
             </div>
           </div>
         </td>
         <td>${user.email}</td>
         <td>
-          <span class="role-badge role-${user.role}">${user.role}</span>
+          <span class="role-badge role-user">User</span>
         </td>
         <td>
           <span class="status-badge status-active">Active</span>
@@ -698,7 +717,7 @@ class AdminDashboard {
       
       if (type === 'users') {
         const { data: users, error } = await supabase
-          .from('profiles')
+          .from('users')
           .select('*')
           .order('created_at', { ascending: false })
         
@@ -768,7 +787,7 @@ class AdminDashboard {
   async viewUser(userId) {
     try {
       const { data: user, error } = await supabase
-        .from('profiles')
+        .from('users')
         .select('*')
         .eq('id', userId)
         .single()
@@ -822,8 +841,8 @@ class AdminDashboard {
         <div class="detail-section">
           <h4>Basic Information</h4>
           <div class="detail-item">
-            <label>Full Name:</label>
-            <span>${user.full_name || 'Not provided'}</span>
+            <label>Name:</label>
+            <span>${user.name || 'Not provided'}</span>
           </div>
           <div class="detail-item">
             <label>Email:</label>
@@ -831,7 +850,7 @@ class AdminDashboard {
           </div>
           <div class="detail-item">
             <label>Role:</label>
-            <span class="role-badge role-${user.role}">${user.role}</span>
+            <span class="role-badge role-user">User</span>
           </div>
           <div class="detail-item">
             <label>User ID:</label>
@@ -1208,7 +1227,7 @@ class AdminDashboard {
   async editUser(userId) {
     try {
       const { data: user, error } = await supabase
-        .from('profiles')
+        .from('users')
         .select('*')
         .eq('id', userId)
         .single()
@@ -1293,8 +1312,8 @@ class AdminDashboard {
     return `
       <div class="edit-form">
         <div class="form-group">
-          <label for="edit-user-name">Full Name:</label>
-          <input type="text" id="edit-user-name" value="${user.full_name || ''}" />
+          <label for="edit-user-name">Name:</label>
+          <input type="text" id="edit-user-name" value="${user.name || ''}" />
         </div>
         <div class="form-group">
           <label for="edit-user-email">Email:</label>

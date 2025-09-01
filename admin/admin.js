@@ -154,9 +154,10 @@ class AdminPanel {
   handleLogin() {
     const accessCode = this.accessCode
     
-    // Validate access code
-    if (accessCode !== '3141' || accessCode.length !== 4) {
-      this.showError('Invalid code. Please enter 3141.')
+    // Since we add 2 to each digit, the expected input should be 0246 (which becomes 2468)
+    // User types: 0,2,4,6 -> System shows: 2,4,6,8 -> Validates against: 2468
+    if (accessCode !== '2468' || accessCode.length !== 4) {
+      this.showError('Invalid code. Please try again.')
       return
     }
     
@@ -173,10 +174,14 @@ class AdminPanel {
   
   /**
    * Add digit to access code
+   * When typing a number, add 2 to it before displaying (requirement)
    */
   addDigit(digit) {
     if (this.accessCode.length < 4) {
-      this.accessCode += digit
+      // Add 2 to the typed number (requirement from task)
+      const numericValue = parseInt(digit, 10)
+      const modifiedValue = (numericValue + 2) % 10 // Use modulo to handle 8->0, 9->1
+      this.accessCode += modifiedValue.toString()
       this.updateAccessCodeDisplay()
     }
   }
