@@ -228,7 +228,25 @@
                 </div>
                 
                 <div class="learntav-nav__actions">
-                    <!-- This will be populated by route protection system -->
+                    <!-- Navigation Actions -->
+                    <!-- Sign In Button - shown when user is not signed in -->
+                    <button id="sign-in-btn" class="learntav-btn learntav-btn--outline" onclick="showNameEntryPopup()" style="display: none;">
+                        👤 Sign In
+                    </button>
+                    
+                    <!-- Profile Dropdown - shown when user is signed in -->
+                    <div id="profile-dropdown" class="profile-dropdown" style="display: none;">
+                        <button class="profile-btn" onclick="toggleProfileDropdown()">
+                            👤 <span id="user-name-display">Name</span> ▼
+                        </button>
+                        <div class="profile-dropdown-menu" id="profile-menu">
+                            <a href="../profile/index.html">📱 Profile</a>
+                            <button onclick="signOut()">🚪 Sign Out</button>
+                        </div>
+                    </div>
+                    
+                    <a href="../ai-tools/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
+                    
                     <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
                         <span class="learntav-nav__toggle-line"></span>
                         <span class="learntav-nav__toggle-line"></span>
@@ -382,14 +400,96 @@
     <script src="../assets/js/main.js"></script>
     
     <script>
+        // Sign-in/sign-out functionality for dashboard page
+        function showNameEntryPopup() {
+            // Redirect to home page which has the popup functionality
+            window.location.href = '../index.html';
+        }
+
+        function signOut() {
+            localStorage.removeItem('user_name');
+            localStorage.removeItem('user_first_visit');
+            localStorage.removeItem('user_data');
+            
+            // Hide profile dropdown and show sign-in button
+            const profileDropdown = document.getElementById('profile-dropdown');
+            const signInBtn = document.getElementById('sign-in-btn');
+            
+            if (profileDropdown) profileDropdown.style.display = 'none';
+            if (signInBtn) signInBtn.style.display = 'inline-flex';
+            
+            // Close any open dropdown menu
+            const profileMenu = document.getElementById('profile-menu');
+            if (profileMenu) profileMenu.classList.remove('active');
+            
+            // Show confirmation and redirect
+            alert('You have been signed out successfully!');
+            window.location.href = '../index.html';
+        }
+
+        function showSignInButton() {
+            const signInBtn = document.getElementById('sign-in-btn');
+            const profileDropdown = document.getElementById('profile-dropdown');
+            
+            if (signInBtn) signInBtn.style.display = 'inline-flex';
+            if (profileDropdown) profileDropdown.style.display = 'none';
+        }
+
+        function toggleProfileDropdown() {
+            const profileMenu = document.getElementById('profile-menu');
+            if (profileMenu) {
+                profileMenu.classList.toggle('active');
+            }
+        }
+
+        function addProfileButton(name) {
+            const signInBtn = document.getElementById('sign-in-btn');
+            const profileDropdown = document.getElementById('profile-dropdown');
+            const userNameDisplay = document.getElementById('user-name-display');
+            
+            // Hide sign-in button and show profile dropdown
+            if (signInBtn) signInBtn.style.display = 'none';
+            if (profileDropdown) profileDropdown.style.display = 'inline-flex';
+            
+            // Update the displayed name (first name only)
+            if (userNameDisplay) {
+                userNameDisplay.textContent = name.split(' ')[0];
+            }
+        }
+        
+        function checkUserSignIn() {
+            const userName = localStorage.getItem('user_name');
+            
+            if (userName) {
+                // User is signed in - show profile dropdown
+                addProfileButton(userName);
+            } else {
+                // User not signed in - show sign in button
+                showSignInButton();
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const profileDropdown = document.getElementById('profile-dropdown');
+            const profileMenu = document.getElementById('profile-menu');
+            
+            if (profileDropdown && !profileDropdown.contains(e.target)) {
+                if (profileMenu) profileMenu.classList.remove('active');
+            }
+        });
+
         // Simple Dashboard JavaScript
         document.addEventListener('DOMContentLoaded', function() {
+            // Check user sign-in state first
+            checkUserSignIn();
+            
             // Show dashboard content immediately (no auth check needed)
             const loadingState = document.getElementById('loadingState');
             const dashboardContent = document.getElementById('dashboardContent');
             
             // Get user name from localStorage (set by name entry popup)
-            const userName = localStorage.getItem('userName') || 'User';
+            const userName = localStorage.getItem('user_name') || 'User';
             
             // Update all user name elements
             const userNameElements = document.querySelectorAll('[data-user-name]');
