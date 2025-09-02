@@ -410,27 +410,46 @@
 }
 
 .search-bar {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    max-width: 400px;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  max-width: 400px;
 }
 
 .search-bar input {
-    flex: 1;
-    padding: 0.75rem 1rem;
-    border: 2px solid #e5e7eb;
-    border-radius: 8px 0 0 8px;
-    font-size: 1rem;
+  flex: 1;
+  padding: 0.875rem 1.25rem;
+  border: 2px solid #3b82f6;
+  border-radius: 16px 0 0 16px;
+  font-size: 1rem;
+  background: #ffffff;
+  color: #1f2937;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+}
+
+.search-bar input:focus {
+  border-color: #2563eb;
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.15),
+    0 4px 12px rgba(59, 130, 246, 0.2);
 }
 
 .search-btn {
-    padding: 0.75rem 1rem;
-    background: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 0 8px 8px 0;
-    cursor: pointer;
+  padding: 0.875rem 1.25rem;
+  background: #3b82f6;
+  color: white;
+  border: 2px solid #3b82f6;
+  border-radius: 0 16px 16px 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.search-btn:hover {
+  background: #2563eb;
+  border-color: #2563eb;
 }
 
 .filter-controls {
@@ -440,20 +459,41 @@
 }
 
 .filter-controls select {
-    padding: 0.75rem 1rem;
-    border: 2px solid #e5e7eb;
-    border-radius: 8px;
-    background: white;
+  padding: 0.875rem 1.25rem;
+  border: 2px solid #3b82f6;
+  border-radius: 16px;
+  background: white;
+  color: #1f2937;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+}
+
+.filter-controls select:focus {
+  border-color: #2563eb;
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.15),
+    0 4px 12px rgba(59, 130, 246, 0.2);
 }
 
 .export-btn {
-    padding: 0.75rem 1.5rem;
-    background: #10b981;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
+  padding: 0.875rem 1.75rem;
+  background: #10b981;
+  color: white;
+  border: 2px solid #10b981;
+  border-radius: 16px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+.export-btn:hover {
+  background: #059669;
+  border-color: #059669;
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
 }
 
 /* Data Table */
@@ -565,10 +605,22 @@
 }
 
 .chart-controls select {
-    padding: 0.5rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    font-size: 0.875rem;
+  padding: 0.625rem 1rem;
+  border: 2px solid #3b82f6;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  background: white;
+  color: #1f2937;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+}
+
+.chart-controls select:focus {
+  border-color: #2563eb;
+  box-shadow:
+    0 0 0 2px rgba(59, 130, 246, 0.15),
+    0 4px 8px rgba(59, 130, 246, 0.2);
 }
 
 .chart-container {
@@ -663,10 +715,23 @@
 
 .setting-item input,
 .setting-item select {
-    padding: 0.75rem;
-    border: 2px solid #e5e7eb;
-    border-radius: 6px;
-    font-size: 1rem;
+  padding: 0.875rem 1.25rem;
+  border: 2px solid #3b82f6;
+  border-radius: 16px;
+  font-size: 1rem;
+  background: white;
+  color: #1f2937;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+}
+
+.setting-item input:focus,
+.setting-item select:focus {
+  border-color: #2563eb;
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.15),
+    0 4px 12px rgba(59, 130, 246, 0.2);
 }
 
 .setting-label {
@@ -707,31 +772,40 @@
 
 /* Buttons */
 .btn {
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: none;
-    font-size: 1rem;
+  padding: 0.875rem 1.75rem;
+  border-radius: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .btn-primary {
-    background: #3b82f6;
-    color: white;
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
 }
 
 .btn-primary:hover {
-    background: #2563eb;
+  background: #2563eb;
+  border-color: #2563eb;
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
-    background: #6b7280;
-    color: white;
+  background: #6b7280;
+  color: white;
+  border-color: #6b7280;
 }
 
 .btn-secondary:hover {
-    background: #4b5563;
+  background: #4b5563;
+  border-color: #4b5563;
+  box-shadow: 0 4px 8px rgba(107, 114, 128, 0.3);
+  transform: translateY(-1px);
 }
 
 /* Modal */

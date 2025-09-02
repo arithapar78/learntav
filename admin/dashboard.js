@@ -3,7 +3,7 @@
  * Handles dashboard functionality, data management, and UI interactions
  */
 
-import { supabase, auth, db } from '../assets/auth/supabase-client.js';
+import { supabase, auth, db, isConfigured } from '../assets/auth/supabase-client.js';
 
 // Auth state management
 let authState = {
@@ -327,6 +327,11 @@ class AdminDashboard {
    */
   async loadAdminCode() {
     try {
+      if (!isConfigured()) {
+        document.getElementById('admin-code-value').textContent = 'DEMO-MODE-123'
+        return
+      }
+
       const { data, error } = await db.getSetting('admin_code')
       
       if (error) {
@@ -338,7 +343,7 @@ class AdminDashboard {
       document.getElementById('admin-code-value').textContent = data?.value || 'Not set'
     } catch (error) {
       console.error('Error loading admin code:', error)
-      document.getElementById('admin-code-value').textContent = 'Error'
+      document.getElementById('admin-code-value').textContent = 'DEMO-123'
     }
   }
 
@@ -381,6 +386,13 @@ class AdminDashboard {
    */
   async loadUserStats() {
     try {
+      if (!isConfigured()) {
+        // Demo data when Supabase is not configured
+        document.getElementById('total-users-stat').textContent = '0'
+        document.getElementById('users-change').textContent = 'No users yet (Demo Mode)'
+        return
+      }
+
       // Get total users count
       const { count: totalUsers, error: usersError } = await supabase
         .from('users')
@@ -415,7 +427,8 @@ class AdminDashboard {
       
     } catch (error) {
       console.error('Error loading user stats:', error)
-      document.getElementById('total-users-stat').textContent = 'Error'
+      document.getElementById('total-users-stat').textContent = '0'
+      document.getElementById('users-change').textContent = 'Database not configured'
     }
   }
   
@@ -424,6 +437,13 @@ class AdminDashboard {
    */
   async loadFormStats() {
     try {
+      if (!isConfigured()) {
+        // Demo data when Supabase is not configured
+        document.getElementById('total-submissions-stat').textContent = '0'
+        document.getElementById('submissions-change').textContent = 'No submissions yet (Demo Mode)'
+        return
+      }
+
       // Get total submissions count
       const { count: totalSubmissions, error: submissionsError } = await supabase
         .from('contact_submissions')
@@ -457,7 +477,8 @@ class AdminDashboard {
       
     } catch (error) {
       console.error('Error loading form stats:', error)
-      document.getElementById('total-submissions-stat').textContent = 'Error'
+      document.getElementById('total-submissions-stat').textContent = '0'
+      document.getElementById('submissions-change').textContent = 'Database not configured'
     }
   }
   
@@ -481,6 +502,29 @@ class AdminDashboard {
    */
   async loadRecentActivity() {
     try {
+      const activityList = document.getElementById('recent-activity-list')
+      
+      if (!isConfigured()) {
+        // Demo activity when Supabase is not configured
+        activityList.innerHTML = `
+          <div class="activity-item">
+            <div class="activity-icon">🔐</div>
+            <div class="activity-content">
+              <div class="activity-text">Administrator signed in (Demo Mode)</div>
+              <div class="activity-time">Just now</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon">📊</div>
+            <div class="activity-content">
+              <div class="activity-text">Dashboard accessed</div>
+              <div class="activity-time">2 minutes ago</div>
+            </div>
+          </div>
+        `
+        return
+      }
+
       const { data: activities, error } = await supabase
         .from('admin_logs')
         .select('*')
@@ -488,8 +532,6 @@ class AdminDashboard {
         .limit(10)
       
       if (error) throw error
-      
-      const activityList = document.getElementById('recent-activity-list')
       
       if (!activities || activities.length === 0) {
         activityList.innerHTML = '<div class="activity-empty">No activity to display yet</div>'
@@ -510,8 +552,8 @@ class AdminDashboard {
       
     } catch (error) {
       console.error('Error loading recent activity:', error)
-      document.getElementById('recent-activity-list').innerHTML = 
-        '<div class="activity-error">Failed to load activity</div>'
+      document.getElementById('recent-activity-list').innerHTML =
+        '<div class="activity-error">Database not configured - using demo mode</div>'
     }
   }
   
@@ -523,6 +565,13 @@ class AdminDashboard {
     tbody.innerHTML = '<tr class="loading-row"><td colspan="7"><div class="table-loading">Loading users...</div></td></tr>'
     
     try {
+      if (!isConfigured()) {
+        // Show demo message when Supabase is not configured
+        tbody.innerHTML = '<tr class="empty-row"><td colspan="7"><div class="table-empty">Database not configured - Demo Mode</div></td></tr>'
+        this.updatePagination('users', 0)
+        return
+      }
+
       let query = supabase
         .from('users')
         .select('*', { count: 'exact' })
@@ -551,7 +600,7 @@ class AdminDashboard {
       
     } catch (error) {
       console.error('Error loading users:', error)
-      tbody.innerHTML = '<tr class="error-row"><td colspan="7"><div class="table-error">Failed to load users</div></td></tr>'
+      tbody.innerHTML = '<tr class="error-row"><td colspan="7"><div class="table-error">Database not configured</div></td></tr>'
     }
   }
   
@@ -607,6 +656,13 @@ class AdminDashboard {
     tbody.innerHTML = '<tr class="loading-row"><td colspan="7"><div class="table-loading">Loading form submissions...</div></td></tr>'
     
     try {
+      if (!isConfigured()) {
+        // Show demo message when Supabase is not configured
+        tbody.innerHTML = '<tr class="empty-row"><td colspan="7"><div class="table-empty">Database not configured - Demo Mode</div></td></tr>'
+        this.updatePagination('forms', 0)
+        return
+      }
+
       let query = supabase
         .from('contact_submissions')
         .select('*', { count: 'exact' })
@@ -639,7 +695,7 @@ class AdminDashboard {
       
     } catch (error) {
       console.error('Error loading forms:', error)
-      tbody.innerHTML = '<tr class="error-row"><td colspan="7"><div class="table-error">Failed to load form submissions</div></td></tr>'
+      tbody.innerHTML = '<tr class="error-row"><td colspan="7"><div class="table-error">Database not configured</div></td></tr>'
     }
   }
   
