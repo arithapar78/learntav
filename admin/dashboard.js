@@ -15,27 +15,38 @@ let authState = {
 // Authentication functions
 async function requireAdmin() {
     try {
-        // Check if user is authenticated
-        const { user, error } = await auth.getUser();
-        if (error || !user) {
+        // Check if admin session exists (simple session management)
+        const adminSession = localStorage.getItem('adminAuthenticated');
+        const sessionTimestamp = localStorage.getItem('adminSessionTimestamp');
+        
+        if (!adminSession || adminSession !== 'true') {
             window.location.href = './index.html';
             return false;
         }
-
-        // Check if user is admin
-        const { isAdmin, error: adminError } = await db.isAdmin(user.id);
-        if (adminError || !isAdmin) {
-            alert('Access denied. Admin privileges required.');
-            window.location.href = '../index.html';
-            return false;
+        
+        // Check if session is expired (24 hours)
+        if (sessionTimestamp) {
+            const sessionTime = parseInt(sessionTimestamp);
+            const currentTime = Date.now();
+            const sessionDuration = 24 * 60 * 60 * 1000; // 24 hours
+            
+            if (currentTime - sessionTime > sessionDuration) {
+                localStorage.removeItem('adminAuthenticated');
+                localStorage.removeItem('adminSessionTimestamp');
+                window.location.href = './index.html';
+                return false;
+            }
         }
 
-        authState.user = user;
+        // Set auth state for simple admin
+        authState.user = { id: 'admin', email: 'admin@learntav.com' };
         authState.isAuthenticated = true;
-        authState.isAdmin = isAdmin;
+        authState.isAdmin = true;
         return true;
     } catch (error) {
         console.error('Auth check failed:', error);
+        localStorage.removeItem('adminAuthenticated');
+        localStorage.removeItem('adminSessionTimestamp');
         window.location.href = './index.html';
         return false;
     }
@@ -43,9 +54,9 @@ async function requireAdmin() {
 
 async function signOut() {
     try {
-        await auth.signOut();
-        localStorage.removeItem('isAuthenticated');
-        localStorage.removeItem('userRole');
+        // Clear simple admin session
+        localStorage.removeItem('adminAuthenticated');
+        localStorage.removeItem('adminSessionTimestamp');
         return Promise.resolve();
     } catch (error) {
         console.error('Sign out failed:', error);
@@ -90,7 +101,8 @@ class AdminDashboard {
    */
   async init() {
     // Check authentication
-    if (!requireAdmin()) {
+    const isAuthenticated = await requireAdmin();
+    if (!isAuthenticated) {
       return
     }
     
@@ -104,8 +116,8 @@ class AdminDashboard {
       document.getElementById('admin-name').textContent = authState.user.email
     }
     
-    // Log dashboard access
-    await logAdminAccess(authState.user.id, 'dashboard_access', {
+    // Log dashboard access (simplified for non-Supabase)
+    console.log('Dashboard accessed:', {
       timestamp: new Date().toISOString(),
       section: this.currentSection
     })

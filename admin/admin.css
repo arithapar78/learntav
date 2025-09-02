@@ -536,51 +536,83 @@
 
 .admin-submit-button {
   width: 100%;
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #1e293b, #334155);
-  border: 2px solid rgba(71, 85, 105, 0.5);
-  border-radius: 12px;
-  color: #94a3b8;
-  font-weight: 700;
+  padding: 1.125rem 2rem;
+  background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  border-radius: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
   font-size: 1rem;
   cursor: not-allowed;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.admin-submit-button.ready {
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-  border-color: #3b82f6;
-  color: #ffffff;
-  cursor: pointer;
-  box-shadow: 
-    0 4px 12px rgba(59, 130, 246, 0.4),
+  text-transform: none;
+  letter-spacing: 0.025em;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-.admin-submit-button.ready:hover {
-  transform: translateY(-2px);
-  box-shadow: 
-    0 8px 20px rgba(59, 130, 246, 0.5),
+.admin-submit-button:enabled {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow:
+    0 4px 14px rgba(59, 130, 246, 0.3),
+    0 2px 6px rgba(59, 130, 246, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-.admin-submit-button.ready::before {
+.admin-submit-button:enabled:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #1e40af 100%);
+  box-shadow:
+    0 8px 25px rgba(59, 130, 246, 0.4),
+    0 4px 12px rgba(59, 130, 246, 0.3),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  border-color: rgba(59, 130, 246, 0.6);
+}
+
+.admin-submit-button:enabled:active {
+  transform: translateY(-1px) scale(1.01);
+  box-shadow:
+    0 4px 12px rgba(59, 130, 246, 0.3),
+    inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-submit-button::before {
   content: '';
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s ease;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
 }
 
-.admin-submit-button.ready:hover::before {
+.admin-submit-button:enabled:hover::before {
   left: 100%;
+}
+
+.admin-submit-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent, rgba(255, 255, 255, 0.1));
+  border-radius: 16px;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: xor;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.admin-submit-button:enabled::after {
+  opacity: 1;
 }
 
 .button-content,

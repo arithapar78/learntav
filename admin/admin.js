@@ -36,6 +36,11 @@ class AdminPanel {
         this.handleLogin()
       }
     })
+    
+    // Enable button when typing
+    passwordInput.addEventListener('input', () => {
+      this.enableButton()
+    })
   }
   
   /**
@@ -65,6 +70,10 @@ class AdminPanel {
     
     this.setLoadingState(true)
     
+    // Set admin session
+    localStorage.setItem('adminAuthenticated', 'true')
+    localStorage.setItem('adminSessionTimestamp', Date.now().toString())
+    
     // Success
     this.showSuccess('Access granted! Redirecting...')
     
@@ -72,6 +81,20 @@ class AdminPanel {
     setTimeout(() => {
       this.redirectToDashboard()
     }, 800)
+  }
+  
+  /**
+   * Enable button when password is entered
+   */
+  enableButton() {
+    const passwordInput = document.getElementById('admin-password')
+    const submitButton = document.querySelector('.admin-submit-button')
+    
+    if (passwordInput.value.trim().length > 0) {
+      submitButton.disabled = false
+    } else {
+      submitButton.disabled = true
+    }
   }
   
   
