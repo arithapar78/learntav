@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LearnTAV Admin Dashboard - Manage users, content, and analytics">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <title>Admin Dashboard - LearnTAV</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="dashboard.css">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+</head>
+<body class="admin-dashboard-body">
+    <!-- Header -->
+    <header class="admin-dashboard-header">
+        <div class="header-container">
+            <div class="header-brand">
+                <div class="brand-logo">🛡️</div>
+                <div class="brand-info">
+                    <h1>LearnTAV Admin</h1>
+                    <p class="brand-subtitle">Administrator Dashboard</p>
+                </div>
+            </div>
+            
+            <nav class="header-nav">
+                <button class="nav-item active" data-section="overview">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Overview</span>
+                </button>
+                <button class="nav-item" data-section="users">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Users</span>
+                </button>
+                <button class="nav-item" data-section="forms">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-text">Form Submissions</span>
+                </button>
+                <button class="nav-item" data-section="analytics">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Analytics</span>
+                </button>
+                <button class="nav-item" data-section="settings">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Settings</span>
+                </button>
+            </nav>
+            
+            <div class="header-actions">
+                <!-- Admin Code Display -->
+                <div id="admin-code-display" class="admin-code-info" style="margin-right: 1rem; padding: 0.5rem 1rem; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; font-family: monospace; font-weight: 600; color: #60a5fa;">
+                    Admin Code: <span id="admin-code-value">Loading...</span>
+                </div>
+                
+                <a href="../index.html" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: #007bff; color: white; text-decoration: none; border-radius: 8px; font-weight: 500; transition: background-color 0.2s ease; margin-right: 1rem;">
+                    🏠 Back to Home
+                </a>
+                <div class="admin-profile">
+                    <div class="profile-avatar">👤</div>
+                    <div class="profile-info">
+                        <span class="profile-name" id="admin-name">Admin</span>
+                        <span class="profile-role">Administrator</span>
+                    </div>
+                    <div class="profile-dropdown">
+                        <button class="dropdown-toggle">⚡</button>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item" id="admin-logout">
+                                <span class="item-icon">🚪</span>
+                                Sign Out
+                            </a>
+                            <a href="../index.html" class="dropdown-item">
+                                <span class="item-icon">🌐</span>
+                                View Site
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="admin-dashboard-main">
+        <!-- Overview Section -->
+        <section id="overview-section" class="dashboard-section active">
+            <div class="section-header">
+                <h2>Dashboard Overview</h2>
+                <p class="section-subtitle">Real-time insights and key metrics</p>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="total-users-stat">0</div>
+                        <div class="stat-label">Total Users</div>
+                        <div class="stat-change neutral" id="users-change">No data yet</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="total-submissions-stat">0</div>
+                        <div class="stat-label">Form Submissions</div>
+                        <div class="stat-change neutral" id="submissions-change">No submissions yet</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="active-sessions-stat">0</div>
+                        <div class="stat-label">Active Sessions</div>
+                        <div class="stat-change neutral" id="sessions-change">No active sessions</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="system-status-stat">Online</div>
+                        <div class="stat-label">System Status</div>
+                        <div class="stat-change positive" id="status-change">All systems operational</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <div class="quick-actions-header">
+                    <h3>Quick Actions</h3>
+                </div>
+                <div class="actions-grid">
+                    <button class="action-card" data-action="export-users">
+                        <div class="action-icon">📊</div>
+                        <div class="action-content">
+                            <h4>Export Users</h4>
+                            <p>Download user data as CSV</p>
+                        </div>
+                    </button>
+                    
+                    <button class="action-card" data-action="export-forms">
+                        <div class="action-icon">📁</div>
+                        <div class="action-content">
+                            <h4>Export Forms</h4>
+                            <p>Download form submissions</p>
+                        </div>
+                    </button>
+                    
+                    <button class="action-card" data-action="clear-logs">
+                        <div class="action-icon">🗑️</div>
+                        <div class="action-content">
+                            <h4>Clear Logs</h4>
+                            <p>Clear old system logs</p>
+                        </div>
+                    </button>
+                    
+                    <button class="action-card" data-action="backup-data">
+                        <div class="action-icon">💾</div>
+                        <div class="action-content">
+                            <h4>Backup Data</h4>
+                            <p>Create system backup</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <div class="activity-header">
+                    <h3>Recent Activity</h3>
+                    <button class="refresh-activity" id="refresh-activity">🔄</button>
+                </div>
+                <div class="activity-list" id="recent-activity-list">
+                    <div class="activity-loading">Loading recent activity...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Users Section -->
+        <section id="users-section" class="dashboard-section">
+            <div class="section-header">
+                <h2>User Management</h2>
+                <p class="section-subtitle">Manage registered users and permissions</p>
+            </div>
+            
+            <div class="section-controls">
+                <div class="search-bar">
+                    <input type="text" id="user-search" placeholder="Search users...">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <div class="filter-controls">
+                    <select id="user-role-filter">
+                        <option value="">All Roles</option>
+                        <option value="user">Users</option>
+                        <option value="admin">Admins</option>
+                    </select>
+                    <select id="user-status-filter">
+                        <option value="">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                    <button class="export-btn" id="export-users">Export CSV</button>
+                </div>
+            </div>
+            
+            <div class="data-table-container">
+                <table class="data-table" id="users-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" id="select-all-users">
+                            </th>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Registered</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body">
+                        <tr class="loading-row">
+                            <td colspan="7">
+                                <div class="table-loading">Loading users...</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="table-pagination" id="users-pagination">
+                <button class="pagination-btn" id="users-prev">Previous</button>
+                <span class="pagination-info" id="users-page-info">Page 1 of 1</span>
+                <button class="pagination-btn" id="users-next">Next</button>
+            </div>
+        </section>
+
+        <!-- Form Submissions Section -->
+        <section id="forms-section" class="dashboard-section">
+            <div class="section-header">
+                <h2>Form Submissions</h2>
+                <p class="section-subtitle">Review and manage form submissions</p>
+            </div>
+            
+            <div class="section-controls">
+                <div class="search-bar">
+                    <input type="text" id="form-search" placeholder="Search submissions...">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <div class="filter-controls">
+                    <select id="form-type-filter">
+                        <option value="">All Forms</option>
+                        <option value="general">General Contact</option>
+                        <option value="consultation">Consultation</option>
+                        <option value="education">Education</option>
+                        <option value="consulting">Consulting</option>
+                    </select>
+                    <select id="form-status-filter">
+                        <option value="">All Status</option>
+                        <option value="unread">Unread</option>
+                        <option value="read">Read</option>
+                        <option value="responded">Responded</option>
+                    </select>
+                    <button class="export-btn" id="export-forms">Export CSV</button>
+                </div>
+            </div>
+            
+            <div class="data-table-container">
+                <table class="data-table" id="forms-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" id="select-all-forms">
+                            </th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Form Type</th>
+                            <th>Status</th>
+                            <th>Submitted</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="forms-table-body">
+                        <tr class="loading-row">
+                            <td colspan="7">
+                                <div class="table-loading">Loading form submissions...</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="table-pagination" id="forms-pagination">
+                <button class="pagination-btn" id="forms-prev">Previous</button>
+                <span class="pagination-info" id="forms-page-info">Page 1 of 1</span>
+                <button class="pagination-btn" id="forms-next">Next</button>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics-section" class="dashboard-section">
+            <div class="section-header">
+                <h2>Analytics & Reports</h2>
+                <p class="section-subtitle">Detailed insights and performance metrics</p>
+            </div>
+            
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <div class="card-header">
+                        <h3>User Growth</h3>
+                        <div class="chart-controls">
+                            <select id="growth-period">
+                                <option value="7d">Last 7 days</option>
+                                <option value="30d" selected>Last 30 days</option>
+                                <option value="90d">Last 90 days</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="user-growth-chart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="analytics-card">
+                    <div class="card-header">
+                        <h3>Form Submissions</h3>
+                        <div class="chart-controls">
+                            <select id="forms-period">
+                                <option value="7d">Last 7 days</option>
+                                <option value="30d" selected>Last 30 days</option>
+                                <option value="90d">Last 90 days</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="forms-chart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="analytics-card">
+                    <div class="card-header">
+                        <h3>Popular Pages</h3>
+                    </div>
+                    <div class="popular-pages-list" id="popular-pages">
+                        <div class="loading-placeholder">Loading page analytics...</div>
+                    </div>
+                </div>
+                
+                <div class="analytics-card">
+                    <div class="card-header">
+                        <h3>System Health</h3>
+                    </div>
+                    <div class="system-health" id="system-health">
+                        <div class="health-metric">
+                            <span class="metric-label">Database</span>
+                            <span class="metric-status online">Online</span>
+                        </div>
+                        <div class="health-metric">
+                            <span class="metric-label">Authentication</span>
+                            <span class="metric-status online">Online</span>
+                        </div>
+                        <div class="health-metric">
+                            <span class="metric-label">Storage</span>
+                            <span class="metric-status online">Online</span>
+                        </div>
+                        <div class="health-metric">
+                            <span class="metric-label">Email Service</span>
+                            <span class="metric-status online">Online</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings-section" class="dashboard-section">
+            <div class="section-header">
+                <h2>System Settings</h2>
+                <p class="section-subtitle">Configure system preferences and security</p>
+            </div>
+            
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <div class="card-header">
+                        <h3>Security Settings</h3>
+                    </div>
+                    <div class="settings-form">
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="require-email-verification" checked>
+                                <span class="checkmark"></span>
+                                Require email verification for new users
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="enable-2fa">
+                                <span class="checkmark"></span>
+                                Enable two-factor authentication
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="log-admin-actions" checked>
+                                <span class="checkmark"></span>
+                                Log all admin actions
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label for="session-timeout">Session timeout (minutes):</label>
+                            <input type="number" id="session-timeout" value="30" min="5" max="480">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-card">
+                    <div class="card-header">
+                        <h3>Email Settings</h3>
+                    </div>
+                    <div class="settings-form">
+                        <div class="setting-item">
+                            <label for="smtp-server">SMTP Server:</label>
+                            <input type="text" id="smtp-server" placeholder="smtp.example.com">
+                        </div>
+                        <div class="setting-item">
+                            <label for="smtp-port">SMTP Port:</label>
+                            <input type="number" id="smtp-port" value="587">
+                        </div>
+                        <div class="setting-item">
+                            <label for="email-from">From Email:</label>
+                            <input type="email" id="email-from" placeholder="noreply@learntav.com">
+                        </div>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="enable-ssl">
+                                <span class="checkmark"></span>
+                                Enable SSL/TLS encryption
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-card">
+                    <div class="card-header">
+                        <h3>Backup & Maintenance</h3>
+                    </div>
+                    <div class="settings-form">
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="auto-backup" checked>
+                                <span class="checkmark"></span>
+                                Enable automatic backups
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label for="backup-frequency">Backup frequency:</label>
+                            <select id="backup-frequency">
+                                <option value="daily" selected>Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="data-retention">Data retention (days):</label>
+                            <input type="number" id="data-retention" value="365" min="30" max="2555">
+                        </div>
+                        <div class="setting-buttons">
+                            <button class="btn btn-primary" id="save-settings">Save Settings</button>
+                            <button class="btn btn-secondary" id="reset-settings">Reset to Default</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for viewing details -->
+    <div id="detail-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Details</h3>
+                <button class="modal-close" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modal-close-btn">Close</button>
+                <button class="btn btn-primary" id="modal-action-btn" style="display: none;">Action</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Processing...</div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script type="module" src="dashboard.js"></script>
+</body>
+</html>
