@@ -53,51 +53,32 @@
                     <div class="admin-logo-icon">🛡️</div>
                     <h1>LearnTAV Admin Panel</h1>
                 </div>
-                <p class="admin-subtitle">Secure Administrator Access</p>
+                <p class="admin-subtitle">zazu is a cool admin</p>
                 <div class="admin-security-badge">
                     <span class="security-icon">🔐</span>
-                    <span class="security-text">Multi-Factor Authentication Required</span>
+                    <span class="security-text">Password Required</span>
                 </div>
             </div>
             
-            <!-- Simplified Login Form -->
+            <!-- Simple Password Login Form -->
             <div class="admin-form-container">
                 <form id="admin-login-form" class="admin-form" novalidate>
-                    <!-- Access Code Field Only -->
+                    <!-- Password Field -->
                     <div class="admin-form-group">
-                        <label for="admin-access-code" class="admin-form-label">
-                            <span class="label-icon">🔢</span>
-                            Enter 4-Digit Access Code
+                        <label for="admin-password" class="admin-form-label">
+                            <span class="label-icon">🔑</span>
+                            Enter Password
                         </label>
-                        <div class="admin-access-code-section">
-                            <div class="access-code-display">
-                                <input type="password"
-                                       id="admin-access-code"
-                                       name="accessCode"
-                                       class="access-code-input"
-                                       maxlength="4"
-                                       placeholder="••••"
-                                       autocomplete="off">
-                                <button type="button" class="access-code-clear" id="clear-code">
-                                    <span>🗑️</span>
-                                </button>
-                            </div>
-                            <div class="numeric-keypad">
-                                <button type="button" class="keypad-key" data-value="1">1</button>
-                                <button type="button" class="keypad-key" data-value="2">2</button>
-                                <button type="button" class="keypad-key" data-value="3">3</button>
-                                <button type="button" class="keypad-key" data-value="4">4</button>
-                                <button type="button" class="keypad-key" data-value="5">5</button>
-                                <button type="button" class="keypad-key" data-value="6">6</button>
-                                <button type="button" class="keypad-key" data-value="7">7</button>
-                                <button type="button" class="keypad-key" data-value="8">8</button>
-                                <button type="button" class="keypad-key" data-value="9">9</button>
-                                <button type="button" class="keypad-key keypad-special" data-action="backspace">⌫</button>
-                                <button type="button" class="keypad-key" data-value="0">0</button>
-                                <button type="button" class="keypad-key keypad-special" data-action="clear">Clear</button>
-                            </div>
+                        <div class="admin-password-section">
+                            <input type="password"
+                                   id="admin-password"
+                                   name="password"
+                                   class="admin-password-input"
+                                   placeholder="Enter your password"
+                                   autocomplete="current-password"
+                                   required>
                             <div class="admin-field-hint">
-                                Enter the 4-digit access code to proceed
+                                Enter the admin password to access the dashboard
                             </div>
                         </div>
                     </div>
@@ -133,12 +114,12 @@
             <!-- Security Info -->
             <div class="admin-security-info">
                 <div class="security-feature">
-                    <span class="feature-icon">🔐</span>
-                    <span class="feature-text">Multi-factor authentication</span>
+                    <span class="feature-icon">🔑</span>
+                    <span class="feature-text">Password protected</span>
                 </div>
                 <div class="security-feature">
                     <span class="feature-icon">🛡️</span>
-                    <span class="feature-text">Encrypted connections</span>
+                    <span class="feature-text">Secure access</span>
                 </div>
                 <div class="security-feature">
                     <span class="feature-icon">📊</span>
@@ -188,20 +169,10 @@
         
         // Keyboard shortcuts for accessibility
         document.addEventListener('keydown', function(e) {
-            // Alt + L to focus username
-            if (e.altKey && e.key === 'l') {
-                e.preventDefault();
-                document.getElementById('admin-username').focus();
-            }
             // Alt + P to focus password
             if (e.altKey && e.key === 'p') {
                 e.preventDefault();
                 document.getElementById('admin-password').focus();
-            }
-            // Alt + C to focus access code
-            if (e.altKey && e.key === 'c') {
-                e.preventDefault();
-                document.getElementById('admin-access-code').focus();
             }
         });
     </script>

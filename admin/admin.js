@@ -1,11 +1,10 @@
 /**
- * Simplified Admin Panel JavaScript
- * Handles simple admin authentication with code only
+ * Simple Admin Panel JavaScript
+ * Handles password-based admin authentication
  */
 
 class AdminPanel {
   constructor() {
-    this.accessCode = ''
     this.init()
   }
   
@@ -14,7 +13,7 @@ class AdminPanel {
    */
   init() {
     this.bindEvents()
-    this.initializeAccessCode()
+    this.focusPasswordField()
   }
   
   /**
@@ -22,7 +21,6 @@ class AdminPanel {
    */
   bindEvents() {
     const form = document.getElementById('admin-login-form')
-    const clearButton = document.getElementById('clear-code')
     
     // Form submission
     form.addEventListener('submit', (e) => {
@@ -30,134 +28,38 @@ class AdminPanel {
       this.handleLogin()
     })
     
-    // Numeric keypad - prevent double clicks and add debounce
-    document.querySelectorAll('.keypad-key').forEach(key => {
-      let isProcessing = false;
-      let lastProcessTime = 0;
-      
-      const handleKeypadClick = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        
-        const now = Date.now();
-        
-        // Prevent rapid successive clicks (debounce with minimum 250ms between clicks)
-        if (isProcessing || (now - lastProcessTime < 250)) {
-          return;
-        }
-        
-        isProcessing = true;
-        lastProcessTime = now;
-        
-        const value = e.target.dataset.value || e.currentTarget.dataset.value;
-        const action = e.target.dataset.action || e.currentTarget.dataset.action;
-        
-        try {
-          if (value) {
-            this.addDigit(value);
-          } else if (action === 'backspace') {
-            this.removeDigit();
-          } else if (action === 'clear') {
-            this.clearAccessCode();
-          }
-        } catch (error) {
-          console.error('Keypad input error:', error);
-        }
-        
-        // Reset processing flag after delay
-        setTimeout(() => {
-          isProcessing = false;
-        }, 300);
-      };
-      
-      // Remove any existing event listeners to prevent duplicates
-      key.removeEventListener('click', handleKeypadClick);
-      
-      // Add single event listener
-      key.addEventListener('click', handleKeypadClick, { once: false, passive: false });
-      
-      // Prevent other event types that might cause double firing
-      key.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-      }, { passive: false });
-      
-      key.addEventListener('mousedown', (e) => {
-        e.preventDefault();
-      });
-    })
-    
-    // Clear button
-    clearButton.addEventListener('click', () => {
-      this.clearAccessCode()
-    })
-    
-    // Keyboard shortcuts for keypad
-    document.addEventListener('keydown', (e) => {
-      if (document.activeElement === document.getElementById('admin-access-code')) {
-        this.handleKeypadKeyboard(e)
-      }
-    })
-    
-    // Allow direct input in the access code field with debounce
-    const accessCodeInput = document.getElementById('admin-access-code')
-    let inputTimeout;
-    
-    accessCodeInput.addEventListener('input', (e) => {
-      // Clear previous timeout to debounce rapid input
-      clearTimeout(inputTimeout);
-      
-      inputTimeout = setTimeout(() => {
-        // Only update if the value has actually changed
-        const newValue = e.target.value.slice(0, 4); // Limit to 4 digits
-        if (newValue !== this.accessCode) {
-          this.accessCode = newValue;
-          this.updateAccessCodeDisplay();
-        }
-      }, 50); // Small debounce delay
-    })
-    
-    // Prevent rapid key repeats on keydown
-    accessCodeInput.addEventListener('keydown', (e) => {
-      // Allow digits, backspace, delete, tab, enter
-      if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'Tab', 'Enter'].includes(e.key)) {
-        e.preventDefault();
-        return;
-      }
-      
-      // Prevent input if already at max length and trying to add more digits
-      if (e.target.value.length >= 4 && /[0-9]/.test(e.key)) {
-        e.preventDefault();
-        return;
+    // Password input field
+    const passwordInput = document.getElementById('admin-password')
+    passwordInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault()
+        this.handleLogin()
       }
     })
   }
   
   /**
-   * Initialize access code functionality
+   * Focus password field on load
    */
-  initializeAccessCode() {
-    const accessCodeInput = document.getElementById('admin-access-code')
-    
-    // Allow direct typing
-    accessCodeInput.addEventListener('keydown', (e) => {
-      // Allow digits, backspace, delete, tab
-      if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'Tab', 'Enter'].includes(e.key)) {
-        e.preventDefault()
-      }
-    })
+  focusPasswordField() {
+    const passwordInput = document.getElementById('admin-password')
+    if (passwordInput) {
+      passwordInput.focus()
+    }
   }
   
   /**
    * Handle login submission
    */
   handleLogin() {
-    const accessCode = this.accessCode
+    const passwordInput = document.getElementById('admin-password')
+    const password = passwordInput.value.trim()
     
-    // Since we add 2 to each digit, the expected input should be 0246 (which becomes 2468)
-    // User types: 0,2,4,6 -> System shows: 2,4,6,8 -> Validates against: 2468
-    if (accessCode !== '2468' || accessCode.length !== 4) {
-      this.showError('Invalid code. Please try again.')
+    // Check if password matches "LearnTAV4ever!"
+    if (password !== 'LearnTAV4ever!') {
+      this.showError('Invalid password. Please try again.')
+      passwordInput.value = '' // Clear the password field
+      passwordInput.focus()
       return
     }
     
@@ -172,73 +74,6 @@ class AdminPanel {
     }, 800)
   }
   
-  /**
-   * Add digit to access code
-   * When typing a number, add 2 to it before displaying (requirement)
-   */
-  addDigit(digit) {
-    if (this.accessCode.length < 4) {
-      // Add 2 to the typed number (requirement from task)
-      const numericValue = parseInt(digit, 10)
-      const modifiedValue = (numericValue + 2) % 10 // Use modulo to handle 8->0, 9->1
-      this.accessCode += modifiedValue.toString()
-      this.updateAccessCodeDisplay()
-    }
-  }
-  
-  /**
-   * Remove last digit from access code
-   */
-  removeDigit() {
-    if (this.accessCode.length > 0) {
-      this.accessCode = this.accessCode.slice(0, -1)
-      this.updateAccessCodeDisplay()
-    }
-  }
-  
-  /**
-   * Clear access code
-   */
-  clearAccessCode() {
-    this.accessCode = ''
-    this.updateAccessCodeDisplay()
-  }
-  
-  /**
-   * Update access code display
-   */
-  updateAccessCodeDisplay() {
-    const input = document.getElementById('admin-access-code')
-    input.value = this.accessCode
-    
-    // Visual feedback
-    const keys = document.querySelectorAll('.keypad-key')
-    keys.forEach(key => key.classList.remove('pressed'))
-    
-    if (this.accessCode.length > 0) {
-      const lastDigit = this.accessCode[this.accessCode.length - 1]
-      const lastKey = document.querySelector(`[data-value="${lastDigit}"]`)
-      if (lastKey) {
-        lastKey.classList.add('pressed')
-        setTimeout(() => lastKey.classList.remove('pressed'), 200)
-      }
-    }
-  }
-  
-  /**
-   * Handle keypad keyboard input
-   */
-  handleKeypadKeyboard(e) {
-    if (e.key >= '0' && e.key <= '9') {
-      this.addDigit(e.key)
-    } else if (e.key === 'Backspace') {
-      this.removeDigit()
-    } else if (e.key === 'Delete' || e.key === 'Escape') {
-      this.clearAccessCode()
-    } else if (e.key === 'Enter') {
-      document.getElementById('admin-login-form').dispatchEvent(new Event('submit'))
-    }
-  }
   
   /**
    * Set loading state
