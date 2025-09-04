@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <p class="learntav-page-header__subtitle">
-                    Where Technology meets Accessibility, Sustainability, and Real-World Impact. We're on a mission to democratize AI education and promote responsible AI adoption.
+                    Where Technology Meets Accessibility, Sustainability, and Real-World Impact. We're on a mission to democratize AI education and promote responsible AI adoption.
                 </p>
             </div>
         </div>
@@ -287,7 +287,7 @@
             }
         });
         
-        // Add tech highlight effects to key phrases
+        // Add tech highlight effects to key phrases with preserved capitalization
         document.addEventListener('DOMContentLoaded', function() {
             const phrases = ['AI education', 'sustainable practices', 'practical application', 'accessibility'];
             
@@ -296,7 +296,10 @@
                 const elements = document.querySelectorAll('p, h1, h2, h3, li');
                 elements.forEach(el => {
                     if (el.innerHTML.match(regex)) {
-                        el.innerHTML = el.innerHTML.replace(regex, `<span class="tech-highlight">${phrase}</span>`);
+                        // Preserve original capitalization by using the matched text
+                        el.innerHTML = el.innerHTML.replace(regex, (match) => {
+                            return `<span class="tech-highlight" data-phrase="${phrase}">${match}</span>`;
+                        });
                     }
                 });
             });

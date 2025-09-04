@@ -741,7 +741,10 @@
                 const matches = modifiedContent.match(regex);
                 if (matches) {
                     console.log(`🔧 TECH-HIGHLIGHT: Found ${matches.length} instances of "${phrase}"`);
-                    modifiedContent = modifiedContent.replace(regex, `<span class="tech-highlight" data-phrase="${phrase}">${phrase}</span>`);
+                    // Preserve original capitalization by using the matched text, not the lowercase phrase
+                    modifiedContent = modifiedContent.replace(regex, (match) => {
+                        return `<span class="tech-highlight" data-phrase="${phrase}">${match}</span>`;
+                    });
                     replacementsMade += matches.length;
                 }
             });
