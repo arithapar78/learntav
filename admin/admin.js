@@ -60,8 +60,8 @@ class AdminPanel {
     const passwordInput = document.getElementById('admin-password')
     const password = passwordInput.value.trim()
     
-    // Check if password matches "LearnTAV4ever!"
-    if (password !== 'LearnTAV4ever!') {
+    // Check if password matches "2468"
+    if (password !== '2468') {
       this.showError('Invalid password. Please try again.')
       passwordInput.value = '' // Clear the password field
       passwordInput.focus()
@@ -170,5 +170,5 @@ document.addEventListener('DOMContentLoaded', function() {
   new AdminPanel()
 })
 
-// Export for potential external use
-export { AdminPanel }
+// No export needed for non-module script
+// export { AdminPanel }

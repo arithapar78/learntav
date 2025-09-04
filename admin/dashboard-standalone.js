@@ -1,9 +1,265 @@
 /**
- * Admin Dashboard JavaScript
+ * Admin Dashboard JavaScript - Standalone Version
  * Handles dashboard functionality, data management, and UI interactions
+ * No ES module imports - all code is inline for local file testing
  */
 
-import { supabase, auth, db, isConfigured } from '../assets/auth/supabase-client.js';
+// Mock Supabase client for local development
+const supabase = {
+  from: (table) => {
+    const getTableData = (tableName) => {
+      try {
+        switch (tableName) {
+          case 'users':
+            return JSON.parse(localStorage.getItem('learntav_users') || '[]')
+          case 'contact_submissions':
+            return JSON.parse(localStorage.getItem('learntav_contact_submissions') || '[]')
+          case 'enrollments':
+            return JSON.parse(localStorage.getItem('learntav_enrollments') || '[]')
+          case 'consults':
+            return JSON.parse(localStorage.getItem('learntav_consults') || '[]')
+          case 'admin_logs':
+            return JSON.parse(localStorage.getItem('learntav_admin_logs') || '[]')
+          default:
+            return []
+        }
+      } catch {
+        return []
+      }
+    }
+
+    return {
+      select: (columns = '*', options = {}) => {
+        const data = getTableData(table)
+        const count = data.length
+
+        return {
+          eq: (column, value) => ({
+            single: () => {
+              const item = data.find(row => row[column] === value)
+              return Promise.resolve({ data: item || null, error: item ? null : { message: 'Not found' } })
+            },
+            limit: (n) => Promise.resolve({ data: data.filter(row => row[column] === value).slice(0, n), error: null, count }),
+            range: (start, end) => Promise.resolve({ data: data.filter(row => row[column] === value).slice(start, end + 1), error: null, count }),
+            order: (orderColumn, orderOptions) => ({
+              limit: (n) => {
+                const filtered = data.filter(row => row[column] === value)
+                const sorted = orderOptions?.ascending === false 
+                  ? filtered.sort((a, b) => b[orderColumn] > a[orderColumn] ? 1 : -1)
+                  : filtered.sort((a, b) => a[orderColumn] > b[orderColumn] ? 1 : -1)
+                return Promise.resolve({ data: sorted.slice(0, n), error: null, count: filtered.length })
+              },
+              range: (start, end) => {
+                const filtered = data.filter(row => row[column] === value)
+                const sorted = orderOptions?.ascending === false 
+                  ? filtered.sort((a, b) => b[orderColumn] > a[orderColumn] ? 1 : -1)
+                  : filtered.sort((a, b) => a[orderColumn] > b[orderColumn] ? 1 : -1)
+                return Promise.resolve({ data: sorted.slice(start, end + 1), error: null, count: filtered.length })
+              }
+            })
+          }),
+          or: (conditions) => Promise.resolve({ data: data.slice(0, 50), error: null, count }),
+          gte: (column, value) => ({
+            order: (orderColumn, orderOptions) => ({
+              limit: (n) => {
+                const filtered = data.filter(row => new Date(row[column]) >= new Date(value))
+                const sorted = orderOptions?.ascending === false 
+                  ? filtered.sort((a, b) => b[orderColumn] > a[orderColumn] ? 1 : -1)
+                  : filtered.sort((a, b) => a[orderColumn] > b[orderColumn] ? 1 : -1)
+                return Promise.resolve({ data: sorted.slice(0, n), error: null, count: filtered.length })
+              }
+            })
+          }),
+          order: (orderColumn, orderOptions) => ({
+            limit: (n) => {
+              const sorted = orderOptions?.ascending === false 
+                ? [...data].sort((a, b) => b[orderColumn] > a[orderColumn] ? 1 : -1)
+                : [...data].sort((a, b) => a[orderColumn] > b[orderColumn] ? 1 : -1)
+              return Promise.resolve({ data: sorted.slice(0, n), error: null, count })
+            },
+            range: (start, end) => {
+              const sorted = orderOptions?.ascending === false 
+                ? [...data].sort((a, b) => b[orderColumn] > a[orderColumn] ? 1 : -1)
+                : [...data].sort((a, b) => a[orderColumn] > b[orderColumn] ? 1 : -1)
+              return Promise.resolve({ data: sorted.slice(start, end + 1), error: null, count })
+            }
+          }),
+          limit: (n) => Promise.resolve({ data: data.slice(0, n), error: null, count }),
+          range: (start, end) => Promise.resolve({ data: data.slice(start, end + 1), error: null, count })
+        }
+      },
+      insert: (insertData) => {
+        try {
+          const data = getTableData(table)
+          const newItems = Array.isArray(insertData) ? insertData : [insertData]
+          const itemsWithIds = newItems.map(item => ({
+            ...item,
+            id: item.id || Date.now().toString() + Math.random().toString(36).substr(2, 9),
+            created_at: item.created_at || new Date().toISOString()
+          }))
+          
+          data.push(...itemsWithIds)
+          localStorage.setItem(`learntav_${table}`, JSON.stringify(data))
+          return Promise.resolve({ data: itemsWithIds, error: null })
+        } catch (error) {
+          return Promise.resolve({ data: null, error: { message: 'Insert failed' } })
+        }
+      },
+      update: (updateData) => ({
+        eq: (column, value) => {
+          try {
+            const data = getTableData(table)
+            const index = data.findIndex(row => row[column] === value)
+            if (index !== -1) {
+              data[index] = { ...data[index], ...updateData, updated_at: new Date().toISOString() }
+              localStorage.setItem(`learntav_${table}`, JSON.stringify(data))
+              return Promise.resolve({ data: [data[index]], error: null })
+            }
+            return Promise.resolve({ data: null, error: { message: 'Not found' } })
+          } catch (error) {
+            return Promise.resolve({ data: null, error: { message: 'Update failed' } })
+          }
+        }
+      }),
+      upsert: (upsertData) => {
+        try {
+          const data = getTableData(table)
+          const items = Array.isArray(upsertData) ? upsertData : [upsertData]
+          
+          items.forEach(item => {
+            const existingIndex = data.findIndex(row => row.id === item.id)
+            if (existingIndex !== -1) {
+              data[existingIndex] = { ...data[existingIndex], ...item, updated_at: new Date().toISOString() }
+            } else {
+              data.push({ 
+                ...item, 
+                id: item.id || Date.now().toString() + Math.random().toString(36).substr(2, 9),
+                created_at: item.created_at || new Date().toISOString()
+              })
+            }
+          })
+          
+          localStorage.setItem(`learntav_${table}`, JSON.stringify(data))
+          return Promise.resolve({ data: items, error: null })
+        } catch (error) {
+          return Promise.resolve({ data: null, error: { message: 'Upsert failed' } })
+        }
+      }
+    }
+  },
+  auth: {
+    signInWithPassword: () => Promise.resolve({ data: null, error: { message: 'Local mode' } }),
+    signUp: () => Promise.resolve({ data: null, error: { message: 'Local mode' } }),
+    signOut: () => Promise.resolve({ error: null }),
+    getUser: () => Promise.resolve({ user: null, error: null }),
+    getSession: () => Promise.resolve({ session: null, error: null }),
+    onAuthStateChange: () => ({ unsubscribe: () => {} })
+  },
+  channel: () => ({
+    on: () => ({ subscribe: () => {} })
+  })
+}
+
+// Database helpers with localStorage fallback
+const db = {
+  // Users
+  async getUsers(options = {}) {
+    try {
+      const users = JSON.parse(localStorage.getItem('learntav_users') || '[]')
+      return { data: users.slice(0, options.limit || users.length), error: null, count: users.length }
+    } catch {
+      return { data: [], error: null, count: 0 }
+    }
+  },
+
+  async getUserById(id) {
+    try {
+      const users = JSON.parse(localStorage.getItem('learntav_users') || '[]')
+      const user = users.find(u => u.id === id)
+      return { data: user || null, error: user ? null : { message: 'User not found' } }
+    } catch {
+      return { data: null, error: { message: 'Error loading user' } }
+    }
+  },
+
+  // Enrollments
+  async getEnrollments(options = {}) {
+    try {
+      const enrollments = JSON.parse(localStorage.getItem('learntav_enrollments') || '[]')
+      return { data: enrollments.slice(0, options.limit || enrollments.length), error: null, count: enrollments.length }
+    } catch {
+      return { data: [], error: null, count: 0 }
+    }
+  },
+
+  async createEnrollment(enrollmentData) {
+    try {
+      const enrollments = JSON.parse(localStorage.getItem('learntav_enrollments') || '[]')
+      const newEnrollment = { ...enrollmentData, id: Date.now().toString(), created_at: new Date().toISOString() }
+      enrollments.push(newEnrollment)
+      localStorage.setItem('learntav_enrollments', JSON.stringify(enrollments))
+      return { data: [newEnrollment], error: null }
+    } catch (error) {
+      return { data: null, error: { message: 'Failed to save enrollment' } }
+    }
+  },
+
+  // Consults
+  async getConsults(options = {}) {
+    try {
+      const consults = JSON.parse(localStorage.getItem('learntav_consults') || '[]')
+      return { data: consults.slice(0, options.limit || consults.length), error: null, count: consults.length }
+    } catch {
+      return { data: [], error: null, count: 0 }
+    }
+  },
+
+  async createConsult(consultData) {
+    try {
+      const consults = JSON.parse(localStorage.getItem('learntav_consults') || '[]')
+      const newConsult = { ...consultData, id: Date.now().toString(), created_at: new Date().toISOString() }
+      consults.push(newConsult)
+      localStorage.setItem('learntav_consults', JSON.stringify(consults))
+      return { data: [newConsult], error: null }
+    } catch (error) {
+      return { data: null, error: { message: 'Failed to save consultation' } }
+    }
+  },
+
+  // Site settings
+  async getSetting(key) {
+    try {
+      const value = localStorage.getItem(`learntav_setting_${key}`) || (key === 'admin_code' ? '2468' : null)
+      return { data: { value }, error: null }
+    } catch (error) {
+      return { data: null, error: { message: 'Failed to get setting' } }
+    }
+  },
+
+  async setSetting(key, value) {
+    try {
+      localStorage.setItem(`learntav_setting_${key}`, value)
+      return { data: { key, value }, error: null }
+    } catch (error) {
+      return { data: null, error: { message: 'Failed to save setting' } }
+    }
+  },
+
+  // Admin functions
+  async isAdmin(userId) {
+    // For demo purposes, allow admin access
+    return { isAdmin: true, error: null }
+  },
+
+  async addAdmin(userId) {
+    return { data: [{ user_id: userId }], error: null }
+  }
+}
+
+// Check if we're using real Supabase or need configuration
+function isConfigured() {
+  return true // Local storage mode is always configured
+}
 
 // Auth state management
 let authState = {
@@ -61,19 +317,6 @@ async function signOut() {
     } catch (error) {
         console.error('Sign out failed:', error);
         return Promise.reject(error);
-    }
-}
-
-async function logAdminAccess(userId, action, details) {
-    try {
-        await supabase.from('admin_logs').insert([{
-            user_id: userId,
-            action: action,
-            details: details,
-            created_at: new Date().toISOString()
-        }]);
-    } catch (error) {
-        console.error('Failed to log admin access:', error);
     }
 }
 
@@ -975,7 +1218,7 @@ class AdminDashboard {
           </div>
           <div class="detail-item">
             <label>Updated:</label>
-            <span>${this.formatDate(user.updated_at)}</span>
+            <span>${this.formatDate(user.updated_at || user.created_at)}</span>
           </div>
         </div>
       </div>
@@ -1301,9 +1544,10 @@ class AdminDashboard {
     if (confirm('Are you sure you want to clear all logs?')) {
       try {
         this.showLoading('Clearing logs...')
-        // Mock clear operation
+        localStorage.removeItem('learntav_admin_logs')
         await new Promise(resolve => setTimeout(resolve, 1000))
         this.showSuccess('Logs cleared successfully')
+        this.loadRecentActivity() // Refresh activity display
       } catch (error) {
         console.error('Error clearing logs:', error)
         this.showError('Failed to clear logs')
@@ -1319,9 +1563,31 @@ class AdminDashboard {
   async backupData() {
     try {
       this.showLoading('Creating backup...')
-      // Mock backup operation
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      this.showSuccess('Backup created successfully')
+      
+      // Create backup object
+      const backupData = {
+        timestamp: new Date().toISOString(),
+        users: JSON.parse(localStorage.getItem('learntav_users') || '[]'),
+        contact_submissions: JSON.parse(localStorage.getItem('learntav_contact_submissions') || '[]'),
+        enrollments: JSON.parse(localStorage.getItem('learntav_enrollments') || '[]'),
+        consults: JSON.parse(localStorage.getItem('learntav_consults') || '[]'),
+        admin_logs: JSON.parse(localStorage.getItem('learntav_admin_logs') || '[]')
+      }
+      
+      // Convert to JSON and create download
+      const jsonStr = JSON.stringify(backupData, null, 2)
+      const blob = new Blob([jsonStr], { type: 'application/json' })
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `learntav-backup-${new Date().toISOString().split('T')[0]}.json`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      window.URL.revokeObjectURL(url)
+      
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      this.showSuccess('Backup created and downloaded successfully')
     } catch (error) {
       console.error('Error creating backup:', error)
       this.showError('Failed to create backup')
@@ -1331,35 +1597,25 @@ class AdminDashboard {
   }
 
   /**
-   * Edit user
+   * Edit user - Mock implementation
    */
   async editUser(userId) {
-    try {
-      const { data: user, error } = await supabase
-        .from('users')
-        .select('*')
-        .eq('id', userId)
-        .single()
-      
-      if (error) throw error
-      
-      this.showModal('Edit User', this.renderUserEditForm(user), 'Save Changes', () => {
-        this.saveUserChanges(userId)
-      })
-    } catch (error) {
-      console.error('Error editing user:', error)
-      this.showError('Failed to load user for editing')
-    }
+    this.showError('Edit user functionality not implemented in local mode')
   }
 
   /**
-   * Delete user
+   * Delete user - Mock implementation  
    */
   async deleteUser(userId) {
     if (confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
       try {
         this.showLoading('Deleting user...')
-        // Mock delete operation
+        
+        // Remove user from localStorage
+        const users = JSON.parse(localStorage.getItem('learntav_users') || '[]')
+        const updatedUsers = users.filter(user => user.id !== userId)
+        localStorage.setItem('learntav_users', JSON.stringify(updatedUsers))
+        
         await new Promise(resolve => setTimeout(resolve, 1000))
         this.showSuccess('User deleted successfully')
         this.loadUsersData()
@@ -1373,25 +1629,10 @@ class AdminDashboard {
   }
 
   /**
-   * Reply to form submission
+   * Reply to form - Mock implementation
    */
   async replyToForm(formId) {
-    try {
-      const { data: form, error } = await supabase
-        .from('contact_submissions')
-        .select('*')
-        .eq('id', formId)
-        .single()
-      
-      if (error) throw error
-      
-      this.showModal('Reply to Form', this.renderReplyForm(form), 'Send Reply', () => {
-        this.sendFormReply(formId)
-      })
-    } catch (error) {
-      console.error('Error loading form for reply:', error)
-      this.showError('Failed to load form for reply')
-    }
+    this.showError('Reply to form functionality not implemented in local mode')
   }
 
   /**
@@ -1401,7 +1642,12 @@ class AdminDashboard {
     if (confirm('Are you sure you want to delete this form submission?')) {
       try {
         this.showLoading('Deleting form submission...')
-        // Mock delete operation
+        
+        // Remove form from localStorage
+        const forms = JSON.parse(localStorage.getItem('learntav_contact_submissions') || '[]')
+        const updatedForms = forms.filter(form => form.id !== formId)
+        localStorage.setItem('learntav_contact_submissions', JSON.stringify(updatedForms))
+        
         await new Promise(resolve => setTimeout(resolve, 1000))
         this.showSuccess('Form submission deleted successfully')
         this.loadFormsData()
@@ -1413,90 +1659,6 @@ class AdminDashboard {
       }
     }
   }
-
-  /**
-   * Render user edit form
-   */
-  renderUserEditForm(user) {
-    return `
-      <div class="edit-form">
-        <div class="form-group">
-          <label for="edit-user-name">Name:</label>
-          <input type="text" id="edit-user-name" value="${user.name || ''}" />
-        </div>
-        <div class="form-group">
-          <label for="edit-user-email">Email:</label>
-          <input type="email" id="edit-user-email" value="${user.email}" />
-        </div>
-        <div class="form-group">
-          <label for="edit-user-role">Role:</label>
-          <select id="edit-user-role">
-            <option value="user" ${user.role === 'user' ? 'selected' : ''}>User</option>
-            <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Admin</option>
-          </select>
-        </div>
-      </div>
-    `
-  }
-
-  /**
-   * Render reply form
-   */
-  renderReplyForm(form) {
-    return `
-      <div class="reply-form">
-        <div class="form-group">
-          <label>To: ${form.email}</label>
-        </div>
-        <div class="form-group">
-          <label for="reply-subject">Subject:</label>
-          <input type="text" id="reply-subject" value="Re: ${form.subject || 'Your inquiry'}" />
-        </div>
-        <div class="form-group">
-          <label for="reply-message">Message:</label>
-          <textarea id="reply-message" rows="6" placeholder="Type your reply here..."></textarea>
-        </div>
-      </div>
-    `
-  }
-
-  /**
-   * Save user changes
-   */
-  async saveUserChanges(userId) {
-    try {
-      this.showLoading('Saving changes...')
-      // Mock save operation
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      this.showSuccess('User updated successfully')
-      this.closeModal()
-      this.loadUsersData()
-    } catch (error) {
-      console.error('Error saving user changes:', error)
-      this.showError('Failed to save user changes')
-    } finally {
-      this.hideLoading()
-    }
-  }
-
-  /**
-   * Send form reply
-   */
-  async sendFormReply(formId) {
-    try {
-      this.showLoading('Sending reply...')
-      // Mock send operation
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      this.showSuccess('Reply sent successfully')
-      this.closeModal()
-      this.loadFormsData()
-    } catch (error) {
-      console.error('Error sending reply:', error)
-      this.showError('Failed to send reply')
-    } finally {
-      this.hideLoading()
-    }
-  }
 }
 
 // Global instance
@@ -1506,6 +1668,3 @@ window.dashboard = null
 document.addEventListener('DOMContentLoaded', function() {
   window.dashboard = new AdminDashboard()
 })
-
-// Export for external use
-export { AdminDashboard }
