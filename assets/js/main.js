@@ -88,13 +88,9 @@ document.addEventListener('DOMContentLoaded', function() {
 // ===================================================================
 function initializeProfileButton() {
     const userName = localStorage.getItem('user_name');
-    if (userName && !isAdminPage()) {
+    if (userName) {
         addProfileButton(userName);
     }
-}
-
-function isAdminPage() {
-    return window.location.pathname.includes('/admin/');
 }
 
 function addProfileButton(name) {
@@ -118,7 +114,6 @@ function addProfileButton(name) {
         currentPath.includes('/resources/') ||
         currentPath.includes('/ai-tools/') ||
         currentPath.includes('/contact/') ||
-        currentPath.includes('/dashboard/') ||
         currentPath.includes('/settings/') ||
         currentPath.includes('/legal/')) {
         profilePath = '../profile/index.html';
@@ -169,9 +164,7 @@ function handleGlobalNameEntry(name) {
     localStorage.setItem('user_first_visit', 'false');
     
     // Add profile button
-    if (!isAdminPage()) {
-        addProfileButton(name);
-    }
+    addProfileButton(name);
 }
 
 (function() {

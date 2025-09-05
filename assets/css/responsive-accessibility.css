@@ -174,106 +174,6 @@
   }
 }
 
-/* Admin Panel - Mobile Responsive */
-@media (max-width: 767px) {
-  .admin-login-container {
-    padding: 1rem;
-    max-width: none;
-    width: 100%;
-  }
-  
-  .admin-login-form {
-    padding: 1.5rem;
-  }
-  
-  .admin-form-group {
-    margin-bottom: 1.5rem;
-  }
-  
-  .admin-input {
-    padding: 1rem;
-    font-size: var(--text-mobile-base);
-    min-height: 48px;
-  }
-  
-  .admin-keypad {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
-    margin: 1.5rem 0;
-  }
-  
-  .keypad-btn {
-    padding: 1rem;
-    font-size: var(--text-mobile-lg);
-    min-height: 56px;
-    border-radius: 8px;
-  }
-  
-  .admin-submit-btn {
-    padding: 1rem;
-    font-size: var(--text-mobile-base);
-    width: 100%;
-    min-height: 48px;
-  }
-}
-
-/* Admin Dashboard - Mobile Layout */
-@media (max-width: 767px) {
-  .admin-dashboard {
-    padding: 1rem;
-  }
-  
-  .dashboard-nav {
-    flex-direction: column;
-    gap: 0.5rem;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: white;
-    border-top: 1px solid #e2e8f0;
-    padding: 0.75rem;
-    z-index: 100;
-  }
-  
-  .nav-item {
-    flex: 1;
-    text-align: center;
-    padding: 0.75rem 0.5rem;
-    font-size: var(--text-mobile-xs);
-    border-radius: 6px;
-  }
-  
-  .dashboard-content {
-    margin-bottom: 80px; /* Space for bottom nav */
-    padding: 0;
-  }
-  
-  .dashboard-section {
-    padding: 1rem;
-  }
-  
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-  
-  .stat-card {
-    padding: 1rem;
-  }
-  
-  .data-table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .table-actions {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-}
 
 /* Route Protection - Mobile Responsive */
 @media (max-width: 767px) {
@@ -317,8 +217,7 @@
 
 /* Custom focus styles for interactive elements */
 .learntav-btn:focus,
-.auth-form__button:focus,
-.admin-submit-btn:focus {
+.auth-form__button:focus {
   outline: 2px solid var(--primary, #007bff);
   outline-offset: 2px;
   box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.25);
@@ -327,8 +226,7 @@
 .learntav-form__input:focus,
 .learntav-form__select:focus,
 .learntav-form__textarea:focus,
-.auth-form__input:focus,
-.admin-input:focus {
+.auth-form__input:focus {
   outline: 2px solid var(--primary, #007bff);
   border-color: var(--primary, #007bff);
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
@@ -380,32 +278,27 @@
 /* High Contrast Mode Support */
 @media (prefers-contrast: high) {
   .auth-modal,
-  .learntav-form,
-  .admin-login-container,
-  .dashboard-card {
+  .learntav-form {
     border: 2px solid;
     background: white;
     color: black;
   }
   
   .learntav-btn--primary,
-  .auth-form__button,
-  .admin-submit-btn {
+  .auth-form__button {
     background: black;
     color: white;
     border: 2px solid black;
   }
   
   .learntav-btn--primary:hover,
-  .auth-form__button:hover,
-  .admin-submit-btn:hover {
+  .auth-form__button:hover {
     background: white;
     color: black;
   }
   
   .learntav-form__input,
-  .auth-form__input,
-  .admin-input {
+  .auth-form__input {
     border: 2px solid black;
     background: white;
     color: black;
@@ -436,7 +329,6 @@
 @media (hover: none) and (pointer: coarse) {
   .learntav-btn,
   .auth-form__button,
-  .admin-submit-btn,
   .keypad-btn,
   .nav-item,
   .learntav-tab-btn {
@@ -445,8 +337,7 @@
   }
   
   .learntav-form__input,
-  .auth-form__input,
-  .admin-input {
+  .auth-form__input {
     min-height: 44px;
     padding: 0.75rem;
   }
@@ -480,25 +371,21 @@
   }
   
   .auth-modal,
-  .learntav-form-container,
-  .admin-login-container,
-  .dashboard-card {
+  .learntav-form-container {
     background: var(--bg-secondary);
     color: var(--text-primary);
     border-color: var(--border-color);
   }
   
   .learntav-form__input,
-  .auth-form__input,
-  .admin-input {
+  .auth-form__input {
     background: var(--bg-primary);
     color: var(--text-primary);
     border-color: var(--border-color);
   }
   
   .learntav-form__input::placeholder,
-  .auth-form__input::placeholder,
-  .admin-input::placeholder {
+  .auth-form__input::placeholder {
     color: var(--text-secondary);
   }
 }
@@ -506,17 +393,13 @@
 /* Print Styles */
 @media print {
   .auth-modal,
-  .admin-keypad,
-  .dashboard-nav,
   .user-profile-dropdown,
   .learntav-nav__toggle,
   .skip-link {
     display: none !important;
   }
   
-  .learntav-form,
-  .admin-login-form,
-  .dashboard-content {
+  .learntav-form {
     box-shadow: none;
     border: 1px solid #000;
   }
@@ -615,8 +498,7 @@
 
 /* Error message styling */
 .learntav-form__error,
-.auth-form__error,
-.admin-form__error {
+.auth-form__error {
   color: #dc3545;
   font-size: var(--text-mobile-sm);
   margin-top: 0.25rem;
@@ -626,8 +508,7 @@
 }
 
 .learntav-form__error::before,
-.auth-form__error::before,
-.admin-form__error::before {
+.auth-form__error::before {
   content: '⚠️';
   font-size: 1rem;
 }
@@ -651,15 +532,13 @@
 
 /* Loading states */
 .learntav-btn--loading,
-.auth-form__button--loading,
-.admin-submit-btn--loading {
+.auth-form__button--loading {
   position: relative;
   color: transparent;
 }
 
 .learntav-btn--loading::after,
-.auth-form__button--loading::after,
-.admin-submit-btn--loading::after {
+.auth-form__button--loading::after {
   content: '';
   position: absolute;
   top: 50%;

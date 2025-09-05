@@ -12,9 +12,6 @@
     display: block;
 }
 
-[data-auth-state="admin"] {
-    display: none;
-}
 
 /* Show authenticated elements when user is signed in */
 body.authenticated [data-auth-state="authenticated"] {
@@ -25,10 +22,6 @@ body.authenticated [data-auth-state="unauthenticated"] {
     display: none;
 }
 
-/* Show admin elements when user has admin role */
-body.authenticated.admin [data-auth-state="admin"] {
-    display: block;
-}
 
 /* User profile dropdown styling */
 .user-profile-dropdown {

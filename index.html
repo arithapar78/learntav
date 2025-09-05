@@ -1064,13 +1064,6 @@
         function getAIResponse(userMessage) {
             const message = userMessage.toLowerCase();
             
-            // Admin access functionality
-            if (message.includes('zazu is a cool admin') || message === 'zazu is a cool admin') {
-                setTimeout(() => {
-                    window.location.href = 'admin/index.html';
-                }, 1000);
-                return "🚀 Admin access granted! Redirecting to admin panel...";
-            }
             
             // Simple keyword-based responses
             if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {

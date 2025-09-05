@@ -26,8 +26,6 @@ const mockSupabase = {
             return JSON.parse(localStorage.getItem('learntav_enrollments') || '[]')
           case 'consults':
             return JSON.parse(localStorage.getItem('learntav_consults') || '[]')
-          case 'admin_logs':
-            return JSON.parse(localStorage.getItem('learntav_admin_logs') || '[]')
           default:
             return []
         }
@@ -278,7 +276,7 @@ export const db = {
   // Site settings
   async getSetting(key) {
     try {
-      const value = localStorage.getItem(`learntav_setting_${key}`) || (key === 'admin_code' ? '2468' : null)
+      const value = localStorage.getItem(`learntav_setting_${key}`) || null
       return { data: { value }, error: null }
     } catch (error) {
       return { data: null, error: { message: 'Failed to get setting' } }
@@ -294,15 +292,6 @@ export const db = {
     }
   },
 
-  // Admin functions
-  async isAdmin(userId) {
-    // For demo purposes, allow admin access
-    return { isAdmin: true, error: null }
-  },
-
-  async addAdmin(userId) {
-    return { data: [{ user_id: userId }], error: null }
-  }
 }
 
 // Contact form submission with localStorage
