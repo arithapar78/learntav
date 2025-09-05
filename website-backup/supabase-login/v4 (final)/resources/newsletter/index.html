@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Subscribe to the LearnTAV newsletter for weekly AI insights, tutorials, and industry updates delivered to your inbox.">
+    <title>Newsletter - LearnTAV Resources</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../assets/images/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    
+    <style>
+        .newsletter-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+        }
+        
+        .newsletter-hero .learntav-hero__title {
+            color: white;
+        }
+        
+        .newsletter-hero .learntav-hero__subtitle {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .newsletter-form {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .newsletter-form__group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .newsletter-form__input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .newsletter-form__input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .newsletter-form__input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .newsletter-form__button {
+            padding: 1rem 2rem;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-form__button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .newsletter-form__note {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .sample-newsletter {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .sample-newsletter__header {
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .sample-newsletter__title {
+            color: #667eea;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sample-newsletter__date {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        .sample-newsletter__section {
+            margin-bottom: 2rem;
+        }
+        
+        .sample-newsletter__section h4 {
+            color: #1f2937;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sample-newsletter__section h4::before {
+            content: "🔹";
+            margin-right: 0.5rem;
+        }
+        
+        .sample-newsletter__content {
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .sample-newsletter__list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sample-newsletter__list li {
+            padding: 0.5rem 0;
+            color: #374151;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .sample-newsletter__list li::before {
+            content: "→";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            margin-top: 0.1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="learntav-nav" id="mainNav">
+        <div class="learntav-container">
+            <div class="learntav-nav__container">
+                <a href="../../index.html" class="learntav-nav__logo">
+                    <span class="learntav-nav__logo-text">LearnTAV</span>
+                </a>
+                
+                <div class="learntav-nav__menu" id="navMenu">
+                    <a href="../../education/index.html" class="learntav-nav__link">Education</a>
+                    <a href="../../consulting/index.html" class="learntav-nav__link">Consulting</a>
+                    <a href="../../about/index.html" class="learntav-nav__link">About</a>
+                    <a href="../index.html" class="learntav-nav__link learntav-nav__link--active">Resources</a>
+                    <a href="../../ai-tools/index.html" class="learntav-nav__link">AI Tools</a>
+                    <a href="../../contact/index.html" class="learntav-nav__link">Contact</a>
+                </div>
+                
+                <div class="learntav-nav__actions">
+                    <a href="../../contact/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
+                    <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="newsletter-hero">
+        <div class="learntav-container">
+            <div class="learntav-hero__content">
+                <div class="learntav-hero__text" style="max-width: 100%; text-align: center;">
+                    <h1 class="learntav-hero__title">
+                        The AI Weekly
+                        <span class="learntav-hero__title-accent">Newsletter</span>
+                    </h1>
+                    <p class="learntav-hero__subtitle">
+                        Get the latest AI insights, practical tutorials, tool recommendations, and industry updates delivered to your inbox every Tuesday. Join 5,000+ professionals staying ahead of the AI curve.
+                    </p>
+                    
+                    <div class="newsletter-form">
+                        <form id="newsletterForm">
+                            <div class="newsletter-form__group">
+                                <input 
+                                    type="email" 
+                                    class="newsletter-form__input" 
+                                    placeholder="Enter your email address"
+                                    required
+                                >
+                                <button type="submit" class="newsletter-form__button">
+                                    Subscribe Free
+                                </button>
+                            </div>
+                            <p class="newsletter-form__note">
+                                ✓ No spam, ever. ✓ Unsubscribe anytime. ✓ Weekly delivery every Tuesday.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What You'll Get -->
+    <section class="learntav-services">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">What You'll Get</h2>
+                <p class="learntav-section-subtitle">
+                    Every Tuesday, receive actionable insights designed to advance your AI knowledge and skills
+                </p>
+            </div>
+            
+            <div class="learntav-grid learntav-grid--2-col">
+                <div class="learntav-service-card learntav-service-card--education">
+                    <div class="learntav-service-card__header">
+                        <div class="learntav-service-card__icon">🚀</div>
+                        <div class="learntav-service-card__category">Weekly Content</div>
+                    </div>
+                    <h3 class="learntav-service-card__title">Latest AI Developments</h3>
+                    <p class="learntav-service-card__description">
+                        Stay informed about breakthrough AI technologies, new tool releases, and industry trends that matter for your work and learning.
+                    </p>
+                    <ul class="learntav-service-card__features">
+                        <li>New AI tool launches and reviews</li>
+                        <li>Industry trend analysis</li>
+                        <li>Research breakthrough summaries</li>
+                        <li>Regulatory and policy updates</li>
+                    </ul>
+                </div>
+
+                <div class="learntav-service-card learntav-service-card--consulting">
+                    <div class="learntav-service-card__header">
+                        <div class="learntav-service-card__icon">💡</div>
+                        <div class="learntav-service-card__category">Weekly Content</div>
+                    </div>
+                    <h3 class="learntav-service-card__title">Practical Tutorials & Tips</h3>
+                    <p class="learntav-service-card__description">
+                        Step-by-step guides, workflow optimizations, and actionable advice you can implement immediately in your projects and daily work.
+                    </p>
+                    <ul class="learntav-service-card__features">
+                        <li>Quick-start tutorials</li>
+                        <li>Productivity hacks</li>
+                        <li>Workflow optimizations</li>
+                        <li>Best practice recommendations</li>
+                    </ul>
+                </div>
+
+                <div class="learntav-service-card learntav-service-card--education">
+                    <div class="learntav-service-card__header">
+                        <div class="learntav-service-card__icon">🎯</div>
+                        <div class="learntav-service-card__category">Exclusive Content</div>
+                    </div>
+                    <h3 class="learntav-service-card__title">Subscriber-Only Resources</h3>
+                    <p class="learntav-service-card__description">
+                        Access exclusive guides, early access to our tools, special discounts, and content not available anywhere else.
+                    </p>
+                    <ul class="learntav-service-card__features">
+                        <li>Exclusive downloadable guides</li>
+                        <li>Early access to new tools</li>
+                        <li>Special subscriber discounts</li>
+                        <li>Behind-the-scenes content</li>
+                    </ul>
+                </div>
+
+                <div class="learntav-service-card learntav-service-card--consulting">
+                    <div class="learntav-service-card__header">
+                        <div class="learntav-service-card__icon">🌱</div>
+                        <div class="learntav-service-card__category">Sustainability Focus</div>
+                    </div>
+                    <h3 class="learntav-service-card__title">Sustainable AI Practices</h3>
+                    <p class="learntav-service-card__description">
+                        Learn about AI's environmental impact and discover practical ways to use AI tools more sustainably and efficiently.
+                    </p>
+                    <ul class="learntav-service-card__features">
+                        <li>Carbon footprint insights</li>
+                        <li>Energy optimization tips</li>
+                        <li>Sustainable tool recommendations</li>
+                        <li>Green computing practices</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sample Newsletter -->
+    <section class="learntav-values">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">Sample Newsletter</h2>
+                <p class="learntav-section-subtitle">
+                    Here's what a typical issue looks like
+                </p>
+            </div>
+            
+            <div class="sample-newsletter">
+                <div class="sample-newsletter__header">
+                    <h3 class="sample-newsletter__title">The AI Weekly #47</h3>
+                    <div class="sample-newsletter__date">Tuesday, December 17, 2024</div>
+                </div>
+                
+                <div class="sample-newsletter__section">
+                    <h4>🚨 This Week's Big AI News</h4>
+                    <div class="sample-newsletter__content">
+                        OpenAI releases ChatGPT-5 with breakthrough reasoning capabilities, Google announces Gemini Pro's new multimodal features, and Meta opens sources their latest computer vision models. Here's what these developments mean for your daily AI usage.
+                    </div>
+                </div>
+                
+                <div class="sample-newsletter__section">
+                    <h4>🎯 Quick Tutorial: 5-Minute AI Setup</h4>
+                    <div class="sample-newsletter__content">
+                        This week, learn how to set up an automated customer service chatbot using Zapier and ChatGPT - no coding required. Perfect for small businesses looking to improve response times.
+                    </div>
+                </div>
+                
+                <div class="sample-newsletter__section">
+                    <h4>🛠️ Tool Spotlight</h4>
+                    <div class="sample-newsletter__content">
+                        <strong>Featured:</strong> Perplexity Pro's new research mode. We tested it against ChatGPT Plus for research tasks - here are the surprising results and when to use each tool.
+                    </div>
+                </div>
+                
+                <div class="sample-newsletter__section">
+                    <h4>🌱 Sustainability Corner</h4>
+                    <div class="sample-newsletter__content">
+                        Did you know that optimizing your prompts can reduce AI energy consumption by up to 40%? Here are three simple techniques you can use today.
+                    </div>
+                </div>
+                
+                <div class="sample-newsletter__section">
+                    <h4>📚 Community Resources</h4>
+                    <ul class="sample-newsletter__list">
+                        <li>Free Guide: "The Complete Prompt Engineering Handbook" (Subscriber exclusive)</li>
+                        <li>Case Study: How TechCorp reduced AI costs by 60% in 3 months</li>
+                        <li>Webinar Recording: "Building AI-Powered Workflows" (45 minutes)</li>
+                        <li>Community Highlight: Sarah's no-code inventory management app</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="learntav-services" style="background: #f9fafb;">
+        <div class="learntav-container">
+            <div class="learntav-section-header">
+                <h2 class="learntav-section-title">What Subscribers Say</h2>
+                <p class="learntav-section-subtitle">
+                    Join thousands of professionals getting ahead with AI
+                </p>
+            </div>
+            
+            <div class="learntav-grid learntav-grid--3-col">
+                <div class="learntav-testimonial-card">
+                    <div class="learntav-testimonial-card__quote">
+                        "The LearnTAV newsletter is the only AI newsletter I actually read every week. The tutorials are practical and the sustainability focus is unique and important."
+                    </div>
+                    <div class="learntav-testimonial-card__author">
+                        <div class="learntav-testimonial-card__avatar">JD</div>
+                        <div class="learntav-testimonial-card__info">
+                            <div class="learntav-testimonial-card__name">Jennifer Davis</div>
+                            <div class="learntav-testimonial-card__title">Product Manager, StartupCo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="learntav-testimonial-card">
+                    <div class="learntav-testimonial-card__quote">
+                        "I've implemented at least 5 workflow improvements from the newsletter this year. It's saved me hours every week and improved my team's productivity significantly."
+                    </div>
+                    <div class="learntav-testimonial-card__author">
+                        <div class="learntav-testimonial-card__avatar">MK</div>
+                        <div class="learntav-testimonial-card__info">
+                            <div class="learntav-testimonial-card__name">Mark Kumar</div>
+                            <div class="learntav-testimonial-card__title">Operations Director, TechFirm</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="learntav-testimonial-card">
+                    <div class="learntav-testimonial-card__quote">
+                        "As a healthcare administrator, I appreciate how LearnTAV explains AI applications in healthcare with a focus on compliance and patient safety. Invaluable resource."
+                    </div>
+                    <div class="learntav-testimonial-card__author">
+                        <div class="learntav-testimonial-card__avatar">LP</div>
+                        <div class="learntav-testimonial-card__info">
+                            <div class="learntav-testimonial-card__name">Dr. Lisa Park</div>
+                            <div class="learntav-testimonial-card__title">Healthcare Administrator</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="learntav-cta">
+        <div class="learntav-container">
+            <div class="learntav-cta__content">
+                <h2 class="learntav-cta__title">Ready to Stay Ahead of the AI Curve?</h2>
+                <p class="learntav-cta__description">
+                    Join 5,000+ professionals who trust LearnTAV to keep them informed about the latest AI developments and practical applications.
+                </p>
+                <div class="learntav-cta__actions">
+                    <div style="background: rgba(102, 126, 234, 0.1); padding: 2rem; border-radius: 12px; max-width: 500px; margin: 0 auto;">
+                        <form id="footerNewsletterForm">
+                            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                                <input 
+                                    type="email" 
+                                    style="flex: 1; padding: 0.75rem; border: 2px solid #667eea; border-radius: 8px; font-size: 1rem;"
+                                    placeholder="Enter your email address"
+                                    required
+                                >
+                                <button type="submit" class="learntav-btn learntav-btn--primary" style="white-space: nowrap;">
+                                    Subscribe Free
+                                </button>
+                            </div>
+                            <p style="font-size: 0.875rem; color: #6b7280; text-align: center; margin: 0;">
+                                Free forever • No spam • Unsubscribe anytime
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="learntav-footer">
+        <div class="learntav-container">
+            <div class="learntav-footer__main">
+                <div class="learntav-footer__brand">
+                    <div class="learntav-footer__logo">
+                        <span class="learntav-footer__logo-text">LearnTAV</span>
+                    </div>
+                    <p class="learntav-footer__description">
+                        Where Technology Meets Accessibility, Sustainability, and Real-World Impact.
+                    </p>
+                </div>
+
+                <div class="learntav-footer__links">
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">Services</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../../education/index.html">Education</a></li>
+                            <li><a href="../../consulting/index.html">Consulting</a></li>
+                            <li><a href="../../education/paths/index.html">Learning Paths</a></li>
+                            <li><a href="../../consulting/case-studies/index.html">Case Studies</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">Company</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../../about/index.html">About</a></li>
+                            <li><a href="../../about/team/index.html">Team</a></li>
+                            <li><a href="../../about/approach/index.html">Our Approach</a></li>
+                            <li><a href="../../contact/index.html">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">AI Tools</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../../ai-tools/index.html">Power Tracker</a></li>
+                            <li><a href="../../ai-tools/power-tracker/index.html">Learn More</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="learntav-footer__column">
+                        <h4 class="learntav-footer__column-title">Resources</h4>
+                        <ul class="learntav-footer__link-list">
+                            <li><a href="../guides/index.html">Free Guides</a></li>
+                            <li><a href="../tools/index.html">Tools</a></li>
+                            <li><a href="../blog/index.html">Blog</a></li>
+                            <li><a href="index.html">Newsletter</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="learntav-footer__bottom">
+                <div class="learntav-footer__legal">
+                    <p>&copy; 2024 LearnTAV. All rights reserved.</p>
+                    <div class="learntav-footer__legal-links">
+                        <a href="../../legal/privacy/index.html">Privacy Policy</a>
+                        <a href="../../legal/terms/index.html">Terms of Service</a>
+                        <a href="../../legal/cookies/index.html">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        // Handle newsletter form submissions
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for subscribing! You will receive a confirmation email shortly.');
+        });
+        
+        document.getElementById('footerNewsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for subscribing! You will receive a confirmation email shortly.');
+        });
+    </script>
+</body>
+</html>

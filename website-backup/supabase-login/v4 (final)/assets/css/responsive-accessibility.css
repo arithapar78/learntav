@@ -1,0 +1,762 @@
+/**
+ * Responsive Design & Accessibility Enhancements
+ * Comprehensive mobile-first design and accessibility features
+ */
+
+/* ===================================================================
+   RESPONSIVE DESIGN SYSTEM
+   ================================================================== */
+
+/* Mobile-first breakpoint system */
+:root {
+  --breakpoint-xs: 320px;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-xxl: 1400px;
+  
+  /* Responsive spacing */
+  --space-mobile-xs: 0.25rem;
+  --space-mobile-sm: 0.5rem;
+  --space-mobile-md: 1rem;
+  --space-mobile-lg: 1.5rem;
+  --space-mobile-xl: 2rem;
+  
+  /* Responsive typography */
+  --text-mobile-xs: 0.75rem;
+  --text-mobile-sm: 0.875rem;
+  --text-mobile-base: 1rem;
+  --text-mobile-lg: 1.125rem;
+  --text-mobile-xl: 1.25rem;
+  --text-mobile-2xl: 1.5rem;
+  --text-mobile-3xl: 1.875rem;
+}
+
+/* ===================================================================
+   AUTHENTICATION SYSTEM RESPONSIVE DESIGN
+   ================================================================== */
+
+/* Authentication Modal - Mobile Optimization */
+@media (max-width: 767px) {
+  .auth-modal {
+    padding: 1rem;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-width: none;
+    max-height: none;
+    overflow-y: auto;
+  }
+  
+  .auth-modal__header {
+    padding: 1rem 1rem 0.5rem 1rem;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .auth-modal__title {
+    font-size: var(--text-mobile-xl);
+  }
+  
+  .auth-modal__tabs {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .auth-tab {
+    flex: 1;
+    padding: 1rem;
+    border-radius: 0;
+    font-size: var(--text-mobile-sm);
+  }
+  
+  .auth-form {
+    padding: 1rem;
+  }
+  
+  .auth-form__group {
+    margin-bottom: 1.25rem;
+  }
+  
+  .auth-form__input,
+  .auth-form__select,
+  .auth-form__textarea {
+    padding: 1rem;
+    font-size: var(--text-mobile-base);
+    min-height: 48px; /* Touch target size */
+  }
+  
+  .auth-form__button {
+    padding: 1rem 1.5rem;
+    font-size: var(--text-mobile-base);
+    min-height: 48px;
+    width: 100%;
+  }
+}
+
+/* Password Validator - Mobile Responsive */
+@media (max-width: 767px) {
+  .password-strength-container {
+    position: relative;
+    margin-top: 0.75rem;
+  }
+  
+  .password-requirements {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    font-size: var(--text-mobile-sm);
+  }
+  
+  .requirement-item {
+    padding: 0.5rem;
+  }
+  
+  .strength-meter {
+    height: 6px;
+    margin: 0.75rem 0;
+  }
+}
+
+/* Contact Forms - Mobile Optimization */
+@media (max-width: 767px) {
+  .learntav-contact-tabs__nav {
+    flex-direction: column;
+    gap: 0;
+    border-radius: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .learntav-tab-btn {
+    flex: none;
+    min-width: auto;
+    white-space: nowrap;
+    padding: 1rem;
+    border-radius: 0;
+    font-size: var(--text-mobile-sm);
+  }
+  
+  .learntav-form__row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .learntav-form__input,
+  .learntav-form__select,
+  .learntav-form__textarea {
+    font-size: var(--text-mobile-base);
+    padding: 1rem;
+    min-height: 48px;
+  }
+  
+  .learntav-form__textarea {
+    min-height: 120px;
+  }
+  
+  .learntav-form__actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .learntav-btn--large {
+    padding: 1rem 1.5rem;
+    font-size: var(--text-mobile-base);
+    width: 100%;
+  }
+}
+
+/* Admin Panel - Mobile Responsive */
+@media (max-width: 767px) {
+  .admin-login-container {
+    padding: 1rem;
+    max-width: none;
+    width: 100%;
+  }
+  
+  .admin-login-form {
+    padding: 1.5rem;
+  }
+  
+  .admin-form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .admin-input {
+    padding: 1rem;
+    font-size: var(--text-mobile-base);
+    min-height: 48px;
+  }
+  
+  .admin-keypad {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+  }
+  
+  .keypad-btn {
+    padding: 1rem;
+    font-size: var(--text-mobile-lg);
+    min-height: 56px;
+    border-radius: 8px;
+  }
+  
+  .admin-submit-btn {
+    padding: 1rem;
+    font-size: var(--text-mobile-base);
+    width: 100%;
+    min-height: 48px;
+  }
+}
+
+/* Admin Dashboard - Mobile Layout */
+@media (max-width: 767px) {
+  .admin-dashboard {
+    padding: 1rem;
+  }
+  
+  .dashboard-nav {
+    flex-direction: column;
+    gap: 0.5rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #e2e8f0;
+    padding: 0.75rem;
+    z-index: 100;
+  }
+  
+  .nav-item {
+    flex: 1;
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    font-size: var(--text-mobile-xs);
+    border-radius: 6px;
+  }
+  
+  .dashboard-content {
+    margin-bottom: 80px; /* Space for bottom nav */
+    padding: 0;
+  }
+  
+  .dashboard-section {
+    padding: 1rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .stat-card {
+    padding: 1rem;
+  }
+  
+  .data-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .table-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Route Protection - Mobile Responsive */
+@media (max-width: 767px) {
+  .user-profile-dropdown {
+    position: fixed;
+    top: auto;
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+    z-index: 1000;
+  }
+  
+  .user-profile-menu {
+    position: relative;
+    width: 100%;
+    max-height: 50vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  }
+  
+  .user-profile-menu-item {
+    padding: 1rem 1.5rem;
+    font-size: var(--text-mobile-base);
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* ===================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ================================================================== */
+
+/* Focus Management */
+*:focus {
+  outline: 2px solid var(--primary, #007bff);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Custom focus styles for interactive elements */
+.learntav-btn:focus,
+.auth-form__button:focus,
+.admin-submit-btn:focus {
+  outline: 2px solid var(--primary, #007bff);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.25);
+}
+
+.learntav-form__input:focus,
+.learntav-form__select:focus,
+.learntav-form__textarea:focus,
+.auth-form__input:focus,
+.admin-input:focus {
+  outline: 2px solid var(--primary, #007bff);
+  border-color: var(--primary, #007bff);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* Skip Links */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--primary, #007bff);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 10000;
+  font-weight: 600;
+  transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Screen Reader Only Content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .auth-modal,
+  .learntav-form,
+  .admin-login-container,
+  .dashboard-card {
+    border: 2px solid;
+    background: white;
+    color: black;
+  }
+  
+  .learntav-btn--primary,
+  .auth-form__button,
+  .admin-submit-btn {
+    background: black;
+    color: white;
+    border: 2px solid black;
+  }
+  
+  .learntav-btn--primary:hover,
+  .auth-form__button:hover,
+  .admin-submit-btn:hover {
+    background: white;
+    color: black;
+  }
+  
+  .learntav-form__input,
+  .auth-form__input,
+  .admin-input {
+    border: 2px solid black;
+    background: white;
+    color: black;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .auth-modal,
+  .password-strength-container,
+  .learntav-form__success,
+  .learntav-form__error-global {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .learntav-btn,
+  .auth-form__button,
+  .admin-submit-btn,
+  .keypad-btn,
+  .nav-item,
+  .learntav-tab-btn {
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+  }
+  
+  .learntav-form__input,
+  .auth-form__input,
+  .admin-input {
+    min-height: 44px;
+    padding: 0.75rem;
+  }
+  
+  /* Remove hover effects on touch devices */
+  .learntav-btn:hover,
+  .auth-form__button:hover,
+  .keypad-btn:hover,
+  .nav-item:hover {
+    background-color: initial;
+    transform: none;
+  }
+  
+  /* Add active states instead */
+  .learntav-btn:active,
+  .auth-form__button:active,
+  .keypad-btn:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #1a202c;
+    --bg-secondary: #2d3748;
+    --text-primary: #f7fafc;
+    --text-secondary: #e2e8f0;
+    --border-color: #4a5568;
+  }
+  
+  .auth-modal,
+  .learntav-form-container,
+  .admin-login-container,
+  .dashboard-card {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+  }
+  
+  .learntav-form__input,
+  .auth-form__input,
+  .admin-input {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+  }
+  
+  .learntav-form__input::placeholder,
+  .auth-form__input::placeholder,
+  .admin-input::placeholder {
+    color: var(--text-secondary);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .auth-modal,
+  .admin-keypad,
+  .dashboard-nav,
+  .user-profile-dropdown,
+  .learntav-nav__toggle,
+  .skip-link {
+    display: none !important;
+  }
+  
+  .learntav-form,
+  .admin-login-form,
+  .dashboard-content {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .learntav-btn,
+  .auth-form__button {
+    border: 1px solid #000;
+    background: white;
+    color: black;
+  }
+}
+
+/* ===================================================================
+   MOBILE NAVIGATION ENHANCEMENTS
+   ================================================================== */
+
+@media (max-width: 767px) {
+  .learntav-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+  }
+  
+  .learntav-nav__menu {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 280px;
+    height: 100vh;
+    background: white;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease;
+    padding: 80px 0 0 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .learntav-nav__menu.active {
+    left: 0;
+  }
+  
+  .learntav-nav__link {
+    display: block;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: var(--text-mobile-base);
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .learntav-nav__link.nav-protected {
+    background: rgba(255, 193, 7, 0.1);
+    border-left: 4px solid #ffc107;
+  }
+  
+  .learntav-nav__actions {
+    order: -1;
+    margin-right: 1rem;
+  }
+  
+  .learntav-nav__toggle {
+    display: flex;
+    width: 44px;
+    height: 44px;
+    margin-left: auto;
+  }
+  
+  /* Mobile menu overlay */
+  .learntav-nav__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .learntav-nav__overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* ===================================================================
+   FORM ACCESSIBILITY ENHANCEMENTS
+   ================================================================== */
+
+/* Error message styling */
+.learntav-form__error,
+.auth-form__error,
+.admin-form__error {
+  color: #dc3545;
+  font-size: var(--text-mobile-sm);
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.learntav-form__error::before,
+.auth-form__error::before,
+.admin-form__error::before {
+  content: '⚠️';
+  font-size: 1rem;
+}
+
+/* Success indicators */
+.learntav-form__success-indicator,
+.auth-form__success-indicator {
+  color: #28a745;
+  font-size: var(--text-mobile-sm);
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.learntav-form__success-indicator::before,
+.auth-form__success-indicator::before {
+  content: '✅';
+  font-size: 1rem;
+}
+
+/* Loading states */
+.learntav-btn--loading,
+.auth-form__button--loading,
+.admin-submit-btn--loading {
+  position: relative;
+  color: transparent;
+}
+
+.learntav-btn--loading::after,
+.auth-form__button--loading::after,
+.admin-submit-btn--loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: button-spinner 1s linear infinite;
+}
+
+@keyframes button-spinner {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ===================================================================
+   UTILITY CLASSES
+   ================================================================== */
+
+/* Responsive visibility */
+.show-mobile { display: none; }
+.hide-mobile { display: block; }
+
+@media (max-width: 767px) {
+  .show-mobile { display: block; }
+  .hide-mobile { display: none; }
+}
+
+.show-tablet { display: none; }
+.hide-tablet { display: block; }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .show-tablet { display: block; }
+  .hide-tablet { display: none; }
+}
+
+.show-desktop { display: none; }
+.hide-desktop { display: block; }
+
+@media (min-width: 992px) {
+  .show-desktop { display: block; }
+  .hide-desktop { display: none; }
+}
+
+/* Responsive spacing */
+.p-mobile { padding: var(--space-mobile-md); }
+.m-mobile { margin: var(--space-mobile-md); }
+.gap-mobile { gap: var(--space-mobile-md); }
+
+@media (max-width: 767px) {
+  .p-mobile-sm { padding: var(--space-mobile-sm); }
+  .p-mobile-lg { padding: var(--space-mobile-lg); }
+  .m-mobile-sm { margin: var(--space-mobile-sm); }
+  .m-mobile-lg { margin: var(--space-mobile-lg); }
+}
+
+/* Touch-friendly sizing */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Accessible animations */
+.fade-in {
+  opacity: 0;
+  animation: fade-in 0.5s ease forwards;
+}
+
+@keyframes fade-in {
+  to { opacity: 1; }
+}
+
+.slide-up {
+  transform: translateY(20px);
+  opacity: 0;
+  animation: slide-up 0.5s ease forwards;
+}
+
+@keyframes slide-up {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .slide-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,1670 @@
+/**
+ * Admin Dashboard JavaScript - Standalone Version
+ * Handles dashboard functionality, data management, and UI interactions
+ * No ES module imports - all code is inline for local file testing
+ */
+
+// Mock Supabase client for local development
+const supabase = {
+  from: (table) => {
+    const getTableData = (tableName) => {
+      try {
+        switch (tableName) {
+          case 'users':
+            return JSON.parse(localStorage.getItem('learntav_users') || '[]')
+          case 'contact_submissions':
+            return JSON.parse(localStorage.getItem('learntav_contact_submissions') || '[]')
+          case 'enrollments':
+            return JSON.parse(localStorage.getItem('learntav_enrollments') || '[]')
+          case 'consults':
+            return JSON.parse(localStorage.getItem('learntav_consults') || '[]')
+          case 'admin_logs':
+            return JSON.parse(localStorage.getItem('learntav_admin_logs') || '[]')
+          default:
+            return []
+        }
+      } catch {
+        return []
+      }
+    }
+
+    return {
+      select: (columns = '*', options = {}) => {
+        const data = getTableData(table)
+        const count = data.length
+
+        return {
+          eq: (column, value) => ({
+            single: () => {
+              const item = data.find(row => row[column] === value)
+              return Promise.resolve({ data: item || null, error: item ? null : { message: 'Not found' } })
+            },
+            limit: (n) => Promise.resolve({ data: data.filter(row => row[column] === value).slice(0, n), error: null, count }),
+            range: (start, end) => Promise.resolve({ data: data.filter(row => row[column] === value).slice(start, end + 1), error: null, count }),
+            order: (orderColumn, orderOptions) => ({
+              limit: (n) => {
+                const filtered = data.filter(row => row[column] === value)
+                const sorted = orderOptions?.ascending === false 
+                  ? filtered.sort((a, b) => b[orderColumn] > a[orderColumn] ? 1 : -1)
+                  : filtered.sort((a, b) => a[orderColumn] > b[orderColumn] ? 1 : -1)
+                return Promise.resolve({ data: sorted.slice(0, n), error: null, count: filtered.length })
+              },
+              range: (start, end) => {
+                const filtered = data.filter(row => row[column] === value)
+                const sorted = orderOptions?.ascending === false 
+                  ? filtered.sort((a, b) => b[orderColumn] > a[orderColumn] ? 1 : -1)
+                  : filtered.sort((a, b) => a[orderColumn] > b[orderColumn] ? 1 : -1)
+                return Promise.resolve({ data: sorted.slice(start, end + 1), error: null, count: filtered.length })
+              }
+            })
+          }),
+          or: (conditions) => Promise.resolve({ data: data.slice(0, 50), error: null, count }),
+          gte: (column, value) => ({
+            order: (orderColumn, orderOptions) => ({
+              limit: (n) => {
+                const filtered = data.filter(row => new Date(row[column]) >= new Date(value))
+                const sorted = orderOptions?.ascending === false 
+                  ? filtered.sort((a, b) => b[orderColumn] > a[orderColumn] ? 1 : -1)
+                  : filtered.sort((a, b) => a[orderColumn] > b[orderColumn] ? 1 : -1)
+                return Promise.resolve({ data: sorted.slice(0, n), error: null, count: filtered.length })
+              }
+            })
+          }),
+          order: (orderColumn, orderOptions) => ({
+            limit: (n) => {
+              const sorted = orderOptions?.ascending === false 
+                ? [...data].sort((a, b) => b[orderColumn] > a[orderColumn] ? 1 : -1)
+                : [...data].sort((a, b) => a[orderColumn] > b[orderColumn] ? 1 : -1)
+              return Promise.resolve({ data: sorted.slice(0, n), error: null, count })
+            },
+            range: (start, end) => {
+              const sorted = orderOptions?.ascending === false 
+                ? [...data].sort((a, b) => b[orderColumn] > a[orderColumn] ? 1 : -1)
+                : [...data].sort((a, b) => a[orderColumn] > b[orderColumn] ? 1 : -1)
+              return Promise.resolve({ data: sorted.slice(start, end + 1), error: null, count })
+            }
+          }),
+          limit: (n) => Promise.resolve({ data: data.slice(0, n), error: null, count }),
+          range: (start, end) => Promise.resolve({ data: data.slice(start, end + 1), error: null, count })
+        }
+      },
+      insert: (insertData) => {
+        try {
+          const data = getTableData(table)
+          const newItems = Array.isArray(insertData) ? insertData : [insertData]
+          const itemsWithIds = newItems.map(item => ({
+            ...item,
+            id: item.id || Date.now().toString() + Math.random().toString(36).substr(2, 9),
+            created_at: item.created_at || new Date().toISOString()
+          }))
+          
+          data.push(...itemsWithIds)
+          localStorage.setItem(`learntav_${table}`, JSON.stringify(data))
+          return Promise.resolve({ data: itemsWithIds, error: null })
+        } catch (error) {
+          return Promise.resolve({ data: null, error: { message: 'Insert failed' } })
+        }
+      },
+      update: (updateData) => ({
+        eq: (column, value) => {
+          try {
+            const data = getTableData(table)
+            const index = data.findIndex(row => row[column] === value)
+            if (index !== -1) {
+              data[index] = { ...data[index], ...updateData, updated_at: new Date().toISOString() }
+              localStorage.setItem(`learntav_${table}`, JSON.stringify(data))
+              return Promise.resolve({ data: [data[index]], error: null })
+            }
+            return Promise.resolve({ data: null, error: { message: 'Not found' } })
+          } catch (error) {
+            return Promise.resolve({ data: null, error: { message: 'Update failed' } })
+          }
+        }
+      }),
+      upsert: (upsertData) => {
+        try {
+          const data = getTableData(table)
+          const items = Array.isArray(upsertData) ? upsertData : [upsertData]
+          
+          items.forEach(item => {
+            const existingIndex = data.findIndex(row => row.id === item.id)
+            if (existingIndex !== -1) {
+              data[existingIndex] = { ...data[existingIndex], ...item, updated_at: new Date().toISOString() }
+            } else {
+              data.push({ 
+                ...item, 
+                id: item.id || Date.now().toString() + Math.random().toString(36).substr(2, 9),
+                created_at: item.created_at || new Date().toISOString()
+              })
+            }
+          })
+          
+          localStorage.setItem(`learntav_${table}`, JSON.stringify(data))
+          return Promise.resolve({ data: items, error: null })
+        } catch (error) {
+          return Promise.resolve({ data: null, error: { message: 'Upsert failed' } })
+        }
+      }
+    }
+  },
+  auth: {
+    signInWithPassword: () => Promise.resolve({ data: null, error: { message: 'Local mode' } }),
+    signUp: () => Promise.resolve({ data: null, error: { message: 'Local mode' } }),
+    signOut: () => Promise.resolve({ error: null }),
+    getUser: () => Promise.resolve({ user: null, error: null }),
+    getSession: () => Promise.resolve({ session: null, error: null }),
+    onAuthStateChange: () => ({ unsubscribe: () => {} })
+  },
+  channel: () => ({
+    on: () => ({ subscribe: () => {} })
+  })
+}
+
+// Database helpers with localStorage fallback
+const db = {
+  // Users
+  async getUsers(options = {}) {
+    try {
+      const users = JSON.parse(localStorage.getItem('learntav_users') || '[]')
+      return { data: users.slice(0, options.limit || users.length), error: null, count: users.length }
+    } catch {
+      return { data: [], error: null, count: 0 }
+    }
+  },
+
+  async getUserById(id) {
+    try {
+      const users = JSON.parse(localStorage.getItem('learntav_users') || '[]')
+      const user = users.find(u => u.id === id)
+      return { data: user || null, error: user ? null : { message: 'User not found' } }
+    } catch {
+      return { data: null, error: { message: 'Error loading user' } }
+    }
+  },
+
+  // Enrollments
+  async getEnrollments(options = {}) {
+    try {
+      const enrollments = JSON.parse(localStorage.getItem('learntav_enrollments') || '[]')
+      return { data: enrollments.slice(0, options.limit || enrollments.length), error: null, count: enrollments.length }
+    } catch {
+      return { data: [], error: null, count: 0 }
+    }
+  },
+
+  async createEnrollment(enrollmentData) {
+    try {
+      const enrollments = JSON.parse(localStorage.getItem('learntav_enrollments') || '[]')
+      const newEnrollment = { ...enrollmentData, id: Date.now().toString(), created_at: new Date().toISOString() }
+      enrollments.push(newEnrollment)
+      localStorage.setItem('learntav_enrollments', JSON.stringify(enrollments))
+      return { data: [newEnrollment], error: null }
+    } catch (error) {
+      return { data: null, error: { message: 'Failed to save enrollment' } }
+    }
+  },
+
+  // Consults
+  async getConsults(options = {}) {
+    try {
+      const consults = JSON.parse(localStorage.getItem('learntav_consults') || '[]')
+      return { data: consults.slice(0, options.limit || consults.length), error: null, count: consults.length }
+    } catch {
+      return { data: [], error: null, count: 0 }
+    }
+  },
+
+  async createConsult(consultData) {
+    try {
+      const consults = JSON.parse(localStorage.getItem('learntav_consults') || '[]')
+      const newConsult = { ...consultData, id: Date.now().toString(), created_at: new Date().toISOString() }
+      consults.push(newConsult)
+      localStorage.setItem('learntav_consults', JSON.stringify(consults))
+      return { data: [newConsult], error: null }
+    } catch (error) {
+      return { data: null, error: { message: 'Failed to save consultation' } }
+    }
+  },
+
+  // Site settings
+  async getSetting(key) {
+    try {
+      const value = localStorage.getItem(`learntav_setting_${key}`) || (key === 'admin_code' ? '2468' : null)
+      return { data: { value }, error: null }
+    } catch (error) {
+      return { data: null, error: { message: 'Failed to get setting' } }
+    }
+  },
+
+  async setSetting(key, value) {
+    try {
+      localStorage.setItem(`learntav_setting_${key}`, value)
+      return { data: { key, value }, error: null }
+    } catch (error) {
+      return { data: null, error: { message: 'Failed to save setting' } }
+    }
+  },
+
+  // Admin functions
+  async isAdmin(userId) {
+    // For demo purposes, allow admin access
+    return { isAdmin: true, error: null }
+  },
+
+  async addAdmin(userId) {
+    return { data: [{ user_id: userId }], error: null }
+  }
+}
+
+// Check if we're using real Supabase or need configuration
+function isConfigured() {
+  return true // Local storage mode is always configured
+}
+
+// Auth state management
+let authState = {
+    user: null,
+    isAuthenticated: false,
+    isAdmin: false
+};
+
+// Authentication functions
+async function requireAdmin() {
+    try {
+        // Check if admin session exists (simple session management)
+        const adminSession = localStorage.getItem('adminAuthenticated');
+        const sessionTimestamp = localStorage.getItem('adminSessionTimestamp');
+        
+        if (!adminSession || adminSession !== 'true') {
+            window.location.href = './index.html';
+            return false;
+        }
+        
+        // Check if session is expired (24 hours)
+        if (sessionTimestamp) {
+            const sessionTime = parseInt(sessionTimestamp);
+            const currentTime = Date.now();
+            const sessionDuration = 24 * 60 * 60 * 1000; // 24 hours
+            
+            if (currentTime - sessionTime > sessionDuration) {
+                localStorage.removeItem('adminAuthenticated');
+                localStorage.removeItem('adminSessionTimestamp');
+                window.location.href = './index.html';
+                return false;
+            }
+        }
+
+        // Set auth state for simple admin
+        authState.user = { id: 'admin', email: 'admin@learntav.com' };
+        authState.isAuthenticated = true;
+        authState.isAdmin = true;
+        return true;
+    } catch (error) {
+        console.error('Auth check failed:', error);
+        localStorage.removeItem('adminAuthenticated');
+        localStorage.removeItem('adminSessionTimestamp');
+        window.location.href = './index.html';
+        return false;
+    }
+}
+
+async function signOut() {
+    try {
+        // Clear simple admin session
+        localStorage.removeItem('adminAuthenticated');
+        localStorage.removeItem('adminSessionTimestamp');
+        return Promise.resolve();
+    } catch (error) {
+        console.error('Sign out failed:', error);
+        return Promise.reject(error);
+    }
+}
+
+class AdminDashboard {
+  constructor() {
+    this.currentSection = 'overview'
+    this.currentPage = {
+      users: 1,
+      forms: 1
+    }
+    this.pageSize = 10
+    this.searchTerms = {
+      users: '',
+      forms: ''
+    }
+    this.filters = {
+      users: { role: '', status: '' },
+      forms: { type: '', status: '' }
+    }
+    this.init()
+  }
+  
+  /**
+   * Initialize dashboard
+   */
+  async init() {
+    // Check authentication
+    const isAuthenticated = await requireAdmin();
+    if (!isAuthenticated) {
+      return
+    }
+    
+    // Initialize sample data if needed
+    await this.initializeSampleData()
+    
+    this.bindEvents()
+    await this.loadAdminCode()
+    await this.loadDashboardData()
+    this.startAutoRefresh()
+    
+    // Update admin name
+    if (authState.user?.email) {
+      document.getElementById('admin-name').textContent = authState.user.email
+    }
+    
+    // Log dashboard access
+    await this.logAdminActivity('dashboard_access', { section: this.currentSection })
+  }
+
+  /**
+   * Initialize sample data for demonstration
+   */
+  async initializeSampleData() {
+    // Check if we already have data
+    const existingUsers = localStorage.getItem('learntav_users')
+    if (existingUsers && JSON.parse(existingUsers).length > 0) {
+      return // Data already exists
+    }
+
+    // Add sample users
+    const sampleUsers = [
+      {
+        id: 'user-1',
+        name: 'John Doe',
+        email: 'john@example.com',
+        created_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString() // 30 days ago
+      },
+      {
+        id: 'user-2',
+        name: 'Jane Smith',
+        email: 'jane@example.com',
+        created_at: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString() // 15 days ago
+      },
+      {
+        id: 'user-3',
+        name: 'Mike Johnson',
+        email: 'mike@example.com',
+        created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString() // 7 days ago
+      }
+    ]
+    localStorage.setItem('learntav_users', JSON.stringify(sampleUsers))
+
+    // Add sample contact submissions
+    const sampleSubmissions = [
+      {
+        id: 'form-1',
+        name: 'Alice Brown',
+        email: 'alice@example.com',
+        subject: 'Question about AI Education',
+        message: 'Hi, I am interested in learning more about your AI education programs. Could you provide more details?',
+        form_type: 'education',
+        status: 'unread',
+        submitted_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() // 2 days ago
+      },
+      {
+        id: 'form-2',
+        name: 'Bob Wilson',
+        email: 'bob@example.com',
+        subject: 'Consulting Services Inquiry',
+        message: 'We are looking for AI consulting services for our healthcare company. Please get in touch.',
+        form_type: 'consulting',
+        status: 'read',
+        submitted_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() // 5 days ago
+      }
+    ]
+    localStorage.setItem('learntav_contact_submissions', JSON.stringify(sampleSubmissions))
+
+    // Add sample admin logs
+    const sampleLogs = [
+      {
+        id: 'log-1',
+        user_id: 'admin',
+        action: 'admin_login',
+        details: { timestamp: new Date().toISOString() },
+        created_at: new Date().toISOString()
+      }
+    ]
+    localStorage.setItem('learntav_admin_logs', JSON.stringify(sampleLogs))
+  }
+
+  /**
+   * Log admin activity
+   */
+  async logAdminActivity(action, details = {}) {
+    try {
+      const logs = JSON.parse(localStorage.getItem('learntav_admin_logs') || '[]')
+      const newLog = {
+        id: Date.now().toString(),
+        user_id: authState.user?.id || 'admin',
+        action,
+        details,
+        created_at: new Date().toISOString()
+      }
+      logs.push(newLog)
+      
+      // Keep only last 100 logs
+      if (logs.length > 100) {
+        logs.splice(0, logs.length - 100)
+      }
+      
+      localStorage.setItem('learntav_admin_logs', JSON.stringify(logs))
+    } catch (error) {
+      console.error('Error logging admin activity:', error)
+    }
+  }
+  
+  /**
+   * Bind event listeners
+   */
+  bindEvents() {
+    // Navigation
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const section = e.currentTarget.dataset.section
+        this.switchSection(section)
+      })
+    })
+    
+    // Logout
+    document.getElementById('admin-logout').addEventListener('click', (e) => {
+      e.preventDefault()
+      this.handleLogout()
+    })
+    
+    // Profile dropdown
+    document.querySelector('.dropdown-toggle').addEventListener('click', (e) => {
+      e.stopPropagation()
+      document.querySelector('.dropdown-menu').classList.toggle('active')
+    })
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', () => {
+      document.querySelector('.dropdown-menu').classList.remove('active')
+    })
+    
+    // Quick actions
+    document.querySelectorAll('.action-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        const action = e.currentTarget.dataset.action
+        this.handleQuickAction(action)
+      })
+    })
+    
+    // Search functionality
+    document.getElementById('user-search').addEventListener('input', (e) => {
+      this.searchTerms.users = e.target.value
+      this.debounce(() => this.loadUsersData(), 300)
+    })
+    
+    document.getElementById('form-search').addEventListener('input', (e) => {
+      this.searchTerms.forms = e.target.value
+      this.debounce(() => this.loadFormsData(), 300)
+    })
+    
+    // Filter controls
+    document.getElementById('user-role-filter').addEventListener('change', (e) => {
+      this.filters.users.role = e.target.value
+      this.loadUsersData()
+    })
+    
+    document.getElementById('user-status-filter').addEventListener('change', (e) => {
+      this.filters.users.status = e.target.value
+      this.loadUsersData()
+    })
+    
+    document.getElementById('form-type-filter').addEventListener('change', (e) => {
+      this.filters.forms.type = e.target.value
+      this.loadFormsData()
+    })
+    
+    document.getElementById('form-status-filter').addEventListener('change', (e) => {
+      this.filters.forms.status = e.target.value
+      this.loadFormsData()
+    })
+    
+    // Export buttons
+    document.getElementById('export-users').addEventListener('click', () => {
+      this.exportData('users')
+    })
+    
+    document.getElementById('export-forms').addEventListener('click', () => {
+      this.exportData('forms')
+    })
+    
+    // Pagination
+    document.getElementById('users-prev').addEventListener('click', () => {
+      if (this.currentPage.users > 1) {
+        this.currentPage.users--
+        this.loadUsersData()
+      }
+    })
+    
+    document.getElementById('users-next').addEventListener('click', () => {
+      this.currentPage.users++
+      this.loadUsersData()
+    })
+    
+    document.getElementById('forms-prev').addEventListener('click', () => {
+      if (this.currentPage.forms > 1) {
+        this.currentPage.forms--
+        this.loadFormsData()
+      }
+    })
+    
+    document.getElementById('forms-next').addEventListener('click', () => {
+      this.currentPage.forms++
+      this.loadFormsData()
+    })
+    
+    // Settings
+    document.getElementById('save-settings').addEventListener('click', () => {
+      this.saveSettings()
+    })
+    
+    document.getElementById('reset-settings').addEventListener('click', () => {
+      this.resetSettings()
+    })
+    
+    // Refresh activity
+    document.getElementById('refresh-activity').addEventListener('click', () => {
+      this.loadRecentActivity()
+    })
+    
+    // Modal
+    document.getElementById('close-modal').addEventListener('click', () => {
+      this.closeModal()
+    })
+    
+    document.getElementById('modal-close-btn').addEventListener('click', () => {
+      this.closeModal()
+    })
+    
+    // Close modal on overlay click
+    document.getElementById('detail-modal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) {
+        this.closeModal()
+      }
+    })
+  }
+  
+  /**
+   * Switch dashboard section
+   */
+  async switchSection(sectionName) {
+    // Update navigation
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.classList.remove('active')
+    })
+    document.querySelector(`[data-section="${sectionName}"]`).classList.add('active')
+    
+    // Update sections
+    document.querySelectorAll('.dashboard-section').forEach(section => {
+      section.classList.remove('active')
+    })
+    document.getElementById(`${sectionName}-section`).classList.add('active')
+    
+    this.currentSection = sectionName
+    
+    // Load section-specific data
+    switch (sectionName) {
+      case 'users':
+        await this.loadUsersData()
+        break
+      case 'forms':
+        await this.loadFormsData()
+        break
+      case 'analytics':
+        await this.loadAnalyticsData()
+        break
+      case 'overview':
+        await this.loadDashboardData()
+        break
+    }
+    
+    // Log section access
+    await this.logAdminActivity('section_access', {
+      section: sectionName,
+      timestamp: new Date().toISOString()
+    })
+  }
+  
+  /**
+   * Load dashboard overview data
+   */
+  async loadDashboardData() {
+    this.showLoading('Loading dashboard data...')
+    
+    try {
+      // Load stats
+      await Promise.all([
+        this.loadUserStats(),
+        this.loadFormStats(),
+        this.loadEnrollmentStats(),
+        this.loadConsultStats(),
+        this.loadSystemStats(),
+        this.loadRecentActivity()
+      ])
+    } catch (error) {
+      console.error('Error loading dashboard data:', error)
+      this.showError('Failed to load dashboard data')
+    } finally {
+      this.hideLoading()
+    }
+  }
+
+  /**
+   * Load admin code from database
+   */
+  async loadAdminCode() {
+    try {
+      const { data, error } = await db.getSetting('admin_code')
+      
+      if (error) {
+        console.error('Error loading admin code:', error)
+        document.getElementById('admin-code-value').textContent = '2468'
+        return
+      }
+      
+      document.getElementById('admin-code-value').textContent = data?.value || '2468'
+    } catch (error) {
+      console.error('Error loading admin code:', error)
+      document.getElementById('admin-code-value').textContent = '2468'
+    }
+  }
+
+  /**
+   * Load enrollment statistics
+   */
+  async loadEnrollmentStats() {
+    try {
+      const { data: enrollments, error } = await db.getEnrollments({ limit: 100 })
+      
+      if (error) throw error
+      
+      // You can add enrollment-specific stats here
+      console.log('Enrollments loaded:', enrollments?.length || 0)
+      
+    } catch (error) {
+      console.error('Error loading enrollment stats:', error)
+    }
+  }
+
+  /**
+   * Load consult statistics
+   */
+  async loadConsultStats() {
+    try {
+      const { data: consults, error } = await db.getConsults({ limit: 100 })
+      
+      if (error) throw error
+      
+      // You can add consult-specific stats here
+      console.log('Consults loaded:', consults?.length || 0)
+      
+    } catch (error) {
+      console.error('Error loading consult stats:', error)
+    }
+  }
+  
+  /**
+   * Load user statistics
+   */
+  async loadUserStats() {
+    try {
+      // Get total users count
+      const { data: users, count: totalUsers, error: usersError } = await supabase
+        .from('users')
+        .select('*', { count: 'exact' })
+      
+      if (usersError && usersError.message !== 'Not found') throw usersError
+      
+      // Get users registered this month
+      const thisMonth = new Date()
+      thisMonth.setDate(1)
+      thisMonth.setHours(0, 0, 0, 0)
+      
+      const monthlyUsers = (users || []).filter(user =>
+        new Date(user.created_at) >= thisMonth
+      ).length
+      
+      // Update UI
+      document.getElementById('total-users-stat').textContent = totalUsers || 0
+      
+      // Show appropriate message based on data
+      if (totalUsers === 0) {
+        document.getElementById('users-change').textContent = 'No users registered yet'
+      } else if (monthlyUsers > 0) {
+        const changePercent = Math.round((monthlyUsers / Math.max(totalUsers - monthlyUsers, 1)) * 100)
+        document.getElementById('users-change').textContent = `+${changePercent}% this month`
+      } else {
+        document.getElementById('users-change').textContent = 'No new users this month'
+      }
+      
+    } catch (error) {
+      console.error('Error loading user stats:', error)
+      document.getElementById('total-users-stat').textContent = '0'
+      document.getElementById('users-change').textContent = 'Error loading data'
+    }
+  }
+  
+  /**
+   * Load form submission statistics
+   */
+  async loadFormStats() {
+    try {
+      // Get total submissions count
+      const { data: submissions, count: totalSubmissions, error: submissionsError } = await supabase
+        .from('contact_submissions')
+        .select('*', { count: 'exact' })
+      
+      if (submissionsError && submissionsError.message !== 'Not found') throw submissionsError
+      
+      // Get submissions from this week
+      const thisWeek = new Date()
+      thisWeek.setDate(thisWeek.getDate() - 7)
+      
+      const weeklySubmissions = (submissions || []).filter(submission =>
+        new Date(submission.submitted_at) >= thisWeek
+      ).length
+      
+      // Update UI
+      document.getElementById('total-submissions-stat').textContent = totalSubmissions || 0
+      
+      // Show appropriate message based on data
+      if (totalSubmissions === 0) {
+        document.getElementById('submissions-change').textContent = 'No submissions received yet'
+      } else if (weeklySubmissions > 0) {
+        const changePercent = Math.round((weeklySubmissions / Math.max(totalSubmissions - weeklySubmissions, 1)) * 100)
+        document.getElementById('submissions-change').textContent = `+${changePercent}% this week`
+      } else {
+        document.getElementById('submissions-change').textContent = 'No new submissions this week'
+      }
+      
+    } catch (error) {
+      console.error('Error loading form stats:', error)
+      document.getElementById('total-submissions-stat').textContent = '0'
+      document.getElementById('submissions-change').textContent = 'Error loading data'
+    }
+  }
+  
+  /**
+   * Load system statistics
+   */
+  async loadSystemStats() {
+    try {
+      // Show system status based on localStorage availability
+      const isStorageAvailable = typeof(Storage) !== "undefined"
+      const activeAdmins = localStorage.getItem('adminAuthenticated') === 'true' ? 1 : 0
+      
+      document.getElementById('active-sessions-stat').textContent = activeAdmins
+      document.getElementById('system-status-stat').textContent = isStorageAvailable ? 'Online' : 'Limited'
+      document.getElementById('status-change').textContent = isStorageAvailable ? 'Local storage active' : 'Storage unavailable'
+      
+    } catch (error) {
+      console.error('Error loading system stats:', error)
+      document.getElementById('active-sessions-stat').textContent = '0'
+      document.getElementById('system-status-stat').textContent = 'Error'
+      document.getElementById('status-change').textContent = 'System check failed'
+    }
+  }
+  
+  /**
+   * Load recent activity
+   */
+  async loadRecentActivity() {
+    try {
+      const activityList = document.getElementById('recent-activity-list')
+      
+      const { data: activities, error } = await supabase
+        .from('admin_logs')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(10)
+      
+      if (error && error.message !== 'Not found') throw error
+      
+      if (!activities || activities.length === 0) {
+        activityList.innerHTML = `
+          <div class="activity-item">
+            <div class="activity-icon">🔐</div>
+            <div class="activity-content">
+              <div class="activity-text">Administrator signed in</div>
+              <div class="activity-time">Just now</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon">📊</div>
+            <div class="activity-content">
+              <div class="activity-text">Dashboard accessed</div>
+              <div class="activity-time">2 minutes ago</div>
+            </div>
+          </div>
+        `
+        return
+      }
+      
+      const activityHTML = activities.map(activity => `
+        <div class="activity-item">
+          <div class="activity-icon">${this.getActivityIcon(activity.action)}</div>
+          <div class="activity-content">
+            <div class="activity-text">${this.getActivityText(activity)}</div>
+            <div class="activity-time">${this.formatTimeAgo(activity.created_at)}</div>
+          </div>
+        </div>
+      `).join('')
+      
+      activityList.innerHTML = activityHTML
+      
+    } catch (error) {
+      console.error('Error loading recent activity:', error)
+      document.getElementById('recent-activity-list').innerHTML =
+        '<div class="activity-error">Error loading recent activity</div>'
+    }
+  }
+  
+  /**
+   * Load users data
+   */
+  async loadUsersData() {
+    const tbody = document.getElementById('users-table-body')
+    tbody.innerHTML = '<tr class="loading-row"><td colspan="7"><div class="table-loading">Loading users...</div></td></tr>'
+    
+    try {
+      let query = supabase
+        .from('users')
+        .select('*', { count: 'exact' })
+        .order('created_at', { ascending: false })
+        .range(
+          (this.currentPage.users - 1) * this.pageSize,
+          this.currentPage.users * this.pageSize - 1
+        )
+      
+      // Apply filters
+      if (this.filters.users.role) {
+        query = query.eq('role', this.filters.users.role)
+      }
+      
+      // Apply search
+      if (this.searchTerms.users) {
+        query = query.or(`name.ilike.%${this.searchTerms.users}%,email.ilike.%${this.searchTerms.users}%`)
+      }
+      
+      const { data: users, error, count } = await query
+      
+      if (error && error.message !== 'Not found') throw error
+      
+      this.renderUsersTable(users)
+      this.updatePagination('users', count)
+      
+    } catch (error) {
+      console.error('Error loading users:', error)
+      tbody.innerHTML = '<tr class="error-row"><td colspan="7"><div class="table-error">Error loading user data</div></td></tr>'
+    }
+  }
+  
+  /**
+   * Render users table
+   */
+  renderUsersTable(users) {
+    const tbody = document.getElementById('users-table-body')
+    
+    if (!users || users.length === 0) {
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="7"><div class="table-empty">No users registered yet</div></td></tr>'
+      return
+    }
+    
+    const usersHTML = users.map(user => `
+      <tr>
+        <td><input type="checkbox" class="user-checkbox" data-id="${user.id}"></td>
+        <td>
+          <div class="user-info">
+            <div class="user-avatar">${user.name ? user.name.charAt(0).toUpperCase() : '?'}</div>
+            <div class="user-details">
+              <div class="user-name">${user.name || 'No name'}</div>
+              <div class="user-id">ID: ${user.id.substring(0, 8)}...</div>
+            </div>
+          </div>
+        </td>
+        <td>${user.email}</td>
+        <td>
+          <span class="role-badge role-user">User</span>
+        </td>
+        <td>
+          <span class="status-badge status-active">Active</span>
+        </td>
+        <td>${this.formatDate(user.created_at)}</td>
+        <td>
+          <div class="action-buttons">
+            <button class="action-btn view-btn" onclick="dashboard.viewUser('${user.id}')">👁️</button>
+            <button class="action-btn edit-btn" onclick="dashboard.editUser('${user.id}')">✏️</button>
+            <button class="action-btn delete-btn" onclick="dashboard.deleteUser('${user.id}')">🗑️</button>
+          </div>
+        </td>
+      </tr>
+    `).join('')
+    
+    tbody.innerHTML = usersHTML
+  }
+  
+  /**
+   * Load forms data
+   */
+  async loadFormsData() {
+    const tbody = document.getElementById('forms-table-body')
+    tbody.innerHTML = '<tr class="loading-row"><td colspan="7"><div class="table-loading">Loading form submissions...</div></td></tr>'
+    
+    try {
+      let query = supabase
+        .from('contact_submissions')
+        .select('*', { count: 'exact' })
+        .order('submitted_at', { ascending: false })
+        .range(
+          (this.currentPage.forms - 1) * this.pageSize,
+          this.currentPage.forms * this.pageSize - 1
+        )
+      
+      // Apply filters
+      if (this.filters.forms.type) {
+        query = query.eq('form_type', this.filters.forms.type)
+      }
+      
+      if (this.filters.forms.status) {
+        query = query.eq('status', this.filters.forms.status)
+      }
+      
+      // Apply search
+      if (this.searchTerms.forms) {
+        query = query.or(`name.ilike.%${this.searchTerms.forms}%,email.ilike.%${this.searchTerms.forms}%,subject.ilike.%${this.searchTerms.forms}%`)
+      }
+      
+      const { data: forms, error, count } = await query
+      
+      if (error && error.message !== 'Not found') throw error
+      
+      this.renderFormsTable(forms)
+      this.updatePagination('forms', count)
+      
+    } catch (error) {
+      console.error('Error loading forms:', error)
+      tbody.innerHTML = '<tr class="error-row"><td colspan="7"><div class="table-error">Error loading form data</div></td></tr>'
+    }
+  }
+  
+  /**
+   * Render forms table
+   */
+  renderFormsTable(forms) {
+    const tbody = document.getElementById('forms-table-body')
+    
+    if (!forms || forms.length === 0) {
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="7"><div class="table-empty">No form submissions received yet</div></td></tr>'
+      return
+    }
+    
+    const formsHTML = forms.map(form => `
+      <tr class="${form.status === 'unread' ? 'unread' : ''}">
+        <td><input type="checkbox" class="form-checkbox" data-id="${form.id}"></td>
+        <td>${form.name}</td>
+        <td>${form.email}</td>
+        <td>
+          <span class="form-type-badge type-${form.form_type || 'general'}">${this.formatFormType(form.form_type)}</span>
+        </td>
+        <td>
+          <span class="status-badge status-${form.status || 'unread'}">${form.status || 'unread'}</span>
+        </td>
+        <td>${this.formatDate(form.submitted_at)}</td>
+        <td>
+          <div class="action-buttons">
+            <button class="action-btn view-btn" onclick="dashboard.viewForm('${form.id}')">👁️</button>
+            <button class="action-btn reply-btn" onclick="dashboard.replyToForm('${form.id}')">↩️</button>
+            <button class="action-btn delete-btn" onclick="dashboard.deleteForm('${form.id}')">🗑️</button>
+          </div>
+        </td>
+      </tr>
+    `).join('')
+    
+    tbody.innerHTML = formsHTML
+  }
+  
+  /**
+   * Update pagination
+   */
+  updatePagination(type, totalCount) {
+    const totalPages = Math.ceil(totalCount / this.pageSize)
+    const currentPage = this.currentPage[type]
+    
+    document.getElementById(`${type}-page-info`).textContent = `Page ${currentPage} of ${totalPages}`
+    document.getElementById(`${type}-prev`).disabled = currentPage <= 1
+    document.getElementById(`${type}-next`).disabled = currentPage >= totalPages
+  }
+  
+  /**
+   * Handle quick actions
+   */
+  async handleQuickAction(action) {
+    this.showLoading(`Processing ${action}...`)
+    
+    try {
+      switch (action) {
+        case 'export-users':
+          await this.exportData('users')
+          break
+        case 'export-forms':
+          await this.exportData('forms')
+          break
+        case 'clear-logs':
+          await this.clearLogs()
+          break
+        case 'backup-data':
+          await this.backupData()
+          break
+      }
+    } catch (error) {
+      console.error(`Error handling ${action}:`, error)
+      this.showError(`Failed to ${action.replace('-', ' ')}`)
+    } finally {
+      this.hideLoading()
+    }
+  }
+  
+  /**
+   * Export data as CSV
+   */
+  async exportData(type) {
+    try {
+      let data, filename
+      
+      if (type === 'users') {
+        data = JSON.parse(localStorage.getItem('learntav_users') || '[]')
+        filename = `learntav-users-${new Date().toISOString().split('T')[0]}.csv`
+      } else if (type === 'forms') {
+        data = JSON.parse(localStorage.getItem('learntav_contact_submissions') || '[]')
+        filename = `learntav-forms-${new Date().toISOString().split('T')[0]}.csv`
+      }
+      
+      if (!data || data.length === 0) {
+        this.showError(`No ${type} data to export`)
+        return
+      }
+      
+      // Convert to CSV
+      const csv = this.convertToCSV(data)
+      
+      // Download
+      const blob = new Blob([csv], { type: 'text/csv' })
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = filename
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      window.URL.revokeObjectURL(url)
+      
+      this.showSuccess(`${type} data exported successfully`)
+      
+    } catch (error) {
+      console.error('Export error:', error)
+      this.showError('Failed to export data')
+    }
+  }
+  
+  /**
+   * Convert data to CSV format
+   */
+  convertToCSV(data) {
+    if (!data || data.length === 0) return ''
+    
+    const headers = Object.keys(data[0])
+    const csvRows = [headers.join(',')]
+    
+    data.forEach(row => {
+      const values = headers.map(header => {
+        const value = row[header]
+        return typeof value === 'string' && value.includes(',') ? `"${value}"` : value
+      })
+      csvRows.push(values.join(','))
+    })
+    
+    return csvRows.join('\n')
+  }
+  
+  /**
+   * View user details
+   */
+  async viewUser(userId) {
+    try {
+      const { data: user, error } = await db.getUserById(userId)
+      
+      if (error) throw error
+      
+      this.showModal('User Details', this.renderUserDetails(user))
+    } catch (error) {
+      console.error('Error viewing user:', error)
+      this.showError('Failed to load user details')
+    }
+  }
+  
+  /**
+   * View form details
+   */
+  async viewForm(formId) {
+    try {
+      const submissions = JSON.parse(localStorage.getItem('learntav_contact_submissions') || '[]')
+      const form = submissions.find(f => f.id === formId)
+      
+      if (!form) {
+        this.showError('Form submission not found')
+        return
+      }
+      
+      // Mark as read
+      form.status = 'read'
+      localStorage.setItem('learntav_contact_submissions', JSON.stringify(submissions))
+      
+      this.showModal('Form Submission Details', this.renderFormDetails(form))
+      
+      // Refresh forms data
+      if (this.currentSection === 'forms') {
+        this.loadFormsData()
+      }
+    } catch (error) {
+      console.error('Error viewing form:', error)
+      this.showError('Failed to load form details')
+    }
+  }
+  
+  /**
+   * Render user details
+   */
+  renderUserDetails(user) {
+    return `
+      <div class="detail-grid">
+        <div class="detail-section">
+          <h4>Basic Information</h4>
+          <div class="detail-item">
+            <label>Name:</label>
+            <span>${user.name || 'Not provided'}</span>
+          </div>
+          <div class="detail-item">
+            <label>Email:</label>
+            <span>${user.email}</span>
+          </div>
+          <div class="detail-item">
+            <label>Role:</label>
+            <span class="role-badge role-user">User</span>
+          </div>
+          <div class="detail-item">
+            <label>User ID:</label>
+            <span class="monospace">${user.id}</span>
+          </div>
+        </div>
+        
+        <div class="detail-section">
+          <h4>Account Information</h4>
+          <div class="detail-item">
+            <label>Created:</label>
+            <span>${this.formatDate(user.created_at)}</span>
+          </div>
+          <div class="detail-item">
+            <label>Updated:</label>
+            <span>${this.formatDate(user.updated_at || user.created_at)}</span>
+          </div>
+        </div>
+      </div>
+    `
+  }
+  
+  /**
+   * Render form details
+   */
+  renderFormDetails(form) {
+    return `
+      <div class="detail-grid">
+        <div class="detail-section">
+          <h4>Contact Information</h4>
+          <div class="detail-item">
+            <label>Name:</label>
+            <span>${form.name}</span>
+          </div>
+          <div class="detail-item">
+            <label>Email:</label>
+            <span>${form.email}</span>
+          </div>
+          <div class="detail-item">
+            <label>Form Type:</label>
+            <span class="form-type-badge type-${form.form_type || 'general'}">${this.formatFormType(form.form_type)}</span>
+          </div>
+        </div>
+        
+        <div class="detail-section">
+          <h4>Message</h4>
+          <div class="detail-item">
+            <label>Subject:</label>
+            <span>${form.subject || 'No subject'}</span>
+          </div>
+          <div class="detail-item message-content">
+            <label>Message:</label>
+            <div class="message-text">${form.message}</div>
+          </div>
+        </div>
+        
+        <div class="detail-section">
+          <h4>Metadata</h4>
+          <div class="detail-item">
+            <label>Submitted:</label>
+            <span>${this.formatDate(form.submitted_at)}</span>
+          </div>
+          <div class="detail-item">
+            <label>Status:</label>
+            <span class="status-badge status-${form.status || 'unread'}">${form.status || 'unread'}</span>
+          </div>
+          ${form.metadata ? `
+            <div class="detail-item">
+              <label>Metadata:</label>
+              <pre class="metadata-display">${JSON.stringify(form.metadata, null, 2)}</pre>
+            </div>
+          ` : ''}
+        </div>
+      </div>
+    `
+  }
+  
+  /**
+   * Handle logout
+   */
+  async handleLogout() {
+    if (confirm('Are you sure you want to sign out?')) {
+      try {
+        await this.logAdminActivity('admin_logout', {
+          timestamp: new Date().toISOString()
+        })
+        
+        await signOut()
+        window.location.href = './index.html'
+      } catch (error) {
+        console.error('Logout error:', error)
+        this.showError('Failed to sign out')
+      }
+    }
+  }
+  
+  /**
+   * Show modal
+   */
+  showModal(title, content, actionText = null, actionCallback = null) {
+    document.getElementById('modal-title').textContent = title
+    document.getElementById('modal-body').innerHTML = content
+    
+    const actionBtn = document.getElementById('modal-action-btn')
+    if (actionText && actionCallback) {
+      actionBtn.textContent = actionText
+      actionBtn.style.display = 'block'
+      actionBtn.onclick = actionCallback
+    } else {
+      actionBtn.style.display = 'none'
+    }
+    
+    document.getElementById('detail-modal').style.display = 'flex'
+    document.body.style.overflow = 'hidden'
+  }
+  
+  /**
+   * Close modal
+   */
+  closeModal() {
+    document.getElementById('detail-modal').style.display = 'none'
+    document.body.style.overflow = ''
+  }
+  
+  /**
+   * Show loading overlay
+   */
+  showLoading(message = 'Loading...') {
+    document.querySelector('.loading-text').textContent = message
+    document.getElementById('loading-overlay').style.display = 'flex'
+  }
+  
+  /**
+   * Hide loading overlay
+   */
+  hideLoading() {
+    document.getElementById('loading-overlay').style.display = 'none'
+  }
+  
+  /**
+   * Show success message
+   */
+  showSuccess(message) {
+    // Create toast notification
+    this.showToast(message, 'success')
+  }
+  
+  /**
+   * Show error message
+   */
+  showError(message) {
+    // Create toast notification
+    this.showToast(message, 'error')
+  }
+  
+  /**
+   * Show toast notification
+   */
+  showToast(message, type = 'info') {
+    const toast = document.createElement('div')
+    toast.className = `toast toast-${type}`
+    toast.innerHTML = `
+      <span class="toast-icon">${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
+      <span class="toast-message">${message}</span>
+      <button class="toast-close">&times;</button>
+    `
+    
+    document.body.appendChild(toast)
+    
+    // Show toast
+    setTimeout(() => toast.classList.add('show'), 100)
+    
+    // Auto hide
+    const autoHide = setTimeout(() => {
+      this.hideToast(toast)
+    }, 5000)
+    
+    // Manual close
+    toast.querySelector('.toast-close').addEventListener('click', () => {
+      clearTimeout(autoHide)
+      this.hideToast(toast)
+    })
+  }
+  
+  /**
+   * Hide toast notification
+   */
+  hideToast(toast) {
+    toast.classList.remove('show')
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.parentNode.removeChild(toast)
+      }
+    }, 300)
+  }
+  
+  /**
+   * Utility functions
+   */
+  debounce(func, wait) {
+    let timeout
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout)
+        func(...args)
+      }
+      clearTimeout(timeout)
+      timeout = setTimeout(later, wait)
+    }
+  }
+  
+  formatDate(dateString) {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  }
+  
+  formatTimeAgo(dateString) {
+    const now = new Date()
+    const date = new Date(dateString)
+    const diffInSeconds = Math.floor((now - date) / 1000)
+    
+    if (diffInSeconds < 60) return 'Just now'
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`
+    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`
+    return `${Math.floor(diffInSeconds / 86400)}d ago`
+  }
+  
+  formatFormType(type) {
+    const types = {
+      general: 'General',
+      consultation: 'Consultation',
+      education: 'Education',
+      consulting: 'Consulting',
+      partnerships: 'Partnerships'
+    }
+    return types[type] || 'General'
+  }
+  
+  getActivityIcon(action) {
+    const icons = {
+      admin_login: '🔐',
+      admin_logout: '🚪',
+      dashboard_access: '📊',
+      user_created: '👤',
+      form_submitted: '📝',
+      data_exported: '📁',
+      settings_changed: '⚙️'
+    }
+    return icons[action] || '📝'
+  }
+  
+  getActivityText(activity) {
+    const actions = {
+      admin_login: 'Administrator signed in',
+      admin_logout: 'Administrator signed out',
+      dashboard_access: `Accessed ${activity.details?.section || 'dashboard'}`,
+      user_created: 'New user registered',
+      form_submitted: 'Form submission received',
+      data_exported: 'Data exported',
+      settings_changed: 'Settings updated'
+    }
+    return actions[activity.action] || activity.action
+  }
+  
+  /**
+   * Start auto-refresh for real-time updates
+   */
+  startAutoRefresh() {
+    // Refresh every 30 seconds for overview section
+    setInterval(() => {
+      if (this.currentSection === 'overview') {
+        this.loadUserStats()
+        this.loadFormStats()
+        this.loadSystemStats()
+      }
+    }, 30000)
+    
+    // Refresh activity every 60 seconds
+    setInterval(() => {
+      if (this.currentSection === 'overview') {
+        this.loadRecentActivity()
+      }
+    }, 60000)
+  }
+
+  /**
+   * Load analytics data
+   */
+  async loadAnalyticsData() {
+    console.log('Loading analytics data...')
+    // Mock implementation for analytics
+  }
+
+  /**
+   * Save settings
+   */
+  async saveSettings() {
+    try {
+      this.showLoading('Saving settings...')
+      // Mock save operation
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      this.showSuccess('Settings saved successfully')
+    } catch (error) {
+      console.error('Error saving settings:', error)
+      this.showError('Failed to save settings')
+    } finally {
+      this.hideLoading()
+    }
+  }
+
+  /**
+   * Reset settings to default
+   */
+  async resetSettings() {
+    if (confirm('Are you sure you want to reset all settings to default?')) {
+      try {
+        this.showLoading('Resetting settings...')
+        // Mock reset operation
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        this.showSuccess('Settings reset to default')
+      } catch (error) {
+        console.error('Error resetting settings:', error)
+        this.showError('Failed to reset settings')
+      } finally {
+        this.hideLoading()
+      }
+    }
+  }
+
+  /**
+   * Clear logs
+   */
+  async clearLogs() {
+    if (confirm('Are you sure you want to clear all logs?')) {
+      try {
+        this.showLoading('Clearing logs...')
+        localStorage.removeItem('learntav_admin_logs')
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        this.showSuccess('Logs cleared successfully')
+        this.loadRecentActivity() // Refresh activity display
+      } catch (error) {
+        console.error('Error clearing logs:', error)
+        this.showError('Failed to clear logs')
+      } finally {
+        this.hideLoading()
+      }
+    }
+  }
+
+  /**
+   * Backup data
+   */
+  async backupData() {
+    try {
+      this.showLoading('Creating backup...')
+      
+      // Create backup object
+      const backupData = {
+        timestamp: new Date().toISOString(),
+        users: JSON.parse(localStorage.getItem('learntav_users') || '[]'),
+        contact_submissions: JSON.parse(localStorage.getItem('learntav_contact_submissions') || '[]'),
+        enrollments: JSON.parse(localStorage.getItem('learntav_enrollments') || '[]'),
+        consults: JSON.parse(localStorage.getItem('learntav_consults') || '[]'),
+        admin_logs: JSON.parse(localStorage.getItem('learntav_admin_logs') || '[]')
+      }
+      
+      // Convert to JSON and create download
+      const jsonStr = JSON.stringify(backupData, null, 2)
+      const blob = new Blob([jsonStr], { type: 'application/json' })
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `learntav-backup-${new Date().toISOString().split('T')[0]}.json`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      window.URL.revokeObjectURL(url)
+      
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      this.showSuccess('Backup created and downloaded successfully')
+    } catch (error) {
+      console.error('Error creating backup:', error)
+      this.showError('Failed to create backup')
+    } finally {
+      this.hideLoading()
+    }
+  }
+
+  /**
+   * Edit user - Mock implementation
+   */
+  async editUser(userId) {
+    this.showError('Edit user functionality not implemented in local mode')
+  }
+
+  /**
+   * Delete user - Mock implementation  
+   */
+  async deleteUser(userId) {
+    if (confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+      try {
+        this.showLoading('Deleting user...')
+        
+        // Remove user from localStorage
+        const users = JSON.parse(localStorage.getItem('learntav_users') || '[]')
+        const updatedUsers = users.filter(user => user.id !== userId)
+        localStorage.setItem('learntav_users', JSON.stringify(updatedUsers))
+        
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        this.showSuccess('User deleted successfully')
+        this.loadUsersData()
+      } catch (error) {
+        console.error('Error deleting user:', error)
+        this.showError('Failed to delete user')
+      } finally {
+        this.hideLoading()
+      }
+    }
+  }
+
+  /**
+   * Reply to form - Mock implementation
+   */
+  async replyToForm(formId) {
+    this.showError('Reply to form functionality not implemented in local mode')
+  }
+
+  /**
+   * Delete form submission
+   */
+  async deleteForm(formId) {
+    if (confirm('Are you sure you want to delete this form submission?')) {
+      try {
+        this.showLoading('Deleting form submission...')
+        
+        // Remove form from localStorage
+        const forms = JSON.parse(localStorage.getItem('learntav_contact_submissions') || '[]')
+        const updatedForms = forms.filter(form => form.id !== formId)
+        localStorage.setItem('learntav_contact_submissions', JSON.stringify(updatedForms))
+        
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        this.showSuccess('Form submission deleted successfully')
+        this.loadFormsData()
+      } catch (error) {
+        console.error('Error deleting form:', error)
+        this.showError('Failed to delete form submission')
+      } finally {
+        this.hideLoading()
+      }
+    }
+  }
+}
+
+// Global instance
+window.dashboard = null
+
+// Initialize dashboard when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  window.dashboard = new AdminDashboard()
+})
