@@ -295,11 +295,41 @@
   outline: none;
 }
 
+/* Password Input - Match Screenshot Styling */
+.admin-password-input {
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  background: #ffffff;
+  border: 3px solid #3b82f6;
+  border-radius: 16px;
+  color: #1f2937;
+  font-size: 1.125rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  outline: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.admin-password-input:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 4px rgba(59, 130, 246, 0.2),
+    0 4px 12px rgba(59, 130, 246, 0.15);
+  transform: translateY(-1px);
+}
+
+.admin-password-input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
 .admin-form-input:focus,
 .access-code-input:focus {
   border-color: #3b82f6;
   background: rgba(30, 41, 59, 0.95);
-  box-shadow: 
+  box-shadow:
     0 0 0 3px rgba(59, 130, 246, 0.2),
     0 4px 12px rgba(59, 130, 246, 0.3);
   transform: translateY(-2px);

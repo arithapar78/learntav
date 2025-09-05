@@ -5,12 +5,15 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-// Supabase configuration - using local storage for now
-const SUPABASE_URL = 'https://learntav-local.supabase.co' // Local development
-const SUPABASE_ANON_KEY = 'local-dev-key' // Local development key
+// Supabase configuration - REAL CREDENTIALS
+const SUPABASE_URL = 'https://egvyykzkiwqoswtkhjid.supabase.co'
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVndnl5a3praXdxb3N3dGtoamlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwMzIxNTksImV4cCI6MjA3MjYwODE1OX0.kDhV0Q1NtyGTSAI84hB1WLZVXiIo1GjWDaYcgz9TPyI'
 
-// Create mock Supabase client for local development
-export const supabase = {
+// Create real Supabase client
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+// Fallback mock for when tables don't exist yet
+const mockSupabase = {
   from: (table) => {
     const getTableData = (tableName) => {
       try {
@@ -337,7 +340,8 @@ export function subscribeToTable(table, callback) {
 
 // Check if we're using real Supabase or need configuration
 export function isConfigured() {
-  return true // Local storage mode is always configured
+  return SUPABASE_URL !== 'https://learntav-local.supabase.co' &&
+         SUPABASE_ANON_KEY !== 'local-dev-key'
 }
 
 export default supabase
