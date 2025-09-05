@@ -483,7 +483,6 @@ li {
   border-radius: var(--radius-lg);
   z-index: -1;
   opacity: 0;
-  animation: gradientRotate 3s linear infinite;
   transition: var(--transition-smooth);
   filter: blur(2px);
 }
@@ -500,7 +499,6 @@ li {
   border-radius: var(--radius-lg);
   z-index: -2;
   opacity: 0;
-  animation: gradientRotate 2s linear infinite reverse;
   transition: var(--transition-smooth);
   filter: blur(8px);
 }
@@ -891,7 +889,7 @@ li {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradientShift 4s ease-in-out infinite;
+  /* animation: gradientShift 4s ease-in-out infinite; */
   position: relative;
   display: inline-block;
   padding: var(--space-2) var(--space-4);
@@ -1738,13 +1736,13 @@ li {
   height: 200%;
   background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
   transform: rotate(45deg);
-  animation: shimmer 4s linear infinite;
+  /* animation: shimmer 4s linear infinite; */
 }
 
-@keyframes shimmer {
+/* @keyframes shimmer {
   0% { transform: translateX(-100%) rotate(45deg); }
   100% { transform: translateX(100%) rotate(45deg); }
-}
+} */
 
 /* Hero Section Enhanced Effects */
 .learntav-hero__title-accent {
@@ -1753,7 +1751,7 @@ li {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradientShift 3s ease-in-out infinite alternate;
+  /* animation: gradientShift 3s ease-in-out infinite alternate; */
 }
 
 /* ===================================================================
@@ -2275,7 +2273,7 @@ li {
   height: 200%;
   background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
   transform: rotate(45deg);
-  animation: shine 3s infinite;
+  /* animation: shine 3s infinite; */
 }
 
 .chatbot-toggle:hover {
@@ -2502,10 +2500,10 @@ li {
   }
 }
 
-@keyframes shine {
+/* @keyframes shine {
   0% { transform: translateX(-100%) rotate(45deg); }
   100% { transform: translateX(100%) rotate(45deg); }
-}
+} */
 
 @keyframes avatarGlow {
   0% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
@@ -2613,7 +2611,7 @@ li {
   height: 200%;
   background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
   transform: rotate(45deg);
-  animation: shine 3s infinite;
+  /* animation: shine 3s infinite; */
 }
 
 .contact-toggle:hover {

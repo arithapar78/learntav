@@ -564,13 +564,21 @@
                 </div>
             </div>
             <div class="contact-form-content">
-                <form id="quickContactForm" onsubmit="submitQuickContact(event)">
-                    <input type="text" class="contact-form-input" id="contactName" placeholder="Your Name" required>
-                    <input type="email" class="contact-form-input" id="contactEmail" placeholder="Your Email" required>
-                    <input type="text" class="contact-form-input" id="contactSubject" placeholder="Subject" required>
-                    <textarea class="contact-form-textarea" id="contactMessage" placeholder="Your message..." required></textarea>
-                    <button type="submit" class="contact-form-submit">Send Message</button>
-                </form>
+                <div class="quick-contact-info">
+                    <p style="text-align: center; color: var(--text-secondary); margin-bottom: 20px;">
+                        Ready to get in touch? Click below to open our contact form.
+                    </p>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScDGSWvZxlIJrUJwPAgY6dtsdVz2XdEIsl-7do2OhkvKb-8Ww/viewform?usp=dialog"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="contact-form-submit"
+                       style="display: block; text-decoration: none; text-align: center;">
+                        📧 Open Contact Form
+                    </a>
+                    <p style="text-align: center; color: var(--text-muted); font-size: 12px; margin-top: 10px;">
+                        Opens in a new window • Takes 2-3 minutes
+                    </p>
+                </div>
             </div>
         </div>
         <button class="contact-toggle" id="contactToggle" onclick="toggleContactForm()">
@@ -1240,26 +1248,7 @@
             }
         }
 
-        function submitQuickContact(event) {
-            event.preventDefault();
-            
-            const name = document.getElementById('contactName').value;
-            const email = document.getElementById('contactEmail').value;
-            const subject = document.getElementById('contactSubject').value;
-            const message = document.getElementById('contactMessage').value;
-            
-            // Show success message
-            showPopup('📧 Message Sent!',
-                '<p>Thank you, <strong>' + name + '</strong>! Your message has been received.</p>' +
-                '<p>We will get back to you at <strong>' + email + '</strong> within 24 hours.</p>' +
-                '<div style="text-align: center; margin-top: 20px;">' +
-                '<button class="learntav-btn learntav-btn--primary" onclick="closePopup()">Great!</button>' +
-                '</div>');
-            
-            // Reset form and close contact widget
-            document.getElementById('quickContactForm').reset();
-            toggleContactForm();
-        }
+        // Quick contact now redirects to Google Forms - no form handling needed
 
         // Enhanced escape key handling
         document.addEventListener('keydown', function(e) {

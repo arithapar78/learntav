@@ -577,68 +577,34 @@
             </div>
             
             <div class="enrollment-form">
-                <form id="enrollmentForm" class="learntav-form">
-                    <div class="learntav-grid learntav-grid--2-col">
-                        <div class="form-group">
-                            <label for="studentName" class="form-label">Student Name *</label>
-                            <input type="text" id="studentName" name="studentName" class="form-input" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="studentAge" class="form-label">Age *</label>
-                            <input type="number" id="studentAge" name="studentAge" class="form-input" min="6" max="18" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="parentName" class="form-label">Parent/Guardian Name *</label>
-                            <input type="text" id="parentName" name="parentName" class="form-input" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email" class="form-label">Email Address *</label>
-                            <input type="email" id="email" name="email" class="form-input" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phone" class="form-label">Phone Number *</label>
-                            <input type="tel" id="phone" name="phone" class="form-input" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="learningStyle" class="form-label">Preferred Learning Style *</label>
-                            <select id="learningStyle" name="learningStyle" class="form-select" required>
-                                <option value="">Select an option</option>
-                                <option value="group">Group Learning - $100 (4 sessions)</option>
-                                <option value="private-package">Private 1-on-1 - $200 (4 sessions)</option>
-                                <option value="private-hourly">Private Per Session - $75/hour</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="experience" class="form-label">Any previous experience with coding or AI tools?</label>
-                        <textarea id="experience" name="experience" class="form-input" rows="3" placeholder="Tell us about any prior experience (it's okay if none!)"></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="goals" class="form-label">What would you like to build? *</label>
-                        <textarea id="goals" name="goals" class="form-input" rows="3" placeholder="Describe your dream app or project ideas" required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="timing" class="form-label">Preferred timing (weekdays/weekends, morning/afternoon)</label>
-                        <input type="text" id="timing" name="timing" class="form-input" placeholder="e.g., Weekend mornings">
-                    </div>
-                    
+                <div class="vibe-enrollment-info">
+                    <p style="text-align: center; color: var(--text-secondary); margin-bottom: 30px; font-size: 18px;">
+                        Ready to join Vibe Coding 101? Click below to complete your enrollment.
+                    </p>
                     <div class="learntav-service-card__actions">
-                        <button type="submit" class="learntav-btn learntav-btn--primary learntav-btn--large">
-                            Enroll in Vibe Coding 101
-                        </button>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScDGSWvZxlIJrUJwPAgY6dtsdVz2XdEIsl-7do2OhkvKb-8Ww/viewform?usp=dialog"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="learntav-btn learntav-btn--primary learntav-btn--large"
+                           style="text-decoration: none;">
+                            🎓 Complete Vibe Coding 101 Enrollment
+                        </a>
                         <p style="text-align: center; color: #666; font-size: 14px; margin-top: 16px;">
-                            We'll contact you within 24 hours to confirm your spot and schedule
+                            Opens in a new window • Takes 5-7 minutes • We'll contact you within 24 hours
                         </p>
                     </div>
-                </form>
+                    
+                    <div style="background: #f8fafc; padding: 24px; border-radius: 12px; margin-top: 32px;">
+                        <h4 style="color: var(--primary); margin-bottom: 16px; text-align: center;">📋 What You'll Need to Provide:</h4>
+                        <ul style="color: var(--text-secondary); line-height: 1.6; margin: 0;">
+                            <li>Student name and age</li>
+                            <li>Parent/Guardian contact information</li>
+                            <li>Preferred learning style (Group, Private, or Per Session)</li>
+                            <li>Learning goals and app ideas</li>
+                            <li>Availability preferences</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -695,29 +661,7 @@
     <!-- JavaScript -->
     <script src="../../assets/js/main.js"></script>
     <script>
-        // Enrollment form handling
-        document.getElementById('enrollmentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-            
-            // Simple validation
-            if (!data.studentName || !data.email || !data.learningStyle || !data.goals) {
-                alert('Please fill in all required fields.');
-                return;
-            }
-            
-            // Show success message
-            alert('Thank you for enrolling in Vibe Coding 101! We\'ll contact you within 24 hours to confirm your spot and schedule your sessions.');
-            
-            // In a real application, you would send this data to a server
-            console.log('Enrollment data:', data);
-            
-            // Reset form
-            this.reset();
-        });
+        // Enrollment now redirects to Google Forms - no form handling needed
         
         // Smooth scrolling for enrollment link
         document.querySelectorAll('a[href="#enrollment"]').forEach(link => {
