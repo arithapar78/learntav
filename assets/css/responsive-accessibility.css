@@ -416,79 +416,57 @@
    MOBILE NAVIGATION ENHANCEMENTS
    ================================================================== */
 
-@media (max-width: 767px) {
+/* Use consistent breakpoint with main.css (768px) and defer to main.css for navigation */
+@media (max-width: 768px) {
+  /* Override only specific navigation enhancements, let main.css handle primary nav styles */
   .learntav-nav {
-    position: fixed;
+    position: sticky !important;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
   
-  .learntav-nav__menu {
-    position: fixed;
-    top: 0;
-    left: -100%;
-    width: 280px;
-    height: 100vh;
-    background: white;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-    transition: left 0.3s ease;
-    padding: 80px 0 0 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+  /* Ensure mobile toggle is always visible */
+  .learntav-nav__toggle {
+    display: flex !important;
+    width: 44px !important;
+    height: 44px !important;
+    margin-left: auto;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    z-index: 1001 !important;
+    gap: 4px !important;
+    padding: 0.5rem !important;
   }
   
-  .learntav-nav__menu.active {
-    left: 0;
+  .learntav-nav__toggle-line {
+    width: 20px !important;
+    height: 2px !important;
+    background: var(--text-secondary, #6b7280) !important;
+    transition: all 0.3s ease !important;
+    border-radius: 1px !important;
+    display: block !important;
   }
   
+  /* Ensure navigation items are properly spaced for touch */
   .learntav-nav__link {
-    display: block;
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid #f1f5f9;
-    font-size: var(--text-mobile-base);
     min-height: 48px;
     display: flex;
     align-items: center;
+    touch-action: manipulation;
   }
   
   .learntav-nav__link.nav-protected {
     background: rgba(255, 193, 7, 0.1);
     border-left: 4px solid #ffc107;
-  }
-  
-  .learntav-nav__actions {
-    order: -1;
-    margin-right: 1rem;
-  }
-  
-  .learntav-nav__toggle {
-    display: flex;
-    width: 44px;
-    height: 44px;
-    margin-left: auto;
-  }
-  
-  /* Mobile menu overlay */
-  .learntav-nav__overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-  }
-  
-  .learntav-nav__overlay.active {
-    opacity: 1;
-    visibility: visible;
   }
 }
 
