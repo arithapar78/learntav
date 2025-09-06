@@ -323,21 +323,14 @@ function handleGlobalNameEntry(name) {
         initializeAccessibility();
     });
 
-    // Enhanced Navigation Functionality with Mobile Touch Support
+    // Navigation Functionality
     function initializeNavigation() {
         const navToggle = document.getElementById('navToggle');
         const navMenu = document.getElementById('navMenu');
         const navLinks = document.querySelectorAll('.learntav-nav__link');
-        
-        // Mobile touch optimization
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let touchMoved = false;
 
         if (navToggle && navMenu) {
-            // Enhanced click/touch handler for toggle
-            navToggle.addEventListener('click', function(e) {
-                e.preventDefault();
+            navToggle.addEventListener('click', function() {
                 const isActive = navMenu.classList.contains('active');
                 
                 if (isActive) {
@@ -347,84 +340,21 @@ function handleGlobalNameEntry(name) {
                 }
             });
 
-            // Touch optimization for mobile toggle
-            navToggle.addEventListener('touchstart', function(e) {
-                touchStartX = e.touches[0].clientX;
-                touchStartY = e.touches[0].clientY;
-                touchMoved = false;
-            }, { passive: true });
-
-            navToggle.addEventListener('touchmove', function(e) {
-                const touchX = e.touches[0].clientX;
-                const touchY = e.touches[0].clientY;
-                const deltaX = Math.abs(touchX - touchStartX);
-                const deltaY = Math.abs(touchY - touchStartY);
-                
-                if (deltaX > 10 || deltaY > 10) {
-                    touchMoved = true;
-                }
-            }, { passive: true });
-
-            navToggle.addEventListener('touchend', function(e) {
-                if (!touchMoved) {
-                    e.preventDefault();
-                    const isActive = navMenu.classList.contains('active');
-                    if (isActive) {
-                        closeNavMenu();
-                    } else {
-                        openNavMenu();
-                    }
-                }
-            });
-
-            // Enhanced nav link interactions with mobile touch feedback
-            navLinks.forEach((link, index) => {
-                // Optimize touch action
-                link.style.touchAction = 'manipulation';
-                
-                link.addEventListener('click', (e) => {
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
                     if (window.innerWidth <= 768) {
-                        // Add visual feedback
-                        link.style.backgroundColor = 'rgba(37, 99, 235, 0.1)';
-                        setTimeout(() => {
-                            link.style.backgroundColor = '';
-                            closeNavMenu();
-                        }, 150);
+                        closeNavMenu();
                     }
                 });
-
-                // Touch feedback for mobile
-                link.addEventListener('touchstart', function() {
-                    if (window.innerWidth <= 768) {
-                        this.style.backgroundColor = 'rgba(37, 99, 235, 0.1)';
-                    }
-                }, { passive: true });
-
-                link.addEventListener('touchend', function() {
-                    if (window.innerWidth <= 768) {
-                        setTimeout(() => {
-                            this.style.backgroundColor = '';
-                        }, 200);
-                    }
-                }, { passive: true });
             });
 
-            // Enhanced click/touch outside to close
             document.addEventListener('click', function(e) {
                 if (window.innerWidth <= 768) {
-                    if (!e.target.closest('.learntav-nav') && navMenu.classList.contains('active')) {
+                    if (!e.target.closest('.learntav-nav')) {
                         closeNavMenu();
                     }
                 }
             });
-
-            document.addEventListener('touchstart', function(e) {
-                if (window.innerWidth <= 768) {
-                    if (!e.target.closest('.learntav-nav') && navMenu.classList.contains('active')) {
-                        closeNavMenu();
-                    }
-                }
-            }, { passive: true });
 
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && navMenu.classList.contains('active')) {
@@ -432,89 +362,9 @@ function handleGlobalNameEntry(name) {
                     navToggle.focus();
                 }
             });
-
-            // Prevent body scroll when mobile menu is open
-            function preventBodyScroll() {
-                if (window.innerWidth <= 768) {
-                    document.body.style.overflow = 'hidden';
-                    document.body.style.position = 'fixed';
-                    document.body.style.width = '100%';
-                    document.body.style.top = `-${window.scrollY}px`;
-                }
-            }
-            
-            function restoreBodyScroll() {
-                const scrollY = document.body.style.top;
-                document.body.style.overflow = '';
-                document.body.style.position = '';
-                document.body.style.width = '';
-                document.body.style.top = '';
-                
-                if (scrollY) {
-                    window.scrollTo(0, parseInt(scrollY || '0') * -1);
-                }
-            }
-
-            // Create mobile overlay
-            function createMobileOverlay() {
-                if (window.innerWidth <= 768) {
-                    const overlay = document.createElement('div');
-                    overlay.className = 'learntav-nav__overlay';
-                    overlay.style.cssText = `
-                        position: fixed;
-                        top: 0;
-                        left: 0;
-                        right: 0;
-                        bottom: 0;
-                        background: rgba(0, 0, 0, 0.5);
-                        z-index: 999;
-                        opacity: 0;
-                        visibility: hidden;
-                        transition: all 0.3s ease;
-                        backdrop-filter: blur(2px);
-                    `;
-                    
-                    overlay.addEventListener('click', closeNavMenu);
-                    overlay.addEventListener('touchstart', closeNavMenu, { passive: true });
-                    
-                    document.body.appendChild(overlay);
-                    
-                    setTimeout(() => {
-                        overlay.style.opacity = '1';
-                        overlay.style.visibility = 'visible';
-                    }, 10);
-                    
-                    return overlay;
-                }
-                return null;
-            }
-            
-            function removeMobileOverlay() {
-                const overlay = document.querySelector('.learntav-nav__overlay');
-                if (overlay) {
-                    overlay.style.opacity = '0';
-                    overlay.style.visibility = 'hidden';
-                    setTimeout(() => {
-                        overlay.remove();
-                    }, 300);
-                }
-            }
-
-            // Store references for enhanced functions
-            window.preventBodyScroll = preventBodyScroll;
-            window.restoreBodyScroll = restoreBodyScroll;
-            window.createMobileOverlay = createMobileOverlay;
-            window.removeMobileOverlay = removeMobileOverlay;
         }
 
         highlightActiveNavLink();
-        
-        // Add resize handler to close menu when switching to desktop
-        window.addEventListener('resize', debounce(() => {
-            if (window.innerWidth > 768 && navMenu && navMenu.classList.contains('active')) {
-                closeNavMenu();
-            }
-        }, 250));
     }
 
     function openNavMenu() {
@@ -530,19 +380,9 @@ function handleGlobalNameEntry(name) {
         lines[1].style.opacity = '0';
         lines[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
         
-        // Mobile enhancements
-        if (window.preventBodyScroll) window.preventBodyScroll();
-        if (window.createMobileOverlay) window.createMobileOverlay();
-        
         const firstLink = navMenu.querySelector('.learntav-nav__link');
-        if (firstLink && typeof firstLink.focus === 'function') {
-            setTimeout(() => {
-                try {
-                    firstLink.focus();
-                } catch (error) {
-                    console.log('Focus error handled:', error.message);
-                }
-            }, 100);
+        if (firstLink) {
+            setTimeout(() => firstLink.focus(), 100);
         }
     }
 
@@ -558,10 +398,6 @@ function handleGlobalNameEntry(name) {
         lines[0].style.transform = '';
         lines[1].style.opacity = '';
         lines[2].style.transform = '';
-        
-        // Mobile enhancements
-        if (window.restoreBodyScroll) window.restoreBodyScroll();
-        if (window.removeMobileOverlay) window.removeMobileOverlay();
     }
 
     function highlightActiveNavLink() {
@@ -1209,94 +1045,9 @@ function handleGlobalNameEntry(name) {
         }
     `;
     
-    // Mobile-specific enhancements
-    const mobileEnhancements = `
-        /* Mobile Touch Optimizations */
-        @media (max-width: 768px) {
-            .learntav-btn,
-            .learntav-nav__link,
-            .learntav-nav__toggle {
-                touch-action: manipulation;
-                -webkit-tap-highlight-color: transparent;
-                -webkit-touch-callout: none;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-            }
-            
-            .learntav-nav__menu {
-                -webkit-overflow-scrolling: touch;
-                overscroll-behavior: contain;
-            }
-            
-            .learntav-nav__overlay {
-                -webkit-backdrop-filter: blur(2px);
-                backdrop-filter: blur(2px);
-            }
-            
-            /* Prevent zoom on input focus */
-            input, textarea, select {
-                font-size: 16px !important;
-                transform: translateZ(0);
-            }
-            
-            /* Enhanced mobile button feedback */
-            .learntav-btn:active {
-                transform: scale(0.98) !important;
-                transition: transform 0.1s ease;
-            }
-            
-            .learntav-nav__link:active {
-                transform: scale(0.98);
-                transition: transform 0.1s ease;
-            }
-        }
-        
-        /* Prevent horizontal scrolling on mobile */
-        html, body {
-            overflow-x: hidden;
-        }
-        
-        /* Enhanced accessibility for mobile */
-        @media (hover: none) and (pointer: coarse) {
-            .learntav-btn:hover,
-            .learntav-nav__link:hover {
-                transform: none;
-            }
-        }
-    `;
-    
     const styleSheet = document.createElement('style');
-    styleSheet.textContent = additionalStyles + mobileEnhancements;
+    styleSheet.textContent = additionalStyles;
     document.head.appendChild(styleSheet);
-
-    // Initialize mobile-specific features
-    if (window.innerWidth <= 768) {
-        // Add viewport meta tag if missing
-        let viewport = document.querySelector('meta[name="viewport"]');
-        if (!viewport) {
-            viewport = document.createElement('meta');
-            viewport.name = 'viewport';
-            viewport.content = 'width=device-width, initial-scale=1.0, user-scalable=no';
-            document.head.appendChild(viewport);
-        }
-        
-        // Prevent default touch behaviors on navigation
-        const nav = document.querySelector('.learntav-nav');
-        if (nav) {
-            nav.addEventListener('touchmove', function(e) {
-                // Allow scrolling only in mobile menu
-                if (!e.target.closest('.learntav-nav__menu')) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
-        }
-        
-        // Optimize scroll performance
-        document.addEventListener('touchstart', function() {}, { passive: true });
-        document.addEventListener('touchmove', function() {}, { passive: true });
-    }
 
 })();
 

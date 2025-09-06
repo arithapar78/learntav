@@ -1,0 +1,401 @@
+/**
+ * Form Response Styling
+ * Success and error message styles for contact forms
+ */
+
+/* Success Messages */
+.learntav-form__success {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border: 1px solid #c3e6cb;
+  border-radius: 12px;
+  margin: 2rem 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.learntav-form__success.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.learntav-form__success-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  animation: bounce 0.6s ease-in-out;
+}
+
+.learntav-form__success-content h3 {
+  color: #155724;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.learntav-form__success-content p {
+  color: #155724;
+  margin: 0 0 1rem 0;
+  line-height: 1.5;
+}
+
+.learntav-form__success-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Error Messages */
+.learntav-form__error-global {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+  border: 1px solid #f5c6cb;
+  border-radius: 12px;
+  margin: 2rem 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.learntav-form__error-global.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.learntav-form__error-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  animation: shake 0.6s ease-in-out;
+}
+
+.learntav-form__error-content h3 {
+  color: #721c24;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.learntav-form__error-content p {
+  color: #721c24;
+  margin: 0 0 1rem 0;
+  line-height: 1.5;
+}
+
+.learntav-form__error-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Form Progress Bar */
+.learntav-form-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  z-index: 9999;
+  transition: width 0.3s ease;
+  opacity: 0;
+}
+
+.learntav-form-progress.visible {
+  opacity: 1;
+}
+
+/* Tab Indicator */
+.learntav-tab-indicator {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  height: 3px;
+  background: var(--primary);
+  transition: all 0.3s ease;
+  border-radius: 2px 2px 0 0;
+  opacity: 0;
+}
+
+.learntav-tab-indicator.active {
+  opacity: 1;
+}
+
+/* Enhanced Button States */
+.learntav-btn--loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.learntav-btn--loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.learntav-btn--loading .learntav-btn__text {
+  opacity: 0;
+}
+
+/* Form Validation States */
+.learntav-form__input.valid,
+.learntav-form__select.valid,
+.learntav-form__textarea.valid {
+  border-color: #28a745;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2328a745'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px 20px;
+  padding-right: 45px;
+}
+
+.learntav-form__input.invalid,
+.learntav-form__select.invalid,
+.learntav-form__textarea.invalid {
+  border-color: #dc3545;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23dc3545'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px 20px;
+  padding-right: 45px;
+}
+
+/* Toast Notifications */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 300px;
+  max-width: 500px;
+  padding: 16px 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  z-index: 10000;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toast.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.toast.toast-success {
+  border-left: 4px solid #28a745;
+}
+
+.toast.toast-error {
+  border-left: 4px solid #dc3545;
+}
+
+.toast.toast-info {
+  border-left: 4px solid #007bff;
+}
+
+.toast-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.toast-message {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #666;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.toast-close:hover {
+  background-color: #f5f5f5;
+}
+
+/* Scroll Reveal Animation */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-reveal:nth-child(2) { transition-delay: 0.1s; }
+.scroll-reveal:nth-child(3) { transition-delay: 0.2s; }
+.scroll-reveal:nth-child(4) { transition-delay: 0.3s; }
+.scroll-reveal:nth-child(5) { transition-delay: 0.4s; }
+
+/* Particle Animation for Contact Options */
+.learntav-contact-options.particles-active {
+  position: relative;
+  overflow: hidden;
+}
+
+.learntav-contact-options.particles-active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(var(--primary-rgb), 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 40%, rgba(var(--secondary-rgb), 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(var(--accent-rgb), 0.1) 0%, transparent 50%);
+  animation: float 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Animations */
+@keyframes bounce {
+  0%, 20%, 60%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  80% { transform: translateY(-5px); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  25% { transform: translateY(-20px) scale(1.02); }
+  50% { transform: translateY(-40px) scale(1.05); }
+  75% { transform: translateY(-20px) scale(1.02); }
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .learntav-form__success,
+  .learntav-form__error-global {
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  .learntav-form__success-actions,
+  .learntav-form__error-actions {
+    flex-direction: column;
+  }
+  
+  .toast {
+    min-width: 280px;
+    right: 10px;
+    left: 10px;
+    width: auto;
+  }
+  
+  .learntav-form__success-icon,
+  .learntav-form__error-icon {
+    font-size: 1.5rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .learntav-form__success {
+    background: linear-gradient(135deg, #1e4d2b 0%, #2d5a3d 100%);
+    border-color: #2d5a3d;
+  }
+  
+  .learntav-form__success-content h3,
+  .learntav-form__success-content p {
+    color: #a3d9a5;
+  }
+  
+  .learntav-form__error-global {
+    background: linear-gradient(135deg, #4d1e2a 0%, #5a2d39 100%);
+    border-color: #5a2d39;
+  }
+  
+  .learntav-form__error-content h3,
+  .learntav-form__error-content p {
+    color: #f5c6cb;
+  }
+  
+  .toast {
+    background: #2d3748;
+    color: #e2e8f0;
+  }
+  
+  .toast-message {
+    color: #e2e8f0;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .learntav-form__success {
+    background: #e6ffed;
+    border: 2px solid #28a745;
+  }
+  
+  .learntav-form__error-global {
+    background: #ffe6e6;
+    border: 2px solid #dc3545;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .learntav-form__success,
+  .learntav-form__error-global,
+  .scroll-reveal,
+  .toast,
+  .learntav-form-progress,
+  .learntav-tab-indicator {
+    transition: none;
+  }
+  
+  .learntav-form__success-icon,
+  .learntav-form__error-icon {
+    animation: none;
+  }
+  
+  .learntav-btn--loading::after {
+    animation: none;
+  }
+}

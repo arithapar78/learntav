@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage your LearnTAV profile information and preferences">
+    <title>Profile - LearnTAV</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/route-protection.css">
+    <link rel="stylesheet" href="../assets/css/responsive-accessibility.css">
+    
+    <style>
+        .profile {
+            min-height: 100vh;
+            padding-top: 80px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .profile-header {
+            background: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin: 0 0 0.5rem 0;
+        }
+        
+        .profile-subtitle {
+            color: #718096;
+            margin: 0;
+        }
+        
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .profile-avatar-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            margin: 0 auto 1rem auto;
+        }
+        
+        .profile-avatar-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-avatar-subtitle {
+            color: #718096;
+            font-size: 0.875rem;
+        }
+        
+        .avatar-upload-btn {
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: #f7fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+        }
+        
+        .avatar-upload-btn:hover {
+            border-color: #007bff;
+            background: #ebf8ff;
+            color: #007bff;
+        }
+        
+        .profile-main {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-section {
+            margin-bottom: 2rem;
+        }
+        
+        .profile-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f7fafc;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: #374151;
+            font-size: 0.875rem;
+        }
+        
+        .form-input {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+        
+        .form-input:disabled {
+            background: #f9fafb;
+            color: #6b7280;
+            cursor: not-allowed;
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1rem;
+            padding-right: 3rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #f7fafc;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e5e7eb;
+            color: #374151;
+        }
+        
+        .btn-outline:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
+        }
+        
+        .success-message {
+            background: #d1fae5;
+            border: 1px solid #34d399;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        .error-message {
+            background: #fee2e2;
+            border: 1px solid #f87171;
+            color: #991b1b;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-content {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e0;
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #007bff;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .settings-group {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .settings-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="learntav-nav" id="mainNav">
+        <div class="learntav-container">
+            <div class="learntav-nav__container">
+                <a href="../index.html" class="learntav-nav__logo">
+                    <span class="learntav-nav__logo-text">LearnTAV</span>
+                </a>
+                
+                <div class="learntav-nav__menu" id="navMenu">
+                    <a href="../education/index.html" class="learntav-nav__link">Education</a>
+                    <a href="../consulting/index.html" class="learntav-nav__link">Consulting</a>
+                    <a href="../about/index.html" class="learntav-nav__link">About</a>
+                    <a href="../resources/index.html" class="learntav-nav__link">Resources</a>
+                    <a href="../ai-tools/index.html" class="learntav-nav__link">AI Tools</a>
+                    <a href="../contact/index.html" class="learntav-nav__link">Contact</a>
+                </div>
+                
+                <div class="learntav-nav__actions">
+                    <!-- Navigation Actions -->
+                    <!-- Sign In Button - shown when user is not signed in -->
+                    <button id="sign-in-btn" class="learntav-btn learntav-btn--outline" onclick="showNameEntryPopup()" style="display: none;">
+                        👤 Sign In
+                    </button>
+                    
+                    <!-- Profile Dropdown - shown when user is signed in -->
+                    <div id="profile-dropdown" class="profile-dropdown" style="display: none;">
+                        <button class="profile-btn" onclick="toggleProfileDropdown()">
+                            👤 <span id="user-name-display">Name</span> ▼
+                        </button>
+                        <div class="profile-dropdown-menu" id="profile-menu">
+                            <a href="index.html">📱 Profile</a>
+                            <button onclick="signOut()">🚪 Sign Out</button>
+                        </div>
+                    </div>
+                    
+                    <a href="../ai-tools/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
+                    
+                    <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Profile Content -->
+    <main class="profile">
+        <div class="profile-header">
+            <div class="learntav-container">
+                <h1 class="profile-title">Profile & Settings</h1>
+                <p class="profile-subtitle">Manage your account information, preferences, and settings</p>
+            </div>
+        </div>
+
+        <div class="learntav-container">
+            <!-- Success/Error Messages -->
+            <div id="success-message" class="success-message">
+                <strong>✓ Success!</strong> Your profile has been updated successfully.
+            </div>
+            <div id="error-message" class="error-message">
+                <strong>⚠ Error!</strong> <span id="error-text">There was an error updating your profile.</span>
+            </div>
+
+            <div class="profile-content">
+                <!-- Sidebar -->
+                <div class="profile-sidebar">
+                    <div class="profile-avatar-card">
+                        <div class="profile-avatar" id="profile-avatar">
+                            👤
+                        </div>
+                        <div class="profile-avatar-text" id="profile-display-name">
+                            Loading...
+                        </div>
+                        <div class="profile-avatar-subtitle" id="profile-display-email">
+                            Loading...
+                        </div>
+                        <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+                        <button class="avatar-upload-btn" onclick="document.getElementById('avatar-upload').click()">
+                            📷 Change Avatar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="profile-main">
+                    <form id="profile-form">
+                        <!-- Personal Information -->
+                        <div class="profile-section">
+                            <h2 class="section-title">Personal Information</h2>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="first-name" class="form-label">First Name</label>
+                                    <input type="text" id="first-name" name="firstName" class="form-input" placeholder="Enter your first name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-name" class="form-label">Last Name</label>
+                                    <input type="text" id="last-name" name="lastName" class="form-input" placeholder="Enter your last name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com" required disabled>
+                                    <small style="color: #6b7280; font-size: 0.75rem;">Email cannot be changed. Contact support if needed.</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email-visibility" class="form-label">Email Visibility</label>
+                                    <select id="email-visibility" name="emailVisibility" class="form-input form-select">
+                                        <option value="private">Keep email private</option>
+                                        <option value="visible">Show email to others</option>
+                                    </select>
+                                    <small style="color: #6b7280; font-size: 0.75rem;">Choose whether others can see your email address</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">Phone Number (Optional)</label>
+                                    <input type="tel" id="phone" name="phone" class="form-input" placeholder="+1 (555) 123-4567">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Professional Information -->
+                        <div class="profile-section">
+                            <h2 class="section-title">Professional Information</h2>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="company" class="form-label">Company/Organization</label>
+                                    <input type="text" id="company" name="company" class="form-input" placeholder="Your company name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="job-title" class="form-label">Job Title</label>
+                                    <input type="text" id="job-title" name="jobTitle" class="form-input" placeholder="Your job title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="industry" class="form-label">Industry</label>
+                                    <select id="industry" name="industry" class="form-input form-select">
+                                        <option value="">Select your industry</option>
+                                        <option value="technology">Technology</option>
+                                        <option value="healthcare">Healthcare</option>
+                                        <option value="finance">Finance</option>
+                                        <option value="education">Education</option>
+                                        <option value="consulting">Consulting</option>
+                                        <option value="manufacturing">Manufacturing</option>
+                                        <option value="retail">Retail</option>
+                                        <option value="non-profit">Non-profit</option>
+                                        <option value="government">Government</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="experience-level" class="form-label">AI Experience Level</label>
+                                    <select id="experience-level" name="experienceLevel" class="form-input form-select">
+                                        <option value="">Select your level</option>
+                                        <option value="beginner">Beginner - New to AI</option>
+                                        <option value="intermediate">Intermediate - Some AI experience</option>
+                                        <option value="advanced">Advanced - Experienced with AI</option>
+                                        <option value="expert">Expert - AI professional</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Learning Preferences -->
+                        <div class="profile-section">
+                            <h2 class="section-title">Learning Preferences</h2>
+                            <div class="form-grid">
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label for="learning-goals" class="form-label">Learning Goals</label>
+                                    <textarea id="learning-goals" name="learningGoals" class="form-input form-textarea" placeholder="Tell us about your AI learning goals and what you hope to achieve..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="preferred-topics" class="form-label">Preferred Topics</label>
+                                    <select id="preferred-topics" name="preferredTopics" class="form-input form-select" multiple>
+                                        <option value="app-development">App Development</option>
+                                        <option value="ai-integration">AI Integration</option>
+                                        <option value="sustainability">Environmental Sustainability</option>
+                                        <option value="healthcare-ai">Healthcare AI</option>
+                                        <option value="productivity">Productivity Tools</option>
+                                        <option value="business-automation">Business Automation</option>
+                                    </select>
+                                    <small style="color: #6b7280; font-size: 0.75rem;">Hold Ctrl (Cmd on Mac) to select multiple topics</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="communication-preference" class="form-label">Communication Preference</label>
+                                    <select id="communication-preference" name="communicationPreference" class="form-input form-select">
+                                        <option value="email">Email updates</option>
+                                        <option value="sms">SMS notifications</option>
+                                        <option value="both">Both email and SMS</option>
+                                        <option value="minimal">Minimal communication</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Settings Section -->
+                        <div class="profile-section">
+                            <h2 class="section-title">Account Settings</h2>
+                            
+                            <!-- Notifications -->
+                            <div class="settings-group" style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #f3f4f6;">
+                                <h3 style="font-size: 1.125rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Notifications</h3>
+                                <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem;">Choose how you want to receive updates</p>
+                                
+                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0;">
+                                    <div>
+                                        <div style="font-weight: 500; color: #1f2937; margin-bottom: 0.25rem;">Email Notifications</div>
+                                        <div style="color: #6b7280; font-size: 0.875rem;">Receive course updates and newsletters</div>
+                                    </div>
+                                    <label class="toggle-switch" style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                                        <input type="checkbox" id="email-notifications" checked style="opacity: 0; width: 0; height: 0;">
+                                        <span class="toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #007bff; transition: 0.3s; border-radius: 24px;"></span>
+                                    </label>
+                                </div>
+
+                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0;">
+                                    <div>
+                                        <div style="font-weight: 500; color: #1f2937; margin-bottom: 0.25rem;">Marketing Communications</div>
+                                        <div style="color: #6b7280; font-size: 0.875rem;">Special offers and product updates</div>
+                                    </div>
+                                    <label class="toggle-switch" style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                                        <input type="checkbox" id="marketing-notifications" style="opacity: 0; width: 0; height: 0;">
+                                        <span class="toggle-slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e0; transition: 0.3s; border-radius: 24px;"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Privacy -->
+                            <div class="settings-group" style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #f3f4f6;">
+                                <h3 style="font-size: 1.125rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Privacy</h3>
+                                <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem;">Control your privacy preferences</p>
+                                
+                                <div class="form-group">
+                                    <label for="profile-visibility" class="form-label">Profile Visibility</label>
+                                    <select id="profile-visibility" name="profileVisibility" class="form-input form-select">
+                                        <option value="private">Private (Only me)</option>
+                                        <option value="instructors">LearnTAV Instructors</option>
+                                        <option value="students">Other Students</option>
+                                        <option value="public">Public</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Learning Preferences -->
+                            <div class="settings-group" style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #f3f4f6;">
+                                <h3 style="font-size: 1.125rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Learning Preferences</h3>
+                                <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem;">Customize your learning experience</p>
+                                
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="theme-preference" class="form-label">Theme</label>
+                                        <select id="theme-preference" name="themePreference" class="form-input form-select">
+                                            <option value="light">Light Theme</option>
+                                            <option value="dark">Dark Theme (Coming Soon)</option>
+                                            <option value="auto">Auto (System)</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="learning-reminder-time" class="form-label">Daily Learning Reminder</label>
+                                        <input type="time" id="learning-reminder-time" name="learningReminderTime" class="form-input" value="18:00">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Security -->
+                            <div class="settings-group">
+                                <h3 style="font-size: 1.125rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Security</h3>
+                                <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem;">Manage your account security</p>
+                                
+                                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                    <button type="button" class="btn btn-outline" id="change-password-btn">
+                                        🔑 Change Password
+                                    </button>
+                                    <button type="button" class="btn btn-outline" id="setup-2fa-btn">
+                                        🛡️ Set Up 2FA
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" id="cancel-changes">
+                                Cancel Changes
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="save-profile">
+                                💾 Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="../assets/js/main.js"></script>
+    
+    <script>
+        // Sign-in/sign-out functionality for profile page
+        function showNameEntryPopup() {
+            // Redirect to home page which has the popup functionality
+            window.location.href = '../index.html';
+        }
+
+        function signOut() {
+            localStorage.removeItem('user_name');
+            localStorage.removeItem('user_first_visit');
+            localStorage.removeItem('user_data');
+            
+            // Hide profile dropdown and show sign-in button
+            const profileDropdown = document.getElementById('profile-dropdown');
+            const signInBtn = document.getElementById('sign-in-btn');
+            
+            if (profileDropdown) profileDropdown.style.display = 'none';
+            if (signInBtn) signInBtn.style.display = 'inline-flex';
+            
+            // Close any open dropdown menu
+            const profileMenu = document.getElementById('profile-menu');
+            if (profileMenu) profileMenu.classList.remove('active');
+            
+            // Show confirmation and redirect
+            alert('You have been signed out successfully!');
+            window.location.href = '../index.html';
+        }
+
+        function showSignInButton() {
+            const signInBtn = document.getElementById('sign-in-btn');
+            const profileDropdown = document.getElementById('profile-dropdown');
+            
+            if (signInBtn) signInBtn.style.display = 'inline-flex';
+            if (profileDropdown) profileDropdown.style.display = 'none';
+        }
+
+        function toggleProfileDropdown() {
+            const profileMenu = document.getElementById('profile-menu');
+            if (profileMenu) {
+                profileMenu.classList.toggle('active');
+            }
+        }
+
+        function addProfileButton(name) {
+            const signInBtn = document.getElementById('sign-in-btn');
+            const profileDropdown = document.getElementById('profile-dropdown');
+            const userNameDisplay = document.getElementById('user-name-display');
+            
+            // Hide sign-in button and show profile dropdown
+            if (signInBtn) signInBtn.style.display = 'none';
+            if (profileDropdown) profileDropdown.style.display = 'inline-flex';
+            
+            // Update the displayed name (first name only)
+            if (userNameDisplay) {
+                userNameDisplay.textContent = name.split(' ')[0];
+            }
+        }
+        
+        function checkUserSignIn() {
+            const userName = localStorage.getItem('user_name');
+            
+            if (userName) {
+                // User is signed in - show profile dropdown
+                addProfileButton(userName);
+            } else {
+                // User not signed in - show sign in button
+                showSignInButton();
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const profileDropdown = document.getElementById('profile-dropdown');
+            const profileMenu = document.getElementById('profile-menu');
+            
+            if (profileDropdown && !profileDropdown.contains(e.target)) {
+                if (profileMenu) profileMenu.classList.remove('active');
+            }
+        });
+        
+        // Profile management JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check user sign-in state first
+            checkUserSignIn();
+            loadUserProfile();
+            setupFormHandlers();
+        });
+
+        async function loadUserProfile() {
+            // This would normally load from Supabase
+            // No placeholder data - use empty values
+            const profileData = {
+                firstName: '',
+                lastName: '',
+                email: '',
+                emailVisibility: 'private',
+                phone: '',
+                company: '',
+                jobTitle: '',
+                industry: '',
+                experienceLevel: '',
+                learningGoals: '',
+                preferredTopics: [],
+                communicationPreference: 'email',
+                emailNotifications: true,
+                marketingNotifications: false,
+                profileVisibility: 'private',
+                themePreference: 'light',
+                learningReminderTime: '18:00'
+            };
+
+            // Populate form fields
+            Object.keys(profileData).forEach(key => {
+                const field = document.getElementById(key.replace(/([A-Z])/g, '-$1').toLowerCase());
+                if (field) {
+                    if (field.type === 'checkbox') {
+                        field.checked = profileData[key];
+                    } else if (field.multiple) {
+                        Array.from(field.options).forEach(option => {
+                            option.selected = profileData[key].includes(option.value);
+                        });
+                    } else {
+                        field.value = profileData[key];
+                    }
+                }
+            });
+
+            // Update sidebar display
+            const fullName = `${profileData.firstName} ${profileData.lastName}`.trim();
+            document.getElementById('profile-display-name').textContent = fullName || 'No name set';
+            
+            // Show/hide email based on visibility setting
+            const emailElement = document.getElementById('profile-display-email');
+            if (profileData.emailVisibility === 'visible' && profileData.email) {
+                emailElement.textContent = profileData.email;
+            } else {
+                emailElement.textContent = 'No email set';
+            }
+            
+            // Set avatar initials
+            const initials = profileData.firstName && profileData.lastName
+                ? `${profileData.firstName.charAt(0)}${profileData.lastName.charAt(0)}`
+                : '👤';
+            document.getElementById('profile-avatar').textContent = initials;
+
+            // Handle toggle switches
+            const emailNotificationsToggle = document.getElementById('email-notifications');
+            const marketingNotificationsToggle = document.getElementById('marketing-notifications');
+            
+            if (emailNotificationsToggle) {
+                emailNotificationsToggle.checked = profileData.emailNotifications;
+            }
+            if (marketingNotificationsToggle) {
+                marketingNotificationsToggle.checked = profileData.marketingNotifications;
+            }
+        }
+
+        function setupFormHandlers() {
+            const form = document.getElementById('profile-form');
+            const cancelBtn = document.getElementById('cancel-changes');
+            const successMsg = document.getElementById('success-message');
+            const errorMsg = document.getElementById('error-message');
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Hide previous messages
+                successMsg.style.display = 'none';
+                errorMsg.style.display = 'none';
+
+                // Collect form data
+                const formData = new FormData(form);
+                const profileData = {};
+                
+                for (let [key, value] of formData.entries()) {
+                    profileData[key] = value;
+                }
+
+                try {
+                    // This would normally save to Supabase
+                    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+                    
+                    // Show success message
+                    successMsg.style.display = 'block';
+                    successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Update sidebar display
+                    const fullName = `${profileData.firstName} ${profileData.lastName}`.trim();
+                    document.getElementById('profile-display-name').textContent = fullName || 'No name set';
+                    
+                    // Update avatar initials
+                    const initials = profileData.firstName && profileData.lastName
+                        ? `${profileData.firstName.charAt(0)}${profileData.lastName.charAt(0)}`
+                        : '👤';
+                    document.getElementById('profile-avatar').textContent = initials;
+
+                } catch (error) {
+                    console.error('Profile update error:', error);
+                    document.getElementById('error-text').textContent = error.message || 'There was an error updating your profile.';
+                    errorMsg.style.display = 'block';
+                    errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+
+            cancelBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to cancel your changes?')) {
+                    loadUserProfile(); // Reload original data
+                    successMsg.style.display = 'none';
+                    errorMsg.style.display = 'none';
+                }
+            });
+
+            // Handle avatar upload
+            document.getElementById('avatar-upload').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        // This would normally upload to storage
+                        console.log('Avatar file selected:', file.name);
+                        alert('Avatar upload feature coming soon!');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Handle settings toggles
+            const settingsToggles = document.querySelectorAll('input[type="checkbox"]');
+            settingsToggles.forEach(toggle => {
+                toggle.addEventListener('change', function() {
+                    if (this.id === 'email-notifications' || this.id === 'marketing-notifications') {
+                        showSuccessMessage();
+                    }
+                });
+            });
+
+            // Handle email visibility change
+            const emailVisibilitySelect = document.getElementById('email-visibility');
+            if (emailVisibilitySelect) {
+                emailVisibilitySelect.addEventListener('change', function() {
+                    const email = document.getElementById('email').value;
+                    const emailElement = document.getElementById('profile-display-email');
+                    if (this.value === 'visible' && email) {
+                        emailElement.textContent = email;
+                    } else {
+                        emailElement.textContent = 'No email set';
+                    }
+                    showSuccessMessage();
+                });
+            }
+
+            // Handle other settings changes
+            const settingsInputs = document.querySelectorAll('#profile-visibility, #theme-preference, #learning-reminder-time');
+            settingsInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    showSuccessMessage();
+                });
+            });
+
+            // Handle security buttons
+            const changePasswordBtn = document.getElementById('change-password-btn');
+            const setup2faBtn = document.getElementById('setup-2fa-btn');
+
+            if (changePasswordBtn) {
+                changePasswordBtn.addEventListener('click', function() {
+                    alert('Change password functionality coming soon! Please contact support if you need to change your password.');
+                });
+            }
+
+            if (setup2faBtn) {
+                setup2faBtn.addEventListener('click', function() {
+                    alert('Two-factor authentication setup coming soon! This will add an extra layer of security to your account.');
+                });
+            }
+
+
+            function showSuccessMessage() {
+                successMsg.style.display = 'block';
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>

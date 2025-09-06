@@ -582,56 +582,17 @@ li {
   }
 }
 
-/* Enhanced Button Sizes with Mobile Touch Targets */
+/* Button Sizes with Enhanced Padding */
 .learntav-btn--large {
   padding: var(--space-4) var(--space-8);
   font-size: var(--font-size-base);
   border-radius: var(--radius-lg);
-  min-height: 48px;
 }
 
 .learntav-btn--small {
   padding: var(--space-2) var(--space-4);
   font-size: var(--font-size-xs);
   border-radius: var(--radius-sm);
-  min-height: 36px;
-}
-
-/* Mobile Button Enhancements */
-@media (max-width: 768px) {
-  .learntav-btn {
-    min-height: 44px;
-    padding: var(--space-3) var(--space-5);
-    font-size: var(--font-size-sm);
-    border-radius: var(--radius-md);
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-  
-  .learntav-btn--large {
-    min-height: 48px;
-    padding: var(--space-4) var(--space-6);
-    font-size: var(--font-size-base);
-  }
-  
-  .learntav-btn--small {
-    min-height: 40px;
-    padding: var(--space-2) var(--space-4);
-    font-size: var(--font-size-sm);
-  }
-}
-
-@media (max-width: 480px) {
-  .learntav-btn {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .learntav-hero__actions .learntav-btn,
-  .learntav-cta__actions .learntav-btn {
-    width: 100%;
-    max-width: none;
-  }
 }
 
 /* Special Tech Button with Multiple Effects */
@@ -763,120 +724,35 @@ li {
   transition: var(--transition-normal);
 }
 
-/* Enhanced Mobile Navigation */
+/* Mobile Navigation */
 @media (max-width: 768px) {
-  .learntav-nav {
-    padding: var(--space-2) 0;
-  }
-  
-  .learntav-nav__container {
-    padding: 0 var(--space-4);
-  }
-  
-  .learntav-nav__logo {
-    font-size: var(--font-size-xl);
-  }
-  
   .learntav-nav__menu {
     display: none;
-    position: fixed;
-    top: 0;
-    left: -100%;
-    width: 280px;
-    height: 100vh;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     background: var(--bg-primary);
-    box-shadow: var(--shadow-2xl);
+    box-shadow: var(--shadow-lg);
     flex-direction: column;
-    padding: var(--space-20) var(--space-6) var(--space-6);
-    gap: var(--space-2);
-    z-index: 1000;
-    transition: left 0.3s ease;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    padding: var(--space-4);
+    gap: var(--space-4);
   }
 
   .learntav-nav__menu.active {
     display: flex;
-    left: 0;
-  }
-  
-  .learntav-nav__link {
-    padding: var(--space-4) var(--space-2);
-    font-size: var(--font-size-base);
-    border-bottom: 1px solid var(--gray-100);
-    min-height: 48px;
-    display: flex;
-    align-items: center;
   }
 
   .learntav-nav__toggle {
     display: flex;
-    width: 44px;
-    height: 44px;
-    padding: var(--space-2);
-    justify-content: center;
-    align-items: center;
-    z-index: 1001;
-  }
-  
-  .learntav-nav__toggle-line {
-    transition: all 0.3s ease;
   }
 
-  .learntav-nav__actions {
-    gap: var(--space-2);
-  }
-  
   .learntav-nav__actions .learntav-btn {
-    padding: var(--space-2) var(--space-3);
-    font-size: var(--font-size-sm);
-    min-height: 40px;
+    display: none;
   }
 
   .learntav-nav__actions .learntav-btn--mobile {
     display: inline-flex;
-  }
-  
-  /* Mobile menu overlay */
-  .learntav-nav__overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-  }
-  
-  .learntav-nav__overlay.active {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
-@media (max-width: 480px) {
-  .learntav-nav__container {
-    padding: 0 var(--space-3);
-  }
-  
-  .learntav-nav__menu {
-    width: calc(100vw - 40px);
-    left: -100vw;
-    right: 0;
-    padding: var(--space-16) var(--space-4) var(--space-4);
-  }
-  
-  .learntav-nav__menu.active {
-    left: 0;
-  }
-  
-  .learntav-nav__actions .learntav-btn {
-    padding: var(--space-2);
-    font-size: var(--font-size-xs);
-    min-height: 36px;
   }
 }
 
@@ -944,83 +820,6 @@ li {
 .learntav-hero__icon {
   font-size: var(--font-size-6xl);
   margin-bottom: var(--space-4);
-}
-
-/* Mobile-first responsive design enhancements */
-@media (max-width: 480px) {
-  .learntav-hero {
-    padding: var(--space-12) 0;
-  }
-  
-  .learntav-hero__title {
-    font-size: var(--font-size-3xl);
-    line-height: 1.2;
-  }
-  
-  .learntav-hero__subtitle {
-    font-size: var(--font-size-base);
-    padding: 0 var(--space-2);
-  }
-  
-  .learntav-hero__actions {
-    padding: 0 var(--space-2);
-    gap: var(--space-3);
-  }
-  
-  .learntav-hero__actions .learntav-btn {
-    width: 100%;
-    max-width: none;
-    min-height: 48px;
-    font-size: var(--font-size-base);
-  }
-  
-  .learntav-container {
-    padding: 0 var(--space-3);
-  }
-}
-
-@media (min-width: 481px) and (max-width: 768px) {
-  .learntav-hero {
-    padding: var(--space-16) 0;
-  }
-
-  .learntav-hero__content {
-    grid-template-columns: 1fr;
-    gap: var(--space-12);
-    text-align: center;
-  }
-
-  .learntav-hero__title-container {
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-3);
-  }
-  
-  .learntav-hero__logo {
-    height: 48px;
-    align-self: center;
-  }
-  
-  .learntav-hero__title {
-    font-size: var(--font-size-4xl);
-  }
-
-  .learntav-hero__subtitle {
-    font-size: var(--font-size-lg);
-  }
-
-  .learntav-hero__actions {
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-4);
-  }
-
-  .learntav-hero__actions .learntav-btn {
-    width: 100%;
-    max-width: 320px;
-    min-height: 48px;
-  }
 }
 
 @media (max-width: 768px) {

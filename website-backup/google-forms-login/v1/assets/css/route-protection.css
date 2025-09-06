@@ -1,0 +1,213 @@
+/**
+ * Route Protection CSS
+ * Styling for authentication-related UI components
+ */
+
+/* Authentication state visibility controls */
+[data-auth-state="authenticated"] {
+    display: none;
+}
+
+[data-auth-state="unauthenticated"] {
+    display: block;
+}
+
+
+/* Show authenticated elements when user is signed in */
+body.authenticated [data-auth-state="authenticated"] {
+    display: block;
+}
+
+body.authenticated [data-auth-state="unauthenticated"] {
+    display: none;
+}
+
+
+/* User profile dropdown styling */
+.user-profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.user-profile-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    color: #374151;
+}
+
+.user-profile-button:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.user-name {
+    font-weight: 500;
+}
+
+.dropdown-arrow {
+    transition: transform 0.2s ease;
+    color: #6b7280;
+}
+
+.user-profile-dropdown.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.user-profile-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+}
+
+.user-profile-dropdown.open .user-profile-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.user-profile-menu-item {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #374151;
+    text-decoration: none;
+    font-size: 0.875rem;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.user-profile-menu-item:hover {
+    background: #f3f4f6;
+    color: #2563eb;
+}
+
+.user-profile-menu-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 0.25rem 0;
+}
+
+/* Protected route indicators */
+.nav-protected {
+    position: relative;
+}
+
+.nav-protected-indicator {
+    margin-left: 0.25rem;
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+/* Auth buttons styling */
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Loading states */
+.auth-loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.auth-loading::after {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #e5e7eb;
+    border-top-color: #2563eb;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 0.5rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .user-profile-dropdown {
+        position: static;
+    }
+    
+    .user-profile-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        min-width: auto;
+        border-radius: 0;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .user-profile-menu-item {
+        padding: 1rem;
+        font-size: 1.125rem;
+        text-align: center;
+    }
+}
+
+/* Error states */
+.auth-error {
+    color: #dc2626;
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+/* Success states */
+.auth-success {
+    color: #059669;
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}

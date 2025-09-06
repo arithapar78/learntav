@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage your LearnTAV account settings and preferences">
+    <title>Settings - LearnTAV</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/route-protection.css">
+    <link rel="stylesheet" href="../assets/css/responsive-accessibility.css">
+    
+    <style>
+        .settings {
+            min-height: 100vh;
+            padding-top: 80px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .settings-header {
+            background: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .settings-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin: 0 0 0.5rem 0;
+        }
+        
+        .settings-subtitle {
+            color: #718096;
+            margin: 0;
+        }
+        
+        .settings-content {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .settings-nav {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .settings-nav-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f7fafc;
+        }
+        
+        .settings-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .settings-nav-item:hover {
+            background: #f7fafc;
+            color: #1a202c;
+        }
+        
+        .settings-nav-item.active {
+            background: #ebf8ff;
+            color: #007bff;
+            font-weight: 500;
+        }
+        
+        .settings-main {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .settings-section {
+            display: none;
+        }
+        
+        .settings-section.active {
+            display: block;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 1rem;
+        }
+        
+        .section-description {
+            color: #718096;
+            margin-bottom: 2rem;
+        }
+        
+        .settings-group {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .settings-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .group-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+        
+        .group-description {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+        
+        .setting-info {
+            flex: 1;
+        }
+        
+        .setting-name {
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+        }
+        
+        .setting-description {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        .setting-control {
+            margin-left: 1rem;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e0;
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #007bff;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .form-input {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+            width: 200px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+        
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1rem;
+            padding-right: 3rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e5e7eb;
+            color: #374151;
+        }
+        
+        .btn-outline:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
+        }
+        
+        .danger-zone {
+            background: #fef2f2;
+            border: 2px solid #fecaca;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .danger-zone-title {
+            color: #dc2626;
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .danger-zone-description {
+            color: #7f1d1d;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        
+        .success-message {
+            background: #d1fae5;
+            border: 1px solid #34d399;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .settings-content {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .settings-nav {
+                position: static;
+                top: auto;
+            }
+            
+            .settings-nav-item {
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .setting-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .setting-control {
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            .form-input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="learntav-nav" id="mainNav">
+        <div class="learntav-container">
+            <div class="learntav-nav__container">
+                <a href="../index.html" class="learntav-nav__logo">
+                    <span class="learntav-nav__logo-text">LearnTAV</span>
+                </a>
+                
+                <div class="learntav-nav__menu" id="navMenu">
+                    <a href="../education/index.html" class="learntav-nav__link">Education</a>
+                    <a href="../consulting/index.html" class="learntav-nav__link">Consulting</a>
+                    <a href="../about/index.html" class="learntav-nav__link">About</a>
+                    <a href="../resources/index.html" class="learntav-nav__link">Resources</a>
+                    <a href="../ai-tools/index.html" class="learntav-nav__link">AI Tools</a>
+                    <a href="../contact/index.html" class="learntav-nav__link">Contact</a>
+                </div>
+                
+                <div class="learntav-nav__actions">
+                    <!-- This will be populated by route protection system -->
+                    <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                        <span class="learntav-nav__toggle-line"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Settings Content -->
+    <main class="settings">
+        <div class="settings-header">
+            <div class="learntav-container">
+                <h1 class="settings-title">Account Settings</h1>
+                <p class="settings-subtitle">Manage your preferences and account security</p>
+            </div>
+        </div>
+
+        <div class="learntav-container">
+            <!-- Success Message -->
+            <div id="success-message" class="success-message">
+                <strong>✓ Success!</strong> Your settings have been updated.
+            </div>
+
+            <div class="settings-content">
+                <!-- Settings Navigation -->
+                <div class="settings-nav">
+                    <div class="settings-nav-title">Settings</div>
+                    <div class="settings-nav-item active" data-section="notifications">
+                        <span>🔔</span>
+                        <span>Notifications</span>
+                    </div>
+                    <div class="settings-nav-item" data-section="privacy">
+                        <span>🔒</span>
+                        <span>Privacy</span>
+                    </div>
+                    <div class="settings-nav-item" data-section="preferences">
+                        <span>⚙️</span>
+                        <span>Preferences</span>
+                    </div>
+                    <div class="settings-nav-item" data-section="security">
+                        <span>🛡️</span>
+                        <span>Security</span>
+                    </div>
+                    <div class="settings-nav-item" data-section="account">
+                        <span>⚠️</span>
+                        <span>Account</span>
+                    </div>
+                </div>
+
+                <!-- Main Settings Area -->
+                <div class="settings-main">
+                    <!-- Notifications Section -->
+                    <div id="notifications-section" class="settings-section active">
+                        <h2 class="section-title">Notification Settings</h2>
+                        <p class="section-description">
+                            Choose how and when you want to receive notifications from LearnTAV.
+                        </p>
+
+                        <div class="settings-group">
+                            <h3 class="group-title">Email Notifications</h3>
+                            <p class="group-description">Manage your email notification preferences</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Course Updates</div>
+                                    <div class="setting-description">Notifications about new lessons and course progress</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="email-course-updates" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Weekly Newsletter</div>
+                                    <div class="setting-description">Weekly AI insights and industry updates</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="email-newsletter" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Marketing Communications</div>
+                                    <div class="setting-description">Updates about new services and special offers</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="email-marketing">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3 class="group-title">Push Notifications</h3>
+                            <p class="group-description">Browser and mobile push notifications</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Browser Notifications</div>
+                                    <div class="setting-description">Real-time notifications in your browser</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="push-browser">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Privacy Section -->
+                    <div id="privacy-section" class="settings-section">
+                        <h2 class="section-title">Privacy Settings</h2>
+                        <p class="section-description">
+                            Control your privacy and data sharing preferences.
+                        </p>
+
+                        <div class="settings-group">
+                            <h3 class="group-title">Data Collection</h3>
+                            <p class="group-description">Help us improve LearnTAV by sharing anonymous usage data</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Analytics Data</div>
+                                    <div class="setting-description">Share anonymous usage statistics to help improve our services</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="privacy-analytics" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Performance Data</div>
+                                    <div class="setting-description">Share performance metrics to help optimize the platform</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="privacy-performance">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3 class="group-title">Profile Visibility</h3>
+                            <p class="group-description">Control who can see your profile information</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Profile Visibility</div>
+                                    <div class="setting-description">Choose who can see your profile</div>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="form-input form-select" id="profile-visibility">
+                                        <option value="private">Private (Only me)</option>
+                                        <option value="instructors">LearnTAV Instructors</option>
+                                        <option value="students">Other Students</option>
+                                        <option value="public">Public</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preferences Section -->
+                    <div id="preferences-section" class="settings-section">
+                        <h2 class="section-title">Learning Preferences</h2>
+                        <p class="section-description">
+                            Customize your learning experience and interface preferences.
+                        </p>
+
+                        <div class="settings-group">
+                            <h3 class="group-title">Interface</h3>
+                            <p class="group-description">Customize the look and feel of your experience</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Theme</div>
+                                    <div class="setting-description">Choose your preferred color scheme</div>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="form-input form-select" id="theme-preference">
+                                        <option value="light">Light Theme</option>
+                                        <option value="dark">Dark Theme (Coming Soon)</option>
+                                        <option value="auto">Auto (System)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Language</div>
+                                    <div class="setting-description">Select your preferred language</div>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="form-input form-select" id="language-preference">
+                                        <option value="en">English</option>
+                                        <option value="es">Español (Coming Soon)</option>
+                                        <option value="fr">Français (Coming Soon)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3 class="group-title">Learning Experience</h3>
+                            <p class="group-description">Personalize your learning journey</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Daily Learning Reminder</div>
+                                    <div class="setting-description">Set a time to receive daily learning reminders</div>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="time" class="form-input" id="learning-reminder-time" value="18:00">
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Learning Goal</div>
+                                    <div class="setting-description">Set your weekly learning goal (minutes)</div>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="form-input form-select" id="learning-goal">
+                                        <option value="60">1 hour per week</option>
+                                        <option value="180">3 hours per week</option>
+                                        <option value="300" selected>5 hours per week</option>
+                                        <option value="600">10 hours per week</option>
+                                        <option value="custom">Custom</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Section -->
+                    <div id="security-section" class="settings-section">
+                        <h2 class="section-title">Security Settings</h2>
+                        <p class="section-description">
+                            Manage your account security and login preferences.
+                        </p>
+
+                        <div class="settings-group">
+                            <h3 class="group-title">Password</h3>
+                            <p class="group-description">Keep your account secure with a strong password</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Change Password</div>
+                                    <div class="setting-description">Update your account password</div>
+                                </div>
+                                <div class="setting-control">
+                                    <button class="btn btn-outline" id="change-password-btn">
+                                        🔑 Change Password
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3 class="group-title">Two-Factor Authentication</h3>
+                            <p class="group-description">Add an extra layer of security to your account</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Enable 2FA</div>
+                                    <div class="setting-description">Secure your account with two-factor authentication</div>
+                                </div>
+                                <div class="setting-control">
+                                    <button class="btn btn-primary" id="setup-2fa-btn">
+                                        🛡️ Set Up 2FA
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3 class="group-title">Active Sessions</h3>
+                            <p class="group-description">Manage your active login sessions</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Current Browser</div>
+                                    <div class="setting-description">This browser, signed in now</div>
+                                </div>
+                                <div class="setting-control">
+                                    <span style="color: #10b981; font-weight: 500;">Active</span>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Sign Out All Devices</div>
+                                    <div class="setting-description">Sign out of all devices except this one</div>
+                                </div>
+                                <div class="setting-control">
+                                    <button class="btn btn-outline" id="signout-all-btn">
+                                        🚪 Sign Out All
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Account Section -->
+                    <div id="account-section" class="settings-section">
+                        <h2 class="section-title">Account Management</h2>
+                        <p class="section-description">
+                            Manage your account data and subscription.
+                        </p>
+
+                        <div class="settings-group">
+                            <h3 class="group-title">Data Export</h3>
+                            <p class="group-description">Download your account data and learning progress</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Export Account Data</div>
+                                    <div class="setting-description">Download all your account data and learning progress</div>
+                                </div>
+                                <div class="setting-control">
+                                    <button class="btn btn-outline" id="export-data-btn">
+                                        📊 Export Data
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="danger-zone">
+                            <div class="danger-zone-title">Danger Zone</div>
+                            <div class="danger-zone-description">
+                                These actions are irreversible. Please be certain before proceeding.
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-name">Delete Account</div>
+                                    <div class="setting-description">Permanently delete your account and all associated data</div>
+                                </div>
+                                <div class="setting-control">
+                                    <button class="btn btn-danger" id="delete-account-btn">
+                                        🗑️ Delete Account
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="../assets/js/main.js"></script>
+    
+    <script>
+        // Settings management JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            setupNavigationHandlers();
+            setupSettingsHandlers();
+            loadUserSettings();
+        });
+
+        function setupNavigationHandlers() {
+            const navItems = document.querySelectorAll('.settings-nav-item');
+            const sections = document.querySelectorAll('.settings-section');
+
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const targetSection = this.dataset.section;
+                    
+                    // Update active nav item
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update active section
+                    sections.forEach(section => section.classList.remove('active'));
+                    document.getElementById(`${targetSection}-section`).classList.add('active');
+                });
+            });
+        }
+
+        function setupSettingsHandlers() {
+            const successMsg = document.getElementById('success-message');
+
+            // Handle toggle switches
+            const toggles = document.querySelectorAll('input[type="checkbox"]');
+            toggles.forEach(toggle => {
+                toggle.addEventListener('change', function() {
+                    saveSettings();
+                });
+            });
+
+            // Handle select changes
+            const selects = document.querySelectorAll('select, input[type="time"]');
+            selects.forEach(select => {
+                select.addEventListener('change', function() {
+                    saveSettings();
+                });
+            });
+
+            // Handle button actions
+            document.getElementById('change-password-btn').addEventListener('click', function() {
+                alert('Change password functionality coming soon!');
+            });
+
+            document.getElementById('setup-2fa-btn').addEventListener('click', function() {
+                alert('Two-factor authentication setup coming soon!');
+            });
+
+            document.getElementById('signout-all-btn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to sign out of all other devices?')) {
+                    alert('You have been signed out of all other devices.');
+                }
+            });
+
+            document.getElementById('export-data-btn').addEventListener('click', function() {
+                alert('Data export functionality coming soon!');
+            });
+
+            document.getElementById('delete-account-btn').addEventListener('click', function() {
+                if (confirm('Are you absolutely sure you want to delete your account? This action cannot be undone.')) {
+                    if (confirm('This will permanently delete all your data, progress, and cannot be recovered. Type "DELETE" to confirm.')) {
+                        alert('Account deletion functionality coming soon. Please contact support for assistance.');
+                    }
+                }
+            });
+
+            function saveSettings() {
+                // This would normally save to Supabase
+                // For now, just show success message
+                successMsg.style.display = 'block';
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        function loadUserSettings() {
+            // This would normally load settings from Supabase
+            // For now, we'll use default settings
+            const defaultSettings = {
+                'email-course-updates': true,
+                'email-newsletter': true,
+                'email-marketing': false,
+                'push-browser': false,
+                'privacy-analytics': true,
+                'privacy-performance': false,
+                'profile-visibility': 'private',
+                'theme-preference': 'light',
+                'language-preference': 'en',
+                'learning-reminder-time': '18:00',
+                'learning-goal': '300'
+            };
+
+            // Apply default settings
+            Object.keys(defaultSettings).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (element.type === 'checkbox') {
+                        element.checked = defaultSettings[key];
+                    } else {
+                        element.value = defaultSettings[key];
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
