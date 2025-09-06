@@ -3411,3 +3411,347 @@ li {
 .profile-dropdown-menu.active ~ .learntav-nav__toggle {
   pointer-events: none;
 }
+
+/* ===================================================================
+   View Mode Toggle Button with Modern Design
+   =================================================================== */
+.view-toggle-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-primary);
+  transition: all 0.3s ease;
+  box-shadow:
+    0 2px 8px rgba(37, 99, 235, 0.3),
+    0 0 0 0 rgba(37, 99, 235, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  white-space: nowrap;
+  user-select: none;
+  animation: viewTogglePulse 3s infinite;
+}
+
+.view-toggle-btn:hover {
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow:
+    0 0 25px rgba(37, 99, 235, 0.6),
+    0 0 50px rgba(37, 99, 235, 0.4),
+    0 8px 20px rgba(37, 99, 235, 0.3);
+  filter: brightness(1.1);
+}
+
+.view-toggle-btn:active {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow:
+    0 0 15px rgba(37, 99, 235, 0.8),
+    0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+.view-toggle-btn:focus {
+  outline: 2px solid var(--primary-light);
+  outline-offset: 2px;
+  box-shadow:
+    0 0 30px rgba(37, 99, 235, 0.7),
+    0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+@keyframes viewTogglePulse {
+  0%, 100% {
+    box-shadow:
+      0 2px 8px rgba(37, 99, 235, 0.3),
+      0 0 0 0 rgba(37, 99, 235, 0.7);
+  }
+  50% {
+    box-shadow:
+      0 2px 8px rgba(37, 99, 235, 0.3),
+      0 0 0 10px rgba(37, 99, 235, 0);
+  }
+}
+
+/* ===================================================================
+   View Mode Override Styles
+   =================================================================== */
+
+/* Mobile Mode Overrides - Force mobile styles regardless of screen size */
+.view-mode-mobile {
+  --force-mobile: 1;
+}
+
+.view-mode-mobile .learntav-container {
+  max-width: 100% !important;
+  padding: 0 var(--space-4) !important;
+}
+
+.view-mode-mobile .learntav-grid--2-col,
+.view-mode-mobile .learntav-grid--3-col,
+.view-mode-mobile .learntav-grid--4-col {
+  grid-template-columns: 1fr !important;
+  gap: var(--space-4) !important;
+}
+
+/* Navigation Mobile Mode */
+.view-mode-mobile .learntav-nav__menu {
+  display: none !important;
+}
+
+.view-mode-mobile .learntav-nav__toggle {
+  display: flex !important;
+}
+
+/* Hero Section Mobile Mode */
+.view-mode-mobile .learntav-hero {
+  padding: var(--space-12) 0 !important;
+}
+
+.view-mode-mobile .learntav-hero__content {
+  grid-template-columns: 1fr !important;
+  gap: var(--space-8) !important;
+  text-align: center !important;
+}
+
+.view-mode-mobile .learntav-hero__title {
+  font-size: var(--font-size-3xl) !important;
+  line-height: 1.2 !important;
+}
+
+.view-mode-mobile .learntav-hero__subtitle {
+  font-size: var(--font-size-base) !important;
+}
+
+.view-mode-mobile .learntav-hero__actions {
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: var(--space-3) !important;
+}
+
+.view-mode-mobile .learntav-hero__actions .learntav-btn {
+  width: 100% !important;
+  max-width: 320px !important;
+  padding: 1rem !important;
+  font-size: 1.1rem !important;
+  margin-bottom: 1rem !important;
+}
+
+/* Form Mobile Optimizations */
+.view-mode-mobile .learntav-form {
+  margin: 1rem 0 !important;
+}
+
+.view-mode-mobile .learntav-form__input {
+  font-size: 16px !important; /* Prevents zoom on iOS */
+  padding: 1rem !important;
+  width: 100% !important;
+}
+
+.view-mode-mobile .learntav-btn {
+  width: 100% !important;
+  min-height: 48px !important;
+  font-size: var(--font-size-base) !important;
+  padding: 1rem !important;
+  margin-bottom: 1rem;
+}
+
+/* Service Cards Mobile Mode */
+.view-mode-mobile .learntav-service-card__actions {
+  flex-direction: column !important;
+}
+
+.view-mode-mobile .learntav-service-card__actions .learntav-btn {
+  width: 100% !important;
+}
+
+/* Desktop Mode Overrides - Force desktop styles regardless of screen size */
+.view-mode-desktop {
+  --force-desktop: 1;
+}
+
+.view-mode-desktop .learntav-nav__menu {
+  display: flex !important;
+}
+
+.view-mode-desktop .learntav-nav__toggle {
+  display: none !important;
+}
+
+.view-mode-desktop .learntav-container {
+  max-width: var(--container-max) !important;
+  padding: 0 var(--space-8) !important;
+}
+
+.view-mode-desktop .learntav-grid--2-col {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+}
+
+.view-mode-desktop .learntav-grid--3-col {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+}
+
+.view-mode-desktop .learntav-grid--4-col {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+}
+
+.view-mode-desktop .learntav-hero__content {
+  grid-template-columns: 1fr 1fr !important;
+  gap: var(--space-16) !important;
+  text-align: left !important;
+}
+
+.view-mode-desktop .learntav-hero__actions {
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  gap: var(--space-4) !important;
+}
+
+.view-mode-desktop .learntav-hero__actions .learntav-btn {
+  width: auto !important;
+  max-width: none !important;
+}
+
+/* Auto Mode - No overrides, use natural responsive behavior */
+.view-mode-auto {
+  /* Let natural CSS media queries handle responsive behavior */
+}
+
+/* ===================================================================
+   Mobile Layout Enhancements for Mobile Mode
+   =================================================================== */
+
+/* Enhanced Mobile Typography */
+.view-mode-mobile .learntav-section-title {
+  font-size: var(--font-size-2xl) !important;
+  text-align: center !important;
+  margin-bottom: var(--space-6) !important;
+}
+
+.view-mode-mobile .learntav-section-subtitle {
+  font-size: var(--font-size-base) !important;
+  text-align: center !important;
+  padding: 0 var(--space-4) !important;
+}
+
+/* Enhanced Mobile Cards */
+.view-mode-mobile .learntav-value-card,
+.view-mode-mobile .learntav-service-card,
+.view-mode-mobile .learntav-testimonial-card {
+  margin-bottom: var(--space-4) !important;
+  padding: var(--space-6) !important;
+}
+
+/* Enhanced Mobile Navigation */
+.view-mode-mobile .learntav-nav {
+  padding: var(--space-3) 0 !important;
+}
+
+.view-mode-mobile .learntav-nav__container {
+  padding: 0 var(--space-4) !important;
+}
+
+.view-mode-mobile .learntav-nav__logo {
+  font-size: var(--font-size-lg) !important;
+}
+
+.view-mode-mobile .learntav-nav__actions .learntav-btn {
+  padding: var(--space-2) var(--space-3) !important;
+  font-size: var(--font-size-sm) !important;
+  min-height: 40px !important;
+}
+
+/* Enhanced Mobile Footer */
+.view-mode-mobile .learntav-footer__main {
+  grid-template-columns: 1fr !important;
+  gap: var(--space-8) !important;
+}
+
+.view-mode-mobile .learntav-footer__links {
+  grid-template-columns: 1fr !important;
+  gap: var(--space-6) !important;
+}
+
+.view-mode-mobile .learntav-footer__legal {
+  flex-direction: column !important;
+  text-align: center !important;
+  gap: var(--space-4) !important;
+}
+
+.view-mode-mobile .learntav-footer__legal-links {
+  flex-direction: column !important;
+  gap: var(--space-3) !important;
+}
+
+/* Mobile CTA Enhancements */
+.view-mode-mobile .learntav-cta__title {
+  font-size: var(--font-size-2xl) !important;
+  padding: 0 var(--space-4) !important;
+}
+
+.view-mode-mobile .learntav-cta__description {
+  font-size: var(--font-size-base) !important;
+  padding: 0 var(--space-4) !important;
+}
+
+/* Touch Target Optimizations for Mobile Mode */
+.view-mode-mobile a,
+.view-mode-mobile button,
+.view-mode-mobile .learntav-nav__link {
+  min-height: 44px !important;
+  touch-action: manipulation !important;
+}
+
+/* Responsive View Toggle Button */
+@media (max-width: 768px) {
+  .view-toggle-btn {
+    top: 10px;
+    right: 10px;
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .view-toggle-btn {
+    top: 8px;
+    right: 8px;
+    padding: 5px 8px;
+    font-size: 11px;
+    gap: 4px;
+  }
+}
+
+/* Ensure toggle button doesn't interfere with mobile menu */
+.view-mode-mobile .learntav-nav__menu.active {
+  z-index: 1000;
+}
+
+.view-toggle-btn {
+  z-index: 1001;
+}
+
+/* Special handling for forced layouts */
+.learntav-nav.force-mobile .learntav-nav__menu {
+  display: none !important;
+}
+
+.learntav-nav.force-mobile .learntav-nav__toggle {
+  display: flex !important;
+}
+
+.learntav-nav.force-desktop .learntav-nav__menu {
+  display: flex !important;
+}
+
+.learntav-nav.force-desktop .learntav-nav__toggle {
+  display: none !important;
+}

@@ -4,9 +4,10 @@
 
 ### ⚡ **Frontend Technologies - PRODUCTION DEPLOYED**
 - **HTML5**: **17+ pages** of semantic markup with WCAG 2.1 AA accessibility compliance
-- **CSS3**: **1,472 lines** of advanced styling with Grid, Flexbox, Custom Properties, and animation system
-- **JavaScript (ES2022+)**: **721 lines** of professional functionality with progressive enhancement
-- **Responsive Design**: **Mobile-first architecture** with fluid layouts and touch optimization
+- **CSS3**: **3,700+ lines** of advanced styling with Grid, Flexbox, Custom Properties, animation system, and view mode controls
+- **JavaScript (ES2022+)**: **1,400+ lines** of professional functionality with progressive enhancement and ViewModeController
+- **View Mode Control**: **Manual responsive override system** with Auto/Mobile/Desktop modes and localStorage persistence
+- **Responsive Design**: **Mobile-first architecture** with fluid layouts, touch optimization, and forced layout capabilities
 - **Performance Excellence**: **Core Web Vitals optimized** with sub-2.5s load times and Lighthouse 95+ scores
 
 ### 🔧 **Development Architecture - PROFESSIONAL GRADE**
@@ -66,10 +67,10 @@ learntav/ (Production-Ready Platform)
 │   └── cookies/index.html               # Cookie policy
 ├── assets/                              # Optimized asset library
 │   ├── css/
-│   │   ├── main.css                     # 1,472 lines - Complete design system
+│   │   ├── main.css                     # 3,700+ lines - Complete design system with view mode controls
 │   │   └── contact.css                  # Contact page specializations
 │   ├── js/
-│   │   ├── main.js                      # 721 lines - Advanced functionality
+│   │   ├── main.js                      # 1,400+ lines - Advanced functionality with ViewModeController
 │   │   └── contact.js                   # Contact form interactions
 │   └── images/
 │       ├── favicon.ico                  # Site favicon
@@ -147,12 +148,43 @@ learntav/ (Production-Ready Platform)
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- No CSS frameworks - 1,472 lines of custom CSS -->
-<!-- No JavaScript libraries - 721 lines of vanilla JavaScript -->
-<!-- Maximum performance and compatibility -->
+<!-- No CSS frameworks - 3,700+ lines of custom CSS with view mode system -->
+<!-- No JavaScript libraries - 1,400+ lines of vanilla JavaScript with ViewModeController -->
+<!-- Maximum performance and compatibility with advanced responsive control -->
+```
+
+### 📱 **View Mode Toggle System - ADVANCED RESPONSIVE CONTROL**
+```javascript
+// ViewModeController Class - Manual responsive override system
+class ViewModeController {
+  constructor() {
+    this.currentMode = localStorage.getItem('viewMode') || 'auto';
+    this.init();
+  }
+  
+  // Three modes: 'auto' (responsive), 'mobile' (forced), 'desktop' (forced)
+  toggleViewMode() {
+    const modes = ['auto', 'mobile', 'desktop'];
+    const currentIndex = modes.indexOf(this.currentMode);
+    this.currentMode = modes[(currentIndex + 1) % modes.length];
+    
+    localStorage.setItem('viewMode', this.currentMode);
+    this.applyViewMode(this.currentMode);
+  }
+}
+
+// Features:
+// ✅ Fixed top-right toggle button with smooth animations
+// ✅ Three distinct modes with clear visual feedback
+// ✅ localStorage persistence for user preferences
+// ✅ Mobile layout optimizations with enhanced element positioning
+// ✅ Keyboard and screen reader accessibility support
+// ✅ CSS override system forcing layouts regardless of screen size
 ```
 
 ### 🚀 **Advanced Features - CUSTOM BUILT**
+- ✅ **View Mode Toggle**: **Manual mobile/desktop switching** with localStorage persistence and accessibility support
+- ✅ **Mobile Layout Optimization**: **Enhanced mobile experience** with repositioned elements and touch targets
 - ✅ **Form Handling**: **Advanced validation** with real-time feedback
 - ✅ **Animations**: **CSS-based animations** with JavaScript enhancement
 - ✅ **Analytics Ready**: **Google Analytics 4** integration prepared
@@ -250,12 +282,13 @@ img {
 
 ## 🏆 **TECHNICAL ACHIEVEMENT SUMMARY**
 
-**📊 CODE QUALITY**: Enterprise-grade with 1,472 lines of CSS and 721 lines of JavaScript
+**📊 CODE QUALITY**: Enterprise-grade with 3,700+ lines of CSS and 1,400+ lines of JavaScript
+**📱 VIEW MODE CONTROL**: Manual responsive override system with Auto/Mobile/Desktop modes and user preference persistence
 **⚡ PERFORMANCE**: Core Web Vitals optimized with Lighthouse 95+ scores
-**♿ ACCESSIBILITY**: WCAG 2.1 AA compliant with comprehensive screen reader support
+**♿ ACCESSIBILITY**: WCAG 2.1 AA compliant with comprehensive screen reader support and view toggle accessibility
 **🌐 COMPATIBILITY**: 100% cross-browser functionality across all modern platforms
 **🛡️ SECURITY**: Production-ready security implementation with CSRF protection
-**📱 RESPONSIVE**: Advanced mobile-first design with touch optimization
+**📱 RESPONSIVE**: Advanced mobile-first design with touch optimization and forced layout capabilities
 **🔍 SEO**: Complete optimization with structured data and social media integration
 
 **The technical foundation delivered exceeds enterprise standards and provides a robust, scalable platform for LearnTAV's continued growth and success.**

@@ -1300,4 +1300,124 @@ function handleGlobalNameEntry(name) {
 
 })();
 
+// View Mode Toggle System
+class ViewModeController {
+  constructor() {
+    this.currentMode = localStorage.getItem('viewMode') || 'auto';
+    this.init();
+  }
+
+  init() {
+    this.createToggleButton();
+    this.applyViewMode(this.currentMode);
+    this.addEventListeners();
+  }
+
+  createToggleButton() {
+    const button = document.createElement('button');
+    button.className = 'view-toggle-btn';
+    button.innerHTML = this.getButtonContent();
+    button.setAttribute('aria-label', 'Toggle view mode');
+    button.setAttribute('title', 'Switch between mobile, desktop, and auto view modes');
+    document.body.appendChild(button);
+    this.button = button;
+  }
+
+  getButtonContent() {
+    const modes = {
+      'mobile': '💻 Desktop View',
+      'desktop': '📱 Mobile View',
+      'auto': '🔄 Auto View'
+    };
+    return modes[this.currentMode];
+  }
+
+  toggleViewMode() {
+    const modes = ['auto', 'mobile', 'desktop'];
+    const currentIndex = modes.indexOf(this.currentMode);
+    this.currentMode = modes[(currentIndex + 1) % modes.length];
+    
+    localStorage.setItem('viewMode', this.currentMode);
+    this.applyViewMode(this.currentMode);
+    this.button.innerHTML = this.getButtonContent();
+    this.announceViewModeChange();
+  }
+
+  applyViewMode(mode) {
+    // Remove any existing view mode classes
+    document.body.className = document.body.className.replace(/view-mode-\w+/g, '');
+    document.body.classList.add(`view-mode-${mode}`);
+    
+    if (mode === 'mobile') {
+      this.forceMobileLayout();
+    } else if (mode === 'desktop') {
+      this.forceDesktopLayout();
+    } else {
+      this.restoreAutoLayout();
+    }
+  }
+
+  forceMobileLayout() {
+    // Force mobile styles regardless of screen size
+    document.documentElement.style.setProperty('--force-mobile', '1');
+    
+    // Trigger mobile navigation if needed
+    const nav = document.querySelector('.learntav-nav');
+    if (nav) {
+      nav.classList.add('force-mobile');
+    }
+  }
+
+  forceDesktopLayout() {
+    // Force desktop styles regardless of screen size
+    document.documentElement.style.setProperty('--force-desktop', '1');
+    
+    // Ensure desktop navigation
+    const nav = document.querySelector('.learntav-nav');
+    if (nav) {
+      nav.classList.add('force-desktop');
+    }
+  }
+
+  restoreAutoLayout() {
+    // Remove forced layout styles
+    document.documentElement.style.removeProperty('--force-mobile');
+    document.documentElement.style.removeProperty('--force-desktop');
+    
+    const nav = document.querySelector('.learntav-nav');
+    if (nav) {
+      nav.classList.remove('force-mobile', 'force-desktop');
+    }
+  }
+
+  announceViewModeChange() {
+    const modeNames = {
+      'auto': 'automatic responsive',
+      'mobile': 'mobile',
+      'desktop': 'desktop'
+    };
+    
+    if (window.announceToScreenReader) {
+      window.announceToScreenReader(`Switched to ${modeNames[this.currentMode]} view mode`);
+    }
+  }
+
+  addEventListeners() {
+    this.button.addEventListener('click', () => this.toggleViewMode());
+    
+    // Keyboard support
+    this.button.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.toggleViewMode();
+      }
+    });
+  }
+}
+
+// Initialize View Mode Controller on page load
+document.addEventListener('DOMContentLoaded', () => {
+  new ViewModeController();
+});
+
 console.log('✅ LearnTAV JavaScript loaded successfully (public version)');
