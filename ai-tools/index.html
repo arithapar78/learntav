@@ -271,17 +271,17 @@
                     </ul>
                     
                     <div class="product-pricing">
-                        <div class="product-price">Free / $4.99</div>
-                        <div class="product-price-note">Basic features free • Pro features $4.99/month</div>
+                        <div class="product-price">🎉 FREE - Limited Time!</div>
+                        <div class="product-price-note">Complete energy monitoring + AI prompt optimization • Normally $4.99/month</div>
                     </div>
                     
                     <div class="product-actions">
-                        <button class="btn-purchase" onclick="directDownloadPowerTracker()">Download Power Tracker</button>
+                        <button class="btn-purchase" onclick="directDownloadPowerTracker()">Get Power Tracker FREE</button>
                         <a href="power-tracker/index.html" class="btn-learn-more">Learn More</a>
                     </div>
                     
                     <div class="integration-note">
-                        <strong>All-in-One Solution:</strong> Power Tracker combines energy monitoring with AI prompt optimization in one unified extension, providing complete sustainable AI management for your browser.
+                        <strong>🔥 Limited Time Offer:</strong> Power Tracker with advanced AI prompt optimization is completely FREE! Get complete sustainable AI management including prompt energy optimizer at no cost.
                     </div>
                 </div>
             </div>
@@ -336,7 +336,7 @@
                 </p>
                 <div class="learntav-cta__actions">
                     <button class="learntav-btn learntav-btn--primary learntav-btn--large" onclick="directDownloadPowerTracker()">
-                        Download Power Tracker Free
+                        Get Power Tracker FREE - Limited Time
                     </button>
                     <div class="learntav-cta__contact-info">
                         <p>Questions? <a href="../contact/index.html">Contact our support team</a></p>
@@ -408,14 +408,8 @@
     <script src="../assets/js/main.js"></script>
     <script>
         function directDownloadPowerTracker() {
-            const link = document.createElement('a');
-            link.href = 'power-tracker-extension.zip';
-            link.download = 'power-tracker.zip';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            alert('✅ Power Tracker download started!\n\nInstallation Instructions:\n1. Unzip the downloaded file\n2. Open Chrome → More tools → Extensions\n3. Enable "Developer mode" (top right)\n4. Click "Load unpacked"\n5. Select the unzipped folder\n6. Pin the extension to your toolbar');
+            // Redirect to Chrome Web Store
+            window.open('https://chromewebstore.google.com/detail/power-tracker/plmljdpofjiehkgfchbadaidahedooid', '_blank');
         }
 
     </script>

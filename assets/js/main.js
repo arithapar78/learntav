@@ -1122,27 +1122,17 @@ function handleGlobalNameEntry(name) {
     }
     
     function directDownload(url) {
-        let zipFile = '';
         let toolName = '';
         
         if (url.includes('power-tracker')) {
-            zipFile = 'power-tracker-extension.zip';
             toolName = 'Power Tracker';
         } else if (url.includes('prompt-energy-optimizer')) {
-            zipFile = 'prompt-optimizer-extension.zip';
-            toolName = 'Prompt Optimizer';
+            toolName = 'Power Tracker'; // Redirect prompt optimizer to power tracker
         }
         
-        if (zipFile) {
-            const link = document.createElement('a');
-            link.href = `assets/extensions/${zipFile}`;
-            link.download = zipFile;
-            link.style.display = 'none';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            alert(`✅ ${toolName} download started!\n\nInstallation:\n1. Unzip the downloaded file\n2. Open Chrome → Extensions\n3. Enable Developer Mode\n4. Click "Load Unpacked"\n5. Select the unzipped folder`);
+        if (toolName) {
+            // Redirect to Chrome Web Store
+            window.open('https://chromewebstore.google.com/detail/power-tracker/plmljdpofjiehkgfchbadaidahedooid', '_blank');
         }
     }
     
