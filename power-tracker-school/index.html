@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Power Tracker for Schools • LearnTAV</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; connect-src 'self';">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="./school.css">
+</head>
+<body>
+    <main class="school-main">
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="container">
+                <h1>Power Tracker for Schools</h1>
+                <p class="hero-subtitle">A student-safe browser extension that builds energy awareness.</p>
+                <a href="#how" class="btn btn-primary">How it works</a>
+            </div>
+        </section>
+
+        <!-- How it works -->
+        <section class="section" id="how">
+            <div class="container">
+                <h2>What it does</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Tracks Power Usage</h3>
+                        <p>Shows estimated browser power consumption in real-time</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Simple Charts</h3>
+                        <p>Easy-to-understand visualizations of energy usage patterns</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Privacy First</h3>
+                        <p>No personal data collected by default - everything stays local</p>
+                    </div>
+                </div>
+                
+                <!-- TODO: Add extension screenshot if available -->
+                <div class="screenshot-placeholder">
+                    <p>📊 Extension Interface Preview</p>
+                    <small>Screenshot coming soon</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Safety & Privacy -->
+        <section class="section">
+            <div class="container">
+                <h2>Safety & Privacy</h2>
+                <div class="safety-content">
+                    <p>Power Tracker for Schools is designed with student privacy and safety as the top priority:</p>
+                    <ul>
+                        <li>No ad tracking or third-party scripts</li>
+                        <li>All data stays in your browser unless you choose to export</li>
+                        <li>No personal information required to function</li>
+                        <li>Complies with school privacy requirements</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Student FAQ -->
+        <section class="section">
+            <div class="container">
+                <h2>Student FAQ</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h3>Will this slow my Chromebook?</h3>
+                        <p>No! Power Tracker is designed to be lightweight and won't affect your browsing experience or device performance.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Does it collect my name or personal info?</h3>
+                        <p>Absolutely not. The extension doesn't collect any personal information - it only tracks anonymous energy usage data that stays on your device.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>How do I remove it?</h3>
+                        <p>You can easily remove the extension through Chrome's standard extension controls - just go to Settings → Extensions and click Remove.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Teacher & IT FAQ -->
+        <section class="section">
+            <div class="container">
+                <h2>Teacher & IT FAQ</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h3>Installation Requirements</h3>
+                        <p>Installation is only available through the Chrome Web Store - no sideloading required. The extension follows all Chrome Web Store policies and security guidelines.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Privacy Compliance</h3>
+                        <p>No personally identifiable information (PII) is needed for the extension to function. All data processing happens locally on the student's device.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Educational Value</h3>
+                        <p>Helps students understand digital energy consumption and develops awareness of sustainable technology practices.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="section">
+            <div class="container">
+                <h2>Questions?</h2>
+                <p>Need help or have questions about Power Tracker for Schools?</p>
+                <button id="contact-btn" class="btn btn-secondary">Contact LearnTAV</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Contact Modal -->
+    <div id="contact-modal" class="modal-overlay" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <button id="modal-close" class="modal-close" aria-label="Close contact modal">&times;</button>
+            <h3 id="modal-title">Contact Information</h3>
+            <p>School contact: hello@learntav.com</p>
+            <button id="modal-close-btn" class="btn btn-primary">Close</button>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="nav-toast" class="toast" role="alert" aria-live="polite">
+        External navigation is disabled on this page.
+    </div>
+
+    <script src="./lockdown.js" defer></script>
+</body>
+</html>

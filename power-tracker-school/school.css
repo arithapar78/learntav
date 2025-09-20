@@ -1,0 +1,579 @@
+/* ===================================================================
+   Power Tracker School Page - Minimal Responsive Styling
+   =================================================================== */
+
+/* CSS Custom Properties aligned with main site */
+:root {
+  /* Brand colors from main site */
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --secondary: #10b981;
+  --success: #059669;
+  --error: #dc2626;
+  
+  /* Neutral colors */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  
+  /* Text colors */
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-600);
+  --text-muted: var(--gray-500);
+  --text-inverse: white;
+  
+  /* Background colors */
+  --bg-primary: white;
+  --bg-secondary: var(--gray-50);
+  
+  /* Typography */
+  --font-primary: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  
+  /* Font sizes */
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  
+  /* Line heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  
+  /* Spacing */
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  
+  /* Border radius */
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  
+  /* Transitions */
+  --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Z-index */
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-toast: 1060;
+}
+
+/* ===================================================================
+   Reset & Base Styles
+   =================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  line-height: var(--line-height-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ===================================================================
+   Layout
+   =================================================================== */
+.container {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 var(--space-6);
+  }
+}
+
+.school-main {
+  min-height: 100vh;
+}
+
+.section {
+  padding: var(--space-16) 0;
+}
+
+.section:nth-child(even) {
+  background: var(--bg-secondary);
+}
+
+/* ===================================================================
+   Typography
+   =================================================================== */
+h1, h2, h3 {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+
+h1 {
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-extrabold);
+}
+
+h2 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+p {
+  margin-bottom: var(--space-4);
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+ul {
+  margin-bottom: var(--space-4);
+  padding-left: var(--space-6);
+}
+
+li {
+  margin-bottom: var(--space-2);
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+/* ===================================================================
+   Hero Section
+   =================================================================== */
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: var(--text-inverse);
+  padding: var(--space-20) 0;
+  text-align: center;
+}
+
+.hero h1 {
+  color: var(--text-inverse);
+  margin-bottom: var(--space-6);
+}
+
+.hero-subtitle {
+  font-size: var(--font-size-xl);
+  color: rgba(255, 255, 255, 0.9);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--space-8);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===================================================================
+   Buttons
+   =================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-base);
+  text-decoration: none;
+  transition: var(--transition-normal);
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  white-space: nowrap;
+  user-select: none;
+  min-height: 48px;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--text-inverse);
+  border: 2px solid var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+  color: var(--text-inverse);
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover {
+  background: var(--primary);
+  color: var(--text-inverse);
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.hero .btn-primary {
+  background: var(--text-inverse);
+  color: var(--primary);
+  border-color: var(--text-inverse);
+}
+
+.hero .btn-primary:hover {
+  background: var(--gray-100);
+  color: var(--primary-dark);
+  border-color: var(--gray-100);
+}
+
+/* ===================================================================
+   Feature Grid
+   =================================================================== */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.feature-card {
+  background: var(--bg-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  transition: var(--transition-normal);
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.feature-card h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-3);
+}
+
+/* ===================================================================
+   FAQ Grid
+   =================================================================== */
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-6);
+}
+
+.faq-item {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+}
+
+.faq-item h3 {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-3);
+  color: var(--primary);
+}
+
+/* ===================================================================
+   Screenshot Placeholder
+   =================================================================== */
+.screenshot-placeholder {
+  background: var(--gray-100);
+  border: 2px dashed var(--gray-300);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  text-align: center;
+  margin: var(--space-8) 0;
+}
+
+.screenshot-placeholder p {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-2);
+  color: var(--text-muted);
+}
+
+.screenshot-placeholder small {
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+}
+
+/* ===================================================================
+   Safety Content
+   =================================================================== */
+.safety-content {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.safety-content ul {
+  text-align: left;
+  max-width: 500px;
+  margin: var(--space-6) auto;
+}
+
+/* ===================================================================
+   Modal Styles
+   =================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: var(--z-modal-backdrop);
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: var(--bg-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  max-width: 400px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  position: relative;
+  transform: scale(0.9);
+  transition: var(--transition-normal);
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1);
+}
+
+.modal-close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  background: none;
+  border: none;
+  font-size: var(--font-size-2xl);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.modal-close:hover {
+  color: var(--primary);
+  background: var(--gray-100);
+}
+
+.modal-content h3 {
+  color: var(--primary);
+  margin-bottom: var(--space-4);
+}
+
+.modal-content p {
+  margin-bottom: var(--space-6);
+  font-family: monospace;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+/* ===================================================================
+   Toast Notification
+   =================================================================== */
+.toast {
+  position: fixed;
+  bottom: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--error);
+  color: var(--text-inverse);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-weight-medium);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-toast);
+  opacity: 0;
+  transition: var(--transition-normal);
+  max-width: 90%;
+  text-align: center;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ===================================================================
+   Responsive Design
+   =================================================================== */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--space-4);
+  }
+  
+  .section {
+    padding: var(--space-12) 0;
+  }
+  
+  .hero {
+    padding: var(--space-16) 0;
+  }
+  
+  h1 {
+    font-size: var(--font-size-4xl);
+  }
+  
+  h2 {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .hero-subtitle {
+    font-size: var(--font-size-lg);
+  }
+  
+  .feature-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  .faq-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  .btn {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: var(--font-size-3xl);
+  }
+  
+  h2 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .hero-subtitle {
+    font-size: var(--font-size-base);
+  }
+  
+  .feature-card,
+  .faq-item {
+    padding: var(--space-4);
+  }
+  
+  .modal-content {
+    padding: var(--space-6);
+  }
+}
+
+/* ===================================================================
+   Print Styles
+   =================================================================== */
+@media print {
+  .modal-overlay,
+  .toast {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .section:nth-child(even) {
+    background: white !important;
+  }
+}
+
+/* ===================================================================
+   Reduced Motion Support
+   =================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .feature-card:hover,
+  .btn:hover {
+    transform: none;
+  }
+}
