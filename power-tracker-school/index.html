@@ -17,74 +17,170 @@
 </head>
 <body>
     <main class="school-main">
-        <!-- Hero Section -->
-        <section class="hero" id="hero">
+        <!-- Executive Summary / Hero Section -->
+        <section id="summary" class="pt-section pt-section--summary" aria-labelledby="summary-title">
             <div class="container">
-                <h1>Power Tracker for Schools</h1>
-                <p class="hero-subtitle">A student-safe browser extension that builds energy awareness.</p>
-                <a href="#how" class="btn btn-primary">How it works</a>
-            </div>
-        </section>
-
-        <!-- How it works -->
-        <section class="section" id="how">
-            <div class="container">
-                <h2>What it does</h2>
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <h3>Tracks Power Usage</h3>
-                        <p>Shows estimated browser power consumption in real-time</p>
+                <div class="pt-card pt-card--summary" role="region" aria-describedby="summary-list">
+                    <h1 id="summary-title">Power Tracker for Schools — Summary</h1>
+                    <ul id="summary-list" class="pt-list pt-list--bullets">
+                        <li>Make energy usage <em>visible</em> during everyday browsing.</li>
+                        <li>Turn real numbers into math/science/Green Team projects.</li>
+                        <li>Teach digital citizenship through responsible tech use.</li>
+                    </ul>
+                    <div class="pt-actions">
+                        <a href="#implementation" class="pt-btn pt-btn--primary">Implementation Steps</a>
+                        <button class="pt-btn pt-btn--secondary" data-pt-contact>Contact LearnTAV</button>
                     </div>
-                    <div class="feature-card">
-                        <h3>Simple Charts</h3>
-                        <p>Easy-to-understand visualizations of energy usage patterns</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Privacy First</h3>
-                        <p>No personal data collected by default - everything stays local</p>
-                    </div>
-                </div>
-                
-                <!-- TODO: Add extension screenshot if available -->
-                <div class="screenshot-placeholder">
-                    <p>📊 Extension Interface Preview</p>
-                    <small>Screenshot coming soon</small>
                 </div>
             </div>
         </section>
 
-        <!-- Why Power Tracker Matters for Students -->
-        <section id="why-matters" class="section">
+        <!-- Why This Matters for Students -->
+        <section id="why" class="pt-section" aria-labelledby="why-title">
             <div class="container">
-                <h2>Why Power Tracker Matters for Students</h2>
-                <ul>
-                    <li><strong>Builds Awareness:</strong> Helps students see how much energy their browsing uses.</li>
-                    <li><strong>Connects to Climate Action:</strong> Links everyday tech use to environmental impact.</li>
-                    <li><strong>Supports School Sustainability Goals:</strong> Adds a digital focus to recycling and eco projects.</li>
-                    <li><strong>Hands-On Learning:</strong> Turns energy awareness into a daily experience.</li>
-                    <li><strong>Encourages Discussion & Projects:</strong> Provides data for Green Team activities and awareness campaigns.</li>
+                <h2 id="why-title">Why This Matters for Students</h2>
+                <div class="pt-grid pt-grid--cards5">
+                    <article class="pt-infocard">
+                        <div class="pt-infocard__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="pt-infocard__title">Links Technology Habits to Real-World Impact</h3>
+                        <p class="pt-infocard__body">Most students don't realize that every search, video, or game uses electricity. Power Tracker makes this <em>visible in real time</em>, connecting everyday browsing to the school's sustainability goals.</p>
+                    </article>
+                    
+                    <article class="pt-infocard">
+                        <div class="pt-infocard__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                <path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                            </svg>
+                        </div>
+                        <h3 class="pt-infocard__title">Creates Data Students Can Use in Class & Clubs</h3>
+                        <p class="pt-infocard__body">The extension generates actual numbers on energy use. These can become:<br>
+                        • Math projects: graphing daily/weekly browser energy trends<br>
+                        • Science experiments: comparing which activities use more energy<br>
+                        • Green Team campaigns: posters, contests, or challenges based on real data</p>
+                    </article>
+                    
+                    <article class="pt-infocard">
+                        <div class="pt-infocard__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                <path fill="currentColor" d="M12 1l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-2.01L12 1z"/>
+                            </svg>
+                        </div>
+                        <h3 class="pt-infocard__title">Builds Digital Citizenship & Responsibility</h3>
+                        <p class="pt-infocard__body">Schools already teach recycling and conservation in the building. Power Tracker extends that lesson into the digital world, helping students understand their role as responsible technology users.</p>
+                    </article>
+                    
+                    <article class="pt-infocard">
+                        <div class="pt-infocard__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                <path fill="currentColor" d="M19.5 3.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2L7.5 3.5 6 2v14H3v3c0 1.66 1.34 3 3 3h12c1.66 0 3-1.34 3-3V2l-1.5 1.5zM19 19c0 .55-.45 1-1 1s-1-.45-1-1v-3H8V5h11v14z"/>
+                            </svg>
+                        </div>
+                        <h3 class="pt-infocard__title">Supports Project-Based Learning (PBL)</h3>
+                        <p class="pt-infocard__body">Teachers can integrate Power Tracker into lessons:<br>
+                        • Social studies → global energy & climate topics<br>
+                        • Computer science → efficiency of sites/apps<br>
+                        • Environmental science → connecting online energy habits with carbon footprint</p>
+                    </article>
+                    
+                    <article class="pt-infocard">
+                        <div class="pt-infocard__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                                <path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-2.01L12 1z"/>
+                            </svg>
+                        </div>
+                        <h3 class="pt-infocard__title">Gives the School a Leadership Edge</h3>
+                        <p class="pt-infocard__body">Adopting Power Tracker lets your school say:<br>
+                        • "We use digital tools to teach energy awareness."<br>
+                        • Highlight in newsletters, assemblies, or sustainability reports.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- What Power Tracker Can Do (Capabilities) -->
+        <section id="capabilities" class="pt-section" aria-labelledby="cap-title">
+            <div class="container">
+                <h2 id="cap-title">What Power Tracker Can Do</h2>
+                <ul class="pt-checkgrid">
+                    <li>Show estimated browser energy use in real time</li>
+                    <li>Visualize simple trends for the day/week</li>
+                    <li>Encourage reflection on high-energy activities</li>
+                    <li>Provide data students can graph or summarize</li>
+                    <li>Run without student accounts or personal data</li>
+                    <li>Work within Chrome's standard extension controls</li>
                 </ul>
             </div>
         </section>
 
-        <!-- Safety & Privacy -->
-        <section class="section">
+        <!-- How Schools Implement It -->
+        <section id="implementation" class="pt-section" aria-labelledby="impl-title">
             <div class="container">
-                <h2>Safety & Privacy</h2>
+                <h2 id="impl-title">How Schools Implement It</h2>
+                <ol class="pt-timeline">
+                    <li>
+                        <h3>Step 1 — Review</h3>
+                        <p>Principal/Advisor reviews this page for goals, safety, and classroom fit.</p>
+                    </li>
+                    <li>
+                        <h3>Step 2 — Request</h3>
+                        <p>Advisor emails district IT to whitelist & push the extension to managed Chromebooks.</p>
+                    </li>
+                    <li>
+                        <h3>Step 3 — Pilot</h3>
+                        <p>Green Team or a class pilots for 2–4 weeks; students use data in small projects.</p>
+                    </li>
+                    <li>
+                        <h3>Step 4 — Share</h3>
+                        <p>Publish a short summary (newsletter/assembly) highlighting learning outcomes.</p>
+                        <p class="pt-note">If district policy cannot push to devices, students can install at home from the Chrome Web Store.</p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Screenshots -->
+        <section id="screenshots" class="pt-section" aria-labelledby="shots-title">
+            <div class="container">
+                <h2 id="shots-title">Screenshots</h2>
+                <div class="pt-gallery">
+                    <figure>
+                        <img src="/assets/images/powertracker-1.jpg" alt="Dashboard view — estimated energy during typical browsing">
+                        <figcaption>Dashboard view — estimated energy during typical browsing</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="/assets/images/powertracker-2.jpg" alt="Simple chart — trend over the school day">
+                        <figcaption>Simple chart — trend over the school day</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="/assets/images/powertracker-3.jpg" alt="Student project example — weekly summary">
+                        <figcaption>Student project example — weekly summary</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy & Safety -->
+        <section class="pt-section">
+            <div class="container">
+                <h2>Privacy & Safety</h2>
                 <div class="safety-content">
                     <p>Power Tracker for Schools is designed with student privacy and safety as the top priority:</p>
                     <ul>
-                        <li>No ad tracking or third-party scripts</li>
-                        <li>All data stays in your browser unless you choose to export</li>
-                        <li>No personal information required to function</li>
-                        <li>Complies with school privacy requirements</li>
+                        <li>No ads, no trackers on this page</li>
+                        <li>No student accounts required</li>
+                        <li>Data stays in the browser unless a student exports it</li>
+                        <li>Built to comply with Chrome Web Store policies</li>
                     </ul>
                 </div>
             </div>
         </section>
 
         <!-- Student FAQ -->
-        <section class="section">
+        <section class="pt-section">
             <div class="container">
                 <h2>Student FAQ</h2>
                 <div class="faq-grid">
@@ -105,7 +201,7 @@
         </section>
 
         <!-- Teacher & IT FAQ -->
-        <section class="section">
+        <section class="pt-section">
             <div class="container">
                 <h2>Teacher & IT FAQ</h2>
                 <div class="faq-grid">
@@ -126,11 +222,11 @@
         </section>
 
         <!-- Contact -->
-        <section class="section">
+        <section class="pt-section">
             <div class="container">
                 <h2>Questions?</h2>
                 <p>Need help or have questions about Power Tracker for Schools?</p>
-                <button id="contact-btn" class="btn btn-secondary">Contact LearnTAV</button>
+                <button id="contact-btn" class="pt-btn pt-btn--secondary" data-pt-contact>Contact LearnTAV</button>
             </div>
         </section>
     </main>

@@ -199,7 +199,9 @@
     function initModal() {
         modal = document.getElementById('contact-modal');
         modalContent = modal ? modal.querySelector('.modal-content') : null;
-        contactBtn = document.getElementById('contact-btn');
+        
+        // Support both old and new contact button selectors
+        contactBtn = document.getElementById('contact-btn') || document.querySelector('[data-pt-contact]');
         closeBtn = document.getElementById('modal-close');
         modalCloseBtn = document.getElementById('modal-close-btn');
         
@@ -311,6 +313,16 @@
             initModal();
             initSmoothScroll();
             initAccessibility();
+            
+            // Support multiple contact buttons with data-pt-contact attribute
+            document.querySelectorAll('[data-pt-contact]').forEach(btn => {
+                if (btn !== contactBtn) {
+                    btn.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        openModal();
+                    });
+                }
+            });
             
             console.log('Power Tracker School: Lockdown system initialized');
         } catch (error) {
