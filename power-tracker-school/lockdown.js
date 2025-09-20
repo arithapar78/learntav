@@ -28,7 +28,7 @@
     }
     
     // Check if navigation should be blocked
-    function shouldBlockNavigation(href) {
+    function shouldBlockNavigation(href, element = null) {
         if (!href) return false;
         
         // Allow hash links
@@ -39,6 +39,12 @@
         
         // Allow relative paths to current directory
         if (href.startsWith('./') && href.includes('#')) return false;
+        
+        // Allow specific external form URL
+        if (href === 'https://forms.gle/C1YiPkw6i5Yc9ogi7') return false;
+        
+        // Allow elements with data-external-form attribute
+        if (element && element.hasAttribute('data-external-form')) return false;
         
         // Block everything else
         return true;
@@ -53,7 +59,7 @@
         
         const href = link.getAttribute('href');
         
-        if (shouldBlockNavigation(href)) {
+        if (shouldBlockNavigation(href, link)) {
             event.preventDefault();
             event.stopPropagation();
             showToast('External navigation is disabled on this page.');
@@ -77,7 +83,7 @@
             const form = event.target;
             const action = form.action;
             
-            if (action && shouldBlockNavigation(action)) {
+            if (action && shouldBlockNavigation(action, form)) {
                 event.preventDefault();
                 showToast('External navigation is disabled on this page.');
             }
