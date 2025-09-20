@@ -370,6 +370,26 @@ li {
 }
 
 /* ===================================================================
+   Why Matters Section
+   =================================================================== */
+#why-matters .container {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#why-matters ul {
+  text-align: left;
+  max-width: 500px;
+  margin: var(--space-6) auto;
+}
+
+#why-matters li strong {
+  color: var(--primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ===================================================================
    Modal Styles
    =================================================================== */
 .modal-overlay {
