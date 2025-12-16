@@ -4,129 +4,260 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="AI education programs - Learn app development and AI workplace skills without coding experience.">
-    <title>Education Programs - LearnTAV | AI Education & Consulting</title>
-    
+    <title>Education Programs - LearnTAV</title>
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
-    
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="../assets/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../assets/css/modern.css">
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="learntav-nav" id="mainNav">
-        <div class="learntav-container">
-            <div class="learntav-nav__container">
-                <a href="../index.html" class="learntav-nav__logo">
-                    <span class="learntav-nav__logo-text">LearnTAV</span>
-                </a>
-                
-                <div class="learntav-nav__menu" id="navMenu">
-                    <a href="../education/index.html" class="learntav-nav__link learntav-nav__link--active">Education</a>
-                    <a href="../consulting/index.html" class="learntav-nav__link">Consulting</a>
-                    <a href="../about/index.html" class="learntav-nav__link">About</a>
-                    <a href="../resources/index.html" class="learntav-nav__link">Resources</a>
-                    <a href="../ai-tools/index.html" class="learntav-nav__link">AI Tools</a>
-                    <a href="../contact/index.html" class="learntav-nav__link">Contact</a>
-                </div>
-                
-                <div class="learntav-nav__actions">
-                    <a href="../contact/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
-                    <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
-                        <span class="learntav-nav__toggle-line"></span>
-                        <span class="learntav-nav__toggle-line"></span>
-                        <span class="learntav-nav__toggle-line"></span>
-                    </button>
-                </div>
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="../index.html" class="nav-logo">
+                <span class="logo-text">LearnTAV</span>
+            </a>
+
+            <div class="nav-menu" id="navMenu">
+                <a href="../education/index.html" class="nav-link nav-link-active">Education</a>
+                <a href="../consulting/index.html" class="nav-link">Consulting</a>
+                <a href="../ai-tools/index.html" class="nav-link">AI Tools</a>
+                <a href="../resources/index.html" class="nav-link">Resources</a>
+                <a href="../about/index.html" class="nav-link">About</a>
             </div>
-        </div>
-    </nav>
+
+            <div class="nav-actions">
+                <a href="../contact/index.html" class="btn btn-ghost">Contact</a>
+                <a href="../ai-tools/index.html" class="btn btn-primary">Get Started</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
 
     <!-- Page Header -->
-    <section class="learntav-page-header" id="main-content">
-        <div class="learntav-container">
-            <div class="learntav-page-header__content">
-                <h1 class="learntav-page-header__title">Education Programs</h1>
-                <p class="learntav-page-header__subtitle">
-                    Learn to build applications and master AI tools without coding experience. Our comprehensive programs are designed for entrepreneurs, professionals, and career changers.
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <span class="section-tag">Education</span>
+                <h1 class="page-title">Learn to Build with AI</h1>
+                <p class="page-description">
+                    Our education programs are designed for entrepreneurs, professionals, and career changers.
+                    No coding experience required.
                 </p>
             </div>
         </div>
     </section>
 
     <!-- Programs Section -->
-    <section class="learntav-services">
-        <div class="learntav-container">
-            <div class="learntav-section-header">
-                <h2 class="learntav-section-title">Our Education Programs</h2>
-                <p class="learntav-section-subtitle">
-                    Choose the program that best fits your goals and learning style
-                </p>
+    <section class="programs">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Programs</h2>
+                <p class="section-description">Choose the program that fits your goals and learning style</p>
             </div>
-            
-            <div class="learntav-grid learntav-grid--2-col">
-                <div class="learntav-service-card learntav-service-card--education">
-                    <div class="learntav-service-card__header">
-                        <div class="learntav-service-card__icon">🚀</div>
-                        <div class="learntav-service-card__category">New Course</div>
+
+            <div class="services-grid">
+                <!-- Vibe Coding 101 -->
+                <div class="service-card service-card-featured">
+                    <div class="service-icon service-icon-blue">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="5.5" cy="17.5" r="2.5"/>
+                            <circle cx="17.5" cy="15.5" r="2.5"/>
+                            <path d="M8 17V5l12-2v12"/>
+                        </svg>
                     </div>
-                    <h3 class="learntav-service-card__title">Vibe Coding 101</h3>
-                    <p class="learntav-service-card__description">
-                        Learn to create apps with AI tools like Anthropic, VS Code, and OpenAI. Perfect for kids and beginners with NO prior coding experience.
+                    <span class="service-tag">Popular</span>
+                    <h3 class="service-title">Vibe Coding 101</h3>
+                    <p class="service-description">
+                        Learn to create apps with AI tools like Anthropic Claude, VS Code, and OpenAI. Perfect for beginners with NO prior coding experience.
                     </p>
-                    <ul class="learntav-service-card__features">
+                    <ul class="service-features">
                         <li>4 sessions (1 hour each)</li>
                         <li>No coding experience needed</li>
                         <li>AI tools mastery</li>
                         <li>Create real apps</li>
                         <li>Group ($100) or Private ($200)</li>
                     </ul>
-                    <div class="learntav-service-card__actions">
-                        <a href="vibe-coding-101/index.html" class="learntav-btn learntav-btn--primary">Enroll Now</a>
-                        <a href="vibe-coding-101/index.html" class="learntav-btn learntav-btn--ghost">Learn More</a>
-                    </div>
+                    <a href="vibe-coding-101/index.html" class="service-link">
+                        Learn more & Enroll
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
                 </div>
 
-                <div class="learntav-service-card learntav-service-card--education">
-                    <div class="learntav-service-card__header">
-                        <div class="learntav-service-card__icon">📱</div>
-                        <div class="learntav-service-card__category">Program</div>
+                <!-- App Development Mastery -->
+                <div class="service-card">
+                    <div class="service-icon service-icon-purple">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                            <line x1="12" y1="18" x2="12.01" y2="18"/>
+                        </svg>
                     </div>
-                    <h3 class="learntav-service-card__title">App Development Mastery</h3>
-                    <p class="learntav-service-card__description">
-                        Build powerful applications using no-code and low-code platforms. Perfect for entrepreneurs who want to create their own solutions.
+                    <span class="service-tag">Comprehensive</span>
+                    <h3 class="service-title">App Development Mastery</h3>
+                    <p class="service-description">
+                        Build powerful applications without formal computer science training. Perfect for entrepreneurs and career changers.
                     </p>
-                    <ul class="learntav-service-card__features">
-                        <li>No-code platform mastery</li>
-                        <li>AI-assisted development</li>
-                        <li>Real project portfolio</li>
-                        <li>Launch strategy guidance</li>
+                    <ul class="service-features">
+                        <li>No-code/Low-code development</li>
+                        <li>AI-assisted application building</li>
+                        <li>Real-world project portfolio</li>
+                        <li>Venture creation guidance</li>
                     </ul>
-                    <div class="learntav-service-card__actions">
-                        <a href="../contact/index.html?form=education" class="learntav-btn learntav-btn--primary">Enroll Now</a>
-                        <a href="paths/index.html" class="learntav-btn learntav-btn--ghost">Learn More</a>
+                    <a href="../contact/index.html" class="service-link">
+                        Contact for details
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- AI Workplace Skills -->
+                <div class="service-card">
+                    <div class="service-icon service-icon-green">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21"/>
+                            <line x1="12" y1="17" x2="12" y2="21"/>
+                        </svg>
                     </div>
+                    <span class="service-tag">Corporate</span>
+                    <h3 class="service-title">AI Workplace Skills</h3>
+                    <p class="service-description">
+                        Empower your team with practical AI skills. Customized training programs for organizations of all sizes.
+                    </p>
+                    <ul class="service-features">
+                        <li>Team workshops</li>
+                        <li>Customized curriculum</li>
+                        <li>Hands-on projects</li>
+                        <li>Ongoing support</li>
+                    </ul>
+                    <a href="../contact/index.html" class="service-link">
+                        Contact for details
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Venture Creation -->
+                <div class="service-card">
+                    <div class="service-icon service-icon-orange">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                            <polyline points="2 17 12 22 22 17"/>
+                            <polyline points="2 12 12 17 22 12"/>
+                        </svg>
+                    </div>
+                    <span class="service-tag">Advanced</span>
+                    <h3 class="service-title">Venture Creation</h3>
+                    <p class="service-description">
+                        Turn your app ideas into real businesses. Guidance on launching and growing your tech venture.
+                    </p>
+                    <ul class="service-features">
+                        <li>Business model development</li>
+                        <li>MVP creation</li>
+                        <li>Launch strategy</li>
+                        <li>Growth guidance</li>
+                    </ul>
+                    <a href="../contact/index.html" class="service-link">
+                        Contact for details
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="learntav-cta">
-        <div class="learntav-container">
-            <div class="learntav-cta__content">
-                <h2 class="learntav-cta__title">Ready to Start Learning?</h2>
-                <p class="learntav-cta__description">
-                    Transform your career with AI education designed for real-world success.
+    <!-- Why Learn With Us -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Why Us</span>
+                <h2 class="section-title">Why Learn with LearnTAV?</h2>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Day One Results</h3>
+                    <p class="feature-description">Start building real applications from your very first session.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Expert Mentors</h3>
+                    <p class="feature-description">Learn from professionals with real-world AI experience.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Practical Focus</h3>
+                    <p class="feature-description">No unnecessary theory. Just skills you can use immediately.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Proven Results</h3>
+                    <p class="feature-description">95% of our students complete their first app project successfully.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to start your AI journey?</h2>
+                <p class="cta-description">
+                    Join hundreds of students who have transformed their careers with our programs.
                 </p>
-                <div class="learntav-cta__actions">
-                    <a href="../contact/index.html" class="learntav-btn learntav-btn--primary learntav-btn--large">
+                <div class="cta-actions">
+                    <a href="../contact/index.html" class="btn btn-white btn-lg">
                         Book Free Consultation
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
                     </a>
                 </div>
             </div>
@@ -134,55 +265,64 @@
     </section>
 
     <!-- Footer -->
-    <footer class="learntav-footer">
-        <div class="learntav-container">
-            <div class="learntav-footer__main">
-                <div class="learntav-footer__brand">
-                    <div class="learntav-footer__logo">
-                        <span class="learntav-footer__logo-text">LearnTAV</span>
-                    </div>
-                    <p class="learntav-footer__description">
-                        Where Technology Meets Accessibility, Sustainability, and Real-World Impact.
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="../index.html" class="footer-logo">LearnTAV</a>
+                    <p class="footer-tagline">
+                        Where technology meets accessibility, sustainability, and real-world impact.
                     </p>
+                    <p class="footer-motto">"Learning Takes a Village"</p>
                 </div>
 
-                <div class="learntav-footer__links">
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Services</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../education/index.html">Education</a></li>
-                            <li><a href="../consulting/index.html">Consulting</a></li>
-                            <li><a href="paths/index.html">Learning Paths</a></li>
-                        </ul>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Services</h4>
+                        <a href="../education/index.html">Education</a>
+                        <a href="../consulting/index.html">Consulting</a>
+                        <a href="paths/index.html">Learning Paths</a>
                     </div>
 
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Company</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../about/index.html">About</a></li>
-                            <li><a href="../contact/index.html">Contact</a></li>
-                        </ul>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="../about/index.html">About</a>
+                        <a href="../about/team/index.html">Team</a>
+                        <a href="../contact/index.html">Contact</a>
                     </div>
 
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Resources</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../resources/index.html">Resources</a></li>
-                            <li><a href="../contact/index.html">Contact</a></li>
-                        </ul>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <a href="../ai-tools/index.html">AI Tools</a>
+                        <a href="../resources/guides/index.html">Guides</a>
+                        <a href="../resources/blog/index.html">Blog</a>
                     </div>
                 </div>
             </div>
 
-            <div class="learntav-footer__bottom">
-                <div class="learntav-footer__legal">
-                    <p>&copy; 2024 LearnTAV. All rights reserved.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2024 LearnTAV. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="../legal/privacy/index.html">Privacy</a>
+                    <a href="../legal/terms/index.html">Terms</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script src="../assets/js/main.js"></script>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <a href="../education/index.html" class="mobile-link">Education</a>
+            <a href="../consulting/index.html" class="mobile-link">Consulting</a>
+            <a href="../ai-tools/index.html" class="mobile-link">AI Tools</a>
+            <a href="../resources/index.html" class="mobile-link">Resources</a>
+            <a href="../about/index.html" class="mobile-link">About</a>
+            <a href="../contact/index.html" class="mobile-link">Contact</a>
+            <a href="../ai-tools/index.html" class="btn btn-primary btn-lg mobile-cta">Get Started</a>
+        </div>
+    </div>
+
+    <script src="../assets/js/modern.js"></script>
 </body>
 </html>

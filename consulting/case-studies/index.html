@@ -5,79 +5,244 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Real-world case studies of successful AI consulting implementations.">
     <title>Case Studies - LearnTAV Consulting</title>
+
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../../assets/images/favicon.ico">
-    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon-32x32.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../assets/css/modern.css">
 </head>
 <body>
-    <nav class="learntav-nav">
-        <div class="learntav-container">
-            <div class="learntav-nav__container">
-                <a href="../../index.html" class="learntav-nav__logo">
-                    <span class="learntav-nav__logo-text">LearnTAV</span>
-                </a>
-                <div class="learntav-nav__menu">
-                    <a href="../../education/index.html" class="learntav-nav__link">Education</a>
-                    <a href="../index.html" class="learntav-nav__link learntav-nav__link--active">Consulting</a>
-                    <a href="../../about/index.html" class="learntav-nav__link">About</a>
-                    <a href="../../resources/index.html" class="learntav-nav__link">Resources</a>
-                    <a href="../../ai-tools/index.html" class="learntav-nav__link">AI Tools</a>
-                    <a href="../../contact/index.html" class="learntav-nav__link">Contact</a>
-                </div>
-                <div class="learntav-nav__actions">
-                    <a href="../../contact/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <!-- Navigation -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="../../index.html" class="nav-logo">
+                <span class="logo-text">LearnTAV</span>
+            </a>
 
-    <section class="learntav-page-header" id="main-content">
-        <div class="learntav-container">
-            <div class="learntav-page-header__content">
-                <h1 class="learntav-page-header__title">Case Studies</h1>
-                <p class="learntav-page-header__subtitle">Real-world examples of successful AI implementations and their measurable impact.</p>
+            <div class="nav-menu" id="navMenu">
+                <a href="../../education/index.html" class="nav-link">Education</a>
+                <a href="../../consulting/index.html" class="nav-link nav-link-active">Consulting</a>
+                <a href="../../ai-tools/index.html" class="nav-link">AI Tools</a>
+                <a href="../../resources/index.html" class="nav-link">Resources</a>
+                <a href="../../about/index.html" class="nav-link">About</a>
             </div>
-        </div>
-    </section>
 
-    <section class="learntav-services">
-        <div class="learntav-container">
-            <div class="learntav-section-header">
-                <h2 class="learntav-section-title">Success Stories</h2>
+            <div class="nav-actions">
+                <a href="../../contact/index.html" class="btn btn-ghost">Contact</a>
+                <a href="../../ai-tools/index.html" class="btn btn-primary">Get Started</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
-            <div class="learntav-grid learntav-grid--3-col">
-                <div class="learntav-testimonial-card">
-                    <div class="learntav-testimonial-card__quote">
-                        "40% reduction in AI infrastructure costs while improving performance."
-                    </div>
-                    <div class="learntav-testimonial-card__author">
-                        <div class="learntav-testimonial-card__avatar">GT</div>
-                        <div class="learntav-testimonial-card__info">
-                            <div class="learntav-testimonial-card__name">GreenTech Solutions</div>
-                            <div class="learntav-testimonial-card__title">Environmental Impact Assessment</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="learntav-testimonial-card">
-                    <div class="learntav-testimonial-card__quote">
-                        "Improved patient outcomes while maintaining full compliance."
-                    </div>
-                    <div class="learntav-testimonial-card__author">
-                        <div class="learntav-testimonial-card__avatar">HC</div>
-                        <div class="learntav-testimonial-card__info">
-                            <div class="learntav-testimonial-card__name">Healthcare Clinic</div>
-                            <div class="learntav-testimonial-card__title">Healthcare AI Implementation</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 3rem;">
-                <a href="../../contact/index.html?form=consulting" class="learntav-btn learntav-btn--primary learntav-btn--large">
-                    Discuss Your Project
-                </a>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <span class="section-tag">Case Studies</span>
+                <h1 class="page-title">Success Stories</h1>
+                <p class="page-description">
+                    Real-world examples of successful AI implementations and their measurable impact on organizations.
+                </p>
             </div>
         </div>
     </section>
 
-    <script src="../../assets/js/main.js"></script>
+    <!-- Case Studies Grid -->
+    <section class="programs">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Featured Cases</span>
+                <h2 class="section-title">Client success stories</h2>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p class="testimonial-quote">
+                            "40% reduction in AI infrastructure costs while improving performance. LearnTAV helped us optimize our entire AI workflow."
+                        </p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">GT</div>
+                        <div class="author-info">
+                            <span class="author-name">GreenTech Solutions</span>
+                            <span class="author-title">Environmental Impact Assessment</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p class="testimonial-quote">
+                            "Improved patient outcomes while maintaining full HIPAA compliance. The AI implementation transformed how we handle patient data."
+                        </p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">HC</div>
+                        <div class="author-info">
+                            <span class="author-name">Regional Healthcare Clinic</span>
+                            <span class="author-title">Healthcare AI Implementation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p class="testimonial-quote">
+                            "Our team went from AI skeptics to AI advocates. The training program was practical, accessible, and immediately applicable."
+                        </p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MF</div>
+                        <div class="author-info">
+                            <span class="author-name">Manufacturing Firm</span>
+                            <span class="author-title">Workforce AI Training</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Results</span>
+                <h2 class="section-title">Measurable outcomes</h2>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">40% Cost Reduction</h3>
+                    <p class="feature-description">Average infrastructure cost savings across all AI optimization projects.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">60% Efficiency Gain</h3>
+                    <p class="feature-description">Improvement in workflow efficiency after AI tool implementation.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">35% Carbon Reduction</h3>
+                    <p class="feature-description">Average decrease in AI-related carbon footprint for sustainability-focused clients.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">95% Team Adoption</h3>
+                    <p class="feature-description">Employee AI tool adoption rate after our training programs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to become our next success story?</h2>
+                <p class="cta-description">
+                    Let's discuss how we can help your organization achieve similar results.
+                </p>
+                <div class="cta-actions">
+                    <a href="../../contact/index.html" class="btn btn-white btn-lg">
+                        Discuss Your Project
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="footer-logo">LearnTAV</a>
+                    <p class="footer-tagline">Where technology meets accessibility.</p>
+                    <p class="footer-motto">"Learning Takes a Village"</p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Services</h4>
+                        <a href="../../education/index.html">Education</a>
+                        <a href="../../consulting/index.html">Consulting</a>
+                        <a href="../../ai-tools/index.html">AI Tools</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="../../about/index.html">About</a>
+                        <a href="../../contact/index.html">Contact</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <a href="../../legal/privacy/index.html">Privacy</a>
+                        <a href="../../legal/terms/index.html">Terms</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 LearnTAV. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <a href="../../education/index.html" class="mobile-link">Education</a>
+            <a href="../../consulting/index.html" class="mobile-link">Consulting</a>
+            <a href="../../ai-tools/index.html" class="mobile-link">AI Tools</a>
+            <a href="../../resources/index.html" class="mobile-link">Resources</a>
+            <a href="../../about/index.html" class="mobile-link">About</a>
+            <a href="../../contact/index.html" class="mobile-link">Contact</a>
+        </div>
+    </div>
+
+    <script src="../../assets/js/modern.js"></script>
 </body>
 </html>

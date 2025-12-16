@@ -5,415 +5,244 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="LearnTAV Terms of Service - Terms and conditions for using our AI education and consulting services.">
     <title>Terms of Service - LearnTAV</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../../assets/images/favicon.ico">
-    
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon-32x32.png">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/main.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../assets/css/modern.css">
     <style>
         .legal-content {
             max-width: 800px;
             margin: 0 auto;
-            padding: 2rem 0;
         }
-        
         .legal-content h2 {
-            color: #1f2937;
-            font-size: 1.5rem;
+            font-size: var(--font-size-xl);
             font-weight: 600;
-            margin: 2rem 0 1rem 0;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 0.5rem;
+            margin: var(--space-8) 0 var(--space-4) 0;
+            padding-bottom: var(--space-2);
+            border-bottom: 2px solid var(--color-primary);
         }
-        
         .legal-content h3 {
-            color: #374151;
-            font-size: 1.25rem;
+            font-size: var(--font-size-lg);
             font-weight: 600;
-            margin: 1.5rem 0 0.75rem 0;
+            margin: var(--space-6) 0 var(--space-3) 0;
         }
-        
-        .legal-content p {
-            color: #4b5563;
+        .legal-content p, .legal-content li {
+            color: var(--color-gray-600);
             line-height: 1.7;
-            margin-bottom: 1rem;
         }
-        
         .legal-content ul {
-            color: #4b5563;
-            line-height: 1.7;
-            margin: 1rem 0;
-            padding-left: 1.5rem;
+            margin: var(--space-4) 0;
+            padding-left: var(--space-6);
         }
-        
         .legal-content li {
-            margin-bottom: 0.5rem;
+            margin-bottom: var(--space-2);
         }
-        
-        .legal-last-updated {
-            background: #f0f9ff;
-            border: 1px solid #0ea5e9;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 2rem;
+        .legal-updated {
+            background: var(--color-gray-50);
+            padding: var(--space-4);
+            border-radius: var(--radius-lg);
             text-align: center;
+            margin-bottom: var(--space-8);
         }
-        
-        .legal-last-updated strong {
-            color: #0369a1;
-        }
-        
-        .legal-contact-box {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-        }
-        
         .important-notice {
             background: #fef3c7;
             border: 1px solid #f59e0b;
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 1rem 0;
+            padding: var(--space-4);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-6);
         }
-        
-        .important-notice strong {
-            color: #92400e;
+        .contact-box {
+            background: var(--color-gray-50);
+            padding: var(--space-6);
+            border-radius: var(--radius-lg);
+            margin-top: var(--space-8);
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="learntav-nav" id="mainNav">
-        <div class="learntav-container">
-            <div class="learntav-nav__container">
-                <a href="../../index.html" class="learntav-nav__logo">
-                    <span class="learntav-nav__logo-text">LearnTAV</span>
-                </a>
-                
-                <div class="learntav-nav__menu" id="navMenu">
-                    <a href="../../education/index.html" class="learntav-nav__link">Education</a>
-                    <a href="../../consulting/index.html" class="learntav-nav__link">Consulting</a>
-                    <a href="../../about/index.html" class="learntav-nav__link">About</a>
-                    <a href="../../resources/index.html" class="learntav-nav__link">Resources</a>
-                    <a href="../../ai-tools/index.html" class="learntav-nav__link">AI Tools</a>
-                    <a href="../../contact/index.html" class="learntav-nav__link">Contact</a>
-                </div>
-                
-                <div class="learntav-nav__actions">
-                    <a href="../../contact/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
-                    <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
-                        <span class="learntav-nav__toggle-line"></span>
-                        <span class="learntav-nav__toggle-line"></span>
-                        <span class="learntav-nav__toggle-line"></span>
-                    </button>
-                </div>
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="../../index.html" class="nav-logo">
+                <span class="logo-text">LearnTAV</span>
+            </a>
+
+            <div class="nav-menu" id="navMenu">
+                <a href="../../education/index.html" class="nav-link">Education</a>
+                <a href="../../consulting/index.html" class="nav-link">Consulting</a>
+                <a href="../../ai-tools/index.html" class="nav-link">AI Tools</a>
+                <a href="../../resources/index.html" class="nav-link">Resources</a>
+                <a href="../../about/index.html" class="nav-link">About</a>
             </div>
-        </div>
-    </nav>
+
+            <div class="nav-actions">
+                <a href="../../contact/index.html" class="btn btn-ghost">Contact</a>
+                <a href="../../ai-tools/index.html" class="btn btn-primary">Get Started</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
 
     <!-- Page Header -->
-    <section class="learntav-page-header" id="main-content">
-        <div class="learntav-container">
-            <div class="learntav-page-header__content">
-                <h1 class="learntav-page-header__title">Terms of Service</h1>
-                <p class="learntav-page-header__subtitle">
-                    Terms and conditions for using LearnTAV services
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <span class="section-tag">Legal</span>
+                <h1 class="page-title">Terms of Service</h1>
+                <p class="page-description">
+                    Terms and conditions for using LearnTAV services.
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Legal Content -->
-    <section class="learntav-services">
-        <div class="learntav-container">
+    <!-- Content -->
+    <section class="programs">
+        <div class="container">
             <div class="legal-content">
-                <div class="legal-last-updated">
+                <div class="legal-updated">
                     <strong>Last Updated:</strong> December 15, 2024
                 </div>
 
                 <div class="important-notice">
-                    <strong>Important:</strong> By accessing or using LearnTAV services, you agree to be bound by these Terms of Service. Please read them carefully.
+                    <strong>Important:</strong> By accessing or using LearnTAV services, you agree to be bound by these Terms of Service.
                 </div>
 
                 <h2>1. Acceptance of Terms</h2>
-                
-                <p>
-                    These Terms of Service ("Terms") constitute a legally binding agreement between you ("User," "you," or "your") and LearnTAV ("we," "us," or "our") governing your access to and use of our website, services, products, and Chrome extensions.
-                </p>
-                
-                <p>By accessing or using our services, you acknowledge that you have read, understood, and agree to be bound by these Terms and our Privacy Policy.</p>
+                <p>These Terms of Service govern your access to and use of LearnTAV's website, services, products, and Chrome extensions. By using our services, you acknowledge that you have read, understood, and agree to be bound by these Terms.</p>
 
                 <h2>2. Description of Services</h2>
-                
                 <p>LearnTAV provides:</p>
                 <ul>
-                    <li><strong>Educational Services:</strong> AI education programs, courses, tutorials, and learning materials</li>
-                    <li><strong>Consulting Services:</strong> AI implementation consulting, environmental impact assessment, and strategic advice</li>
-                    <li><strong>Digital Tools:</strong> Chrome extensions and web-based applications for AI optimization</li>
-                    <li><strong>Content:</strong> Blog articles, guides, newsletters, and other educational resources</li>
-                    <li><strong>Community:</strong> Access to forums, discussions, and networking opportunities</li>
+                    <li><strong>Educational Services:</strong> AI education programs and courses</li>
+                    <li><strong>Consulting Services:</strong> AI implementation consulting</li>
+                    <li><strong>Digital Tools:</strong> Chrome extensions and web applications</li>
+                    <li><strong>Content:</strong> Blog articles, guides, and resources</li>
                 </ul>
 
-                <h2>3. User Accounts and Registration</h2>
-                
+                <h2>3. User Accounts</h2>
                 <h3>Account Creation</h3>
                 <p>To access certain features, you may need to create an account. You agree to:</p>
                 <ul>
-                    <li>Provide accurate, current, and complete information</li>
+                    <li>Provide accurate, current information</li>
                     <li>Maintain and update your account information</li>
                     <li>Keep your login credentials confidential</li>
-                    <li>Notify us immediately of any unauthorized account access</li>
                     <li>Be responsible for all activities under your account</li>
                 </ul>
 
-                <h3>Eligibility</h3>
-                <p>You must be at least 18 years old to use our services. If you are under 18, you may use our services only with parental consent and supervision.</p>
-
                 <h2>4. Payment and Billing</h2>
-                
-                <h3>Fees and Charges</h3>
                 <ul>
                     <li>Some services require payment as described on our pricing pages</li>
                     <li>All fees are non-refundable unless otherwise stated</li>
-                    <li>Prices may change with 30 days' notice to existing customers</li>
-                    <li>You authorize us to charge your payment method for all applicable fees</li>
-                </ul>
-
-                <h3>Subscriptions</h3>
-                <ul>
                     <li>Subscription services automatically renew unless cancelled</li>
-                    <li>You may cancel subscriptions at any time through your account settings</li>
-                    <li>Cancellations take effect at the end of the current billing period</li>
-                    <li>No refunds for partial subscription periods</li>
+                    <li><strong>Refund Policy:</strong> 30-day money-back guarantee for education programs</li>
                 </ul>
 
-                <h3>Refund Policy</h3>
+                <h2>5. Acceptable Use</h2>
+                <p>You agree not to:</p>
                 <ul>
-                    <li><strong>Education Programs:</strong> 30-day money-back guarantee if you're not satisfied</li>
-                    <li><strong>Chrome Extensions:</strong> 30-day refund window for one-time purchases</li>
-                    <li><strong>Consulting Services:</strong> Satisfaction guarantee with project-specific terms</li>
-                    <li><strong>Digital Products:</strong> No refunds after access is granted, unless defective</li>
-                </ul>
-
-                <h2>5. Acceptable Use Policy</h2>
-                
-                <p>You agree not to use our services to:</p>
-                <ul>
-                    <li>Violate any laws, regulations, or third-party rights</li>
-                    <li>Share false, misleading, or harmful information</li>
-                    <li>Engage in harassment, abuse, or discriminatory behavior</li>
-                    <li>Attempt to gain unauthorized access to our systems</li>
-                    <li>Distribute malware, viruses, or malicious code</li>
-                    <li>Use automated tools to access our services without permission</li>
+                    <li>Violate any laws or regulations</li>
+                    <li>Share false or misleading information</li>
+                    <li>Engage in harassment or discriminatory behavior</li>
+                    <li>Attempt unauthorized access to our systems</li>
                     <li>Resell or redistribute our content without authorization</li>
-                    <li>Reverse engineer our software or extensions</li>
                 </ul>
 
-                <h2>6. Intellectual Property Rights</h2>
-                
-                <h3>Our Content</h3>
-                <p>All content, including but not limited to text, graphics, logos, software, and educational materials, is owned by LearnTAV or our licensors and protected by copyright and other intellectual property laws.</p>
+                <h2>6. Intellectual Property</h2>
+                <p>All content, including text, graphics, logos, and software, is owned by LearnTAV or our licensors. We grant you a limited, non-exclusive license to access and use our services for personal or business purposes.</p>
 
-                <h3>Limited License</h3>
-                <p>We grant you a limited, non-exclusive, non-transferable license to access and use our services for your personal or business purposes in accordance with these Terms.</p>
+                <h2>7. Privacy</h2>
+                <p>Your privacy is important to us. Please review our <a href="../privacy/index.html">Privacy Policy</a> for information about how we collect, use, and protect your data.</p>
 
-                <h3>User Content</h3>
-                <p>You retain ownership of content you submit to our services. By submitting content, you grant us a worldwide, non-exclusive, royalty-free license to use, reproduce, and display your content as necessary to provide our services.</p>
-
-                <h2>7. Privacy and Data Protection</h2>
-                
-                <p>Your privacy is important to us. Please review our Privacy Policy, which explains how we collect, use, and protect your information. By using our services, you consent to our data practices as described in the Privacy Policy.</p>
-
-                <h2>8. Third-Party Services and Integrations</h2>
-                
-                <p>Our services may integrate with or provide access to third-party services, including:</p>
+                <h2>8. Disclaimers</h2>
+                <p>Our services are provided "AS IS" without warranties of any kind. We do not guarantee:</p>
                 <ul>
-                    <li>Payment processors (Stripe, PayPal)</li>
-                    <li>AI platforms (OpenAI, Anthropic, Google)</li>
-                    <li>Analytics services (Google Analytics)</li>
-                    <li>Communication tools (email providers, chat services)</li>
-                </ul>
-                
-                <p>We are not responsible for the availability, content, or practices of third-party services. Your use of third-party services is governed by their respective terms and policies.</p>
-
-                <h2>9. Service Availability and Modifications</h2>
-                
-                <h3>Service Availability</h3>
-                <p>We strive to provide reliable services but cannot guarantee 100% uptime. We may temporarily suspend services for maintenance, updates, or other operational reasons.</p>
-
-                <h3>Modifications</h3>
-                <p>We reserve the right to modify, suspend, or discontinue any aspect of our services at any time. We will provide reasonable notice of material changes when possible.</p>
-
-                <h2>10. Disclaimers and Limitation of Liability</h2>
-                
-                <h3>Disclaimers</h3>
-                <p>Our services are provided "AS IS" and "AS AVAILABLE" without warranties of any kind, either express or implied, including but not limited to:</p>
-                <ul>
-                    <li>Merchantability or fitness for a particular purpose</li>
-                    <li>Accuracy, completeness, or reliability of content</li>
+                    <li>Accuracy or completeness of content</li>
                     <li>Uninterrupted or error-free operation</li>
-                    <li>Results or outcomes from using our services</li>
+                    <li>Specific results from using our services</li>
                 </ul>
 
-                <h3>Limitation of Liability</h3>
-                <p>To the maximum extent permitted by law, LearnTAV shall not be liable for:</p>
-                <ul>
-                    <li>Indirect, incidental, special, or consequential damages</li>
-                    <li>Loss of profits, data, or business opportunities</li>
-                    <li>Damages exceeding the amount paid for services in the 12 months prior to the claim</li>
-                    <li>Issues arising from third-party services or integrations</li>
-                </ul>
+                <h2>9. Limitation of Liability</h2>
+                <p>To the maximum extent permitted by law, LearnTAV shall not be liable for indirect, incidental, special, or consequential damages arising from your use of our services.</p>
 
-                <h2>11. Indemnification</h2>
-                
-                <p>You agree to indemnify, defend, and hold harmless LearnTAV, its officers, directors, employees, and agents from any claims, damages, losses, or expenses arising from:</p>
-                <ul>
-                    <li>Your use of our services</li>
-                    <li>Your violation of these Terms</li>
-                    <li>Your violation of any third-party rights</li>
-                    <li>Content you submit or share through our services</li>
-                </ul>
+                <h2>10. Termination</h2>
+                <p>You may terminate your account at any time. We may suspend or terminate access if you violate these Terms, engage in fraudulent activities, or fail to pay required fees.</p>
 
-                <h2>12. Termination</h2>
-                
-                <h3>Termination by You</h3>
-                <p>You may terminate your account at any time by contacting us or using account settings. Termination does not relieve you of payment obligations for services already provided.</p>
+                <h2>11. Changes to Terms</h2>
+                <p>We may update these Terms from time to time. We will notify you of material changes via email or website notice. Continued use after changes constitutes acceptance.</p>
 
-                <h3>Termination by Us</h3>
-                <p>We may suspend or terminate your access to our services at any time if you:</p>
-                <ul>
-                    <li>Violate these Terms or our policies</li>
-                    <li>Engage in fraudulent or illegal activities</li>
-                    <li>Fail to pay required fees</li>
-                    <li>Create security risks for our systems or users</li>
-                </ul>
-
-                <h2>13. Dispute Resolution</h2>
-                
-                <h3>Governing Law</h3>
-                <p>These Terms are governed by the laws of [Jurisdiction], without regard to conflict of law principles.</p>
-
-                <h3>Dispute Resolution Process</h3>
-                <p>Before filing any legal action, you agree to attempt to resolve disputes through:</p>
-                <ol>
-                    <li><strong>Direct Contact:</strong> Contact us at legal@learntav.com</li>
-                    <li><strong>Good Faith Negotiation:</strong> 60-day period to resolve the matter amicably</li>
-                    <li><strong>Mediation:</strong> If negotiation fails, binding mediation may be required</li>
-                </ol>
-
-                <h2>14. Changes to Terms</h2>
-                
-                <p>We may update these Terms from time to time. Changes will be effective when posted on our website. We will notify you of material changes via:</p>
-                <ul>
-                    <li>Email notification to your registered address</li>
-                    <li>Prominent notice on our website</li>
-                    <li>In-app notifications for significant changes</li>
-                </ul>
-                
-                <p>Continued use of our services after changes constitute acceptance of the updated Terms.</p>
-
-                <h2>15. General Provisions</h2>
-                
-                <h3>Entire Agreement</h3>
-                <p>These Terms, together with our Privacy Policy and other referenced policies, constitute the entire agreement between you and LearnTAV.</p>
-
-                <h3>Severability</h3>
-                <p>If any provision of these Terms is found to be unenforceable, the remaining provisions will continue in full force and effect.</p>
-
-                <h3>Assignment</h3>
-                <p>You may not assign your rights under these Terms. We may assign our rights and obligations without restriction.</p>
-
-                <h3>Waiver</h3>
-                <p>Our failure to enforce any provision of these Terms does not constitute a waiver of that provision or any other provision.</p>
-
-                <div class="legal-contact-box">
-                    <h3>Contact Information</h3>
-                    <p>For questions about these Terms of Service, please contact us:</p>
-                    <ul>
-                        <li><strong>Email:</strong> legal@learntav.com</li>
-                        <li><strong>Address:</strong> LearnTAV Legal Department, [Company Address]</li>
-                        <li><strong>Phone:</strong> [Phone Number]</li>
-                    </ul>
-                    <p>We will respond to your inquiry within 5 business days.</p>
+                <div class="contact-box">
+                    <h3>Contact Us</h3>
+                    <p>Questions about these Terms of Service? Contact us at:</p>
+                    <p><strong>Email:</strong> legal@learntav.com</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="learntav-footer">
-        <div class="learntav-container">
-            <div class="learntav-footer__main">
-                <div class="learntav-footer__brand">
-                    <div class="learntav-footer__logo">
-                        <span class="learntav-footer__logo-text">LearnTAV</span>
-                    </div>
-                    <p class="learntav-footer__description">
-                        Where Technology Meets Accessibility, Sustainability, and Real-World Impact.
-                    </p>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="footer-logo">LearnTAV</a>
+                    <p class="footer-tagline">Where technology meets accessibility.</p>
+                    <p class="footer-motto">"Learning Takes a Village"</p>
                 </div>
 
-                <div class="learntav-footer__links">
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Services</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../../education/index.html">Education</a></li>
-                            <li><a href="../../consulting/index.html">Consulting</a></li>
-                            <li><a href="../../education/paths/index.html">Learning Paths</a></li>
-                            <li><a href="../../consulting/case-studies/index.html">Case Studies</a></li>
-                        </ul>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Services</h4>
+                        <a href="../../education/index.html">Education</a>
+                        <a href="../../consulting/index.html">Consulting</a>
+                        <a href="../../ai-tools/index.html">AI Tools</a>
                     </div>
 
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Company</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../../about/index.html">About</a></li>
-                            <li><a href="../../about/team/index.html">Team</a></li>
-                            <li><a href="../../about/approach/index.html">Our Approach</a></li>
-                            <li><a href="../../contact/index.html">Contact</a></li>
-                        </ul>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="../../about/index.html">About</a>
+                        <a href="../../contact/index.html">Contact</a>
                     </div>
 
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Resources</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../../resources/guides/index.html">Free Guides</a></li>
-                            <li><a href="../../resources/tools/index.html">Tools</a></li>
-                            <li><a href="../../resources/blog/index.html">Blog</a></li>
-                            <li><a href="../../resources/newsletter/index.html">Newsletter</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Legal</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../privacy/index.html">Privacy Policy</a></li>
-                            <li><a href="index.html">Terms of Service</a></li>
-                            <li><a href="../cookies/index.html">Cookie Policy</a></li>
-                        </ul>
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <a href="../privacy/index.html">Privacy</a>
+                        <a href="index.html">Terms</a>
+                        <a href="../cookies/index.html">Cookies</a>
                     </div>
                 </div>
             </div>
 
-            <div class="learntav-footer__bottom">
-                <div class="learntav-footer__legal">
-                    <p>&copy; 2024 LearnTAV. All rights reserved.</p>
-                </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 LearnTAV. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script src="../../assets/js/main.js"></script>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <a href="../../education/index.html" class="mobile-link">Education</a>
+            <a href="../../consulting/index.html" class="mobile-link">Consulting</a>
+            <a href="../../ai-tools/index.html" class="mobile-link">AI Tools</a>
+            <a href="../../resources/index.html" class="mobile-link">Resources</a>
+            <a href="../../about/index.html" class="mobile-link">About</a>
+            <a href="../../contact/index.html" class="mobile-link">Contact</a>
+        </div>
+    </div>
+
+    <script src="../../assets/js/modern.js"></script>
 </body>
 </html>

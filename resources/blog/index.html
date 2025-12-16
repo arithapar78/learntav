@@ -5,295 +5,249 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Latest insights on AI trends, tutorials, case studies, and best practices from the LearnTAV team.">
     <title>Blog & Insights - LearnTAV Resources</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../../assets/images/favicon.ico">
-    
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon-32x32.png">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../assets/css/modern.css">
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="learntav-nav" id="mainNav">
-        <div class="learntav-container">
-            <div class="learntav-nav__container">
-                <a href="../../index.html" class="learntav-nav__logo">
-                    <span class="learntav-nav__logo-text">LearnTAV</span>
-                </a>
-                
-                <div class="learntav-nav__menu" id="navMenu">
-                    <a href="../../education/index.html" class="learntav-nav__link">Education</a>
-                    <a href="../../consulting/index.html" class="learntav-nav__link">Consulting</a>
-                    <a href="../../about/index.html" class="learntav-nav__link">About</a>
-                    <a href="../index.html" class="learntav-nav__link learntav-nav__link--active">Resources</a>
-                    <a href="../../ai-tools/index.html" class="learntav-nav__link">AI Tools</a>
-                    <a href="../../contact/index.html" class="learntav-nav__link">Contact</a>
-                </div>
-                
-                <div class="learntav-nav__actions">
-                    <a href="../../contact/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
-                    <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
-                        <span class="learntav-nav__toggle-line"></span>
-                        <span class="learntav-nav__toggle-line"></span>
-                        <span class="learntav-nav__toggle-line"></span>
-                    </button>
-                </div>
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="../../index.html" class="nav-logo">
+                <span class="logo-text">LearnTAV</span>
+            </a>
+
+            <div class="nav-menu" id="navMenu">
+                <a href="../../education/index.html" class="nav-link">Education</a>
+                <a href="../../consulting/index.html" class="nav-link">Consulting</a>
+                <a href="../../ai-tools/index.html" class="nav-link">AI Tools</a>
+                <a href="../../resources/index.html" class="nav-link nav-link-active">Resources</a>
+                <a href="../../about/index.html" class="nav-link">About</a>
             </div>
-        </div>
-    </nav>
+
+            <div class="nav-actions">
+                <a href="../../contact/index.html" class="btn btn-ghost">Contact</a>
+                <a href="../../ai-tools/index.html" class="btn btn-primary">Get Started</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
 
     <!-- Page Header -->
-    <section class="learntav-page-header" id="main-content">
-        <div class="learntav-container">
-            <div class="learntav-page-header__content">
-                <h1 class="learntav-page-header__title">Blog & Insights</h1>
-                <p class="learntav-page-header__subtitle">
-                    Latest thoughts on AI trends, practical tutorials, case studies, and industry insights from our team of experts.
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <span class="section-tag">Blog</span>
+                <h1 class="page-title">Blog & Insights</h1>
+                <p class="page-description">
+                    Latest thoughts on AI trends, practical tutorials, case studies, and industry insights from our team.
                 </p>
             </div>
         </div>
     </section>
 
     <!-- Featured Posts -->
-    <section class="learntav-services">
-        <div class="learntav-container">
-            <div class="learntav-section-header">
-                <h2 class="learntav-section-title">Featured Articles</h2>
-                <p class="learntav-section-subtitle">
-                    Our most popular and impactful posts on AI education and sustainable technology
-                </p>
+    <section class="programs">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Featured</span>
+                <h2 class="section-title">Featured articles</h2>
             </div>
-            
-            <div class="learntav-grid learntav-grid--3-col">
-                <div class="learntav-service-card learntav-service-card--education">
-                    <div class="learntav-service-card__header">
-                        <div class="learntav-service-card__icon">🌱</div>
-                        <div class="learntav-service-card__category">Sustainability</div>
+
+            <div class="services-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="service-card">
+                    <div class="service-icon service-icon-green">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
                     </div>
-                    <h3 class="learntav-service-card__title">The Hidden Carbon Cost of AI: What You Need to Know</h3>
-                    <p class="learntav-service-card__description">
-                        A deep dive into AI's environmental impact and practical steps you can take to reduce your carbon footprint while using AI tools effectively.
+                    <span class="service-tag">Sustainability</span>
+                    <h3 class="service-title">The Hidden Carbon Cost of AI</h3>
+                    <p class="service-description">
+                        A deep dive into AI's environmental impact and practical steps to reduce your carbon footprint.
                     </p>
-                    <div class="learntav-service-card__meta" style="font-size: 0.875rem; color: #6b7280; margin-top: 1rem;">
-                        <span>By Sarah Chen</span> • <span>Dec 15, 2024</span> • <span>8 min read</span>
-                    </div>
+                    <p style="color: var(--color-gray-500); font-size: var(--font-size-sm); margin-top: var(--space-4);">
+                        Dec 15, 2024 - 8 min read
+                    </p>
                 </div>
 
-                <div class="learntav-service-card learntav-service-card--consulting">
-                    <div class="learntav-service-card__header">
-                        <div class="learntav-service-card__icon">🚀</div>
-                        <div class="learntav-service-card__category">Tutorial</div>
+                <div class="service-card">
+                    <div class="service-icon service-icon-blue">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
                     </div>
-                    <h3 class="learntav-service-card__title">Build Your First AI-Powered App in 30 Minutes</h3>
-                    <p class="learntav-service-card__description">
-                        Step-by-step tutorial showing how to create a functional AI application using no-code tools, perfect for complete beginners.
+                    <span class="service-tag">Tutorial</span>
+                    <h3 class="service-title">Build Your First AI App in 30 Minutes</h3>
+                    <p class="service-description">
+                        Step-by-step tutorial for creating a functional AI application using no-code tools.
                     </p>
-                    <div class="learntav-service-card__meta" style="font-size: 0.875rem; color: #6b7280; margin-top: 1rem;">
-                        <span>By Alex Thompson</span> • <span>Dec 10, 2024</span> • <span>12 min read</span>
-                    </div>
+                    <p style="color: var(--color-gray-500); font-size: var(--font-size-sm); margin-top: var(--space-4);">
+                        Dec 10, 2024 - 12 min read
+                    </p>
                 </div>
 
-                <div class="learntav-service-card learntav-service-card--education">
-                    <div class="learntav-service-card__header">
-                        <div class="learntav-service-card__icon">🏥</div>
-                        <div class="learntav-service-card__category">Case Study</div>
+                <div class="service-card">
+                    <div class="service-icon service-icon-purple">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
                     </div>
-                    <h3 class="learntav-service-card__title">How a Small Clinic Improved Patient Care with AI</h3>
-                    <p class="learntav-service-card__description">
-                        Real-world case study showing how a family practice implemented AI tools to reduce wait times and improve patient outcomes.
+                    <span class="service-tag">Case Study</span>
+                    <h3 class="service-title">How a Clinic Improved Care with AI</h3>
+                    <p class="service-description">
+                        Real-world case study showing how a family practice implemented AI tools successfully.
                     </p>
-                    <div class="learntav-service-card__meta" style="font-size: 0.875rem; color: #6b7280; margin-top: 1rem;">
-                        <span>By Dr. Michael Rodriguez</span> • <span>Dec 5, 2024</span> • <span>10 min read</span>
-                    </div>
+                    <p style="color: var(--color-gray-500); font-size: var(--font-size-sm); margin-top: var(--space-4);">
+                        Dec 5, 2024 - 10 min read
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Recent Posts -->
-    <section class="learntav-values">
-        <div class="learntav-container">
-            <div class="learntav-section-header">
-                <h2 class="learntav-section-title">Recent Posts</h2>
-                <p class="learntav-section-subtitle">
-                    Our latest articles and insights
-                </p>
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Latest</span>
+                <h2 class="section-title">Recent posts</h2>
             </div>
-            
-            <div class="learntav-grid learntav-grid--2-col">
-                <div class="learntav-testimonial-card" style="text-align: left;">
-                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                        <div class="learntav-testimonial-card__avatar" style="width: 50px; height: 50px; margin-right: 1rem;">💡</div>
-                        <div>
-                            <div class="learntav-testimonial-card__title" style="font-size: 0.875rem; color: #667eea; margin-bottom: 0.25rem;">AI Trends</div>
-                            <div style="font-size: 0.875rem; color: #6b7280;">Nov 28, 2024 • 6 min read</div>
-                        </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <span class="service-tag" style="margin-bottom: var(--space-2);">AI Trends</span>
+                        <h4 style="font-size: var(--font-size-lg); font-weight: 600; margin-bottom: var(--space-2);">
+                            5 AI Productivity Hacks Every Professional Should Know
+                        </h4>
+                        <p style="color: var(--color-gray-600); font-size: var(--font-size-sm);">
+                            Practical tips for integrating AI into your daily workflow.
+                        </p>
+                        <p style="color: var(--color-gray-500); font-size: var(--font-size-xs); margin-top: var(--space-3);">
+                            Nov 28, 2024 - 6 min read
+                        </p>
                     </div>
-                    <h4 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; line-height: 1.4;">
-                        5 AI Productivity Hacks Every Professional Should Know
-                    </h4>
-                    <p style="color: #6b7280; line-height: 1.6;">
-                        Practical tips for integrating AI into your daily workflow, from email management to content creation and data analysis.
-                    </p>
                 </div>
 
-                <div class="learntav-testimonial-card" style="text-align: left;">
-                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                        <div class="learntav-testimonial-card__avatar" style="width: 50px; height: 50px; margin-right: 1rem;">🎯</div>
-                        <div>
-                            <div class="learntav-testimonial-card__title" style="font-size: 0.875rem; color: #667eea; margin-bottom: 0.25rem;">Best Practices</div>
-                            <div style="font-size: 0.875rem; color: #6b7280;">Nov 25, 2024 • 8 min read</div>
-                        </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <span class="service-tag" style="margin-bottom: var(--space-2);">Best Practices</span>
+                        <h4 style="font-size: var(--font-size-lg); font-weight: 600; margin-bottom: var(--space-2);">
+                            Prompt Engineering: Getting Better Results from AI
+                        </h4>
+                        <p style="color: var(--color-gray-600); font-size: var(--font-size-sm);">
+                            Master the art of crafting effective prompts for AI models.
+                        </p>
+                        <p style="color: var(--color-gray-500); font-size: var(--font-size-xs); margin-top: var(--space-3);">
+                            Nov 25, 2024 - 8 min read
+                        </p>
                     </div>
-                    <h4 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; line-height: 1.4;">
-                        Prompt Engineering: Getting Better Results from AI Models
-                    </h4>
-                    <p style="color: #6b7280; line-height: 1.6;">
-                        Master the art of crafting effective prompts to get more accurate and useful responses from ChatGPT, Claude, and other AI models.
-                    </p>
                 </div>
 
-                <div class="learntav-testimonial-card" style="text-align: left;">
-                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                        <div class="learntav-testimonial-card__avatar" style="width: 50px; height: 50px; margin-right: 1rem;">📊</div>
-                        <div>
-                            <div class="learntav-testimonial-card__title" style="font-size: 0.875rem; color: #667eea; margin-bottom: 0.25rem;">Data Analysis</div>
-                            <div style="font-size: 0.875rem; color: #6b7280;">Nov 20, 2024 • 7 min read</div>
-                        </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <span class="service-tag" style="margin-bottom: var(--space-2);">Data Analysis</span>
+                        <h4 style="font-size: var(--font-size-lg); font-weight: 600; margin-bottom: var(--space-2);">
+                            No-Code Data Analysis: Spreadsheets to Insights
+                        </h4>
+                        <p style="color: var(--color-gray-600); font-size: var(--font-size-sm);">
+                            Use AI tools to analyze data without coding.
+                        </p>
+                        <p style="color: var(--color-gray-500); font-size: var(--font-size-xs); margin-top: var(--space-3);">
+                            Nov 20, 2024 - 7 min read
+                        </p>
                     </div>
-                    <h4 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; line-height: 1.4;">
-                        No-Code Data Analysis: Turn Spreadsheets into Insights
-                    </h4>
-                    <p style="color: #6b7280; line-height: 1.6;">
-                        Learn how to use AI-powered tools like Notion and Airtable to analyze data and create meaningful visualizations without coding.
-                    </p>
-                </div>
-
-                <div class="learntav-testimonial-card" style="text-align: left;">
-                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                        <div class="learntav-testimonial-card__avatar" style="width: 50px; height: 50px; margin-right: 1rem;">💼</div>
-                        <div>
-                            <div class="learntav-testimonial-card__title" style="font-size: 0.875rem; color: #667eea; margin-bottom: 0.25rem;">Business Strategy</div>
-                            <div style="font-size: 0.875rem; color: #6b7280;">Nov 18, 2024 • 9 min read</div>
-                        </div>
-                    </div>
-                    <h4 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; line-height: 1.4;">
-                        ROI of AI Training: Measuring Success in Your Organization
-                    </h4>
-                    <p style="color: #6b7280; line-height: 1.6;">
-                        Framework for calculating and tracking the return on investment of AI training programs in your organization.
-                    </p>
-                </div>
-
-                <div class="learntav-testimonial-card" style="text-align: left;">
-                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                        <div class="learntav-testimonial-card__avatar" style="width: 50px; height: 50px; margin-right: 1rem;">🔧</div>
-                        <div>
-                            <div class="learntav-testimonial-card__title" style="font-size: 0.875rem; color: #667eea; margin-bottom: 0.25rem;">Tool Review</div>
-                            <div style="font-size: 0.875rem; color: #6b7280;">Nov 15, 2024 • 5 min read</div>
-                        </div>
-                    </div>
-                    <h4 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; line-height: 1.4;">
-                        Bubble vs Webflow vs Framer: Which No-Code Platform is Right for You?
-                    </h4>
-                    <p style="color: #6b7280; line-height: 1.6;">
-                        Comprehensive comparison of popular no-code platforms to help you choose the best one for your specific project needs.
-                    </p>
-                </div>
-
-                <div class="learntav-testimonial-card" style="text-align: left;">
-                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                        <div class="learntav-testimonial-card__avatar" style="width: 50px; height: 50px; margin-right: 1rem;">🌍</div>
-                        <div>
-                            <div class="learntav-testimonial-card__title" style="font-size: 0.875rem; color: #667eea; margin-bottom: 0.25rem;">Sustainability</div>
-                            <div style="font-size: 0.875rem; color: #6b7280;">Nov 12, 2024 • 6 min read</div>
-                        </div>
-                    </div>
-                    <h4 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; line-height: 1.4;">
-                        Green Computing: Simple Steps to Reduce Your Tech Footprint
-                    </h4>
-                    <p style="color: #6b7280; line-height: 1.6;">
-                        Practical advice for reducing energy consumption and environmental impact through smarter technology choices and habits.
-                    </p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Categories -->
-    <section class="learntav-services" style="background: #f9fafb;">
-        <div class="learntav-container">
-            <div class="learntav-section-header">
-                <h2 class="learntav-section-title">Browse by Category</h2>
-                <p class="learntav-section-subtitle">
-                    Find articles that match your interests and learning goals
-                </p>
+    <section class="programs" style="background: var(--color-gray-50);">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Browse</span>
+                <h2 class="section-title">Categories</h2>
             </div>
-            
-            <div class="learntav-grid learntav-grid--4-col">
-                <div class="learntav-value-card">
-                    <div class="learntav-value-card__icon">📱</div>
-                    <h3 class="learntav-value-card__title">App Development</h3>
-                    <p class="learntav-value-card__description">
-                        No-code tutorials, platform comparisons, and development best practices.
-                    </p>
-                    <div style="text-align: center; margin-top: 1rem; font-size: 0.875rem; color: #667eea; font-weight: 600;">
-                        15 articles
+
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                            <line x1="12" y1="18" x2="12.01" y2="18"/>
+                        </svg>
                     </div>
+                    <h3 class="feature-title">App Development</h3>
+                    <p class="feature-description">No-code tutorials and platform comparisons.</p>
                 </div>
-                
-                <div class="learntav-value-card">
-                    <div class="learntav-value-card__icon">🤖</div>
-                    <h3 class="learntav-value-card__title">AI Integration</h3>
-                    <p class="learntav-value-card__description">
-                        Workplace AI adoption, tool integration, and workflow optimization strategies.
-                    </p>
-                    <div style="text-align: center; margin-top: 1rem; font-size: 0.875rem; color: #667eea; font-weight: 600;">
-                        23 articles
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
                     </div>
+                    <h3 class="feature-title">AI Integration</h3>
+                    <p class="feature-description">Workplace AI adoption and workflow optimization.</p>
                 </div>
-                
-                <div class="learntav-value-card">
-                    <div class="learntav-value-card__icon">🌱</div>
-                    <h3 class="learntav-value-card__title">Sustainability</h3>
-                    <p class="learntav-value-card__description">
-                        Environmental impact, green computing, and sustainable technology practices.
-                    </p>
-                    <div style="text-align: center; margin-top: 1rem; font-size: 0.875rem; color: #667eea; font-weight: 600;">
-                        12 articles
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
                     </div>
+                    <h3 class="feature-title">Sustainability</h3>
+                    <p class="feature-description">Green computing and environmental impact.</p>
                 </div>
-                
-                <div class="learntav-value-card">
-                    <div class="learntav-value-card__icon">📊</div>
-                    <h3 class="learntav-value-card__title">Case Studies</h3>
-                    <p class="learntav-value-card__description">
-                        Real-world success stories, implementation examples, and lessons learned.
-                    </p>
-                    <div style="text-align: center; margin-top: 1rem; font-size: 0.875rem; color: #667eea; font-weight: 600;">
-                        8 articles
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="20" x2="18" y2="10"/>
+                            <line x1="12" y1="20" x2="12" y2="4"/>
+                            <line x1="6" y1="20" x2="6" y2="14"/>
+                        </svg>
                     </div>
+                    <h3 class="feature-title">Case Studies</h3>
+                    <p class="feature-description">Real-world success stories and lessons learned.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Newsletter Signup -->
-    <section class="learntav-cta">
-        <div class="learntav-container">
-            <div class="learntav-cta__content">
-                <h2 class="learntav-cta__title">Never Miss an Update</h2>
-                <p class="learntav-cta__description">
-                    Get our latest articles, tutorials, and industry insights delivered directly to your inbox every week.
+    <!-- Newsletter CTA -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Never miss an update</h2>
+                <p class="cta-description">
+                    Get our latest articles and insights delivered to your inbox every week.
                 </p>
-                <div class="learntav-cta__actions">
-                    <a href="../newsletter/index.html" class="learntav-btn learntav-btn--primary learntav-btn--large">
+                <div class="cta-actions">
+                    <a href="../newsletter/index.html" class="btn btn-white btn-lg">
                         Subscribe to Newsletter
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
                     </a>
                 </div>
             </div>
@@ -301,73 +255,55 @@
     </section>
 
     <!-- Footer -->
-    <footer class="learntav-footer">
-        <div class="learntav-container">
-            <div class="learntav-footer__main">
-                <div class="learntav-footer__brand">
-                    <div class="learntav-footer__logo">
-                        <span class="learntav-footer__logo-text">LearnTAV</span>
-                    </div>
-                    <p class="learntav-footer__description">
-                        Where Technology Meets Accessibility, Sustainability, and Real-World Impact.
-                    </p>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="footer-logo">LearnTAV</a>
+                    <p class="footer-tagline">Where technology meets accessibility.</p>
+                    <p class="footer-motto">"Learning Takes a Village"</p>
                 </div>
 
-                <div class="learntav-footer__links">
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Services</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../../education/index.html">Education</a></li>
-                            <li><a href="../../consulting/index.html">Consulting</a></li>
-                            <li><a href="../../education/paths/index.html">Learning Paths</a></li>
-                            <li><a href="../../consulting/case-studies/index.html">Case Studies</a></li>
-                        </ul>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Services</h4>
+                        <a href="../../education/index.html">Education</a>
+                        <a href="../../consulting/index.html">Consulting</a>
+                        <a href="../../ai-tools/index.html">AI Tools</a>
                     </div>
 
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Company</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../../about/index.html">About</a></li>
-                            <li><a href="../../about/team/index.html">Team</a></li>
-                            <li><a href="../../about/approach/index.html">Our Approach</a></li>
-                            <li><a href="../../contact/index.html">Contact</a></li>
-                        </ul>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="../../about/index.html">About</a>
+                        <a href="../../contact/index.html">Contact</a>
                     </div>
 
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">AI Tools</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../../ai-tools/index.html">Power Tracker</a></li>
-                            <li><a href="../../ai-tools/power-tracker/index.html">Learn More</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Resources</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../guides/index.html">Free Guides</a></li>
-                            <li><a href="../tools/index.html">Tools</a></li>
-                            <li><a href="index.html">Blog</a></li>
-                            <li><a href="../newsletter/index.html">Newsletter</a></li>
-                        </ul>
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <a href="../../legal/privacy/index.html">Privacy</a>
+                        <a href="../../legal/terms/index.html">Terms</a>
                     </div>
                 </div>
             </div>
 
-            <div class="learntav-footer__bottom">
-                <div class="learntav-footer__legal">
-                    <p>&copy; 2024 LearnTAV. All rights reserved.</p>
-                    <div class="learntav-footer__legal-links">
-                        <a href="../../legal/privacy/index.html">Privacy Policy</a>
-                        <a href="../../legal/terms/index.html">Terms of Service</a>
-                        <a href="../../legal/cookies/index.html">Cookie Policy</a>
-                    </div>
-                </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 LearnTAV. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script src="../../assets/js/main.js"></script>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <a href="../../education/index.html" class="mobile-link">Education</a>
+            <a href="../../consulting/index.html" class="mobile-link">Consulting</a>
+            <a href="../../ai-tools/index.html" class="mobile-link">AI Tools</a>
+            <a href="../../resources/index.html" class="mobile-link">Resources</a>
+            <a href="../../about/index.html" class="mobile-link">About</a>
+            <a href="../../contact/index.html" class="mobile-link">Contact</a>
+        </div>
+    </div>
+
+    <script src="../../assets/js/modern.js"></script>
 </body>
 </html>

@@ -5,337 +5,234 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="LearnTAV Privacy Policy - How we collect, use, and protect your personal information.">
     <title>Privacy Policy - LearnTAV</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../../assets/images/favicon.ico">
-    
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon-32x32.png">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/main.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../assets/css/modern.css">
     <style>
         .legal-content {
             max-width: 800px;
             margin: 0 auto;
-            padding: 2rem 0;
         }
-        
         .legal-content h2 {
-            color: #1f2937;
-            font-size: 1.5rem;
+            font-size: var(--font-size-xl);
             font-weight: 600;
-            margin: 2rem 0 1rem 0;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 0.5rem;
+            margin: var(--space-8) 0 var(--space-4) 0;
+            padding-bottom: var(--space-2);
+            border-bottom: 2px solid var(--color-primary);
         }
-        
         .legal-content h3 {
-            color: #374151;
-            font-size: 1.25rem;
+            font-size: var(--font-size-lg);
             font-weight: 600;
-            margin: 1.5rem 0 0.75rem 0;
+            margin: var(--space-6) 0 var(--space-3) 0;
         }
-        
-        .legal-content p {
-            color: #4b5563;
+        .legal-content p, .legal-content li {
+            color: var(--color-gray-600);
             line-height: 1.7;
-            margin-bottom: 1rem;
         }
-        
         .legal-content ul {
-            color: #4b5563;
-            line-height: 1.7;
-            margin: 1rem 0;
-            padding-left: 1.5rem;
+            margin: var(--space-4) 0;
+            padding-left: var(--space-6);
         }
-        
         .legal-content li {
-            margin-bottom: 0.5rem;
+            margin-bottom: var(--space-2);
         }
-        
-        .legal-last-updated {
-            background: #f0f9ff;
-            border: 1px solid #0ea5e9;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 2rem;
+        .legal-updated {
+            background: var(--color-gray-50);
+            padding: var(--space-4);
+            border-radius: var(--radius-lg);
             text-align: center;
+            margin-bottom: var(--space-8);
         }
-        
-        .legal-last-updated strong {
-            color: #0369a1;
-        }
-        
-        .legal-contact-box {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 2rem 0;
+        .contact-box {
+            background: var(--color-gray-50);
+            padding: var(--space-6);
+            border-radius: var(--radius-lg);
+            margin-top: var(--space-8);
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="learntav-nav" id="mainNav">
-        <div class="learntav-container">
-            <div class="learntav-nav__container">
-                <a href="../../index.html" class="learntav-nav__logo">
-                    <span class="learntav-nav__logo-text">LearnTAV</span>
-                </a>
-                
-                <div class="learntav-nav__menu" id="navMenu">
-                    <a href="../../education/index.html" class="learntav-nav__link">Education</a>
-                    <a href="../../consulting/index.html" class="learntav-nav__link">Consulting</a>
-                    <a href="../../about/index.html" class="learntav-nav__link">About</a>
-                    <a href="../../resources/index.html" class="learntav-nav__link">Resources</a>
-                    <a href="../../ai-tools/index.html" class="learntav-nav__link">AI Tools</a>
-                    <a href="../../contact/index.html" class="learntav-nav__link">Contact</a>
-                </div>
-                
-                <div class="learntav-nav__actions">
-                    <a href="../../contact/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
-                    <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
-                        <span class="learntav-nav__toggle-line"></span>
-                        <span class="learntav-nav__toggle-line"></span>
-                        <span class="learntav-nav__toggle-line"></span>
-                    </button>
-                </div>
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="../../index.html" class="nav-logo">
+                <span class="logo-text">LearnTAV</span>
+            </a>
+
+            <div class="nav-menu" id="navMenu">
+                <a href="../../education/index.html" class="nav-link">Education</a>
+                <a href="../../consulting/index.html" class="nav-link">Consulting</a>
+                <a href="../../ai-tools/index.html" class="nav-link">AI Tools</a>
+                <a href="../../resources/index.html" class="nav-link">Resources</a>
+                <a href="../../about/index.html" class="nav-link">About</a>
             </div>
-        </div>
-    </nav>
+
+            <div class="nav-actions">
+                <a href="../../contact/index.html" class="btn btn-ghost">Contact</a>
+                <a href="../../ai-tools/index.html" class="btn btn-primary">Get Started</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
 
     <!-- Page Header -->
-    <section class="learntav-page-header" id="main-content">
-        <div class="learntav-container">
-            <div class="learntav-page-header__content">
-                <h1 class="learntav-page-header__title">Privacy Policy</h1>
-                <p class="learntav-page-header__subtitle">
-                    How we collect, use, and protect your personal information
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <span class="section-tag">Legal</span>
+                <h1 class="page-title">Privacy Policy</h1>
+                <p class="page-description">
+                    How we collect, use, and protect your personal information.
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Legal Content -->
-    <section class="learntav-services">
-        <div class="learntav-container">
+    <!-- Content -->
+    <section class="programs">
+        <div class="container">
             <div class="legal-content">
-                <div class="legal-last-updated">
+                <div class="legal-updated">
                     <strong>Last Updated:</strong> December 15, 2024
                 </div>
 
-                <p>
-                    At LearnTAV ("we," "our," or "us"), we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, use our services, or interact with us.
-                </p>
+                <p>At LearnTAV, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information.</p>
 
                 <h2>1. Information We Collect</h2>
-                
-                <h3>Information You Provide Directly</h3>
-                <p>We collect information you voluntarily provide to us, including:</p>
+                <h3>Information You Provide</h3>
                 <ul>
-                    <li><strong>Contact Information:</strong> Name, email address, phone number, company name</li>
-                    <li><strong>Account Information:</strong> Username, password, profile information</li>
-                    <li><strong>Communication Data:</strong> Messages, inquiries, consultation requests, support tickets</li>
-                    <li><strong>Educational Data:</strong> Learning progress, course completions, assessment results</li>
-                    <li><strong>Payment Information:</strong> Billing address, payment method details (processed securely through third-party providers)</li>
+                    <li><strong>Contact Information:</strong> Name, email, phone number</li>
+                    <li><strong>Account Information:</strong> Username, password, profile details</li>
+                    <li><strong>Communication Data:</strong> Messages, inquiries, support requests</li>
+                    <li><strong>Educational Data:</strong> Learning progress and assessment results</li>
                 </ul>
 
-                <h3>Information Collected Automatically</h3>
-                <p>When you visit our website or use our services, we may automatically collect:</p>
+                <h3>Automatically Collected</h3>
                 <ul>
-                    <li><strong>Device Information:</strong> IP address, browser type, operating system, device identifiers</li>
-                    <li><strong>Usage Data:</strong> Pages visited, time spent, clicks, navigation patterns</li>
-                    <li><strong>Technical Data:</strong> Cookies, web beacons, log files, analytics data</li>
-                    <li><strong>Extension Data:</strong> For our Chrome extensions, usage metrics and performance data (anonymized)</li>
+                    <li><strong>Device Information:</strong> IP address, browser type, operating system</li>
+                    <li><strong>Usage Data:</strong> Pages visited, time spent, navigation patterns</li>
+                    <li><strong>Cookies:</strong> Web beacons and similar technologies</li>
                 </ul>
 
                 <h2>2. How We Use Your Information</h2>
-                
-                <p>We use your information for the following purposes:</p>
                 <ul>
-                    <li><strong>Service Delivery:</strong> Provide education programs, consulting services, and technical support</li>
-                    <li><strong>Account Management:</strong> Create and maintain your account, process payments, send confirmations</li>
-                    <li><strong>Communication:</strong> Respond to inquiries, send updates, newsletters, and important notices</li>
-                    <li><strong>Personalization:</strong> Customize your learning experience and recommend relevant content</li>
-                    <li><strong>Analytics:</strong> Analyze usage patterns to improve our services and website functionality</li>
-                    <li><strong>Legal Compliance:</strong> Meet legal obligations and protect our rights and interests</li>
+                    <li>Provide education programs and consulting services</li>
+                    <li>Process payments and manage accounts</li>
+                    <li>Respond to inquiries and provide support</li>
+                    <li>Personalize your learning experience</li>
+                    <li>Analyze usage to improve our services</li>
+                    <li>Comply with legal obligations</li>
                 </ul>
 
-                <h2>3. Information Sharing and Disclosure</h2>
-                
-                <p>We do not sell, trade, or otherwise transfer your personal information to third parties, except in the following circumstances:</p>
-                
-                <h3>Service Providers</h3>
-                <p>We may share information with trusted third-party service providers who assist us in:</p>
+                <h2>3. Information Sharing</h2>
+                <p>We do not sell your personal information. We may share data with:</p>
                 <ul>
-                    <li>Payment processing (Stripe, PayPal)</li>
-                    <li>Email marketing (Mailchimp, ConvertKit)</li>
-                    <li>Analytics (Google Analytics, Mixpanel)</li>
-                    <li>Customer support (Zendesk, Intercom)</li>
-                    <li>Hosting and infrastructure (AWS, Google Cloud)</li>
-                </ul>
-
-                <h3>Legal Requirements</h3>
-                <p>We may disclose your information when required by law or to:</p>
-                <ul>
-                    <li>Comply with legal processes or government requests</li>
-                    <li>Protect our rights, property, or safety</li>
-                    <li>Enforce our terms of service</li>
-                    <li>Investigate fraud or security issues</li>
+                    <li>Service providers who assist our operations</li>
+                    <li>Legal authorities when required by law</li>
+                    <li>Business partners with your consent</li>
                 </ul>
 
                 <h2>4. Data Security</h2>
-                
-                <p>We implement appropriate technical and organizational measures to protect your personal information:</p>
+                <p>We implement appropriate security measures including:</p>
                 <ul>
-                    <li><strong>Encryption:</strong> Data transmitted over secure SSL/TLS connections</li>
-                    <li><strong>Access Controls:</strong> Restricted access to authorized personnel only</li>
-                    <li><strong>Regular Audits:</strong> Security assessments and vulnerability testing</li>
-                    <li><strong>Data Minimization:</strong> Collect only necessary information for specified purposes</li>
-                    <li><strong>Secure Storage:</strong> Data stored on secure, encrypted servers</li>
+                    <li>SSL/TLS encryption for data transmission</li>
+                    <li>Restricted access to authorized personnel</li>
+                    <li>Regular security assessments</li>
+                    <li>Secure data storage practices</li>
                 </ul>
 
-                <h2>5. Cookies and Tracking Technologies</h2>
-                
-                <p>We use cookies and similar technologies to enhance your experience:</p>
+                <h2>5. Your Rights</h2>
+                <p>You have the right to:</p>
                 <ul>
-                    <li><strong>Essential Cookies:</strong> Required for website functionality and security</li>
-                    <li><strong>Performance Cookies:</strong> Help us understand how you interact with our website</li>
-                    <li><strong>Functional Cookies:</strong> Remember your preferences and settings</li>
-                    <li><strong>Marketing Cookies:</strong> Deliver relevant advertisements and measure campaign effectiveness</li>
-                </ul>
-                
-                <p>You can control cookie settings through your browser preferences. Please note that disabling certain cookies may affect website functionality.</p>
-
-                <h2>6. Your Rights and Choices</h2>
-                
-                <p>Depending on your location, you may have the following rights regarding your personal information:</p>
-                <ul>
-                    <li><strong>Access:</strong> Request a copy of the personal information we hold about you</li>
-                    <li><strong>Correction:</strong> Request correction of inaccurate or incomplete information</li>
-                    <li><strong>Deletion:</strong> Request deletion of your personal information (subject to legal requirements)</li>
-                    <li><strong>Portability:</strong> Receive your data in a structured, machine-readable format</li>
-                    <li><strong>Restriction:</strong> Request restriction of processing in certain circumstances</li>
-                    <li><strong>Objection:</strong> Object to processing based on legitimate interests</li>
-                    <li><strong>Withdrawal:</strong> Withdraw consent at any time (where processing is based on consent)</li>
+                    <li>Access your personal information</li>
+                    <li>Request correction of inaccurate data</li>
+                    <li>Request deletion of your data</li>
+                    <li>Opt out of marketing communications</li>
+                    <li>Withdraw consent at any time</li>
                 </ul>
 
-                <h2>7. Data Retention</h2>
-                
-                <p>We retain your personal information only as long as necessary for the purposes outlined in this policy or as required by law. Specific retention periods include:</p>
-                <ul>
-                    <li><strong>Account Data:</strong> Retained while your account is active and for 3 years after closure</li>
-                    <li><strong>Educational Records:</strong> Retained for 7 years for certification and compliance purposes</li>
-                    <li><strong>Communication Data:</strong> Retained for 3 years for customer service purposes</li>
-                    <li><strong>Marketing Data:</strong> Retained until you opt out or for 2 years of inactivity</li>
-                </ul>
+                <h2>6. Cookies</h2>
+                <p>We use cookies to enhance your experience. You can control cookie settings through your browser. See our <a href="../cookies/index.html">Cookie Policy</a> for details.</p>
 
-                <h2>8. International Data Transfers</h2>
-                
-                <p>Your information may be transferred to and processed in countries other than your country of residence. We ensure appropriate safeguards are in place for such transfers, including:</p>
-                <ul>
-                    <li>Adequacy decisions by relevant authorities</li>
-                    <li>Standard contractual clauses</li>
-                    <li>Binding corporate rules</li>
-                    <li>Certification schemes</li>
-                </ul>
+                <h2>7. Children's Privacy</h2>
+                <p>Our services are not intended for children under 13. We do not knowingly collect information from children under 13.</p>
 
-                <h2>9. Children's Privacy</h2>
-                
-                <p>Our services are not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If we become aware that we have collected such information, we will take steps to delete it promptly.</p>
+                <h2>8. Changes to This Policy</h2>
+                <p>We may update this policy periodically. We will notify you of material changes via email or website notice.</p>
 
-                <h2>10. Changes to This Privacy Policy</h2>
-                
-                <p>We may update this Privacy Policy periodically to reflect changes in our practices or legal requirements. We will notify you of material changes by:</p>
-                <ul>
-                    <li>Posting the updated policy on our website</li>
-                    <li>Sending email notifications to registered users</li>
-                    <li>Displaying prominent notices on our platform</li>
-                </ul>
-
-                <div class="legal-contact-box">
+                <div class="contact-box">
                     <h3>Contact Us</h3>
-                    <p>If you have questions about this Privacy Policy or our privacy practices, please contact us:</p>
-                    <ul>
-                        <li><strong>Email:</strong> privacy@learntav.com</li>
-                        <li><strong>Address:</strong> LearnTAV Privacy Officer, [Company Address]</li>
-                        <li><strong>Phone:</strong> [Phone Number]</li>
-                    </ul>
-                    <p>We will respond to your inquiry within 30 days.</p>
+                    <p>Questions about this Privacy Policy? Contact us at:</p>
+                    <p><strong>Email:</strong> privacy@learntav.com</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="learntav-footer">
-        <div class="learntav-container">
-            <div class="learntav-footer__main">
-                <div class="learntav-footer__brand">
-                    <div class="learntav-footer__logo">
-                        <span class="learntav-footer__logo-text">LearnTAV</span>
-                    </div>
-                    <p class="learntav-footer__description">
-                        Where Technology Meets Accessibility, Sustainability, and Real-World Impact.
-                    </p>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="footer-logo">LearnTAV</a>
+                    <p class="footer-tagline">Where technology meets accessibility.</p>
+                    <p class="footer-motto">"Learning Takes a Village"</p>
                 </div>
 
-                <div class="learntav-footer__links">
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Services</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../../education/index.html">Education</a></li>
-                            <li><a href="../../consulting/index.html">Consulting</a></li>
-                            <li><a href="../../education/paths/index.html">Learning Paths</a></li>
-                            <li><a href="../../consulting/case-studies/index.html">Case Studies</a></li>
-                        </ul>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Services</h4>
+                        <a href="../../education/index.html">Education</a>
+                        <a href="../../consulting/index.html">Consulting</a>
+                        <a href="../../ai-tools/index.html">AI Tools</a>
                     </div>
 
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Company</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../../about/index.html">About</a></li>
-                            <li><a href="../../about/team/index.html">Team</a></li>
-                            <li><a href="../../about/approach/index.html">Our Approach</a></li>
-                            <li><a href="../../contact/index.html">Contact</a></li>
-                        </ul>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="../../about/index.html">About</a>
+                        <a href="../../contact/index.html">Contact</a>
                     </div>
 
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Resources</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../../resources/guides/index.html">Free Guides</a></li>
-                            <li><a href="../../resources/tools/index.html">Tools</a></li>
-                            <li><a href="../../resources/blog/index.html">Blog</a></li>
-                            <li><a href="../../resources/newsletter/index.html">Newsletter</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Legal</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="index.html">Privacy Policy</a></li>
-                            <li><a href="../terms/index.html">Terms of Service</a></li>
-                            <li><a href="../cookies/index.html">Cookie Policy</a></li>
-                        </ul>
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <a href="index.html">Privacy</a>
+                        <a href="../terms/index.html">Terms</a>
+                        <a href="../cookies/index.html">Cookies</a>
                     </div>
                 </div>
             </div>
 
-            <div class="learntav-footer__bottom">
-                <div class="learntav-footer__legal">
-                    <p>&copy; 2024 LearnTAV. All rights reserved.</p>
-                </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 LearnTAV. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script src="../../assets/js/main.js"></script>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <a href="../../education/index.html" class="mobile-link">Education</a>
+            <a href="../../consulting/index.html" class="mobile-link">Consulting</a>
+            <a href="../../ai-tools/index.html" class="mobile-link">AI Tools</a>
+            <a href="../../resources/index.html" class="mobile-link">Resources</a>
+            <a href="../../about/index.html" class="mobile-link">About</a>
+            <a href="../../contact/index.html" class="mobile-link">Contact</a>
+        </div>
+    </div>
+
+    <script src="../../assets/js/modern.js"></script>
 </body>
 </html>

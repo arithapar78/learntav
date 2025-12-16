@@ -5,71 +5,239 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Free comprehensive guides for AI learning and app development.">
     <title>Free Guides - LearnTAV Resources</title>
+
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../../assets/images/favicon.ico">
-    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon-32x32.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../assets/css/modern.css">
 </head>
 <body>
-    <nav class="learntav-nav">
-        <div class="learntav-container">
-            <div class="learntav-nav__container">
-                <a href="../../index.html" class="learntav-nav__logo">
-                    <span class="learntav-nav__logo-text">LearnTAV</span>
-                </a>
-                <div class="learntav-nav__menu">
-                    <a href="../../education/index.html" class="learntav-nav__link">Education</a>
-                    <a href="../../consulting/index.html" class="learntav-nav__link">Consulting</a>
-                    <a href="../../about/index.html" class="learntav-nav__link">About</a>
-                    <a href="../index.html" class="learntav-nav__link learntav-nav__link--active">Resources</a>
-                    <a href="../../ai-tools/index.html" class="learntav-nav__link">AI Tools</a>
-                    <a href="../../contact/index.html" class="learntav-nav__link">Contact</a>
-                </div>
-                <div class="learntav-nav__actions">
-                    <a href="../../contact/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <!-- Navigation -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="../../index.html" class="nav-logo">
+                <span class="logo-text">LearnTAV</span>
+            </a>
 
-    <section class="learntav-page-header" id="main-content">
-        <div class="learntav-container">
-            <div class="learntav-page-header__content">
-                <h1 class="learntav-page-header__title">Free Guides</h1>
-                <p class="learntav-page-header__subtitle">Comprehensive guides to get you started with AI and app development.</p>
+            <div class="nav-menu" id="navMenu">
+                <a href="../../education/index.html" class="nav-link">Education</a>
+                <a href="../../consulting/index.html" class="nav-link">Consulting</a>
+                <a href="../../ai-tools/index.html" class="nav-link">AI Tools</a>
+                <a href="../../resources/index.html" class="nav-link nav-link-active">Resources</a>
+                <a href="../../about/index.html" class="nav-link">About</a>
+            </div>
+
+            <div class="nav-actions">
+                <a href="../../contact/index.html" class="btn btn-ghost">Contact</a>
+                <a href="../../ai-tools/index.html" class="btn btn-primary">Get Started</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <span class="section-tag">Resources</span>
+                <h1 class="page-title">Free Guides</h1>
+                <p class="page-description">
+                    Comprehensive guides to get you started with AI and app development.
+                </p>
             </div>
         </div>
     </section>
 
-    <section class="learntav-services">
-        <div class="learntav-container">
-            <div class="learntav-grid learntav-grid--2-col">
-                <div class="learntav-service-card learntav-service-card--education">
-                    <div class="learntav-service-card__header">
-                        <div class="learntav-service-card__icon">🚀</div>
+    <!-- Guides Grid -->
+    <section class="programs">
+        <div class="container">
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon service-icon-blue">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
                     </div>
-                    <h3 class="learntav-service-card__title">Getting Started with AI</h3>
-                    <p class="learntav-service-card__description">
+                    <span class="service-tag">Beginner</span>
+                    <h3 class="service-title">Getting Started with AI</h3>
+                    <p class="service-description">
                         A comprehensive introduction to AI for beginners, covering the basics and practical applications.
                     </p>
-                    <div class="learntav-service-card__actions">
-                        <a href="../../contact/index.html" class="learntav-btn learntav-btn--primary">Download Guide</a>
-                    </div>
+                    <ul class="service-features">
+                        <li>What is AI and how it works</li>
+                        <li>Popular AI tools explained</li>
+                        <li>Your first AI project</li>
+                        <li>Best practices for beginners</li>
+                    </ul>
+                    <a href="../../contact/index.html" class="service-link">
+                        Download Guide
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
                 </div>
-                <div class="learntav-service-card learntav-service-card--education">
-                    <div class="learntav-service-card__header">
-                        <div class="learntav-service-card__icon">📱</div>
+
+                <div class="service-card">
+                    <div class="service-icon service-icon-purple">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                            <line x1="12" y1="18" x2="12.01" y2="18"/>
+                        </svg>
                     </div>
-                    <h3 class="learntav-service-card__title">No-Code App Development</h3>
-                    <p class="learntav-service-card__description">
+                    <span class="service-tag">Practical</span>
+                    <h3 class="service-title">No-Code App Development</h3>
+                    <p class="service-description">
                         Learn to build powerful applications without coding using modern no-code platforms.
                     </p>
-                    <div class="learntav-service-card__actions">
-                        <a href="../../contact/index.html" class="learntav-btn learntav-btn--primary">Download Guide</a>
+                    <ul class="service-features">
+                        <li>Choosing the right platform</li>
+                        <li>Building your first app</li>
+                        <li>Database and logic design</li>
+                        <li>Publishing and sharing</li>
+                    </ul>
+                    <a href="../../contact/index.html" class="service-link">
+                        Download Guide
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon service-icon-green">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
                     </div>
+                    <span class="service-tag">Advanced</span>
+                    <h3 class="service-title">AI Prompt Engineering</h3>
+                    <p class="service-description">
+                        Master the art of writing effective prompts to get better results from AI tools.
+                    </p>
+                    <ul class="service-features">
+                        <li>Understanding prompts</li>
+                        <li>Structure and formatting</li>
+                        <li>Advanced techniques</li>
+                        <li>Common mistakes to avoid</li>
+                    </ul>
+                    <a href="../../contact/index.html" class="service-link">
+                        Download Guide
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon service-icon-orange">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                    </div>
+                    <span class="service-tag">Sustainability</span>
+                    <h3 class="service-title">Sustainable AI Practices</h3>
+                    <p class="service-description">
+                        Learn how to use AI responsibly while minimizing environmental impact.
+                    </p>
+                    <ul class="service-features">
+                        <li>Understanding AI's carbon footprint</li>
+                        <li>Energy-efficient practices</li>
+                        <li>Optimizing AI usage</li>
+                        <li>Measuring your impact</li>
+                    </ul>
+                    <a href="../../contact/index.html" class="service-link">
+                        Download Guide
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <script src="../../assets/js/main.js"></script>
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Need personalized guidance?</h2>
+                <p class="cta-description">
+                    Our education programs provide hands-on instruction tailored to your goals.
+                </p>
+                <div class="cta-actions">
+                    <a href="../../education/index.html" class="btn btn-white btn-lg">
+                        Explore Programs
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="../../index.html" class="footer-logo">LearnTAV</a>
+                    <p class="footer-tagline">Where technology meets accessibility.</p>
+                    <p class="footer-motto">"Learning Takes a Village"</p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Services</h4>
+                        <a href="../../education/index.html">Education</a>
+                        <a href="../../consulting/index.html">Consulting</a>
+                        <a href="../../ai-tools/index.html">AI Tools</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="../../about/index.html">About</a>
+                        <a href="../../contact/index.html">Contact</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <a href="../../legal/privacy/index.html">Privacy</a>
+                        <a href="../../legal/terms/index.html">Terms</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 LearnTAV. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <a href="../../education/index.html" class="mobile-link">Education</a>
+            <a href="../../consulting/index.html" class="mobile-link">Consulting</a>
+            <a href="../../ai-tools/index.html" class="mobile-link">AI Tools</a>
+            <a href="../../resources/index.html" class="mobile-link">Resources</a>
+            <a href="../../about/index.html" class="mobile-link">About</a>
+            <a href="../../contact/index.html" class="mobile-link">Contact</a>
+        </div>
+    </div>
+
+    <script src="../../assets/js/modern.js"></script>
 </body>
 </html>

@@ -3,423 +3,345 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Contact LearnTAV for AI education and consulting services. Multiple ways to get in touch for education programs and business consulting.">
-    <meta name="keywords" content="contact LearnTAV, AI education inquiry, consulting contact, book consultation">
-    
-    <title>Contact Us - LearnTAV | AI Education & Consulting</title>
-    
+    <meta name="description" content="Contact LearnTAV for AI education and consulting services. Book a free consultation.">
+    <title>Contact Us - LearnTAV</title>
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
-    
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/contact.css">
-    <link rel="stylesheet" href="../assets/css/form-responses.css">
-    <link rel="stylesheet" href="../assets/css/responsive-accessibility.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../assets/css/modern.css">
 </head>
-<body class="enable-scroll-animations">
+<body>
     <!-- Navigation -->
-    <nav class="learntav-nav" id="mainNav">
-        <div class="learntav-container">
-            <div class="learntav-nav__container">
-                <a href="../index.html" class="learntav-nav__logo">
-                    <span class="learntav-nav__logo-text">LearnTAV</span>
-                </a>
-                
-                <div class="learntav-nav__menu" id="navMenu">
-                    <a href="../education/index.html" class="learntav-nav__link">Education</a>
-                    <a href="../consulting/index.html" class="learntav-nav__link">Consulting</a>
-                    <a href="../about/index.html" class="learntav-nav__link">About</a>
-                    <a href="../resources/index.html" class="learntav-nav__link">Resources</a>
-                    <a href="../ai-tools/index.html" class="learntav-nav__link">AI Tools</a>
-                    <a href="../contact/index.html" class="learntav-nav__link learntav-nav__link--active">Contact</a>
-                </div>
-                
-                <div class="learntav-nav__actions">
-                    <a href="../contact/index.html" class="learntav-btn learntav-btn--primary">Get Started</a>
-                    <button class="learntav-nav__toggle" id="navToggle" aria-label="Toggle navigation menu">
-                        <span class="learntav-nav__toggle-line"></span>
-                        <span class="learntav-nav__toggle-line"></span>
-                        <span class="learntav-nav__toggle-line"></span>
-                    </button>
-                </div>
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="../index.html" class="nav-logo">
+                <span class="logo-text">LearnTAV</span>
+            </a>
+
+            <div class="nav-menu" id="navMenu">
+                <a href="../education/index.html" class="nav-link">Education</a>
+                <a href="../consulting/index.html" class="nav-link">Consulting</a>
+                <a href="../ai-tools/index.html" class="nav-link">AI Tools</a>
+                <a href="../resources/index.html" class="nav-link">Resources</a>
+                <a href="../about/index.html" class="nav-link">About</a>
             </div>
-        </div>
-    </nav>
+
+            <div class="nav-actions">
+                <a href="../contact/index.html" class="btn btn-ghost">Contact</a>
+                <a href="../ai-tools/index.html" class="btn btn-primary">Get Started</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
 
     <!-- Page Header -->
-    <section class="learntav-page-header scroll-animate" id="main-content">
-        <div class="learntav-container">
-            <div class="learntav-page-header__content">
-                <h1 class="learntav-page-header__title">Let's Start Your Journey</h1>
-                <p class="learntav-page-header__subtitle">
-                    Ready to transform your relationship with technology? We're here to help you build apps, master AI, or implement sustainable solutions.
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <span class="section-tag">Contact</span>
+                <h1 class="page-title">Let's Talk</h1>
+                <p class="page-description">
+                    Have questions about our programs or consulting services? We'd love to hear from you.
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Contact Options -->
-    <section class="learntav-contact-options scroll-animate">
-        <div class="learntav-container">
-            <div class="learntav-grid learntav-grid--3-col">
-                <div class="learntav-contact-option scroll-animate">
-                    <div class="learntav-contact-option__icon">📧</div>
-                    <h3 class="learntav-contact-option__title">Email Us</h3>
-                    <p class="learntav-contact-option__description">
-                        Send us an email and we'll respond within 24 hours.
-                    </p>
-                    <a href="mailto:hello@learntav.com" class="learntav-contact-option__link">
-                        hello@learntav.com
-                    </a>
-                </div>
+    <!-- Contact Options Section -->
+    <section class="programs">
+        <div class="container">
+            <div class="contact-options">
+                <div class="services-grid">
+                    <!-- General Inquiries -->
+                    <div class="service-card service-card-featured">
+                        <div class="service-icon service-icon-blue">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                        </div>
+                        <span class="service-tag">Recommended</span>
+                        <h3 class="service-title">General Inquiries</h3>
+                        <p class="service-description">
+                            Questions about LearnTAV, our services, or how we can help you? Start here.
+                        </p>
+                        <a href="https://forms.gle/wFHzuNcaFKST6eDc9" target="_blank" rel="noopener noreferrer" class="service-link">
+                            Contact Us
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
 
-                <div class="learntav-contact-option scroll-animate">
-                    <div class="learntav-contact-option__icon">📅</div>
-                    <h3 class="learntav-contact-option__title">Free Consultation</h3>
-                    <p class="learntav-contact-option__description">
-                        Schedule a personalized consultation to discuss your goals.
-                    </p>
-                    <a href="https://forms.gle/UR8eckGZ8Qns9r9DA"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="learntav-contact-option__link">
-                        Book Free Consultation
-                    </a>
-                </div>
+                    <!-- Education Programs -->
+                    <div class="service-card">
+                        <div class="service-icon service-icon-purple">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                                <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/>
+                            </svg>
+                        </div>
+                        <span class="service-tag">Education</span>
+                        <h3 class="service-title">Education Programs</h3>
+                        <p class="service-description">
+                            Interested in our education programs? Learn about Vibe Coding 101, App Development Mastery, and more.
+                        </p>
+                        <a href="https://forms.gle/HqhLnJHnN2G9QnMR8" target="_blank" rel="noopener noreferrer" class="service-link">
+                            Inquire About Programs
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
 
-                <div class="learntav-contact-option scroll-animate">
-                    <div class="learntav-contact-option__icon">💬</div>
-                    <h3 class="learntav-contact-option__title">Quick Question</h3>
-                    <p class="learntav-contact-option__description">
-                        Have a quick question? Use our general contact form.
-                    </p>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfBJwP5hFVhluQdWbiBJy0xx3wj0n9r7iOTfJajNcQshGFYIA/viewform?usp=dialog"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="learntav-contact-option__link">
-                        Send Message
-                    </a>
+                    <!-- Consulting Services -->
+                    <div class="service-card">
+                        <div class="service-icon service-icon-green">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                <path d="M2 12h20"/>
+                            </svg>
+                        </div>
+                        <span class="service-tag">Consulting</span>
+                        <h3 class="service-title">Consulting Services</h3>
+                        <p class="service-description">
+                            Need help with AI strategy, environmental impact assessment, or healthcare AI implementation?
+                        </p>
+                        <a href="https://forms.gle/UR8eckGZ8Qns9r9DA" target="_blank" rel="noopener noreferrer" class="service-link">
+                            Book Consultation
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Partnerships -->
+                    <div class="service-card">
+                        <div class="service-icon service-icon-orange">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <span class="service-tag">Partnerships</span>
+                        <h3 class="service-title">Partnership Opportunities</h3>
+                        <p class="service-description">
+                            Interested in partnering with LearnTAV? We're always looking for collaborations.
+                        </p>
+                        <a href="https://forms.gle/wFHzuNcaFKST6eDc9" target="_blank" rel="noopener noreferrer" class="service-link">
+                            Discuss Partnership
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Forms Section -->
-    <section class="learntav-contact-forms scroll-animate">
-        <div class="learntav-container">
-            <div class="learntav-contact-tabs">
-                <div class="learntav-contact-tabs__nav">
-                    <button class="learntav-tab-btn active" data-tab="consultation">
-                        Free Consultation
-                    </button>
-                    <button class="learntav-tab-btn" data-tab="education">
-                        Education Inquiry
-                    </button>
-                    <button class="learntav-tab-btn" data-tab="consulting">
-                        Consulting Request
-                    </button>
-                    <button class="learntav-tab-btn" data-tab="general">
-                        General Contact
-                    </button>
+    <!-- Direct Contact Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Direct Contact</span>
+                <h2 class="section-title">Other ways to reach us</h2>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Email</h3>
+                    <p class="feature-description">
+                        <a href="mailto:hello@learntav.com" style="color: var(--color-primary);">hello@learntav.com</a>
+                    </p>
                 </div>
 
-                <!-- Consultation Button -->
-                <div class="learntav-tab-content active" id="consultation-form">
-                    <div class="learntav-form-container">
-                        <div class="learntav-form-header">
-                            <h2>Book Your Free Consultation</h2>
-                            <p>Ready to discuss your goals? Click below to access our consultation form.</p>
-                        </div>
-                        <div class="learntav-form-actions">
-                            <a href="https://forms.gle/UR8eckGZ8Qns9r9DA"
-                               target="_blank"
-                               rel="noopener noreferrer"
-                               class="learntav-btn learntav-btn--primary learntav-btn--large">
-                                📅 Start Consultation Form
-                            </a>
-                            <p class="learntav-form__note">
-                                Opens in a new window • Takes 3-5 minutes to complete
-                            </p>
-                        </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
                     </div>
+                    <h3 class="feature-title">Response Time</h3>
+                    <p class="feature-description">We typically respond within 24-48 hours</p>
                 </div>
 
-                <!-- Education Button -->
-                <div class="learntav-tab-content" id="education-form">
-                    <div class="learntav-form-container">
-                        <div class="learntav-form-header">
-                            <h2>Education Programs Inquiry</h2>
-                            <p>Interested in our learning programs? Click below to tell us about your goals.</p>
-                        </div>
-                        <div class="learntav-form-actions">
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfBJwP5hFVhluQdWbiBJy0xx3wj0n9r7iOTfJajNcQshGFYIA/viewform?usp=dialog"
-                               target="_blank"
-                               rel="noopener noreferrer"
-                               class="learntav-btn learntav-btn--primary learntav-btn--large">
-                                🎓 Education Inquiry Form
-                            </a>
-                            <p class="learntav-form__note">
-                                Opens in a new window • Takes 3-5 minutes to complete
-                            </p>
-                        </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
                     </div>
+                    <h3 class="feature-title">Schedule a Call</h3>
+                    <p class="feature-description">Book a time through our contact form</p>
                 </div>
 
-                <!-- Consulting Button -->
-                <div class="learntav-tab-content" id="consulting-form">
-                    <div class="learntav-form-container">
-                        <div class="learntav-form-header">
-                            <h2>Consulting Request</h2>
-                            <p>Need professional consulting services? Click below to submit your request.</p>
-                        </div>
-                        <div class="learntav-form-actions">
-                            <a href="https://forms.gle/UR8eckGZ8Qns9r9DA"
-                               target="_blank"
-                               rel="noopener noreferrer"
-                               class="learntav-btn learntav-btn--primary learntav-btn--large">
-                                💼 Consulting Request Form
-                            </a>
-                            <p class="learntav-form__note">
-                                Opens in a new window • Takes 3-5 minutes to complete
-                            </p>
-                        </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            <path d="M2 12h20"/>
+                        </svg>
                     </div>
-                </div>
-
-                <!-- General Contact Button -->
-                <div class="learntav-tab-content" id="general-form">
-                    <div class="learntav-form-container">
-                        <div class="learntav-form-header">
-                            <h2>General Contact</h2>
-                            <p>Have a question or want to get in touch? Click below to contact us.</p>
-                        </div>
-                        <div class="learntav-form-actions">
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfBJwP5hFVhluQdWbiBJy0xx3wj0n9r7iOTfJajNcQshGFYIA/viewform?usp=dialog"
-                               target="_blank"
-                               rel="noopener noreferrer"
-                               class="learntav-btn learntav-btn--primary learntav-btn--large">
-                                💬 General Contact Form
-                            </a>
-                            <p class="learntav-form__note">
-                                Opens in a new window • Takes 2-3 minutes to complete
-                            </p>
-                        </div>
-                    </div>
+                    <h3 class="feature-title">Location</h3>
+                    <p class="feature-description">Remote-first, serving clients globally</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FAQ Section -->
-    <section class="learntav-faq scroll-animate">
-        <div class="learntav-container">
-            <div class="learntav-section-header scroll-animate">
-                <h2 class="learntav-section-title">Frequently Asked Questions</h2>
-                <p class="learntav-section-subtitle">
-                    Quick answers to common questions about our services and process
-                </p>
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">FAQ</span>
+                <h2 class="section-title">Common Questions</h2>
             </div>
-            
-            <div class="learntav-faq-list">
-                <div class="learntav-faq-item scroll-animate">
-                    <button class="learntav-faq-question" aria-expanded="false">
-                        <span>How quickly will you respond to my inquiry?</span>
-                        <span class="learntav-faq-toggle">+</span>
-                    </button>
-                    <div class="learntav-faq-answer">
-                        <p>We respond to all inquiries within 24 hours on business days. For consultation requests, we'll typically schedule your free consultation within 2-3 business days of your initial contact.</p>
+
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p class="testimonial-quote" style="font-weight: 600; margin-bottom: var(--space-2);">
+                            Do I need coding experience?
+                        </p>
+                        <p style="color: var(--color-gray-600); font-size: var(--font-size-sm);">
+                            No! Our programs are designed for people with zero coding experience. We use AI tools and no-code platforms to make app development accessible to everyone.
+                        </p>
                     </div>
                 </div>
 
-                <div class="learntav-faq-item scroll-animate">
-                    <button class="learntav-faq-question" aria-expanded="false">
-                        <span>Is the consultation really free?</span>
-                        <span class="learntav-faq-toggle">+</span>
-                    </button>
-                    <div class="learntav-faq-answer">
-                        <p>Yes, absolutely! Our 15-minute consultation is completely free with no strings attached. We'll discuss your goals, challenges, and how our services might help, with no pressure to commit to anything.</p>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p class="testimonial-quote" style="font-weight: 600; margin-bottom: var(--space-2);">
+                            What's included in a consultation?
+                        </p>
+                        <p style="color: var(--color-gray-600); font-size: var(--font-size-sm);">
+                            Our free consultations are 30-minute calls where we discuss your goals, answer questions, and recommend the best path forward for your specific situation.
+                        </p>
                     </div>
                 </div>
 
-                <div class="learntav-faq-item scroll-animate">
-                    <button class="learntav-faq-question" aria-expanded="false">
-                        <span>Do you work with international clients?</span>
-                        <span class="learntav-faq-toggle">+</span>
-                    </button>
-                    <div class="learntav-faq-answer">
-                        <p>Yes, we work with clients globally. Our education programs and consulting services are delivered remotely, making them accessible regardless of your location. We accommodate different time zones for consultations and meetings.</p>
-                    </div>
-                </div>
-
-                <div class="learntav-faq-item scroll-animate">
-                    <button class="learntav-faq-question" aria-expanded="false">
-                        <span>What if I'm not sure which service is right for me?</span>
-                        <span class="learntav-faq-toggle">+</span>
-                    </button>
-                    <div class="learntav-faq-answer">
-                        <p>No problem! That's exactly what our free consultation is for. We'll discuss your goals, current situation, and recommend the best approach - whether that's education, consulting, or a combination of both.</p>
-                    </div>
-                </div>
-
-                <div class="learntav-faq-item scroll-animate">
-                    <button class="learntav-faq-question" aria-expanded="false">
-                        <span>Can you accommodate custom requirements?</span>
-                        <span class="learntav-faq-toggle">+</span>
-                    </button>
-                    <div class="learntav-faq-answer">
-                        <p>Absolutely! We specialize in creating customized solutions. Whether you need specialized training for your team or unique consulting services for your industry, we can tailor our approach to meet your specific needs.</p>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p class="testimonial-quote" style="font-weight: 600; margin-bottom: var(--space-2);">
+                            How long are your programs?
+                        </p>
+                        <p style="color: var(--color-gray-600); font-size: var(--font-size-sm);">
+                            Programs vary. Vibe Coding 101 is 4 hours total (4 x 1-hour sessions). Other programs are customized to your needs and schedule.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to get started?</h2>
+                <p class="cta-description">
+                    The first step is always a conversation. Let's discuss how LearnTAV can help you achieve your goals.
+                </p>
+                <div class="cta-actions">
+                    <a href="https://forms.gle/wFHzuNcaFKST6eDc9" target="_blank" rel="noopener noreferrer" class="btn btn-white btn-lg">
+                        Contact Us Now
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+                <p class="cta-email">Or email us directly at <a href="mailto:hello@learntav.com">hello@learntav.com</a></p>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="learntav-footer">
-        <div class="learntav-container">
-            <div class="learntav-footer__main">
-                <div class="learntav-footer__brand">
-                    <div class="learntav-footer__logo">
-                        <span class="learntav-footer__logo-text">LearnTAV</span>
-                    </div>
-                    <p class="learntav-footer__description">
-                        Where Technology Meets Accessibility, Sustainability, and Real-World Impact.
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="../index.html" class="footer-logo">LearnTAV</a>
+                    <p class="footer-tagline">
+                        Where technology meets accessibility, sustainability, and real-world impact.
                     </p>
-                    <div class="learntav-footer__social">
-                        <a href="#" class="learntav-footer__social-link" aria-label="LinkedIn">
-                            <span>LinkedIn</span>
-                        </a>
-                        <a href="#" class="learntav-footer__social-link" aria-label="Twitter">
-                            <span>Twitter</span>
-                        </a>
-                        <a href="#" class="learntav-footer__social-link" aria-label="YouTube">
-                            <span>YouTube</span>
-                        </a>
-                    </div>
+                    <p class="footer-motto">"Learning Takes a Village"</p>
                 </div>
 
-                <div class="learntav-footer__links">
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Services</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../education/index.html">Education</a></li>
-                            <li><a href="../consulting/index.html">Consulting</a></li>
-                            <li><a href="../education/paths/index.html">Learning Paths</a></li>
-                            <li><a href="../consulting/case-studies/index.html">Case Studies</a></li>
-                        </ul>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Services</h4>
+                        <a href="../education/index.html">Education</a>
+                        <a href="../consulting/index.html">Consulting</a>
+                        <a href="../education/paths/index.html">Learning Paths</a>
                     </div>
 
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Company</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../about/index.html">About</a></li>
-                            <li><a href="../about/team/index.html">Team</a></li>
-                            <li><a href="../about/approach/index.html">Our Approach</a></li>
-                            <li><a href="../contact/index.html">Contact</a></li>
-                        </ul>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="../about/index.html">About</a>
+                        <a href="../about/team/index.html">Team</a>
+                        <a href="../contact/index.html">Contact</a>
                     </div>
 
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Resources</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../resources/guides/index.html">Free Guides</a></li>
-                            <li><a href="../resources/tools/index.html">Tools</a></li>
-                            <li><a href="../resources/blog/index.html">Blog</a></li>
-                            <li><a href="../resources/newsletter/index.html">Newsletter</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="learntav-footer__column">
-                        <h4 class="learntav-footer__column-title">Contact</h4>
-                        <ul class="learntav-footer__link-list">
-                            <li><a href="../contact/index.html?form=general">General Inquiries</a></li>
-                            <li><a href="../contact/index.html?form=education">Education</a></li>
-                            <li><a href="../contact/index.html?form=consulting">Consulting</a></li>
-                            <li><a href="../contact/index.html?form=partnerships">Partnerships</a></li>
-                        </ul>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <a href="../ai-tools/index.html">AI Tools</a>
+                        <a href="../resources/guides/index.html">Guides</a>
+                        <a href="../resources/blog/index.html">Blog</a>
                     </div>
                 </div>
             </div>
 
-            <div class="learntav-footer__bottom">
-                <div class="learntav-footer__legal">
-                    <p>&copy; 2024 LearnTAV. All rights reserved.</p>
-                    <div class="learntav-footer__legal-links">
-                        <a href="../legal/privacy/index.html">Privacy Policy</a>
-                        <a href="../legal/terms/index.html">Terms of Service</a>
-                        <a href="../legal/cookies/index.html">Cookie Policy</a>
-                    </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 LearnTAV. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="../legal/privacy/index.html">Privacy</a>
+                    <a href="../legal/terms/index.html">Terms</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- AI Chatbot Widget -->
-    <div class="ai-chatbot-widget" id="aiChatbot">
-        <div class="ai-chatbot-button" onclick="toggleChatbot()">
-            <span class="ai-chatbot-icon">🤖</span>
-            <span class="ai-chatbot-text">AI Help</span>
-        </div>
-        
-        <div class="ai-chatbot-panel" id="chatbotPanel">
-            <div class="ai-chatbot-header">
-                <h3>LearnTAV AI Assistant</h3>
-                <button class="ai-chatbot-close" onclick="toggleChatbot()">&times;</button>
-            </div>
-            
-            <div class="ai-chatbot-messages" id="chatMessages">
-                <div class="ai-message">
-                    <div class="ai-avatar">🤖</div>
-                    <div class="ai-content">
-                        <p>Hello! I'm here to help you with questions about LearnTAV's services, pricing, or anything else. How can I assist you today?</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="ai-chatbot-input">
-                <input type="text" id="chatInput" placeholder="Ask me anything..." onkeypress="handleChatKeypress(event)">
-                <button onclick="sendMessage()" class="ai-send-btn">Send</button>
-            </div>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <a href="../education/index.html" class="mobile-link">Education</a>
+            <a href="../consulting/index.html" class="mobile-link">Consulting</a>
+            <a href="../ai-tools/index.html" class="mobile-link">AI Tools</a>
+            <a href="../resources/index.html" class="mobile-link">Resources</a>
+            <a href="../about/index.html" class="mobile-link">About</a>
+            <a href="../contact/index.html" class="mobile-link">Contact</a>
+            <a href="../ai-tools/index.html" class="btn btn-primary btn-lg mobile-cta">Get Started</a>
         </div>
     </div>
 
-    <!-- Popup Contact Form Widget -->
-    <div class="popup-contact-widget" id="contactWidget">
-        <div class="contact-widget-button" onclick="toggleContactForm()">
-            <span class="contact-widget-icon">✉️</span>
-            <span class="contact-widget-text">Quick Contact</span>
-        </div>
-        
-        <div class="contact-widget-panel" id="contactPanel">
-            <div class="contact-widget-header">
-                <h3>Quick Contact</h3>
-                <button class="contact-widget-close" onclick="toggleContactForm()">&times;</button>
-            </div>
-            
-            <form class="contact-widget-form" onsubmit="submitQuickContact(event)">
-                <div class="form-group">
-                    <input type="text" name="name" placeholder="Your Name" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" name="email" placeholder="Your Email" required>
-                </div>
-                <div class="form-group">
-                    <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
-                </div>
-                <button type="submit" class="contact-submit-btn">Send Message</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- JavaScript -->
-    <script type="module" src="../assets/js/accessibility-utils.js"></script>
-    <script src="../assets/js/main.js"></script>
-    <script type="module" src="../assets/js/contact.js"></script>
+    <script src="../assets/js/modern.js"></script>
 </body>
 </html>
