@@ -1132,3 +1132,294 @@ ul, ol {
 .testimonials-grid .testimonial:nth-child(1) { transition-delay: 0s; }
 .testimonials-grid .testimonial:nth-child(2) { transition-delay: 0.1s; }
 .testimonials-grid .testimonial:nth-child(3) { transition-delay: 0.2s; }
+
+/* ========================================
+   Theme Toggle
+   ======================================== */
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--color-gray-100);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    color: var(--color-gray-600);
+}
+
+.theme-toggle:hover {
+    background: var(--color-gray-200);
+    color: var(--color-gray-900);
+}
+
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
+}
+
+.theme-toggle .sun-icon {
+    display: none;
+}
+
+.theme-toggle .moon-icon {
+    display: block;
+}
+
+/* ========================================
+   Dark Mode
+   ======================================== */
+[data-theme="dark"] {
+    --color-gray-50: #1a1a2e;
+    --color-gray-100: #16213e;
+    --color-gray-200: #1f2937;
+    --color-gray-300: #374151;
+    --color-gray-400: #6b7280;
+    --color-gray-500: #9ca3af;
+    --color-gray-600: #d1d5db;
+    --color-gray-700: #e5e7eb;
+    --color-gray-800: #f3f4f6;
+    --color-gray-900: #f9fafb;
+    --color-gray-950: #ffffff;
+
+    --color-white: #0f0f23;
+    --color-black: #ffffff;
+}
+
+[data-theme="dark"] body {
+    background-color: #0f0f23;
+    color: var(--color-gray-700);
+}
+
+[data-theme="dark"] .header {
+    background: rgba(15, 15, 35, 0.9);
+    border-bottom-color: var(--color-gray-200);
+}
+
+[data-theme="dark"] .header.scrolled {
+    background: rgba(15, 15, 35, 0.98);
+}
+
+[data-theme="dark"] .logo-text {
+    color: var(--color-gray-900);
+}
+
+[data-theme="dark"] .nav-link {
+    color: var(--color-gray-500);
+}
+
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link-active {
+    color: var(--color-gray-900);
+}
+
+[data-theme="dark"] .nav-toggle span {
+    background: var(--color-gray-700);
+}
+
+[data-theme="dark"] .btn-primary {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+[data-theme="dark"] .btn-ghost {
+    color: var(--color-gray-500);
+}
+
+[data-theme="dark"] .btn-ghost:hover {
+    background: var(--color-gray-100);
+    color: var(--color-gray-900);
+}
+
+[data-theme="dark"] .btn-outline {
+    border-color: var(--color-gray-300);
+    color: var(--color-gray-700);
+}
+
+[data-theme="dark"] .btn-outline:hover {
+    background: var(--color-gray-100);
+    border-color: var(--color-gray-400);
+}
+
+[data-theme="dark"] .hero {
+    background-color: #0f0f23;
+}
+
+[data-theme="dark"] .hero-badge {
+    background: var(--color-gray-100);
+    border-color: var(--color-gray-200);
+    color: var(--color-gray-700);
+}
+
+[data-theme="dark"] .hero-title {
+    color: var(--color-gray-900);
+}
+
+[data-theme="dark"] .hero-description {
+    color: var(--color-gray-500);
+}
+
+[data-theme="dark"] .hero-grid {
+    background-image:
+        linear-gradient(to right, var(--color-gray-200) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--color-gray-200) 1px, transparent 1px);
+    opacity: 0.3;
+}
+
+[data-theme="dark"] .stat-value {
+    color: var(--color-gray-900);
+}
+
+[data-theme="dark"] .stat-label {
+    color: var(--color-gray-500);
+}
+
+[data-theme="dark"] .trusted {
+    border-bottom-color: var(--color-gray-200);
+}
+
+[data-theme="dark"] .section-title {
+    color: var(--color-gray-900);
+}
+
+[data-theme="dark"] .section-description {
+    color: var(--color-gray-500);
+}
+
+[data-theme="dark"] .page-header {
+    background: var(--color-gray-100);
+    border-bottom-color: var(--color-gray-200);
+}
+
+[data-theme="dark"] .page-title {
+    color: var(--color-gray-900);
+}
+
+[data-theme="dark"] .page-description {
+    color: var(--color-gray-500);
+}
+
+[data-theme="dark"] .service-card {
+    background: var(--color-gray-100);
+    border-color: var(--color-gray-200);
+}
+
+[data-theme="dark"] .service-card:hover {
+    border-color: var(--color-gray-300);
+}
+
+[data-theme="dark"] .service-tag {
+    color: var(--color-gray-500);
+}
+
+[data-theme="dark"] .service-title {
+    color: var(--color-gray-900);
+}
+
+[data-theme="dark"] .service-description {
+    color: var(--color-gray-500);
+}
+
+[data-theme="dark"] .service-features li {
+    color: var(--color-gray-500);
+}
+
+[data-theme="dark"] .features {
+    background: var(--color-gray-100);
+}
+
+[data-theme="dark"] .feature-icon {
+    background: var(--color-gray-50);
+    border-color: var(--color-gray-200);
+}
+
+[data-theme="dark"] .feature-title {
+    color: var(--color-gray-900);
+}
+
+[data-theme="dark"] .feature-description {
+    color: var(--color-gray-500);
+}
+
+[data-theme="dark"] .testimonial {
+    background: var(--color-gray-100);
+    border-color: var(--color-gray-200);
+}
+
+[data-theme="dark"] .testimonial:hover {
+    border-color: var(--color-gray-300);
+}
+
+[data-theme="dark"] .testimonial-quote {
+    color: var(--color-gray-700);
+}
+
+[data-theme="dark"] .author-name {
+    color: var(--color-gray-900);
+}
+
+[data-theme="dark"] .author-title {
+    color: var(--color-gray-500);
+}
+
+[data-theme="dark"] .testimonial-metric {
+    background: var(--color-gray-200);
+    color: var(--color-gray-700);
+}
+
+[data-theme="dark"] .mobile-menu {
+    background: #0f0f23;
+}
+
+[data-theme="dark"] .mobile-link {
+    color: var(--color-gray-700);
+    border-bottom-color: var(--color-gray-200);
+}
+
+[data-theme="dark"] .theme-toggle {
+    background: var(--color-gray-100);
+    border-color: var(--color-gray-200);
+    color: var(--color-gray-500);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+    background: var(--color-gray-200);
+    color: var(--color-gray-900);
+}
+
+[data-theme="dark"] .theme-toggle .sun-icon {
+    display: block;
+}
+
+[data-theme="dark"] .theme-toggle .moon-icon {
+    display: none;
+}
+
+/* Legal pages dark mode */
+[data-theme="dark"] .legal-content p,
+[data-theme="dark"] .legal-content li {
+    color: var(--color-gray-500);
+}
+
+[data-theme="dark"] .legal-updated {
+    background: var(--color-gray-100);
+}
+
+[data-theme="dark"] .contact-box {
+    background: var(--color-gray-100);
+}
+
+[data-theme="dark"] .cookie-table {
+    background: var(--color-gray-100);
+}
+
+[data-theme="dark"] .cookie-table td {
+    border-bottom-color: var(--color-gray-200);
+}
+
+[data-theme="dark"] .important-notice {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.3);
+}

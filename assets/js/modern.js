@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollAnimations();
     initSmoothScroll();
     initHeaderScroll();
+    initThemeToggle();
 });
 
 /* ========================================
@@ -157,4 +158,41 @@ function throttle(func, limit) {
             setTimeout(() => inThrottle = false, limit);
         }
     };
+}
+
+/* ========================================
+   Theme Toggle (Light/Dark Mode)
+   ======================================== */
+function initThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+
+    // Check for saved theme preference or default to system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    // Set initial theme
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    } else if (systemPrefersDark) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    // Toggle theme on button click
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        // Only auto-switch if user hasn't manually set a preference
+        if (!localStorage.getItem('theme')) {
+            document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+        }
+    });
 }
