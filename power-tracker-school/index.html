@@ -1,185 +1,458 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Power Tracker for Schools • LearnTAV</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Power Tracker for Schools - A student-safe browser extension that builds energy awareness.">
     <meta name="robots" content="noindex, nofollow">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; connect-src 'self' https://forms.gle; form-action 'self' https://forms.gle;">
-    
+    <title>Power Tracker for Schools - LearnTAV</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <!-- Styles -->
-    <link rel="stylesheet" href="./school.css">
+    <link rel="stylesheet" href="../assets/css/modern.css">
+    <style>
+        /* School page specific overrides */
+        .toast {
+            position: fixed;
+            bottom: var(--space-6);
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #dc2626;
+            color: #fff;
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-lg);
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.2s ease;
+            max-width: 90%;
+            text-align: center;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
 </head>
 <body>
-    <main class="school-main">
-        <!-- Hero Section -->
-        <section class="hero" id="hero">
-            <div class="container">
-                <h1>Power Tracker for Schools</h1>
-                <p class="hero-subtitle">A student-safe browser extension that builds energy awareness.</p>
-                <a href="#how" class="btn btn-primary">How it works</a>
-            </div>
-        </section>
+    <!-- Navigation -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="../index.html" class="nav-logo">
+                <span class="logo-text">LearnTAV</span>
+            </a>
 
-        <!-- How it works -->
-        <section class="section" id="how">
-            <div class="container">
-                <h2>What it does</h2>
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <h3>Tracks Power Usage</h3>
-                        <p>Shows estimated browser power consumption in real-time</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Simple Charts</h3>
-                        <p>Easy-to-understand visualizations of energy usage patterns</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Privacy First</h3>
-                        <p>No personal data collected by default - everything stays local</p>
-                    </div>
-                </div>
-                
-                <!-- TODO: Add extension screenshot if available -->
-                <div class="screenshot-placeholder">
-                    <p>📊 Extension Interface Preview</p>
-                    <small>Screenshot coming soon</small>
-                </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="../education/index.html" class="nav-link">Education</a>
+                <a href="../consulting/index.html" class="nav-link">Consulting</a>
+                <a href="../ai-tools/index.html" class="nav-link nav-link-active">AI Tools</a>
+                <a href="../resources/index.html" class="nav-link">Resources</a>
+                <a href="../about/index.html" class="nav-link">About</a>
             </div>
-        </section>
 
-        <!-- Why Power Tracker Matters for Schools -->
-        <section id="why-matters" class="section">
-            <div class="container">
-                <h2>Why Power Tracker Matters for Schools</h2>
-                <div class="benefits-content">
-                    <div class="benefits-grid">
-                        <div class="benefit-column">
-                            <h3>Educational Benefits</h3>
-                            <ul>
-                                <li>Builds digital awareness and responsibility</li>
-                                <li>Connects technology use to environmental impact</li>
-                                <li>Supports STEM learning with real data</li>
-                                <li>Enhances environmental science curriculum</li>
-                                <li>Creates opportunities for student projects</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="benefit-column">
-                            <h3>School Sustainability</h3>
-                            <ul>
-                                <li>Reduces digital energy consumption</li>
-                                <li>Supports Green School initiatives</li>
-                                <li>Provides data for sustainability reporting</li>
-                                <li>Encourages eco-friendly technology habits</li>
-                                <li>Aligns with climate action goals</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="benefit-column">
-                            <h3>Easy Implementation</h3>
-                            <ul>
-                                <li>Zero setup or maintenance required</li>
-                                <li>No server or IT infrastructure needed</li>
-                                <li>Students install through Chrome Web Store</li>
-                                <li>No training required for staff</li>
-                                <li>Privacy-compliant by design</li>
-                            </ul>
-                        </div>
-                    </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                </button>
+                <a href="../contact/index.html" class="btn btn-ghost">Contact</a>
+                <a href="https://chromewebstore.google.com/detail/power-tracker-%E2%80%93-monitor-y/plmljdpofjiehkgfchbadaidahedooid" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Get Extension</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="background: linear-gradient(135deg, #10b981, #059669); min-height: auto; padding: calc(72px + var(--space-16)) 0 var(--space-16);">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge" style="background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); color: #fff;">
+                    <span class="badge-dot" style="background: #fff;"></span>
+                    For Schools
+                </div>
+                <h1 class="hero-title" style="color: #fff;">
+                    Power Tracker for Schools
+                    <span class="hero-title-gradient" style="background: linear-gradient(135deg, #fff, rgba(255,255,255,0.8)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Build Energy Awareness</span>
+                </h1>
+                <p class="hero-description" style="color: rgba(255,255,255,0.9);">
+                    A student-safe browser extension that helps students understand digital energy consumption
+                    and develop sustainable technology habits.
+                </p>
+                <div class="hero-actions">
+                    <a href="https://chromewebstore.google.com/detail/power-tracker-%E2%80%93-monitor-y/plmljdpofjiehkgfchbadaidahedooid" target="_blank" rel="noopener noreferrer" class="btn btn-white btn-lg">
+                        Add to Chrome - Free
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="#features" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.5); color: #fff;">
+                        Learn More
+                    </a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Safety & Privacy -->
-        <section class="section">
-            <div class="container">
-                <h2>Safety & Privacy</h2>
-                <div class="safety-content">
-                    <p>Power Tracker for Schools is designed with student privacy and safety as the top priority:</p>
-                    <ul>
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Features</span>
+                <h2 class="section-title">What it does</h2>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Tracks Power Usage</h3>
+                    <p class="feature-description">Shows estimated browser power consumption in real-time.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="3" y1="9" x2="21" y2="9"/>
+                            <line x1="9" y1="21" x2="9" y2="9"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Simple Charts</h3>
+                    <p class="feature-description">Easy-to-understand visualizations of energy usage patterns.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Privacy First</h3>
+                    <p class="feature-description">No personal data collected by default - everything stays local.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            <path d="M2 12h20"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Environmental Focus</h3>
+                    <p class="feature-description">Connects technology use to environmental impact awareness.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why It Matters Section -->
+    <section class="programs">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Benefits</span>
+                <h2 class="section-title">Why Power Tracker Matters for Schools</h2>
+            </div>
+
+            <div class="services-grid">
+                <!-- Educational Benefits -->
+                <div class="service-card service-card-featured">
+                    <div class="service-icon service-icon-blue" style="background: rgba(255,255,255,0.2);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                            <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/>
+                        </svg>
+                    </div>
+                    <span class="service-tag">Learning</span>
+                    <h3 class="service-title">Educational Benefits</h3>
+                    <p class="service-description">
+                        Power Tracker helps students develop digital awareness and connect technology use to real-world environmental impact.
+                    </p>
+                    <ul class="service-features">
+                        <li>Builds digital awareness and responsibility</li>
+                        <li>Supports STEM learning with real data</li>
+                        <li>Enhances environmental science curriculum</li>
+                        <li>Creates opportunities for student projects</li>
+                    </ul>
+                </div>
+
+                <!-- School Sustainability -->
+                <div class="service-card">
+                    <div class="service-icon service-icon-green">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            <path d="M2 12h20"/>
+                        </svg>
+                    </div>
+                    <span class="service-tag">Sustainability</span>
+                    <h3 class="service-title">School Sustainability</h3>
+                    <p class="service-description">
+                        Support your school's green initiatives and sustainability reporting with real data.
+                    </p>
+                    <ul class="service-features">
+                        <li>Reduces digital energy consumption</li>
+                        <li>Supports Green School initiatives</li>
+                        <li>Provides data for sustainability reporting</li>
+                        <li>Aligns with climate action goals</li>
+                    </ul>
+                </div>
+
+                <!-- Easy Implementation -->
+                <div class="service-card">
+                    <div class="service-icon service-icon-purple">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <span class="service-tag">Simple</span>
+                    <h3 class="service-title">Easy Implementation</h3>
+                    <p class="service-description">
+                        Get started in seconds with no IT infrastructure or training required.
+                    </p>
+                    <ul class="service-features">
+                        <li>Zero setup or maintenance required</li>
+                        <li>No server or IT infrastructure needed</li>
+                        <li>Students install through Chrome Web Store</li>
+                        <li>Privacy-compliant by design</li>
+                    </ul>
+                </div>
+
+                <!-- Privacy & Safety -->
+                <div class="service-card">
+                    <div class="service-icon service-icon-orange">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <span class="service-tag">Safe</span>
+                    <h3 class="service-title">Privacy & Safety</h3>
+                    <p class="service-description">
+                        Designed with student privacy and safety as the top priority.
+                    </p>
+                    <ul class="service-features">
                         <li>No ad tracking or third-party scripts</li>
-                        <li>All data stays in your browser unless you choose to export</li>
-                        <li>No personal information required to function</li>
+                        <li>All data stays in the browser locally</li>
+                        <li>No personal information required</li>
                         <li>Complies with school privacy requirements</li>
                     </ul>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Student FAQ -->
-        <section class="section">
-            <div class="container">
-                <h2>Student FAQ</h2>
-                <div class="faq-grid">
-                    <div class="faq-item">
-                        <h3>Will this slow my Chromebook?</h3>
-                        <p>No! Power Tracker is designed to be lightweight and won't affect your browsing experience or device performance.</p>
+    <!-- Student FAQ -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">FAQ</span>
+                <h2 class="section-title">Student Questions</h2>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p class="testimonial-quote" style="font-weight: 600; margin-bottom: var(--space-2);">
+                            Will this slow my Chromebook?
+                        </p>
+                        <p style="color: var(--color-gray-600); font-size: var(--font-size-sm);">
+                            No! Power Tracker is designed to be lightweight and won't affect your browsing experience or device performance.
+                        </p>
                     </div>
-                    <div class="faq-item">
-                        <h3>Does it collect my name or personal info?</h3>
-                        <p>Absolutely not. The extension doesn't collect any personal information - it only tracks anonymous energy usage data that stays on your device.</p>
+                </div>
+
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p class="testimonial-quote" style="font-weight: 600; margin-bottom: var(--space-2);">
+                            Does it collect my personal info?
+                        </p>
+                        <p style="color: var(--color-gray-600); font-size: var(--font-size-sm);">
+                            Absolutely not. The extension doesn't collect any personal information - it only tracks anonymous energy usage data that stays on your device.
+                        </p>
                     </div>
-                    <div class="faq-item">
-                        <h3>How do I remove it?</h3>
-                        <p>You can easily remove the extension through Chrome's standard extension controls - just go to Settings → Extensions and click Remove.</p>
+                </div>
+
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p class="testimonial-quote" style="font-weight: 600; margin-bottom: var(--space-2);">
+                            How do I remove it?
+                        </p>
+                        <p style="color: var(--color-gray-600); font-size: var(--font-size-sm);">
+                            You can easily remove the extension through Chrome's extension controls - go to Settings and then Extensions and click Remove.
+                        </p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Teacher & IT FAQ -->
-        <section class="section">
-            <div class="container">
-                <h2>Teacher & IT FAQ</h2>
-                <div class="faq-grid">
-                    <div class="faq-item">
-                        <h3>Installation Requirements</h3>
-                        <p>Installation is only available through the Chrome Web Store - no sideloading required. The extension follows all Chrome Web Store policies and security guidelines.</p>
+    <!-- Teacher & IT FAQ -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">For Educators</span>
+                <h2 class="section-title">Teacher & IT Information</h2>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21"/>
+                            <line x1="12" y1="17" x2="12" y2="21"/>
+                        </svg>
                     </div>
-                    <div class="faq-item">
-                        <h3>Privacy Compliance</h3>
-                        <p>No personally identifiable information (PII) is needed for the extension to function. All data processing happens locally on the student's device.</p>
+                    <h3 class="feature-title">Installation</h3>
+                    <p class="feature-description">Available through Chrome Web Store - no sideloading required. Follows all Chrome policies.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
                     </div>
-                    <div class="faq-item">
-                        <h3>Educational Value</h3>
-                        <p>Helps students understand digital energy consumption and develops awareness of sustainable technology practices.</p>
+                    <h3 class="feature-title">Privacy Compliance</h3>
+                    <p class="feature-description">No PII needed. All data processing happens locally on the student's device.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                            <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Educational Value</h3>
+                    <p class="feature-description">Helps students understand digital energy and sustainable technology practices.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">No Maintenance</h3>
+                    <p class="feature-description">Zero IT overhead - students can install and manage it themselves.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to bring energy awareness to your school?</h2>
+                <p class="cta-description">
+                    Power Tracker is free and takes less than a minute to install. Have questions? We're here to help.
+                </p>
+                <div class="cta-actions" style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+                    <a href="https://chromewebstore.google.com/detail/power-tracker-%E2%80%93-monitor-y/plmljdpofjiehkgfchbadaidahedooid" target="_blank" rel="noopener noreferrer" class="btn btn-white btn-lg">
+                        Get Power Tracker
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="https://forms.gle/3csP1Z1CTtAYdGmL8" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.5); color: #fff;" data-external-form="true">
+                        Ask a Question
+                    </a>
+                </div>
+                <p class="cta-email">Or email us at <a href="mailto:hello@learntav.com">hello@learntav.com</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="../index.html" class="footer-logo">LearnTAV</a>
+                    <p class="footer-tagline">
+                        Where technology meets accessibility, sustainability, and real-world impact.
+                    </p>
+                    <p class="footer-motto">"Learning Takes a Village"</p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Services</h4>
+                        <a href="../education/index.html">Education</a>
+                        <a href="../consulting/index.html">Consulting</a>
+                        <a href="../ai-tools/index.html">AI Tools</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="../about/index.html">About</a>
+                        <a href="../about/team/index.html">Team</a>
+                        <a href="../contact/index.html">Contact</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <a href="../resources/guides/index.html">Guides</a>
+                        <a href="../resources/blog/index.html">Blog</a>
+                        <a href="../resources/newsletter/index.html">Newsletter</a>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Contact -->
-        <section class="section">
-            <div class="container">
-                <h2>Questions?</h2>
-                <p>Need help or have questions about Power Tracker for Schools?</p>
-                <button id="contact-btn" class="btn btn-secondary">Contact LearnTAV</button>
+            <div class="footer-bottom">
+                <p>&copy; 2024 LearnTAV. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="../legal/privacy/index.html">Privacy</a>
+                    <a href="../legal/terms/index.html">Terms</a>
+                </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </footer>
 
-    <!-- Contact Modal -->
-    <div id="contact-modal" class="modal-overlay" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
-        <div class="modal-content">
-            <button id="modal-close" class="modal-close" aria-label="Close contact modal">&times;</button>
-            <h3 id="modal-title">Contact Information</h3>
-            <p>School contact: hello@learntav.com</p>
-            <div class="modal-actions">
-                <a href="https://forms.gle/3csP1Z1CTtAYdGmL8"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="btn btn-secondary"
-                   data-external-form="true">
-                    Extra Questions Form
-                </a>
-                <button id="modal-close-btn" class="btn btn-primary">Close</button>
-            </div>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <a href="../education/index.html" class="mobile-link">Education</a>
+            <a href="../consulting/index.html" class="mobile-link">Consulting</a>
+            <a href="../ai-tools/index.html" class="mobile-link">AI Tools</a>
+            <a href="../resources/index.html" class="mobile-link">Resources</a>
+            <a href="../about/index.html" class="mobile-link">About</a>
+            <a href="../contact/index.html" class="mobile-link">Contact</a>
         </div>
     </div>
 
@@ -188,6 +461,6 @@
         External navigation is disabled on this page.
     </div>
 
-    <script src="./lockdown.js" defer></script>
+    <script src="../assets/js/modern.js"></script>
 </body>
 </html>
