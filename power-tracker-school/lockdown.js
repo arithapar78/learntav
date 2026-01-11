@@ -41,7 +41,7 @@
         if (href.startsWith('./') && href.includes('#')) return false;
         
         // Allow specific external form URL
-        if (href === 'https://forms.gle/C1YiPkw6i5Yc9ogi7') return false;
+        if (href === 'https://forms.gle/3csP1Z1CTtAYdGmL8') return false;
         
         // Allow elements with data-external-form attribute
         if (element && element.hasAttribute('data-external-form')) return false;
