@@ -82,7 +82,7 @@
 
 ### ⚡ **Functionality Achievements**
 - **Form Intelligence**: 4 specialized forms with smart validation and routing
-- **Interactive Tools**: AI Power Tracker and Prompt Energy Optimizer
+- **Interactive Tools**: AI EcoPrompt and Prompt Energy Optimizer
 - **Navigation Excellence**: Smooth scrolling, active states, and mobile optimization
 - **Content Management**: Dynamic FAQ system and resource organization
 - **User Experience**: Intuitive interactions with accessibility-first approach
@@ -149,7 +149,7 @@
 - Touch-friendly numerical keypad with keyboard support
 - Auto-advance input fields with visual feedback
 - Automatic installation instructions display
-- Secure zip file distribution for Power Tracker and Prompt Optimizer extensions
+- Secure zip file distribution for EcoPrompt and Prompt Optimizer extensions
 **User Impact**: Intuitive, secure download experience with clear guidance
 **Business Impact**: Professional extension distribution showcasing technical expertise
 

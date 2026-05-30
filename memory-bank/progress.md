@@ -302,7 +302,7 @@
 - Keyboard input support with auto-advance between fields
 - Example verification code display (7392)
 - Automatic installation instructions after successful verification
-- Two extension zip files: Power Tracker and Prompt Optimizer
+- Two extension zip files: EcoPrompt and Prompt Optimizer
 **Result**: Professional download experience with security protection
 **Impact**: Secure distribution system for Chrome extensions with user-friendly interface
 

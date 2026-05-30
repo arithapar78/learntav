@@ -1125,9 +1125,9 @@ function handleGlobalNameEntry(name) {
         let toolName = '';
         
         if (url.includes('power-tracker')) {
-            toolName = 'Power Tracker';
+            toolName = 'EcoPrompt';
         } else if (url.includes('prompt-energy-optimizer')) {
-            toolName = 'Power Tracker'; // Redirect prompt optimizer to power tracker
+            toolName = 'EcoPrompt'; // Redirect prompt optimizer to power tracker
         }
         
         if (toolName) {

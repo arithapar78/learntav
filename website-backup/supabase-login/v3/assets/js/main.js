@@ -970,7 +970,7 @@ function handleGlobalNameEntry(name) {
         
         if (url.includes('power-tracker')) {
             zipFile = 'power-tracker-extension.zip';
-            toolName = 'Power Tracker';
+            toolName = 'EcoPrompt';
         } else if (url.includes('prompt-energy-optimizer')) {
             zipFile = 'prompt-optimizer-extension.zip';
             toolName = 'Prompt Optimizer';

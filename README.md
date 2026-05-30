@@ -49,7 +49,7 @@ LearnTAV Website (Production-Ready)
 ├── ai-tools/
 │   ├── index.html                         # AI tools directory with download system
 │   ├── power-tracker/index.html           # Energy consumption tracking
-│   ├── power-tracker-extension.zip        # Power Tracker Chrome extension
+│   ├── power-tracker-extension.zip        # EcoPrompt Chrome extension
 │   └── prompt-energy-optimizer/index.html # Prompt optimization tool
 ├── resources/
 │   ├── index.html                         # Resource hub
@@ -72,7 +72,7 @@ LearnTAV Website (Production-Ready)
 │   │   ├── main.js                       # 900+ lines - Advanced functionality with download system
 │   │   └── contact.js                    # Contact form interactions
 │   ├── extensions/
-│   │   ├── power-tracker-extension.zip   # Power Tracker Chrome extension download
+│   │   ├── power-tracker-extension.zip   # EcoPrompt Chrome extension download
 │   │   └── prompt-optimizer-extension.zip # Prompt Optimizer Chrome extension download
 │   └── images/
 │       ├── favicon.ico                   # Site favicon
@@ -109,8 +109,8 @@ LearnTAV Website (Production-Ready)
 - **Compliance Auditing**: Regulatory compliance for AI implementations
 
 ### 🤖 **AI Tools Suite**
-- **Power Tracker Chrome Extension**: Complete energy monitoring and AI prompt optimization solution available FREE (limited time) on Chrome Web Store
-- **Prompt Energy Optimizer**: Now integrated into Power Tracker - reduce computational costs through advanced prompt engineering
+- **EcoPrompt Chrome Extension**: Complete energy monitoring and AI prompt optimization solution available FREE (limited time) on Chrome Web Store
+- **Prompt Energy Optimizer**: Now integrated into EcoPrompt - reduce computational costs through advanced prompt engineering
 - **Chrome Web Store Integration**: Easy one-click installation directly from Chrome Web Store
 - **Installation Instructions**: Step-by-step Chrome extension installation guide
 - **Custom Tools**: Bespoke AI solutions for specific business needs

@@ -59,7 +59,7 @@ Successfully identified and resolved multiple critical issues with the contact f
 **Solution:**
 - ✅ Removed verification codes from basic/free downloads
 - ✅ Standardized all downloads to use `power-tracker.zip` filename
-- ✅ Both Power Tracker and Prompt Optimizer now download the same unified extension
+- ✅ Both EcoPrompt and Prompt Optimizer now download the same unified extension
 - ✅ Verified "Learn More" links correctly point to extension detail pages
 - ✅ Added clear messaging about unified extension functionality
 

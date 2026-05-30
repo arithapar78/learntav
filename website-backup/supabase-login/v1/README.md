@@ -48,7 +48,7 @@ LearnTAV Website (Production-Ready)
 ├── ai-tools/
 │   ├── index.html                         # AI tools directory with download system
 │   ├── power-tracker/index.html           # Energy consumption tracking
-│   ├── power-tracker-extension.zip        # Power Tracker Chrome extension
+│   ├── power-tracker-extension.zip        # EcoPrompt Chrome extension
 │   └── prompt-energy-optimizer/index.html # Prompt optimization tool
 ├── resources/
 │   ├── index.html                         # Resource hub
@@ -71,7 +71,7 @@ LearnTAV Website (Production-Ready)
 │   │   ├── main.js                       # 900+ lines - Advanced functionality with download system
 │   │   └── contact.js                    # Contact form interactions
 │   ├── extensions/
-│   │   ├── power-tracker-extension.zip   # Power Tracker Chrome extension download
+│   │   ├── power-tracker-extension.zip   # EcoPrompt Chrome extension download
 │   │   └── prompt-optimizer-extension.zip # Prompt Optimizer Chrome extension download
 │   └── images/
 │       ├── favicon.ico                   # Site favicon
@@ -108,7 +108,7 @@ LearnTAV Website (Production-Ready)
 - **Compliance Auditing**: Regulatory compliance for AI implementations
 
 ### 🤖 **AI Tools Suite**
-- **Power Tracker Chrome Extension**: Monitor and optimize AI system energy consumption with downloadable Chrome extension
+- **EcoPrompt Chrome Extension**: Monitor and optimize AI system energy consumption with downloadable Chrome extension
 - **Prompt Energy Optimizer Extension**: Reduce computational costs through prompt engineering with standalone Chrome extension
 - **Verification-Protected Downloads**: Secure download system with one-time verification codes (example: 7392)
 - **Installation Instructions**: Step-by-step Chrome extension installation guide

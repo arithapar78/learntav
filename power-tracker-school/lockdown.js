@@ -1,5 +1,5 @@
 /* ===================================================================
-   Power Tracker School - Lockdown & Modal Script
+   EcoPrompt School - Lockdown & Modal Script
    Navigation restrictions and contact modal functionality
    =================================================================== */
 
@@ -312,9 +312,9 @@
             initSmoothScroll();
             initAccessibility();
             
-            console.log('Power Tracker School: Lockdown system initialized');
+            console.log('EcoPrompt School: Lockdown system initialized');
         } catch (error) {
-            console.error('Power Tracker School: Initialization error:', error);
+            console.error('EcoPrompt School: Initialization error:', error);
         }
     }
     

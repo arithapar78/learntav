@@ -910,7 +910,7 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
         
         if (url.includes('power-tracker')) {
             zipFile = 'power-tracker-extension.zip';
-            toolName = 'Power Tracker';
+            toolName = 'EcoPrompt';
         } else if (url.includes('prompt-energy-optimizer')) {
             zipFile = 'prompt-optimizer-extension.zip';
             toolName = 'Prompt Optimizer';
@@ -932,7 +932,7 @@ console.log('🚀 DEBUG: JavaScript file is loading!');
     
     function showDownloadModal(toolType) {
         const isPromptOptimizer = toolType.includes('prompt-energy-optimizer');
-        const toolName = isPromptOptimizer ? 'Prompt Optimizer' : 'Power Tracker';
+        const toolName = isPromptOptimizer ? 'Prompt Optimizer' : 'EcoPrompt';
         const zipFile = isPromptOptimizer ? 'prompt-optimizer-extension.zip' : 'power-tracker-extension.zip';
         
         // Create modal HTML
