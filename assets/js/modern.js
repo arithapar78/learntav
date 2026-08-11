@@ -18,34 +18,66 @@ document.addEventListener('DOMContentLoaded', function() {
 function initNavigation() {
     const navToggle = document.getElementById('navToggle');
     const mobileMenu = document.getElementById('mobileMenu');
-    const header = document.getElementById('header');
 
-    if (navToggle && mobileMenu) {
-        navToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-        });
+    if (!navToggle || !mobileMenu) return;
 
-        // Close mobile menu when clicking a link
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                navToggle.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
+    // Elements outside the menu are inert while it is open, so focus has
+    // to be kept inside it for keyboard and screen-reader users.
+    const FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
-        // Close mobile menu on escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-                navToggle.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
+    function focusableItems() {
+        return Array.from(mobileMenu.querySelectorAll(FOCUSABLE))
+            .filter(el => el.offsetParent !== null);
     }
+
+    function setOpen(open) {
+        navToggle.classList.toggle('active', open);
+        mobileMenu.classList.toggle('active', open);
+        navToggle.setAttribute('aria-expanded', String(open));
+        navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        document.body.style.overflow = open ? 'hidden' : '';
+
+        if (open) {
+            const first = focusableItems()[0];
+            if (first) first.focus();
+        }
+    }
+
+    navToggle.addEventListener('click', function () {
+        setOpen(!mobileMenu.classList.contains('active'));
+    });
+
+    // Close when a destination is chosen.
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => setOpen(false));
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (!mobileMenu.classList.contains('active')) return;
+
+        if (e.key === 'Escape') {
+            setOpen(false);
+            navToggle.focus();
+            return;
+        }
+
+        // Trap Tab within the open menu.
+        if (e.key === 'Tab') {
+            const items = focusableItems();
+            if (!items.length) return;
+
+            const first = items[0];
+            const last = items[items.length - 1];
+
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
+    });
 }
 
 /* ========================================
@@ -53,18 +85,10 @@ function initNavigation() {
    ======================================== */
 function initHeaderScroll() {
     const header = document.getElementById('header');
-    let lastScroll = 0;
+    if (!header) return;
 
-    window.addEventListener('scroll', function() {
-        const currentScroll = window.pageYOffset;
-
-        if (currentScroll > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-
-        lastScroll = currentScroll;
+    window.addEventListener('scroll', function () {
+        header.classList.toggle('scrolled', window.pageYOffset > 50);
     }, { passive: true });
 }
 
@@ -72,10 +96,17 @@ function initHeaderScroll() {
    Scroll Animations
    ======================================== */
 function initScrollAnimations() {
-    // Add animate-on-scroll class to elements
     const animatedElements = document.querySelectorAll(
         '.service-card, .feature, .testimonial, .section-header'
     );
+
+    // Respect a reduced-motion preference: never hide content that we
+    // would then have to animate back into view.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // IntersectionObserver is what restores opacity. Without it the
+    // .animate-on-scroll rule would leave content permanently invisible.
+    if (!('IntersectionObserver' in window)) return;
 
     animatedElements.forEach(el => {
         el.classList.add('animate-on-scroll');
@@ -163,36 +194,50 @@ function throttle(func, limit) {
 /* ========================================
    Theme Toggle (Light/Dark Mode)
    ======================================== */
+// The initial theme is resolved in assets/js/layout.js, which runs in
+// <head> before first paint so dark-mode users never see a flash of the
+// light theme. This function only wires up the toggle control.
 function initThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
 
-    // Check for saved theme preference or default to system preference
-    const savedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    // Set initial theme
-    if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-    } else if (systemPrefersDark) {
-        document.documentElement.setAttribute('data-theme', 'dark');
+    function syncToggle(theme) {
+        if (!themeToggle) return;
+        const isDark = theme === 'dark';
+        themeToggle.setAttribute('aria-pressed', String(isDark));
+        themeToggle.setAttribute(
+            'aria-label',
+            isDark ? 'Switch to light mode' : 'Switch to dark mode'
+        );
     }
 
-    // Toggle theme on button click
-    if (themeToggle) {
-        themeToggle.addEventListener('click', function() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    syncToggle(document.documentElement.getAttribute('data-theme'));
 
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function () {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.setAttribute('data-theme', next);
+            try {
+                localStorage.setItem('theme', next);
+            } catch (e) {
+                // Ignore: private mode blocks writes, theme still applies.
+            }
+            syncToggle(next);
         });
     }
 
-    // Listen for system theme changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-        // Only auto-switch if user hasn't manually set a preference
-        if (!localStorage.getItem('theme')) {
-            document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+    // Follow the OS only while the user has no explicit preference.
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+        let saved = null;
+        try {
+            saved = localStorage.getItem('theme');
+        } catch (err) { /* ignore */ }
+
+        if (!saved) {
+            const theme = e.matches ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            syncToggle(theme);
         }
     });
 }
