@@ -127,10 +127,10 @@
                         <h4 style="font-size: var(--font-size-lg); font-weight: 600; margin-bottom: var(--space-2);">
                             The Future of No-Code AI
                         </h4>
-                        <p style="color: var(--color-gray-600); font-size: var(--font-size-sm);">
+                        <p style="color: var(--text-secondary); font-size: var(--font-size-sm);">
                             How visual programming is making AI accessible to everyone, plus 5 tools you should try.
                         </p>
-                        <p style="color: var(--color-gray-500); font-size: var(--font-size-xs); margin-top: var(--space-3);">
+                        <p style="color: var(--text-muted); font-size: var(--font-size-xs); margin-top: var(--space-3);">
                             December 9, 2024
                         </p>
                     </div>
@@ -142,10 +142,10 @@
                         <h4 style="font-size: var(--font-size-lg); font-weight: 600; margin-bottom: var(--space-2);">
                             Responsible AI Practices
                         </h4>
-                        <p style="color: var(--color-gray-600); font-size: var(--font-size-sm);">
+                        <p style="color: var(--text-secondary); font-size: var(--font-size-sm);">
                             Why responsible AI usage matters and practical steps for thoughtful implementation.
                         </p>
-                        <p style="color: var(--color-gray-500); font-size: var(--font-size-xs); margin-top: var(--space-3);">
+                        <p style="color: var(--text-muted); font-size: var(--font-size-xs); margin-top: var(--space-3);">
                             December 2, 2024
                         </p>
                     </div>
@@ -157,10 +157,10 @@
                         <h4 style="font-size: var(--font-size-lg); font-weight: 600; margin-bottom: var(--space-2);">
                             AI for Small Business
                         </h4>
-                        <p style="color: var(--color-gray-600); font-size: var(--font-size-sm);">
+                        <p style="color: var(--text-secondary); font-size: var(--font-size-sm);">
                             Case study: How a local business increased productivity 40% with simple AI tools.
                         </p>
-                        <p style="color: var(--color-gray-500); font-size: var(--font-size-xs); margin-top: var(--space-3);">
+                        <p style="color: var(--text-muted); font-size: var(--font-size-xs); margin-top: var(--space-3);">
                             November 25, 2024
                         </p>
                     </div>
@@ -185,6 +185,16 @@
                         </svg>
                     </a>
                 </div>
+
+                <!-- Same intent as the signup: follow for the same updates -->
+                <div class="cta-social">
+                    <span class="cta-social-label">Or follow us</span>
+                    <div id="social-newsletter"></div>
+                </div>
+                <script>
+                    document.getElementById('social-newsletter').innerHTML =
+                        LearnTAVSocialLinks({});
+                </script>
             </div>
         </div>
     </section>

@@ -117,13 +117,13 @@
             </div>
 
             <div class="about-story" style="max-width: 800px; margin: 0 auto; text-align: center;">
-                <p style="font-size: var(--font-size-lg); color: var(--color-gray-600); line-height: 1.8; margin-bottom: var(--space-6);">
+                <p style="font-size: var(--font-size-lg); color: var(--text-secondary); line-height: 1.8; margin-bottom: var(--space-6);">
                     We saw a gap between the promise of AI and the reality for most people. While AI was transforming industries, many talented professionals felt left behind because they didn't have a traditional computer science background.
                 </p>
-                <p style="font-size: var(--font-size-lg); color: var(--color-gray-600); line-height: 1.8; margin-bottom: var(--space-6);">
+                <p style="font-size: var(--font-size-lg); color: var(--text-secondary); line-height: 1.8; margin-bottom: var(--space-6);">
                     At the same time, we noticed that AI adoption was happening without proper guidance, especially in specialized fields like healthcare. Organizations were rushing to implement AI without understanding the implications.
                 </p>
-                <p style="font-size: var(--font-size-lg); color: var(--color-gray-600); line-height: 1.8;">
+                <p style="font-size: var(--font-size-lg); color: var(--text-secondary); line-height: 1.8;">
                     LearnTAV was founded to address both challenges: making AI accessible to everyone while promoting responsible AI practices. Because we believe that Learning Takes a Village.
                 </p>
             </div>
@@ -131,7 +131,7 @@
     </section>
 
     <!-- Values Section -->
-    <section class="services" style="padding: var(--space-24) 0; background: var(--color-white);">
+    <section class="services" style="padding: var(--space-24) 0; background: var(--surface-page);">
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Our Values</span>
@@ -210,6 +210,16 @@
                         </svg>
                     </a>
                 </div>
+
+                <!-- Follow along — rendered from the shared icon map -->
+                <div class="cta-social">
+                    <span class="cta-social-label">Follow along</span>
+                    <div id="social-about"></div>
+                </div>
+                <script>
+                    document.getElementById('social-about').innerHTML =
+                        LearnTAVSocialLinks({});
+                </script>
             </div>
         </div>
     </section>

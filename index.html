@@ -44,7 +44,12 @@
       "name": "LearnTAV",
       "description": "A learning platform and lab for building with AI",
       "url": "https://learntav.com",
-      "logo": "https://learntav.com/assets/images/logo.png"
+      "logo": "https://learntav.com/assets/images/logo.png",
+      "sameAs": [
+        "https://www.instagram.com/learntav_llc/",
+        "https://www.facebook.com/profile.php?id=61593091894765",
+        "https://www.youtube.com/channel/UC9ksUX7uSH0yPYjETWThdGA"
+      ]
     }
     </script>
 </head>
@@ -362,6 +367,16 @@
                     </a>
                 </div>
                 <p class="cta-email">Or email us at <a href="mailto:hello@learntav.com">hello@learntav.com</a></p>
+
+                <!-- Follow us — rendered from the shared icon map -->
+                <div class="cta-social">
+                    <span class="cta-social-label">Follow us</span>
+                    <div id="social-home"></div>
+                </div>
+                <script>
+                    document.getElementById('social-home').innerHTML =
+                        LearnTAVSocialLinks({});
+                </script>
             </div>
         </div>
     </section>
