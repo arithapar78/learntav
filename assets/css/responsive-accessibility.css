@@ -1,3 +1,9 @@
+/* ============================================================
+   LEGACY — DO NOT EXTEND
+   Loaded only by the authenticated views (dashboard/, profile/,
+   settings/). modern.css carries its own responsive and
+   accessibility rules for the marketing site.
+   ============================================================ */
 /**
  * Responsive Design & Accessibility Enhancements
  * Comprehensive mobile-first design and accessibility features
