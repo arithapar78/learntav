@@ -341,14 +341,17 @@ ul, ol {
     display: none;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 5px;
-    width: 32px;
-    height: 32px;
-    padding: 4px;
+    /* 44px hit area; the bars themselves stay 24px wide. */
+    width: 44px;
+    height: 44px;
+    padding: 10px;
 }
 
 .nav-toggle span {
     display: block;
+    /* 100% of the 24px content box left by the padding above. */
     width: 100%;
     height: 2px;
     background: var(--text-primary);
@@ -1191,8 +1194,8 @@ ul, ol {
     font-size: var(--font-size-sm);
     line-height: var(--line-height-ui);
     color: var(--text-on-dark-muted);
-    /* Vertical padding brings the tap target to ~44px. */
-    padding: var(--space-2) 0;
+    /* 23px line box + 2x11px padding clears the 44px tap target. */
+    padding: 11px 0;
     transition: color var(--transition-fast);
 }
 
@@ -1224,7 +1227,7 @@ ul, ol {
     display: inline-block;
     font-size: var(--font-size-sm);
     color: var(--text-on-dark-muted);
-    padding: var(--space-2) 0;
+    padding: 11px 0;
     transition: color var(--transition-fast);
 }
 
