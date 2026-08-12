@@ -26,8 +26,11 @@ function initNavigation() {
     const FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
     function focusableItems() {
+        // The menu animates in via opacity/visibility, so immediately after
+        // opening its children still report offsetParent === null. Filter on
+        // layout box instead, which is already correct at that point.
         return Array.from(mobileMenu.querySelectorAll(FOCUSABLE))
-            .filter(el => el.offsetParent !== null);
+            .filter(el => el.getBoundingClientRect().width > 0);
     }
 
     function setOpen(open) {
@@ -38,8 +41,20 @@ function initNavigation() {
         document.body.style.overflow = open ? 'hidden' : '';
 
         if (open) {
-            const first = focusableItems()[0];
-            if (first) first.focus();
+            // The menu transitions from visibility:hidden, and a hidden
+            // element cannot take focus — calling focus() synchronously
+            // here silently does nothing. Wait for the transition to end
+            // (with a timeout fallback in case it never fires).
+            let moved = false;
+            const focusFirst = () => {
+                if (moved) return;
+                moved = true;
+                const first = focusableItems()[0];
+                if (first) first.focus();
+            };
+
+            mobileMenu.addEventListener('transitionend', focusFirst, { once: true });
+            setTimeout(focusFirst, 250);
         }
     }
 

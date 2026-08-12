@@ -530,7 +530,7 @@ ul, ol {
     font-weight: 500;
     color: var(--text-secondary);
     margin-bottom: var(--space-6);
-    animation: fadeInUp 0.6s ease forwards;
+    animation: fadeInUp 0.6s ease backwards;
 }
 
 .badge-dot {
@@ -553,8 +553,7 @@ ul, ol {
     color: var(--text-primary);
     letter-spacing: -0.02em;
     margin-bottom: var(--space-6);
-    animation: fadeInUp 0.6s ease 0.1s forwards;
-    opacity: 0;
+    animation: fadeInUp 0.6s ease 0.1s backwards;
 }
 
 .hero-title-gradient {
@@ -581,8 +580,7 @@ ul, ol {
     color: var(--text-secondary);
     max-width: 600px;
     margin: 0 auto var(--space-8);
-    animation: fadeInUp 0.6s ease 0.2s forwards;
-    opacity: 0;
+    animation: fadeInUp 0.6s ease 0.2s backwards;
 }
 
 .hero-actions {
@@ -591,8 +589,7 @@ ul, ol {
     justify-content: center;
     gap: var(--space-4);
     margin-bottom: var(--space-12);
-    animation: fadeInUp 0.6s ease 0.3s forwards;
-    opacity: 0;
+    animation: fadeInUp 0.6s ease 0.3s backwards;
 }
 
 .hero-stats {
@@ -600,8 +597,7 @@ ul, ol {
     align-items: center;
     justify-content: center;
     gap: var(--space-10);
-    animation: fadeInUp 0.6s ease 0.4s forwards;
-    opacity: 0;
+    animation: fadeInUp 0.6s ease 0.4s backwards;
 }
 
 .stat {
