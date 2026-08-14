@@ -70,6 +70,12 @@
     --text-link: #2563eb;
     --text-link-hover: #1d4ed8;
 
+    /* Brand blue used as *text* (large figures, accent numerals). The raw
+       --color-primary is a fill colour and only reaches 3.36:1 as text on
+       the dark raised surface, so this flips per theme while the fill
+       itself stays saturated. 4.95:1 on --surface-sunken here. */
+    --text-accent: #2563eb;
+
     /* Borders: three weights so cards stop reading as flat.
        --border-strong is used where a border is the only thing defining
        an interactive control, so it clears 3:1 against the page. */
@@ -1581,6 +1587,7 @@ ul, ol {
     --text-on-dark-muted: #cbd2dc;
     --text-link: #7ba6f7;
     --text-link-hover: #a5c2fa;
+    --text-accent: #7ba6f7;         /*  7.15:1 on --surface-raised */
 
     --border-subtle: #232833;
     --border-default: #333a48;
@@ -1859,5 +1866,305 @@ ul, ol {
     .cta-social {
         flex-direction: column;
         gap: var(--space-2);
+    }
+}
+
+/* ========================================
+   Article (long-form blog posts)
+
+   The reusable post template. The legal pages predate this and carry
+   their own page-local styles; anything new under /resources/blog/
+   should use these classes so posts stay consistent without each one
+   inventing its own <style> block.
+
+   Every colour here resolves through a semantic token, so dark mode
+   needs no overrides below except where a surface changes elevation.
+   ======================================== */
+
+/* ~700px measure. Set in ch so it tracks the font size rather than
+   fixing a pixel width that stops matching if the base size moves. */
+.article {
+    max-width: 42rem;   /* 672px at the 16px root */
+    margin: 0 auto;
+}
+
+.article-header {
+    margin-bottom: var(--space-10);
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--border-default);
+}
+
+/* Byline / date / read-time row. Wraps rather than truncating at 375px. */
+.article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.article-meta-author {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Dot separators are decorative; hidden from the a11y tree at the
+   markup level with aria-hidden. */
+.article-meta-sep {
+    color: var(--text-muted);
+}
+
+.article-body > * {
+    max-width: 100%;
+}
+
+.article-body p,
+.article-body li {
+    font-size: var(--font-size-prose);
+    line-height: var(--line-height-prose);
+    color: var(--text-secondary);
+}
+
+.article-body p {
+    margin-bottom: var(--space-6);
+}
+
+.article-body h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    line-height: var(--line-height-snug);
+    color: var(--text-primary);
+    letter-spacing: var(--tracking-display);
+    margin: var(--space-12) 0 var(--space-4);
+}
+
+.article-body h3 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    line-height: var(--line-height-snug);
+    color: var(--text-primary);
+    margin: var(--space-8) 0 var(--space-3);
+}
+
+/* Bulleted lists need their markers back — the reset strips them
+   globally for nav and card lists. */
+.article-body ul {
+    list-style: disc;
+    margin: 0 0 var(--space-6);
+    padding-left: var(--space-6);
+}
+
+.article-body ol {
+    list-style: decimal;
+    margin: 0 0 var(--space-6);
+    padding-left: var(--space-6);
+}
+
+.article-body li {
+    margin-bottom: var(--space-3);
+    padding-left: var(--space-1);
+}
+
+.article-body li::marker {
+    color: var(--text-muted);
+}
+
+.article-body strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Inline links are underlined: colour alone is not a sufficient
+   affordance inside a wall of prose. */
+.article-body a {
+    color: var(--text-link);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    transition: color var(--transition-fast);
+}
+
+.article-body a:hover {
+    color: var(--text-link-hover);
+}
+
+.article-body hr {
+    height: 1px;
+    border: 0;
+    background: var(--border-default);
+    margin: var(--space-10) 0;
+}
+
+/* Pull-quote: a left rule rather than a filled panel, so it reads as
+   emphasis inside the prose instead of a separate card. */
+.article-pullquote {
+    margin: var(--space-10) 0;
+    padding: var(--space-2) 0 var(--space-2) var(--space-6);
+    border-left: 3px solid var(--color-primary);
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-snug);
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.article-pullquote p {
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+    margin: 0;
+}
+
+/* Stat callout: figures pulled out of the paragraph flow. auto-fit so
+   it collapses 4 -> 2 -> 1 without per-breakpoint rules. */
+.article-stat {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: var(--space-6);
+    margin: var(--space-10) 0;
+    padding: var(--space-6);
+    background: var(--surface-sunken);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-xl);
+}
+
+.article-stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.article-stat-value {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--tracking-display);
+    color: var(--text-accent);
+}
+
+.article-stat-label {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-ui);
+    color: var(--text-secondary);
+}
+
+/* Numbered "how it works" steps. */
+.article-steps {
+    list-style: none;
+    margin: var(--space-8) 0;
+    padding: 0;
+    counter-reset: article-step;
+}
+
+.article-steps > li {
+    position: relative;
+    counter-increment: article-step;
+    margin-bottom: var(--space-6);
+    padding-left: var(--space-12);
+}
+
+.article-steps > li::before {
+    content: counter(article-step);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: var(--color-primary);
+    color: #ffffff;   /* literal: sits on the fixed blue fill in both themes */
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    border-radius: var(--radius-full);
+}
+
+/* Author note / italic sign-off at the foot of the piece. */
+.article-note {
+    margin-top: var(--space-10);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--border-default);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-prose);
+    color: var(--text-secondary);
+}
+
+.article-sources {
+    margin-top: var(--space-8);
+    padding: var(--space-6);
+    background: var(--surface-sunken);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-lg);
+}
+
+.article-sources h2 {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-eyebrow);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-3);
+}
+
+.article-sources ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.article-sources li {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-prose);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+    /* Long source URLs must not push the page into horizontal scroll. */
+    overflow-wrap: anywhere;
+}
+
+/* Back-to-index link above the title. */
+.article-back {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+}
+
+.article-back:hover {
+    color: var(--text-primary);
+}
+
+/* In dark mode the sunken band and the page are nearly the same value,
+   so these panels take the raised surface to stay distinguishable —
+   the same treatment .service-card gets. */
+[data-theme="dark"] .article-stat,
+[data-theme="dark"] .article-sources {
+    background: var(--surface-raised);
+}
+
+@media (max-width: 480px) {
+    .article-body h2 {
+        font-size: var(--font-size-xl);
+    }
+
+    .article-stat {
+        padding: var(--space-5);
+        gap: var(--space-5);
+    }
+
+    .article-stat-value {
+        font-size: var(--font-size-2xl);
+    }
+
+    .article-pullquote {
+        font-size: var(--font-size-lg);
+        padding-left: var(--space-5);
+    }
+
+    .article-steps > li {
+        padding-left: var(--space-10);
     }
 }
