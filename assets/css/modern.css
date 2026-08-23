@@ -1881,17 +1881,57 @@ ul, ol {
    needs no overrides below except where a surface changes elevation.
    ======================================== */
 
-/* ~700px measure. Set in ch so it tracks the font size rather than
-   fixing a pixel width that stops matching if the base size moves. */
+/* The article sits on the plain page surface with header clearance —
+   no sunken band, no marketing hero above it. */
+.article-section {
+    padding: calc(72px + var(--space-12)) 0 var(--section-padding);
+}
+
+/* One column, one alignment. The masthead and the body share this
+   measure so the title, dek, byline and prose all sit on the same left
+   edge — the single biggest thing that makes a page read as an article
+   rather than a landing page. ~700px at the 17px body size. */
 .article {
-    max-width: 42rem;   /* 672px at the 16px root */
+    max-width: 43rem;   /* 688px at the 16px root */
     margin: 0 auto;
 }
 
+/* Article masthead. Deliberately NOT .page-header: that block is a
+   centred marketing hero on a sunken band, which fights the
+   left-aligned text column underneath it. */
 .article-header {
     margin-bottom: var(--space-10);
-    padding-bottom: var(--space-8);
-    border-bottom: 1px solid var(--border-default);
+}
+
+/* Back-link row sits above the title on its own line, so it stops
+   colliding with the category pill. */
+.article-kicker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.article-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--tracking-display);
+    color: var(--text-primary);
+    margin-bottom: var(--space-5);
+    /* Keeps a lone short word off the last line. */
+    text-wrap: balance;
+}
+
+/* Standfirst / dek. Larger and lighter than body copy, left-aligned to
+   the same edge as everything else. */
+.article-dek {
+    font-size: var(--font-size-xl);
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-8);
+    max-width: 38rem;
 }
 
 /* Byline / date / read-time row. Wraps rather than truncating at 375px. */
@@ -1900,6 +1940,8 @@ ul, ol {
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-2) var(--space-3);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--border-default);
     font-size: var(--font-size-sm);
     color: var(--text-secondary);
 }
@@ -1919,24 +1961,31 @@ ul, ol {
     max-width: 100%;
 }
 
+/* Body copy is --text-primary, not --text-secondary. Long-form reading
+   wants near-black; the muted grey used for card blurbs reads as a
+   caption when it runs for several thousand words. */
 .article-body p,
 .article-body li {
     font-size: var(--font-size-prose);
     line-height: var(--line-height-prose);
-    color: var(--text-secondary);
+    color: var(--text-primary);
 }
 
 .article-body p {
     margin-bottom: var(--space-6);
 }
 
+/* Headings own the section break on their own — the source copy also
+   carries `---` rules between sections, which would double up. Generous
+   space above, tight below, so a heading binds to the text it
+   introduces rather than floating between two blocks. */
 .article-body h2 {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-3xl);
     font-weight: 700;
     line-height: var(--line-height-snug);
     color: var(--text-primary);
     letter-spacing: var(--tracking-display);
-    margin: var(--space-12) 0 var(--space-4);
+    margin: var(--space-16) 0 var(--space-5);
 }
 
 .article-body h3 {
@@ -1944,7 +1993,20 @@ ul, ol {
     font-weight: 600;
     line-height: var(--line-height-snug);
     color: var(--text-primary);
-    margin: var(--space-8) 0 var(--space-3);
+    margin: var(--space-10) 0 var(--space-3);
+}
+
+/* A heading directly after the masthead shouldn't push a huge gap. */
+.article-body > h2:first-child,
+.article-body > h3:first-child {
+    margin-top: 0;
+}
+
+/* Lead paragraph: the first line of the piece carries slightly more
+   weight, a standard article convention. */
+.article-body > p:first-of-type {
+    font-size: var(--font-size-lg);
+    color: var(--text-primary);
 }
 
 /* Bulleted lists need their markers back — the reset strips them
@@ -1988,81 +2050,105 @@ ul, ol {
     color: var(--text-link-hover);
 }
 
+/* Scene break for a shift in time or subject *within* a section. An
+   <h2> is already a section break, so a rule directly before a heading
+   is redundant — don't author one; use the heading alone. */
 .article-body hr {
-    height: 1px;
+    height: auto;
     border: 0;
-    background: var(--border-default);
-    margin: var(--space-10) 0;
+    margin: var(--space-12) auto;
+    text-align: center;
+    overflow: visible;
 }
 
-/* Pull-quote: a left rule rather than a filled panel, so it reads as
-   emphasis inside the prose instead of a separate card. */
+.article-body hr::before {
+    content: "* * *";
+    display: block;
+    color: var(--text-muted);
+    font-size: var(--font-size-base);
+    letter-spacing: 0.4em;
+    /* The tracking pads the right side; pull it back to stay centred. */
+    text-indent: 0.4em;
+}
+
+/* Pull-quote: no box, no border — just larger, tighter type set off by
+   whitespace. A filled panel reads as a UI card and stops the eye;
+   this reads as the author raising their voice mid-paragraph. */
 .article-pullquote {
-    margin: var(--space-10) 0;
-    padding: var(--space-2) 0 var(--space-2) var(--space-6);
-    border-left: 3px solid var(--color-primary);
-    font-size: var(--font-size-xl);
-    line-height: var(--line-height-snug);
-    font-weight: 500;
+    margin: var(--space-12) 0;
+    padding: 0;
+    border: 0;
+    font-size: clamp(1.375rem, 3vw, 1.75rem);
+    line-height: 1.35;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     color: var(--text-primary);
+    text-wrap: balance;
 }
 
 .article-pullquote p {
     font-size: inherit;
     line-height: inherit;
     color: inherit;
+    font-weight: inherit;
     margin: 0;
 }
 
-/* Stat callout: figures pulled out of the paragraph flow. auto-fit so
-   it collapses 4 -> 2 -> 1 without per-breakpoint rules. */
+/* Stat rail: a bordered list, not a card grid. Five figures in a
+   3-column grid orphaned two onto a ragged second row; one per line
+   with a rule between them scans in the reading direction and never
+   leaves a hole. */
 .article-stat {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-    gap: var(--space-6);
     margin: var(--space-10) 0;
-    padding: var(--space-6);
-    background: var(--surface-sunken);
-    border: 1px solid var(--border-card);
-    border-radius: var(--radius-xl);
+    padding: 0;
+    border: 0;
+    border-top: 2px solid var(--text-primary);
+    background: none;
 }
 
 .article-stat-item {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
+    display: grid;
+    grid-template-columns: minmax(7rem, auto) 1fr;
+    align-items: baseline;
+    gap: var(--space-3) var(--space-6);
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--border-default);
 }
 
 .article-stat-value {
-    font-size: var(--font-size-3xl);
+    font-size: var(--font-size-2xl);
     font-weight: 700;
     line-height: var(--line-height-tight);
     letter-spacing: var(--tracking-display);
     color: var(--text-accent);
+    font-variant-numeric: tabular-nums;
 }
 
 .article-stat-label {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-base);
     line-height: var(--line-height-ui);
     color: var(--text-secondary);
 }
 
 /* Numbered "how it works" steps. */
-.article-steps {
+/* Scoped to .article-body to outrank the generic `.article-body ol`
+   list-style above — otherwise the native decimal marker renders
+   alongside the numbered badge and every step is numbered twice. */
+.article-body .article-steps {
     list-style: none;
     margin: var(--space-8) 0;
     padding: 0;
     counter-reset: article-step;
 }
 
-.article-steps > li {
+.article-body .article-steps > li {
     position: relative;
     counter-increment: article-step;
     margin-bottom: var(--space-6);
     padding-left: var(--space-12);
 }
 
-.article-steps > li::before {
+.article-body .article-steps > li::before {
     content: counter(article-step);
     position: absolute;
     top: 0;
@@ -2121,12 +2207,11 @@ ul, ol {
     overflow-wrap: anywhere;
 }
 
-/* Back-to-index link above the title. */
+/* Back-to-index link, sits in the kicker row above the title. */
 .article-back {
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
-    margin-bottom: var(--space-6);
     font-size: var(--font-size-sm);
     font-weight: 600;
     color: var(--text-secondary);
@@ -2137,34 +2222,30 @@ ul, ol {
     color: var(--text-primary);
 }
 
-/* In dark mode the sunken band and the page are nearly the same value,
-   so these panels take the raised surface to stay distinguishable —
-   the same treatment .service-card gets. */
-[data-theme="dark"] .article-stat,
+/* The stat rail is borders-only now, so only the sources panel needs
+   the raised surface in dark. */
 [data-theme="dark"] .article-sources {
     background: var(--surface-raised);
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
     .article-body h2 {
-        font-size: var(--font-size-xl);
-    }
-
-    .article-stat {
-        padding: var(--space-5);
-        gap: var(--space-5);
-    }
-
-    .article-stat-value {
         font-size: var(--font-size-2xl);
+        margin-top: var(--space-12);
     }
 
-    .article-pullquote {
+    .article-dek {
         font-size: var(--font-size-lg);
-        padding-left: var(--space-5);
     }
 
-    .article-steps > li {
+    /* Figure stacks above its label rather than squeezing two columns
+       into 343px. */
+    .article-stat-item {
+        grid-template-columns: 1fr;
+        gap: var(--space-1);
+    }
+
+    .article-body .article-steps > li {
         padding-left: var(--space-10);
     }
 }
