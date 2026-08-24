@@ -3,176 +3,11 @@
    A clean, professional CSS framework
    ======================================== */
 
-/* CSS Variables */
-:root {
-    color-scheme: light dark;
+/* Brand tokens. MUST be first — every value below resolves through it.
+   Do not define colours, type steps, spacing, radii or shadows in this
+   file; add them to tokens.css so there is one source of brand truth. */
+@import url('tokens.css');
 
-    /* ----------------------------------------
-       Raw palette
-       These are fixed reference values. They are NEVER remapped per
-       theme — doing that breaks every rule that used a gray step as a
-       background rather than as text. Theme switching happens through
-       the semantic tokens below.
-       ---------------------------------------- */
-    --color-primary: #2563eb;
-    --color-primary-dark: #1d4ed8;
-    --color-primary-light: #3b82f6;
-
-    --color-gray-50: #f9fafb;
-    --color-gray-100: #f3f4f6;
-    --color-gray-200: #e5e7eb;
-    --color-gray-300: #d1d5db;
-    --color-gray-400: #9ca3af;
-    --color-gray-500: #6b7280;
-    --color-gray-600: #4b5563;
-    --color-gray-700: #374151;
-    --color-gray-800: #1f2937;
-    --color-gray-900: #111827;
-    --color-gray-950: #030712;
-
-    --color-white: #ffffff;
-    --color-black: #000000;
-
-    /* Accent Colors */
-    --color-blue: #2563eb;
-    --color-green: #10b981;
-    --color-purple: #8b5cf6;
-    --color-orange: #f59e0b;
-
-    /* Deeper purple for gradients that carry white text. The display
-       purple (#8b5cf6) is only 4.23:1 against white, so small labels on
-       a blue->purple fill failed AA; this stop is 7.10:1. */
-    --color-purple-accessible: #6d28d9;
-    --gradient-brand: linear-gradient(135deg, var(--color-primary), var(--color-purple));
-    --gradient-brand-on-white-text: linear-gradient(135deg, var(--color-primary), var(--color-purple-accessible));
-
-    /* ----------------------------------------
-       Semantic tokens — light theme
-       Every component rule should reach for one of these rather than a
-       raw gray step. Only these are overridden in the dark block, which
-       is what keeps dark mode maintainable.
-       Contrast noted against the surface each is used on.
-       ---------------------------------------- */
-
-    /* Surfaces: three elevation levels, not one flat colour. */
-    --surface-page: #ffffff;
-    --surface-raised: #ffffff;      /* cards sitting on the page */
-    --surface-sunken: #f9fafb;      /* alternating section bands */
-    --surface-overlay: #ffffff;     /* menus, popovers */
-    --surface-inverse: #111827;     /* dark bands inside a light page */
-
-    /* Text. Ratios are vs --surface-page. */
-    --text-primary: #1f2937;        /* 14.68:1 */
-    --text-secondary: #4b5563;      /*  7.56:1 */
-    --text-muted: #4b5563;          /*  7.56:1 — gray-400 (2.54:1) failed AA */
-    --text-on-dark: #ffffff;        /* on --surface-inverse */
-    --text-on-dark-muted: #d1d5db;  /* 11.28:1 on #111827 */
-    --text-link: #2563eb;
-    --text-link-hover: #1d4ed8;
-
-    /* Brand blue used as *text* (large figures, accent numerals). The raw
-       --color-primary is a fill colour and only reaches 3.36:1 as text on
-       the dark raised surface, so this flips per theme while the fill
-       itself stays saturated. 4.95:1 on --surface-sunken here. */
-    --text-accent: #2563eb;
-
-    /* Borders: three weights so cards stop reading as flat.
-       --border-strong is used where a border is the only thing defining
-       an interactive control, so it clears 3:1 against the page. */
-    --border-subtle: #f3f4f6;
-    --border-default: #e5e7eb;
-    --border-strong: #8b94a3;   /* 3.06:1 on #ffffff */
-    --border-card: #e5e7eb;     /* decorative card edge */
-    --border-on-dark: rgba(255, 255, 255, 0.14);
-
-    /* Focus ring */
-    --focus-ring: #2563eb;
-    --focus-ring-halo: #ffffff;
-
-    /* Header backdrop (and its @supports fallback) */
-    --header-bg: rgba(255, 255, 255, 0.8);
-    --header-bg-solid: #ffffff;
-    --header-bg-scrolled: rgba(255, 255, 255, 0.95);
-
-    /* ----------------------------------------
-       Typography
-       ---------------------------------------- */
-    /* Fallbacks are metric-adjacent to Inter to limit shift on swap. */
-    --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
-        'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-
-    /* Restricted to badges and pills — never body copy. */
-    --font-size-xs: 0.75rem;        /* 12px */
-    --font-size-eyebrow: 0.8125rem; /* 13px — uppercase tag text */
-    --font-size-sm: 0.9375rem;      /* 15px — was 14px; the legibility floor */
-    --font-size-base: 1.0625rem;    /* 17px — body copy */
-    --font-size-prose: 1.125rem;    /* 18px — long-form reading */
-    --font-size-lg: 1.1875rem;      /* 19px — lead paragraphs */
-    --font-size-xl: 1.25rem;
-    --font-size-2xl: 1.5rem;
-    --font-size-3xl: 1.875rem;
-    --font-size-4xl: 2.25rem;
-    --font-size-5xl: 3rem;
-    --font-size-6xl: 3.75rem;
-
-    --line-height-tight: 1.15;      /* display headings */
-    --line-height-snug: 1.3;        /* sub-headings */
-    --line-height-ui: 1.5;          /* buttons, nav, labels */
-    --line-height-prose: 1.65;      /* body copy */
-
-    --tracking-display: -0.02em;    /* >= 1.875rem only */
-    --tracking-normal: 0;
-    --tracking-eyebrow: 0.06em;
-
-    /* Comfortable reading measure. */
-    --measure: 65ch;
-
-    /* Spacing */
-    --space-1: 0.25rem;
-    --space-2: 0.5rem;
-    --space-3: 0.75rem;
-    --space-4: 1rem;
-    --space-5: 1.25rem;
-    --space-6: 1.5rem;
-    --space-8: 2rem;
-    --space-10: 2.5rem;
-    --space-12: 3rem;
-    --space-16: 4rem;
-    --space-20: 5rem;
-    --space-24: 6rem;
-    --space-32: 8rem;
-
-    /* Border Radius */
-    --radius-sm: 0.25rem;
-    --radius-md: 0.375rem;
-    --radius-lg: 0.5rem;
-    --radius-xl: 0.75rem;
-    --radius-2xl: 1rem;
-    --radius-full: 9999px;
-
-    /* Shadows — two layers (tight contact + soft ambient) so cards read
-       as lifted rather than glowing. */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-card: 0 1px 2px rgb(16 24 40 / 0.06), 0 1px 3px rgb(16 24 40 / 0.10);
-    --shadow-card-hover: 0 4px 6px -2px rgb(16 24 40 / 0.05), 0 12px 16px -4px rgb(16 24 40 / 0.10);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-
-    /* Section rhythm — two sizes, applied consistently. Sections used to
-       mix space-12 / space-20 / space-24 with no logic. */
-    --section-padding: var(--space-24);
-    --section-padding-compact: var(--space-16);
-
-    /* Transitions */
-    --transition-fast: 150ms ease;
-    --transition-normal: 200ms ease;
-    --transition-slow: 300ms ease;
-
-    /* Container */
-    --container-max: 1200px;
-    --container-padding: 1.5rem;
-}
 
 /* Reset & Base */
 *, *::before, *::after {
@@ -398,13 +233,13 @@ ul, ol {
 }
 
 .btn-primary {
-    background: var(--color-primary);
+    background: var(--brand-700);
     /* Literal white: this sits on the blue fill in both themes. */
     color: #ffffff;
 }
 
 .btn-primary:hover {
-    background: var(--color-primary-dark);
+    background: var(--brand-800);
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
 }
@@ -446,12 +281,14 @@ ul, ol {
 }
 
 .btn-white {
+    /* Sits on the brand fill in both themes, so both values are
+       literal rather than themed. 14.30:1. */
     background: #ffffff;
-    color: #1f2937;
+    color: var(--color-gray-800);
 }
 
 .btn-white:hover {
-    background: #f3f4f6;
+    background: var(--color-gray-100);
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
 }
@@ -505,7 +342,7 @@ ul, ol {
     width: 100%;
     max-width: 1400px;
     height: 600px;
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(37, 99, 235, 0.15), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(27, 77, 143, 0.16), transparent);
 }
 
 .hero-grid {
@@ -545,7 +382,7 @@ ul, ol {
 .badge-dot {
     width: 8px;
     height: 8px;
-    background: var(--color-green);
+    background: var(--color-success);
     border-radius: var(--radius-full);
     animation: pulse 2s infinite;
 }
@@ -565,22 +402,23 @@ ul, ol {
     animation: fadeInUp 0.6s ease 0.1s backwards;
 }
 
+/* Second line of the hero headline.
+
+   This used to be blue->purple gradient text clipped to the glyphs. Two
+   things were wrong with it: the two-hue sweep was the stock template
+   look the rebrand exists to remove, and background-clip:text with
+   text-fill-color:transparent renders the line COMPLETELY INVISIBLE the
+   moment the gradient variable fails to resolve — an @supports guard
+   cannot catch that, because the property is supported, the value is
+   just missing.
+
+   A solid brand colour cannot fail that way. It has to be theme-aware,
+   though: the ink-blue is 8.38:1 on white but only 2.25:1 on the dark
+   page, so this uses the same token the rest of the site uses for brand
+   text — --text-accent, which flips to --brand-300 in dark (9.12:1). */
 .hero-title-gradient {
     display: block;
-    /* Fallback colour paints the headline if the clip is unsupported. */
-    color: var(--color-primary);
-}
-
-/* Only go transparent where the gradient can actually be clipped to the
-   glyphs, otherwise the headline would render invisible. */
-@supports ((background-clip: text) or (-webkit-background-clip: text)) {
-    .hero-title-gradient {
-        background: var(--gradient-brand);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: transparent;
-    }
+    color: var(--text-accent);
 }
 
 .hero-description {
@@ -694,8 +532,7 @@ ul, ol {
 .section-tag {
     display: inline-block;
     padding: var(--space-1) var(--space-3);
-    background: var(--color-primary);
-    background: var(--gradient-brand-on-white-text);
+    background: var(--brand-700);
     color: #ffffff;
     font-size: var(--font-size-eyebrow);
     font-weight: 600;
@@ -792,12 +629,12 @@ ul, ol {
 }
 
 .service-card-featured {
-    background: linear-gradient(135deg, #1f2937, #111827);
-    border-color: #1f2937;
+    background: var(--brand-fill-gradient);
+    border-color: var(--brand-900);
 }
 
 .service-card-featured:hover {
-    border-color: #374151;
+    border-color: var(--brand-600);
 }
 
 .service-card-featured .service-tag,
@@ -808,14 +645,13 @@ ul, ol {
     color: #ffffff;
 }
 
-.service-card-featured .service-tag {
-    /* Permanently dark panel: --text-muted is dark and would vanish. */
-    color: #cbd2dc;
-}
-
+/* Permanently dark panel in both themes, so it uses the --text-on-dark*
+   tokens rather than the page text tokens, which would vanish here.
+   9.72:1 on the --brand-900 end of the fill. */
+.service-card-featured .service-tag,
 .service-card-featured .service-description,
 .service-card-featured .service-features li {
-    color: #d1d5db;
+    color: var(--text-on-dark-muted);
 }
 
 .service-icon {
@@ -828,29 +664,33 @@ ul, ol {
     margin-bottom: var(--space-4);
 }
 
-.service-icon-blue {
-    background: rgba(37, 99, 235, 0.1);
-    color: var(--color-blue);
-}
+/* One brand-coloured icon treatment.
 
-.service-icon-green {
-    background: rgba(16, 185, 129, 0.1);
-    color: var(--color-green);
-}
+   These used to be four classes — blue / green / purple / orange —
+   applied in card order, so the colour tracked an icon's POSITION in
+   the grid rather than meaning anything. Four decorative hues cycling
+   per row is the single clearest "bought a theme" tell on a site.
 
-.service-icon-purple {
-    background: rgba(139, 92, 246, 0.1);
-    color: var(--color-purple);
-}
-
+   The four class names are kept as aliases below so no page markup has
+   to change, but they all resolve to the same brand treatment. If a
+   genuine semantic mapping is wanted later (Education / Consulting /
+   Tools), define it here as named classes — not as colour names. */
+.service-icon-blue,
+.service-icon-green,
+.service-icon-purple,
 .service-icon-orange {
-    background: rgba(245, 158, 11, 0.1);
-    color: var(--color-orange);
+    background: var(--surface-brand-tint);
+    color: var(--brand-700);
 }
 
-.service-card-featured .service-icon-blue {
-    background: rgba(37, 99, 235, 0.2);
-    color: var(--color-primary-light);
+/* On the inverted featured card the tint has to lift off a dark ground. */
+.service-card-featured .service-icon,
+.service-card-featured .service-icon-blue,
+.service-card-featured .service-icon-green,
+.service-card-featured .service-icon-purple,
+.service-card-featured .service-icon-orange {
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
 }
 
 .service-tag {
@@ -921,8 +761,12 @@ ul, ol {
     gap: var(--space-3);
 }
 
+/* The featured card is a dark brand panel, so its link needs a light
+   tint from the top of the ramp. A mid-blue here is only 1.56:1 against
+   the fill. --brand-200 is 5.46:1 at the light end of the gradient and
+   8.55:1 at the dark end. */
 .service-card-featured .service-link {
-    color: var(--color-primary-light);
+    color: var(--brand-200);
 }
 
 /* ========================================
@@ -1023,7 +867,7 @@ ul, ol {
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: var(--gradient-brand-on-white-text);
+    background: var(--brand-700);
     color: #ffffff;
     font-size: var(--font-size-sm);
     font-weight: 600;
@@ -1063,11 +907,11 @@ ul, ol {
    ======================================== */
 .cta {
     padding: var(--section-padding) 0;
-    background: linear-gradient(135deg, #1f2937, #111827);
+    background: var(--brand-fill-gradient);
 }
 
 [data-theme="dark"] .cta {
-    background: linear-gradient(135deg, #12151d, #05060a);
+    background: var(--brand-fill-gradient);
 }
 
 .cta-content {
@@ -1570,38 +1414,10 @@ ul, ol {
    Surfaces use three elevation levels so cards separate from the page
    instead of every panel sharing one flat #0f0f23.
 */
-[data-theme="dark"] {
-    color-scheme: dark;
-
-    --surface-page: #0f1117;
-    --surface-raised: #171a23;      /* cards lift off the page */
-    --surface-sunken: #14161e;      /* alternating bands */
-    --surface-overlay: #1c2029;     /* menus, popovers */
-    --surface-inverse: #05060a;     /* deepest band (footer, CTA) */
-
-    /* Ratios vs --surface-page (#0f1117). */
-    --text-primary: #f3f4f6;        /* 16.15:1 */
-    --text-secondary: #cbd2dc;      /* 11.32:1 */
-    --text-muted: #a8b1c0;          /*  7.60:1 */
-    --text-on-dark: #ffffff;
-    --text-on-dark-muted: #cbd2dc;
-    --text-link: #7ba6f7;
-    --text-link-hover: #a5c2fa;
-    --text-accent: #7ba6f7;         /*  7.15:1 on --surface-raised */
-
-    --border-subtle: #232833;
-    --border-default: #333a48;
-    --border-strong: #5a6474;   /* 3.14:1 on --surface-page — control edges */
-    --border-card: #2a3040;     /* decorative card edge */
-    --border-on-dark: rgba(255, 255, 255, 0.12);
-
-    --focus-ring: #7ba6f7;
-    --focus-ring-halo: #0f1117;
-
-    --header-bg: rgba(15, 17, 23, 0.85);
-    --header-bg-solid: #0f1117;
-    --header-bg-scrolled: rgba(15, 17, 23, 0.97);
-}
+/* Dark-theme semantic tokens live in tokens.css alongside the light
+   ones, so the two themes are edited together and cannot drift. Only
+   component-level dark overrides that the token layer genuinely cannot
+   express remain below. */
 
 /*
    With component rules on semantic tokens, almost every former dark
@@ -1647,7 +1463,7 @@ ul, ol {
 }
 
 [data-theme="dark"] .hero-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.18), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(74, 135, 208, 0.20), transparent);
 }
 
 /* Toggle icon swap. */
@@ -1659,9 +1475,23 @@ ul, ol {
     display: none;
 }
 
+/* Warning callout. The base rule lived in a <style> block on
+   legal/terms only and set a background but never a text colour, so in
+   dark mode the panel repainted and the inherited dark text stayed put
+   — 1.44:1. Both themes now set background AND colour together. */
+.important-notice {
+    background: var(--color-warning-tint);
+    border: 1px solid var(--color-warning);
+    color: var(--color-gray-900);   /* 15.29:1 on the tint */
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-6);
+}
+
 [data-theme="dark"] .important-notice {
     background: rgba(245, 158, 11, 0.12);
     border-color: rgba(245, 158, 11, 0.35);
+    color: var(--text-primary);     /* 14.9:1 on the tinted dark panel */
 }
 
 /* ========================================

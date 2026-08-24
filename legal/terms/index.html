@@ -55,13 +55,10 @@
             text-align: center;
             margin-bottom: var(--space-8);
         }
-        .important-notice {
-            background: #fef3c7;
-            border: 1px solid #f59e0b;
-            padding: var(--space-4);
-            border-radius: var(--radius-lg);
-            margin-bottom: var(--space-6);
-        }
+        /* .important-notice now lives in modern.css so it carries a text
+           colour in both themes. It set a background but no colour here,
+           which made it dark-on-dark once the dark override repainted the
+           panel. */
         .contact-box {
             background: var(--surface-sunken);
             padding: var(--space-6);
