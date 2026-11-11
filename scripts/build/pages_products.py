@@ -8,7 +8,7 @@ new card up automatically.
 from lib import *
 
 TC = product('trophy-case')
-INSTALL_URL = TC['secondaryCta']['url']          # https://trophy-case-trophy-case.vercel.app
+INSTALL_URL = 'https://trophy-case-trophy-case.vercel.app'   # live app (QR + install steps encode this)
 IMG = 'assets/images/trophy-case/'
 
 SVG = {
@@ -127,7 +127,7 @@ def trophy_case():
                 <h1 id="tc-title">Every Achievement. <em>One Place.</em></h1>
                 <p class="lead">From your first certificate to your biggest milestone, Trophy Case helps you save what you&rsquo;ve accomplished, understand what matters, and plan what comes next.</p>
                 <div class="btn-row">
-                    <a class="btn btn-cta btn-lg" href="{INSTALL_URL}" target="_blank" rel="noopener noreferrer">Get Trophy Case {ICON['arrow']}</a>
+                    <a class="btn btn-cta btn-lg" href="#get">Get Trophy Case {ICON['arrow']}</a>
                     <a class="btn btn-outline btn-lg" href="#how-it-works">See How It Works</a>
                 </div>
                 <p class="small muted" style="margin-top: var(--space-4)">For students ages 13&ndash;18 and their parents. No App Store needed. <a class="link-arrow" style="min-height:0;display:inline" href="#install">Add it to your Home Screen</a>.</p>
@@ -221,7 +221,7 @@ def trophy_case():
             <div class="cta-content cta-band">
                 <h2 class="cta-title">Start Collecting Your Wins.</h2>
                 <p class="cta-description">Built by LearnTAV, alongside <a href="{up}ai-tools/power-tracker/index.html" style="color:#fff; text-decoration:underline">EcoPrompt</a>. Real products, built with AI.</p>
-                <div class="cta-actions"><a class="btn btn-white btn-lg" href="{INSTALL_URL}" target="_blank" rel="noopener noreferrer">Get Trophy Case {ICON['arrow']}</a></div>
+                <div class="cta-actions"><a class="btn btn-white btn-lg" href="#get">Get Trophy Case {ICON['arrow']}</a></div>
             </div>
         </div>
     </section>

@@ -7,7 +7,11 @@
     "description": "Capture accomplishments, track your progress, and get AI-powered guidance toward your next big goal.",
     "detailPath": "products/trophy-case/",
     "primaryCta": "Explore Trophy Case",
-    "secondaryCta": { "label": "Get the App", "url": "https://trophy-case-trophy-case.vercel.app", "external": true },
+    "secondaryCta": {
+      "label": "Get the App",
+      "url": "products/trophy-case/#get",
+      "external": false
+    },
     "visual": {
       "type": "phone",
       "src": "assets/images/trophy-case/timeline.jpg",
@@ -26,14 +30,22 @@
     "description": "A free Chrome extension that estimates the energy used by the pages you visit and your AI prompts, and helps you write more efficient prompts.",
     "detailPath": "ai-tools/power-tracker/",
     "primaryCta": "Explore EcoPrompt",
-    "secondaryCta": { "label": "Use EcoPrompt", "url": "https://chromewebstore.google.com/detail/ecoprompt/plmljdpofjiehkgfchbadaidahedooid", "external": true },
+    "secondaryCta": {
+      "label": "Use EcoPrompt",
+      "url": "https://chromewebstore.google.com/detail/ecoprompt/plmljdpofjiehkgfchbadaidahedooid",
+      "external": true
+    },
     "visual": {
       "type": "icon",
       "src": "assets/images/ecoprompt-icon.png",
       "alt": "EcoPrompt extension icon",
       "width": 128,
       "height": 128,
-      "chips": ["Dashboard", "Prompt Optimizer", "Energy history"]
+      "chips": [
+        "Dashboard",
+        "Prompt Optimizer",
+        "Energy history"
+      ]
     },
     "meta": "Chrome extension. Energy figures are estimates, not measurements."
   }

@@ -136,6 +136,9 @@ def product_card(p, up):
         visual = (f'<div class="pcard-visual pcard-visual-icon"><img src="{up}{v["src"]}" alt="{v["alt"]}" width="96" height="96" loading="lazy" decoding="async">'
                   f'<ul class="pcard-chips" aria-label="What it includes">{chips}</ul></div>')
     sec = p['secondaryCta']
+    ext = sec.get('external', True)
+    sec_href = sec['url'] if ext else up + sec['url']
+    sec_attrs = ' target="_blank" rel="noopener noreferrer"' if ext else ''
     return f'''<article class="pcard reveal" id="product-{p['slug']}">
                     {visual}
                     <div class="pcard-body">
@@ -146,7 +149,7 @@ def product_card(p, up):
                         <p class="small muted">{p['meta']}</p>
                         <div class="btn-row">
                             <a class="btn btn-primary" href="{up}{p['detailPath']}index.html">{p['primaryCta']} {ICON['arrow']}</a>
-                            <a class="btn btn-outline" href="{sec['url']}" target="_blank" rel="noopener noreferrer">{sec['label']}</a>
+                            <a class="btn btn-outline" href="{sec_href}"{sec_attrs}>{sec['label']}</a>
                         </div>
                     </div>
                 </article>'''
