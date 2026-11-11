@@ -7,6 +7,7 @@
    Do not define colours, type steps, spacing, radii or shadows in this
    file; add them to tokens.css so there is one source of brand truth. */
 @import url('tokens.css');
+@import url('product.css');
 
 
 /* Reset & Base */

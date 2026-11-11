@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Learning | Enrollment Inquiry | LearnTAV</title>
+    <meta name="description" content="Send an enrollment inquiry for Vibe Coding 101. Choose group ($99) or private ($199). This is an inquiry, not a booking; we will email scheduling and payment details.">
+    <link rel="canonical" href="https://learntav.com/enroll/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://learntav.com/enroll/">
+    <meta property="og:title" content="Start Learning | Enrollment Inquiry | LearnTAV">
+    <meta property="og:description" content="Send an enrollment inquiry for Vibe Coding 101. Choose group ($99) or private ($199). This is an inquiry, not a booking; we will email scheduling and payment details.">
+    <meta property="og:image" content="https://learntav.com/assets/images/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Start Learning | Enrollment Inquiry | LearnTAV">
+    <meta name="twitter:description" content="Send an enrollment inquiry for Vibe Coding 101. Choose group ($99) or private ($199). This is an inquiry, not a booking; we will email scheduling and payment details.">
+
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="../assets/images/favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap" rel="stylesheet">
+
+    <!-- Shared layout: resolves theme pre-paint, renders header/footer -->
+    <script src="../assets/js/layout.js"></script>
+    <script src="../assets/js/site-config.js" defer></script>
+    <link rel="stylesheet" href="../assets/css/modern.css">
+</head>
+<body>
+    <!-- Header + mobile menu injected by assets/js/layout.js -->
+    <div id="site-header"></div>
+    <script>LearnTAVLayout.mount();</script>
+
+    <main id="main">
+
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <span class="section-tag">Enrollment inquiry</span>
+                <h1 class="page-title">Start Learning</h1>
+                <p class="page-description">Tell us a little about you and what you&rsquo;d like to build. We&rsquo;ll email you to arrange times and payment. <strong>Submitting this form doesn&rsquo;t book a spot or charge you.</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container enroll-layout">
+            <div class="card form-card">
+                <div class="notice warn" id="endpointNotice" role="note" hidden><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><p><strong>Heads up:</strong> our online enrollment form isn&rsquo;t switched on yet. Please use the <a id="fallbackLink1" href="#" target="_blank" rel="noopener noreferrer">sign-up form</a> instead, or email <a href="mailto:hello@learntav.com">hello@learntav.com</a>.</p></div>
+                <form id="enrollForm" novalidate>
+                    <div class="hp" aria-hidden="true"><label>Leave this field empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+
+                    <fieldset class="form-section">
+                        <legend>1. Choose your format</legend>
+                        <div class="choice-grid" role="radiogroup" aria-label="Group or private">
+                            <label class="choice"><input type="radio" name="plan" value="group" checked><span class="choice-box"><strong>Group · <span data-cfg="pricing.group.total">$99</span></strong><span>Per student, full course. <span data-cfg="pricing.group.size">Up to 5 students</span> per group</span></span></label>
+                            <label class="choice"><input type="radio" name="plan" value="private"><span class="choice-box"><strong>Private · <span data-cfg="pricing.private.total">$199</span></strong><span>Per student, full course. One-on-one pacing</span></span></label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-section">
+                        <legend>2. About the student</legend>
+                        <div class="field"><label for="f-name">Student&rsquo;s full name <span class="req" aria-hidden="true">*</span></label><input class="input" id="f-name" name="name" type="text" autocomplete="name" required maxlength="100" aria-describedby="err-name"><span class="field-error" id="err-name" hidden></span></div>
+                        <div class="field"><label for="f-email">Email <span class="req" aria-hidden="true">*</span> <span class="hint">(where we&rsquo;ll reply. A parent&rsquo;s email is fine)</span></label><input class="input" id="f-email" name="email" type="email" autocomplete="email" required maxlength="160" aria-describedby="err-email"><span class="field-error" id="err-email" hidden></span></div>
+                        <div class="field"><label for="f-age">Age range <span class="req" aria-hidden="true">*</span></label>
+                            <select class="select" id="f-age" name="age" required aria-describedby="err-age"><option value="">Select one</option><option>10 - 14</option><option>15 - 18</option><option>19 - 25</option><option>25 +</option><option>Prefer not to say</option></select><span class="field-error" id="err-age" hidden></span></div>
+                        <div class="field"><label for="f-exp">Prior coding experience <span class="req" aria-hidden="true">*</span></label>
+                            <select class="select" id="f-exp" name="experience" required aria-describedby="err-experience"><option value="">Select one</option><option>None</option><option>A little (tutorials or small experiments)</option><option>Some (I&rsquo;ve built small things)</option><option>Experienced</option></select><span class="field-error" id="err-experience" hidden></span></div>
+                    </fieldset>
+
+                    <fieldset class="form-section">
+                        <legend>3. Schedule &amp; project</legend>
+                        <div class="field"><label for="f-start">Preferred start date <span class="hint">(optional)</span></label><input class="input" id="f-start" name="startDate" type="date" aria-describedby="err-startDate"><span class="field-error" id="err-startDate" hidden></span></div>
+                        <div class="field"><label for="f-avail">General availability <span class="req" aria-hidden="true">*</span></label><input class="input" id="f-avail" name="availability" type="text" required maxlength="300" placeholder="e.g. weekday evenings, weekends" aria-describedby="err-availability"><span class="field-error" id="err-availability" hidden></span></div>
+                        <div class="field"><label for="f-tz">Time zone <span class="req" aria-hidden="true">*</span></label><input class="input" id="f-tz" name="timezone" type="text" required maxlength="80" aria-describedby="err-timezone"><span class="field-error" id="err-timezone" hidden></span></div>
+                        <div class="field"><label for="f-goal">Project goals <span class="hint">(optional. What would you like to build? A rough idea is fine)</span></label><textarea class="textarea" id="f-goal" name="goal" maxlength="1000"></textarea></div>
+                        <div class="field"><label for="f-q">Questions for us <span class="hint">(optional. Mention your device here if you use a Chromebook)</span></label><textarea class="textarea" id="f-q" name="questions" maxlength="1000"></textarea></div>
+                        <div class="check"><input type="checkbox" id="f-intro" name="intro"><label for="f-intro">I&rsquo;d like the free, optional 15-minute introductory conversation first.</label></div>
+                    </fieldset>
+
+                    <fieldset class="form-section">
+                        <legend>4. Confirm</legend>
+                        <div class="stack">
+                        <div class="notice warn" role="note"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><p><strong>Not included in the course price:</strong> external AI subscriptions, API credits, hosting, domains and other third-party tools. Some have free tiers and some cost money, and prices are set by those providers. Ask us before you enrol if you'd like help estimating what your project might need.</p></div>
+                        <div class="check"><input type="checkbox" id="f-ack" name="ack" required aria-describedby="err-ack"><label for="f-ack">I understand this is an enrollment <strong>inquiry</strong>, not a confirmed booking or payment, and that third-party tool costs aren&rsquo;t included. <span class="req" aria-hidden="true">*</span></label></div>
+                        <span class="field-error" id="err-ack" hidden></span>
+                        <p class="small muted">We use your details only to reply about this inquiry. See our <a class="link-arrow" style="min-height:0; display:inline" href="../legal/privacy/index.html">privacy policy</a>. We never ask for card or payment details here.</p>
+                        <button class="btn btn-cta btn-lg" type="submit" id="submitBtn">Send enrollment inquiry</button>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-status" id="formStatus" role="status" aria-live="polite" tabindex="-1" hidden></div>
+                </form>
+            </div>
+
+            <aside class="card order-summary" aria-labelledby="summary-title">
+                <h2 class="h3" id="summary-title">Your selection</h2>
+                <dl>
+                    <div><dt>Course</dt><dd>Vibe Coding 101</dd></div>
+                    <div><dt>Format</dt><dd id="sumPlan">Group</dd></div>
+                    <div><dt>Sessions</dt><dd>4 × 1 hour (4 hours)</dd></div>
+                    <div><dt>Class size</dt><dd id="sumSize">Up to 5 students</dd></div>
+                </dl>
+                <div class="order-total"><span>Full-course total, per person</span><span class="amt" id="sumTotal" data-cfg="pricing.group.total">$99</span></div>
+                <p class="small muted" style="margin-top: var(--space-4)">Pending confirmation. Nothing is charged by submitting this form. We&rsquo;ll email scheduling and payment details.</p>
+                <p class="small muted">Whether you finish a deployed app depends on your project&rsquo;s scope and how your learning progresses. We&rsquo;ll help you choose a project that fits the four hours.</p>
+            </aside>
+        </div>
+    </section>
+    </main>
+
+    <!-- Footer injected by assets/js/layout.js -->
+    <div id="site-footer">
+        <noscript>
+            <p>
+                <a href="../contact/index.html">Contact</a> &middot;
+                <a href="../pricing/index.html">Pricing</a> &middot;
+                <a href="../legal/privacy/index.html">Privacy</a> &middot;
+                <a href="https://www.instagram.com/learntav_llc/" rel="noopener noreferrer">Instagram (@learntav_llc)</a> &middot;
+                <a href="https://www.facebook.com/profile.php?id=61593091894765" rel="noopener noreferrer">Facebook (LearnTAV)</a> &middot;
+                <a href="https://www.youtube.com/channel/UC9ksUX7uSH0yPYjETWThdGA" rel="noopener noreferrer">YouTube (learntavOFFICIAL)</a>
+            </p>
+        </noscript>
+    </div>
+    <script>LearnTAVLayout.mount();</script>
+
+    <script src="../assets/js/modern.js"></script>
+    <script src="../assets/js/enroll.js" defer></script>
+</body>
+</html>

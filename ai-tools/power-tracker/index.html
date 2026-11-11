@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EcoPrompt Chrome Extension - Monitor browser energy consumption in real-time. AI prompt optimization included.">
+    <meta name="description" content="EcoPrompt Chrome Extension - Chrome extension that estimates the energy used by your browsing and AI prompts, with a prompt optimizer.">
     <title>EcoPrompt - LearnTAV</title>
+    <link rel="canonical" href="https://learntav.com/ai-tools/power-tracker/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://learntav.com/ai-tools/power-tracker/">
+    <meta property="og:title" content="EcoPrompt - LearnTAV">
+    <meta property="og:description" content="EcoPrompt Chrome Extension - Chrome extension that estimates the energy used by your browsing and AI prompts, with a prompt optimizer.">
+    <meta property="og:image" content="https://learntav.com/assets/images/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
@@ -29,7 +36,7 @@
     <main id="main">
 
     <!-- Hero Section -->
-    <section class="hero" style="background: linear-gradient(135deg, #047857, #065f46); min-height: auto; padding: calc(72px + var(--space-16)) 0 var(--space-16);">
+    <section class="hero" style="background: var(--brand-fill-gradient); min-height: auto; padding: calc(72px + var(--space-16)) 0 var(--space-16);">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-badge" style="background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3);">
@@ -38,14 +45,14 @@
                 </div>
                 <h1 class="hero-title" style="color: #fff;">
                     EcoPrompt
-                    <span class="hero-title-gradient" style="background: linear-gradient(135deg, #fff, rgba(255,255,255,0.8)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Monitor Your AI Energy</span>
+                    <span class="hero-title-gradient" style="background: linear-gradient(135deg, #fff, rgba(255,255,255,0.8)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Estimate Your AI Energy Use</span>
                 </h1>
                 <p class="hero-description" style="color: #ffffff;">
-                    Track your browser's energy consumption in real-time. Optimize AI prompts for efficiency.
+                    See estimates of the energy used by the pages you visit. Optimize AI prompts for efficiency. Figures are estimates from a model, not hardware measurements.
                     Understand your AI energy usage patterns.
                 </p>
                 <div class="hero-actions">
-                    <a href="https://chromewebstore.google.com/detail/power-tracker-%E2%80%93-monitor-y/plmljdpofjiehkgfchbadaidahedooid" target="_blank" rel="noopener noreferrer" class="btn btn-white btn-lg">
+                    <a href="https://chromewebstore.google.com/detail/ecoprompt/plmljdpofjiehkgfchbadaidahedooid" target="_blank" rel="noopener noreferrer" class="btn btn-white btn-lg">
                         Add to Chrome - Free
                         <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -53,16 +60,6 @@
                     </a>
                     <a href="#features" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.5); color: #fff;">
                         Learn More
-                    </a>
-                </div>
-                <div style="margin-top: var(--space-6);">
-                    <a href="https://app.powerbi.com/view?r=eyJrIjoiZjVmOTI0MmMtY2U2Mi00ZTE2LTk2MGYtY2ZjNDMzODZkMjlmIiwidCI6IjQyNmQyYThkLTljY2QtNDI1NS04OTNkLTA2ODZhMzJjMTY4ZCIsImMiOjF9" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(255,255,255,0.15); border-radius: 8px; color: #fff; font-size: var(--font-size-sm); text-decoration: none; transition: background 0.2s;">
-                        <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                            <polyline points="15 3 21 3 21 9"/>
-                            <line x1="10" y1="14" x2="21" y2="3"/>
-                        </svg>
-                        Backend Data Source: Power BI Dashboard
                     </a>
                 </div>
             </div>
@@ -84,8 +81,8 @@
                             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
                         </svg>
                     </div>
-                    <h3 class="feature-title">Real-Time Monitoring</h3>
-                    <p class="feature-description">See your energy consumption as it happens. Dashboard updates live as you browse.</p>
+                    <h3 class="feature-title">Live Estimates</h3>
+                    <p class="feature-description">See estimated energy as you browse. The dashboard updates live.</p>
                 </div>
 
                 <div class="feature">
@@ -118,8 +115,8 @@
                             <line x1="9" y1="21" x2="9" y2="9"/>
                         </svg>
                     </div>
-                    <h3 class="feature-title">Usage Reports</h3>
-                    <p class="feature-description">Export detailed reports to track and understand your AI usage over time.</p>
+                    <h3 class="feature-title">Energy History</h3>
+                    <p class="feature-description">Review your estimated energy over time in the extension's history charts.</p>
                 </div>
             </div>
         </div>
@@ -155,15 +152,48 @@
                 <div class="feature">
                     <div class="feature-icon">4</div>
                     <h3 class="feature-title">View Dashboard</h3>
-                    <p class="feature-description">Click the icon to see real-time energy stats and suggestions.</p>
+                    <p class="feature-description">Click the icon to see your live energy estimates and open the Optimizer.</p>
                 </div>
 
                 <div class="feature">
                     <div class="feature-icon">5</div>
-                    <h3 class="feature-title">Optimize & Export</h3>
-                    <p class="feature-description">Apply suggestions and export reports for tracking.</p>
+                    <h3 class="feature-title">Optimize Prompts</h3>
+                    <p class="feature-description">Use the Optimizer to write more efficient prompts.</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Privacy, cost and method (verified against extension source v10.1.2) -->
+    <section class="programs" id="privacy">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Transparency</span>
+                <h2 class="section-title">What EcoPrompt does with your data</h2>
+                <p class="section-description">Based on the extension&rsquo;s source code (version 10.1.2). Read the <a href="privacy.html">full EcoPrompt privacy policy</a>.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature">
+                    <h3 class="feature-title">Stays on your device</h3>
+                    <p class="feature-description">Energy estimates, the sites you&rsquo;ve visited (by hostname) and your history are stored in your browser. Prompt optimization runs in the extension, and your prompt text is not sent anywhere.</p>
+                </div>
+                <div class="feature">
+                    <h3 class="feature-title">What is sent</h3>
+                    <p class="feature-description">When you use the Prompt Optimizer, the extension sends an anonymous usage record: a random ID, a timestamp, token and character counts, and the extension version. It does not include your prompt text or the pages you visit.</p>
+                </div>
+                <div class="feature">
+                    <h3 class="feature-title">No off switch yet</h3>
+                    <p class="feature-description">In this version that usage upload is on by default and there is no setting in the extension to turn it off. Uninstalling the extension stops it.</p>
+                </div>
+                <div class="feature">
+                    <h3 class="feature-title">Cost</h3>
+                    <p class="feature-description">The extension has no paid features or usage limits in its code, and it doesn&rsquo;t call any paid AI service.</p>
+                </div>
+            </div>
+            <p class="small muted" style="max-width: 760px; margin: var(--space-8) auto 0; text-align:center">
+                Energy, water and carbon figures are estimates from a simple model, not measurements. AI figures use data from the research paper
+                <a href="https://arxiv.org/abs/2505.09598" target="_blank" rel="noopener noreferrer">&ldquo;How Hungry is AI?&rdquo;</a> (Jegham et al.).
+            </p>
         </div>
     </section>
 
@@ -171,12 +201,12 @@
     <section class="cta">
         <div class="container">
             <div class="cta-content">
-                <h2 class="cta-title">Ready to track your AI energy usage?</h2>
+                <h2 class="cta-title">Ready to see your AI energy estimates?</h2>
                 <p class="cta-description">
-                    Join users who are learning about and tracking their AI energy consumption.
+                    Learn about your AI energy footprint.
                 </p>
                 <div class="cta-actions">
-                    <a href="https://chromewebstore.google.com/detail/power-tracker-%E2%80%93-monitor-y/plmljdpofjiehkgfchbadaidahedooid" target="_blank" rel="noopener noreferrer" class="btn btn-white btn-lg">
+                    <a href="https://chromewebstore.google.com/detail/ecoprompt/plmljdpofjiehkgfchbadaidahedooid" target="_blank" rel="noopener noreferrer" class="btn btn-white btn-lg">
                         Add to Chrome - Free
                         <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"/>

@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScroll();
     initHeaderScroll();
     initThemeToggle();
+    initNavDropdowns();
 });
 
 /* ========================================
@@ -112,7 +113,7 @@ function initHeaderScroll() {
    ======================================== */
 function initScrollAnimations() {
     const animatedElements = document.querySelectorAll(
-        '.service-card, .feature, .testimonial, .section-header'
+        '.service-card, .feature, .testimonial, .section-header, .reveal'
     );
 
     // Respect a reduced-motion preference: never hide content that we
@@ -254,5 +255,43 @@ function initThemeToggle() {
             document.documentElement.setAttribute('data-theme', theme);
             syncToggle(theme);
         }
+    });
+}
+
+
+/* ========================================
+   Nav dropdown (Products)
+   A disclosure button: click/Enter/Space toggles, Esc and outside click
+   close it. Links inside are ordinary links, so it works with a keyboard
+   and screen reader without any ARIA menu roles.
+   ======================================== */
+function initNavDropdowns() {
+    document.querySelectorAll('.nav-menu-btn').forEach(function (btn) {
+        var panel = document.getElementById(btn.getAttribute('aria-controls'));
+        if (!panel) return;
+
+        function setOpen(open) {
+            btn.setAttribute('aria-expanded', String(open));
+            panel.hidden = !open;
+        }
+
+        btn.addEventListener('click', function () {
+            setOpen(btn.getAttribute('aria-expanded') !== 'true');
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!btn.parentNode.contains(e.target)) setOpen(false);
+        });
+
+        btn.parentNode.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') {
+                setOpen(false);
+                btn.focus();
+            }
+        });
+
+        btn.parentNode.addEventListener('focusout', function (e) {
+            if (e.relatedTarget && !btn.parentNode.contains(e.relatedTarget)) setOpen(false);
+        });
     });
 }

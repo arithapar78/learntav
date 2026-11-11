@@ -3,23 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Vibe Coding 101 - Learn to create apps with AI tools. No coding experience required.">
-    <title>Vibe Coding 101 - LearnTAV</title>
+    <title>Vibe Coding 101 | Learn to Build With AI | LearnTAV</title>
+    <meta name="description" content="Vibe Coding 101: four live one-hour sessions to learn prompting, AI coding tools, building and debugging. $99 group or $199 private. No coding experience required.">
+    <link rel="canonical" href="https://learntav.com/education/vibe-coding-101/">
 
-    <!-- Favicon -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://learntav.com/education/vibe-coding-101/">
+    <meta property="og:title" content="Vibe Coding 101 | Learn to Build With AI | LearnTAV">
+    <meta property="og:description" content="Vibe Coding 101: four live one-hour sessions to learn prompting, AI coding tools, building and debugging. $99 group or $199 private. No coding experience required.">
+    <meta property="og:image" content="https://learntav.com/assets/images/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vibe Coding 101 | Learn to Build With AI | LearnTAV">
+    <meta name="twitter:description" content="Vibe Coding 101: four live one-hour sessions to learn prompting, AI coding tools, building and debugging. $99 group or $199 private. No coding experience required.">
+
     <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
     <link rel="apple-touch-icon" href="../../assets/images/favicon.png">
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
     <!-- Shared layout: resolves theme pre-paint, renders header/footer -->
     <script src="../../assets/js/layout.js"></script>
-
+    <script src="../../assets/js/site-config.js" defer></script>
     <link rel="stylesheet" href="../../assets/css/modern.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      "name": "Vibe Coding 101",
+      "description": "Four live one-hour sessions teaching beginners to direct AI tools to build a real project.",
+      "provider": {"@type": "Organization", "name": "LearnTAV", "sameAs": "https://learntav.com"},
+      "timeRequired": "PT4H",
+      "offers": [
+        {"@type": "Offer", "name": "Group course", "price": "99", "priceCurrency": "USD"},
+        {"@type": "Offer", "name": "Private course", "price": "199", "priceCurrency": "USD"}
+      ]
+    }
+    </script>
 </head>
 <body>
     <!-- Header + mobile menu injected by assets/js/layout.js -->
@@ -28,178 +49,193 @@
 
     <main id="main">
 
-    <!-- Hero Section -->
-    <section class="hero" style="background: linear-gradient(135deg, #4f46e5, #6d28d9); min-height: auto; padding: calc(72px + var(--space-16)) 0 var(--space-16);">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge" style="background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3);">
-                    <span class="badge-dot" style="background: #fff;"></span>
-                    Popular Course
+    <section class="hero-split hero-dark" aria-labelledby="course-title">
+        <div class="container hero-split-grid">
+            <div>
+                <p class="eyebrow">Flagship course · 4 hours</p>
+                <h1 id="course-title">Vibe Coding <em>101</em></h1>
+                <p class="lead">Learn to direct AI tools to build a real project, even if you&rsquo;ve never written a line of code. Four live one-hour sessions, built around a hands-on project.</p>
+                <div class="btn-row">
+                    <a class="btn btn-white btn-lg" href="../../enroll/index.html">Request a spot <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                    <a class="btn btn-outline btn-lg" href="#pricing">See pricing</a>
                 </div>
-                <h1 class="hero-title" style="color: #fff;">
-                    Vibe Coding 101
-                    <span class="hero-title-gradient" style="background: linear-gradient(135deg, #fff, rgba(255,255,255,0.8)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Let AI Code For You</span>
-                </h1>
-                <p class="hero-description" style="color: #ffffff;">
-                    Master the art of AI-assisted development. Learn to direct AI tools like Claude and Cursor
-                    to write code for you while you control the vision and architecture. No coding experience required.
-                </p>
-                <div class="hero-actions">
-                    <a href="https://forms.gle/53NuP8WamvBh3x716" target="_blank" rel="noopener noreferrer" class="btn btn-white btn-lg">
-                        Enroll Now
-                        <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                    <a href="#details" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.5); color: #fff;">
-                        Learn More
-                    </a>
-                </div>
-                <div class="hero-stats" style="margin-top: var(--space-8);">
-                    <div class="stat">
-                        <span class="stat-value" style="color: #fff;">4 hours</span>
-                        <span class="stat-label" style="color: #e8eaf6;">Total Course</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-value" style="color: #fff;">AI-First</span>
-                        <span class="stat-label" style="color: #e8eaf6;">Approach</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-value" style="color: #fff;">0</span>
-                        <span class="stat-label" style="color: #e8eaf6;">Experience Needed</span>
-                    </div>
+                <ul class="hero-pills" aria-label="Course facts">
+                    <li class="pill">4 live sessions</li>
+                    <li class="pill">1 hour each</li>
+                    <li class="pill">Group <strong data-cfg="pricing.group.total">$99</strong> · <span data-cfg="pricing.group.size">Up to 5 students</span></li>
+                    <li class="pill">Private <strong data-cfg="pricing.private.total">$199</strong></li>
+                </ul>
+                <p class="small" style="margin-top: var(--space-3)">Prices are per person for the full course. Free optional 15-minute intro conversation available.</p>
+            </div>
+            <div>
+                <div class="card" style="background: rgba(255,255,255,.08); border-color: var(--border-on-dark); box-shadow:none">
+                    <h2 class="h3" style="color:#fff; margin-bottom: var(--space-4)">The course at a glance</h2>
+                    <ul class="tick-list" style="color:#fff">
+                        <li style="color:#fff">4 live one-hour sessions (4 hours total)</li>
+                        <li style="color:#fff">Setup guidance for your AI coding tools</li>
+                        <li style="color:#fff">Prompting fundamentals</li>
+                        <li style="color:#fff">Building with AI, plus debugging and deployment fundamentals</li>
+                        <li style="color:#fff">A hands-on project of your own</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Course Details -->
-    <section class="programs" id="details">
+    <section class="section" aria-labelledby="who-title">
         <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Course Details</span>
-                <h2 class="section-title">What you'll learn</h2>
-            </div>
-
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon service-icon-purple">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                        </svg>
-                    </div>
-                    <span class="service-tag">Session 1</span>
-                    <h3 class="service-title">Prompting Fundamentals</h3>
-                    <p class="service-description">
-                        Learn how to communicate with AI coding assistants effectively. Master prompt techniques that get accurate, working code.
-                    </p>
+            <div class="grid-2" style="align-items:start">
+                <div class="reveal stack">
+                    <p class="eyebrow">Who it&rsquo;s for</p>
+                    <h2 class="h2" id="who-title">Curious beginners who want to make something.</h2>
+                    <p class="lead">&ldquo;Vibe coding&rdquo; means describing what you want in plain language, reviewing what an AI assistant produces, and guiding it until it works. You make the decisions; the AI does the typing.</p>
+                    <p>It&rsquo;s a fit for students, adults changing careers, entrepreneurs, professionals and small teams, with no coding background needed.</p>
                 </div>
-
-                <div class="service-card">
-                    <div class="service-icon service-icon-blue">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="16 18 22 12 16 6"/>
-                            <polyline points="8 6 2 12 8 18"/>
-                        </svg>
-                    </div>
-                    <span class="service-tag">Session 2</span>
-                    <h3 class="service-title">AI Coding Tools Setup</h3>
-                    <p class="service-description">
-                        Set up Cursor, Claude Code, and other AI-powered IDEs. Learn to navigate and control AI coding agents.
-                    </p>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon service-icon-green">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
-                            <line x1="12" y1="18" x2="12.01" y2="18"/>
-                        </svg>
-                    </div>
-                    <span class="service-tag">Session 3</span>
-                    <h3 class="service-title">Direct AI to Build</h3>
-                    <p class="service-description">
-                        Guide AI to build a real application. Learn to review, iterate, and refine AI-generated code without writing it yourself.
-                    </p>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon service-icon-orange">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                            <polyline points="22 4 12 14.01 9 11.01"/>
-                        </svg>
-                    </div>
-                    <span class="service-tag">Session 4</span>
-                    <h3 class="service-title">Debug & Deploy</h3>
-                    <p class="service-description">
-                        Learn to use AI for debugging and troubleshooting. Deploy your app and continue your vibe coding journey.
-                    </p>
+                <div class="card reveal">
+                    <h3 class="h3">What to realistically expect</h3>
+                    <ul class="tick-list">
+                        <li>You&rsquo;ll understand how to prompt and steer an AI coding assistant.</li>
+                        <li>You&rsquo;ll work on a real project of your own, scoped to fit four hours.</li>
+                        <li>You&rsquo;ll learn how to debug with AI and the basics of deployment.</li>
+                        <li>You won&rsquo;t become a professional engineer in four hours. This is a strong foundation.</li>
+                    </ul>
+                    <p class="small muted" style="margin-top: var(--space-4)">Whether you finish a deployed app depends on your project&rsquo;s scope and how your learning progresses. We&rsquo;ll help you choose a project that fits the four hours.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="testimonials">
+    <section class="section section-sunken" id="curriculum" aria-labelledby="curr-title">
         <div class="container">
-            <div class="section-header">
-                <span class="section-tag">FAQ</span>
-                <h2 class="section-title">Common questions</h2>
+            <div class="section-head reveal">
+                <p class="eyebrow">Curriculum</p>
+                <h2 class="h2" id="curr-title">Four live sessions, one hour each.</h2>
             </div>
+            <ol class="curriculum" style="max-width: 860px; margin-inline: auto;">
+                <li class="session reveal">
+                    <div class="session-n">Session<strong>1</strong></div>
+                    <div><h3 class="h3">Prompting Fundamentals</h3><p>How to describe what you want so an AI assistant gives you useful results: clear goals, context, and follow-up questions.</p><p class="meta">1 hour · live</p></div>
+                </li>
+                <li class="session reveal">
+                    <div class="session-n">Session<strong>2</strong></div>
+                    <div><h3 class="h3">AI Coding Tools Setup</h3><p>Install and configure an AI coding environment, such as Claude, Cursor or VS Code with an AI assistant, and learn to steer it.</p><p class="meta">1 hour · live</p></div>
+                </li>
+                <li class="session reveal">
+                    <div class="session-n">Session<strong>3</strong></div>
+                    <div><h3 class="h3">Direct AI to Build</h3><p>Guide an AI assistant to build your project, then review, test and refine what it produces.</p><p class="meta">1 hour · live</p></div>
+                </li>
+                <li class="session reveal">
+                    <div class="session-n">Session<strong>4</strong></div>
+                    <div><h3 class="h3">Debug &amp; Deploy</h3><p>Use AI to find and fix problems, and learn the fundamentals of getting a project online.</p><p class="meta">1 hour · live</p></div>
+                </li>
+            </ol>
+        </div>
+    </section>
 
-            <div class="testimonials-grid">
-                <div class="testimonial">
-                    <div class="testimonial-content">
-                        <p class="testimonial-quote" style="font-weight: 600; margin-bottom: var(--space-2);">
-                            What is vibe coding?
-                        </p>
-                        <p style="color: var(--text-secondary); font-size: var(--font-size-sm);">
-                            Vibe coding is directing AI to write code for you. Instead of typing code yourself, you describe what you want, review AI output, and guide iterations until your app works perfectly.
-                        </p>
-                    </div>
+    <section class="section" id="pricing" aria-labelledby="price-title">
+        <div class="container">
+            <div class="section-head reveal">
+                <p class="eyebrow">Pricing</p>
+                <h2 class="h2" id="price-title">Group or private. Per person, full course.</h2>
+                <p class="section-description">Choose what fits how you like to learn. Prices cover all four sessions.</p>
+            </div>
+            <div class="price-grid">
+                <div class="price-card reveal">
+                    <span class="pill price-tag">Group course</span>
+                    <p class="muted">Learn alongside other beginners and share ideas along the way.</p>
+                    <div class="price-amount"><span class="num" data-cfg="pricing.group.total">$99</span><span class="per">per person · full course</span></div>
+                    <p class="price-note">Total for all four live one-hour (60-minute) sessions.</p>
+                    <ul class="tick-list">
+                        <li>4 live one-hour sessions</li>
+                        <li>Setup guidance</li>
+                        <li>Prompting fundamentals</li>
+                        <li>Building with AI</li>
+                        <li>Debugging &amp; deployment fundamentals</li>
+                        <li>A hands-on project</li>
+                        <li><span data-cfg="pricing.group.size">Up to 5 students</span> per group</li>
+                    </ul>
+                    <a class="btn btn-outline btn-lg" href="../../enroll/index.html?plan=group">Request a Group spot <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
                 </div>
-
-                <div class="testimonial">
-                    <div class="testimonial-content">
-                        <p class="testimonial-quote" style="font-weight: 600; margin-bottom: var(--space-2);">
-                            Do I need coding experience?
-                        </p>
-                        <p style="color: var(--text-secondary); font-size: var(--font-size-sm);">
-                            No! You'll learn to communicate with AI coding tools effectively. The AI writes the code - you control the vision and make decisions.
-                        </p>
-                    </div>
+                <div class="price-card featured reveal">
+                    <span class="pill pill-brand price-tag">Private course</span>
+                    <p class="muted">One-on-one pacing and project guidance, built around you.</p>
+                    <div class="price-amount"><span class="num" data-cfg="pricing.private.total">$199</span><span class="per">per person · full course</span></div>
+                    <p class="price-note">Total for all four live one-hour (60-minute) sessions.</p>
+                    <ul class="tick-list">
+                        <li>4 live one-hour sessions</li>
+                        <li>Setup guidance</li>
+                        <li>Prompting fundamentals</li>
+                        <li>Building with AI</li>
+                        <li>Debugging &amp; deployment fundamentals</li>
+                        <li>A hands-on project</li>
+                        <li><strong>Personalized one-on-one pacing</strong></li><li><strong>Project guidance tailored to your goal</strong></li>
+                    </ul>
+                    <a class="btn btn-cta btn-lg" href="../../enroll/index.html?plan=private">Request a Private spot <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
                 </div>
+            </div>
+            <div class="table-wrap" style="max-width: 920px; margin: var(--space-10) auto 0">
+                <table class="compare">
+                    <caption class="visually-hidden">Group versus private course comparison</caption>
+                    <thead><tr><th scope="col">&nbsp;</th><th scope="col">Group</th><th scope="col">Private</th></tr></thead>
+                    <tbody>
+                        <tr><th scope="row">Full-course price</th><td><strong data-cfg="pricing.group.total">$99</strong> per person</td><td><strong data-cfg="pricing.private.total">$199</strong> per person</td></tr>
+                        <tr><th scope="row">Live sessions</th><td>4 × 1 hour</td><td>4 × 1 hour</td></tr>
+                        <tr><th scope="row">Pacing</th><td>Shared with the group</td><td>Personalized, one-on-one</td></tr>
+                        <tr><th scope="row">Project guidance</th><td>Hands-on project</td><td>Hands-on project with guidance tailored to you</td></tr>
+                        <tr><th scope="row">Group size</th><td data-cfg="pricing.group.size">Up to 5 students</td><td>Just you</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="max-width: 920px; margin: var(--space-8) auto 0"><div class="notice warn" role="note"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><p><strong>Not included in the course price:</strong> external AI subscriptions, API credits, hosting, domains and other third-party tools. Some have free tiers and some cost money, and prices are set by those providers. Ask us before you enrol if you'd like help estimating what your project might need.</p></div></div>
+        </div>
+    </section>
 
-                <div class="testimonial">
-                    <div class="testimonial-content">
-                        <p class="testimonial-quote" style="font-weight: 600; margin-bottom: var(--space-2);">
-                            What tools will I learn?
-                        </p>
-                        <p style="color: var(--text-secondary); font-size: var(--font-size-sm);">
-                            You'll master AI coding assistants like Claude, Cursor, and other AI-powered development tools that let you build real applications through conversation.
-                        </p>
-                    </div>
+    <section class="section section-sunken" id="requirements" aria-labelledby="prep-title">
+        <div class="container">
+            <div class="section-head reveal"><p class="eyebrow">Before you enrol</p><h2 class="h2" id="prep-title">What you&rsquo;ll need.</h2></div>
+            <div class="grid-2">
+                <div class="card reveal"><h3 class="h3">Your computer &amp; setup</h3>
+                    <ul class="tick-list">
+                        <li>A Mac, Windows or Chromebook computer</li>
+                        <li>A reliable internet connection</li>
+                        <li>An up-to-date web browser, preferably Chrome</li>
+                        <li>Access to VS Code and an AI coding assistant, where supported on your device</li>
+                        <li><strong>No previous coding experience required</strong></li>
+                    </ul>
+                </div>
+                <div class="stack reveal">
+                    <div class="notice" role="note"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><p><strong>About Chromebooks:</strong> Chromebooks can have compatibility limitations with desktop coding tools, and we can&rsquo;t promise every device supports the same setup. If you plan to use a Chromebook, tell us in your enrollment inquiry so we can talk through your options before you commit.</p></div>
+                    <div class="notice warn" role="note"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><p><strong>Accounts and costs:</strong> some AI tools require an account or paid API credits. These are <strong>not included</strong> in the course price.</p></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA -->
+    <section class="section" aria-labelledby="faq-title">
+        <div class="container">
+            <div class="section-head reveal"><p class="eyebrow">Course FAQ</p><h2 class="h2" id="faq-title">Questions about Vibe Coding 101.</h2></div>
+            <div class="faq">
+                <details><summary>How big are group classes?</summary><div><p>Group classes have a maximum of <strong>5 students</strong>. Private classes are one-on-one.</p></div></details>
+<details><summary>Do I need coding experience?</summary><div><p>No. Vibe Coding 101 is designed for beginners. You learn to describe what you want, review what the AI produces, and guide it toward a working result.</p></div></details>
+<details><summary>How much does it cost?</summary><div><p>The group course is <strong>$99 per person</strong> and the private course is <strong>$199 per person</strong>, each for the full four-session, four-hour course. Third-party AI subscriptions, API credits, hosting and domains are not included.</p></div></details>
+<details><summary>Is enrolling the same as booking?</summary><div><p>No. Submitting the form is an enrollment inquiry. We&rsquo;ll email you to confirm scheduling and share payment details. Nothing is charged through this website.</p></div></details>
+<details><summary>Will I finish a deployed app?</summary><div><p>Whether you finish a deployed app depends on your project&rsquo;s scope and how your learning progresses. We&rsquo;ll help you choose a project that fits the four hours.</p></div></details>
+<details><summary>Can I talk to someone first?</summary><div><p>Yes. We offer a free, optional 15-minute introductory conversation. It&rsquo;s never required to enrol.</p></div></details>
+<details><summary>Can I use a Chromebook?</summary><div><p>Possibly, but Chromebooks may have compatibility limitations with desktop coding tools such as VS Code. We can&rsquo;t promise every device supports the same setup, so please mention your device in your inquiry.</p></div></details>
+<details><summary>What tools will I use?</summary><div><p>We work with AI coding assistants such as Claude, Cursor, and VS Code with AI extensions. Exactly which tools you use depends on your project and budget.</p></div></details>
+<details><summary>What if I can&rsquo;t attend a session?</summary><div><p>Tell us when you submit your inquiry and we&rsquo;ll talk through scheduling when we reach out.</p></div></details>
+            </div>
+        </div>
+    </section>
+
     <section class="cta">
         <div class="container">
-            <div class="cta-content">
-                <h2 class="cta-title">Ready to start building?</h2>
-                <p class="cta-description">
-                    Join Vibe Coding 101 and create your first app in just 4 sessions.
-                </p>
+            <div class="cta-content cta-band">
+                <h2 class="cta-title">Ready to build your first project?</h2>
+                <p class="cta-description">Send an enrollment inquiry. It&rsquo;s not a booking or a payment. We&rsquo;ll follow up with scheduling and payment details.</p>
                 <div class="cta-actions">
-                    <a href="https://forms.gle/53NuP8WamvBh3x716" target="_blank" rel="noopener noreferrer" class="btn btn-white btn-lg">
-                        Enroll Now
-                        <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
+                    <a class="btn btn-white btn-lg" href="../../enroll/index.html?plan=group">Group · <span data-cfg="pricing.group.total">$99</span> <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                    <a class="btn btn-outline btn-lg" href="../../enroll/index.html?plan=private">Private · <span data-cfg="pricing.private.total">$199</span></a>
                 </div>
             </div>
         </div>
@@ -211,6 +247,7 @@
         <noscript>
             <p>
                 <a href="../../contact/index.html">Contact</a> &middot;
+                <a href="../../pricing/index.html">Pricing</a> &middot;
                 <a href="../../legal/privacy/index.html">Privacy</a> &middot;
                 <a href="https://www.instagram.com/learntav_llc/" rel="noopener noreferrer">Instagram (@learntav_llc)</a> &middot;
                 <a href="https://www.facebook.com/profile.php?id=61593091894765" rel="noopener noreferrer">Facebook (LearnTAV)</a> &middot;
@@ -219,7 +256,6 @@
         </noscript>
     </div>
     <script>LearnTAVLayout.mount();</script>
-
 
     <script src="../../assets/js/modern.js"></script>
 </body>

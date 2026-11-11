@@ -1,0 +1,40 @@
+[
+  {
+    "slug": "trophy-case",
+    "name": "Trophy Case",
+    "badge": "Live Product",
+    "tagline": "Your achievements deserve more than a drawer.",
+    "description": "Capture accomplishments, track your progress, and get AI-powered guidance toward your next big goal.",
+    "detailPath": "products/trophy-case/",
+    "primaryCta": "Explore Trophy Case",
+    "secondaryCta": { "label": "Get the App", "url": "https://trophy-case-trophy-case.vercel.app", "external": true },
+    "visual": {
+      "type": "phone",
+      "src": "assets/images/trophy-case/timeline.jpg",
+      "alt": "Screenshot of the Trophy Case timeline showing three saved achievements",
+      "width": 684,
+      "height": 900,
+      "note": "Real screenshot of the live app. Sample entries added for illustration."
+    },
+    "meta": "Installable web app (PWA) for phones. Not an App Store app."
+  },
+  {
+    "slug": "ecoprompt",
+    "name": "EcoPrompt",
+    "badge": "Live Product",
+    "tagline": "See what your browsing and AI prompts may cost the planet.",
+    "description": "A free Chrome extension that estimates the energy used by the pages you visit and your AI prompts, and helps you write more efficient prompts.",
+    "detailPath": "ai-tools/power-tracker/",
+    "primaryCta": "Explore EcoPrompt",
+    "secondaryCta": { "label": "Use EcoPrompt", "url": "https://chromewebstore.google.com/detail/ecoprompt/plmljdpofjiehkgfchbadaidahedooid", "external": true },
+    "visual": {
+      "type": "icon",
+      "src": "assets/images/ecoprompt-icon.png",
+      "alt": "EcoPrompt extension icon",
+      "width": 128,
+      "height": 128,
+      "chips": ["Dashboard", "Prompt Optimizer", "Energy history"]
+    },
+    "meta": "Chrome extension. Energy figures are estimates, not measurements."
+  }
+]

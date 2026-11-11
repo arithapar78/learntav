@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Privacy policy for the EcoPrompt browser extension by LearnTAV. EcoPrompt analyzes activity locally and transmits nothing to external servers.">
+    <meta name="description" content="Privacy policy for the EcoPrompt browser extension by LearnTAV: what stays on your device and what anonymous usage data the Prompt Optimizer sends.">
 
     <title>EcoPrompt Extension Privacy Policy | LearnTAV</title>
+    <link rel="canonical" href="https://learntav.com/ai-tools/power-tracker/privacy.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://learntav.com/ai-tools/power-tracker/privacy.html">
+    <meta property="og:title" content="EcoPrompt Extension Privacy Policy | LearnTAV">
+    <meta property="og:description" content="Privacy policy for the EcoPrompt browser extension by LearnTAV: what stays on your device and what anonymous usage data the Prompt Optimizer sends.">
+    <meta property="og:image" content="https://learntav.com/assets/images/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
@@ -49,27 +56,68 @@
                     LearnTAV website, see our <a href="../../legal/privacy/index.html">main privacy policy</a>.
                 </p>
 
-                <h2>What EcoPrompt collects</h2>
-                <p>
-                    EcoPrompt does not collect or share personally identifiable information.
+                <p class="legal-updated">
+                    Last updated: November 11, 2026. This description is based on the extension&rsquo;s source code
+                    (version 10.1.2). If you run a different version, behavior may differ.
                 </p>
 
-                <h2>How it works</h2>
+                <h2>What stays on your device</h2>
                 <p>
-                    The extension only analyzes website activity locally in the browser to estimate
-                    energy usage.
+                    To estimate energy use, a content script runs on web pages you visit (all http and https pages
+                    except the Chrome Web Store, Google account sign-in pages and Stripe checkout pages) and reads
+                    lightweight page measurements: the number of elements on the page, how quickly the page changes,
+                    how much data it has transferred, and whether it contains video or a canvas. It does not read
+                    your messages or the text of the pages you view.
                 </p>
                 <p>
-                    All data is stored locally in the user's browser using Chrome storage.
+                    The extension&rsquo;s background process uses the address and title of your open tabs to label each
+                    site by hostname (for example &ldquo;github.com&rdquo;) and to recognize AI platforms. This
+                    information, your energy history (kept to a short rolling window plus daily totals), your
+                    display preferences and a randomly generated anonymous ID are stored in your browser using Chrome
+                    storage. The &ldquo;Clear History&rdquo; button in the extension&rsquo;s settings deletes the stored energy
+                    history.
                 </p>
 
-                <h2>What is never transmitted</h2>
+                <h2>What is sent to a server</h2>
                 <p>
-                    No browsing history, personal information, or website content is transmitted to
-                    external servers.
+                    Prompt optimization itself runs inside the extension, and your prompt text is not transmitted.
+                    However, each time you use the Prompt Optimizer, the extension sends an anonymous usage record to a
+                    LearnTAV-operated cloud service (Google Cloud / Firebase). The record contains:
                 </p>
+                <ul>
+                    <li>the random anonymous ID created by the extension, and an event ID</li>
+                    <li>the date and time of the event</li>
+                    <li>token counts and character counts before and after optimization, and the amount saved</li>
+                    <li>the optimization mode, a source label and the extension version</li>
+                </ul>
                 <p>
-                    We do not sell, share, or use any data beyond the extension's core functionality.
+                    It does not include your prompt text, the pages you visit, or your name or email address. These
+                    records are used to understand how the optimizer is used.
+                </p>
+
+                <h2>Your choices</h2>
+                <p>
+                    In this version, the usage upload is switched on by default when you first open the extension, and
+                    the extension does not currently offer a setting to turn it off. You can stop it by not using the
+                    Prompt Optimizer or by uninstalling the extension. If this changes, this policy will be updated.
+                </p>
+
+                <h2>Retention and deletion</h2>
+                <p>
+                    Uploaded usage records are not currently subject to an automated deletion schedule, and there is no
+                    self-service way to delete them. If you have questions or want to ask about your data, contact us
+                    at the address below.
+                </p>
+
+                <h2>Sharing</h2>
+                <p>
+                    We do not sell this data. It is processed by Google Cloud as our hosting provider.
+                </p>
+
+                <h2>Cost</h2>
+                <p>
+                    The extension contains no paid features and does not call paid AI services. Energy, water and
+                    carbon figures are estimates from a simple model and published research, not measurements.
                 </p>
 
                 <h2>Questions</h2>

@@ -143,11 +143,15 @@
        Navigation model
        ---------------------------------------- */
     var NAV = [
-        { label: 'Education', href: 'education/index.html', match: /^education\// },
-        { label: 'Consulting', href: 'consulting/index.html', match: /^consulting\// },
-        { label: 'AI Tools', href: 'ai-tools/index.html', match: /^(ai-tools|power-tracker-school)\// },
-        { label: 'Resources', href: 'resources/index.html', match: /^resources\// },
-        { label: 'About', href: 'about/index.html', match: /^about\// }
+        { label: 'Learn', href: 'education/index.html', match: /^education\// },
+        { label: 'Build', href: 'consulting/index.html', match: /^consulting\// },
+        { label: 'Products', href: 'products/index.html', match: /^(products|ai-tools|power-tracker-school)\//,
+          children: [
+              { label: 'Trophy Case', desc: 'Achievement tracker and AI coach', href: 'products/trophy-case/index.html' },
+              { label: 'EcoPrompt', desc: 'Chrome extension for AI energy awareness', href: 'ai-tools/power-tracker/index.html' }
+          ] },
+        { label: 'About', href: 'about/index.html', match: /^about\// },
+        { label: 'Pricing', href: 'pricing/index.html', match: /^pricing\// }
     ];
 
     // Path of the current page relative to the site root, e.g.
@@ -180,6 +184,17 @@
     function renderHeader() {
         var navLinks = NAV.map(function (item) {
             var active = isActive(item);
+            if (item.children) {
+                var kids = item.children.map(function (c) {
+                    return '<a href="' + url(c.href) + '" class="nav-dropdown-link"><strong>' + c.label + '</strong><span>' + c.desc + '</span></a>';
+                }).join('');
+                return '<div class="nav-item">' +
+                    '<button type="button" class="nav-link nav-menu-btn' + (active ? ' nav-link-active' : '') + '"' + (active ? ' aria-current="page"' : '') +
+                    ' aria-expanded="false" aria-controls="productsMenu">' + item.label +
+                    '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg></button>' +
+                    '<div class="nav-dropdown" id="productsMenu" hidden>' + kids +
+                    '<a href="' + url(item.href) + '" class="nav-dropdown-all">See all products</a></div></div>';
+            }
             return '<a href="' + url(item.href) + '"' +
                 ' class="nav-link' + (active ? ' nav-link-active' : '') + '"' +
                 (active ? ' aria-current="page"' : '') +
@@ -215,8 +230,8 @@
 '                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>\n' +
 '                </svg>\n' +
 '            </button>\n' +
-'            <a href="' + url('contact/index.html') + '" class="btn btn-ghost">Contact</a>\n' +
-'            <a href="' + url('ai-tools/index.html') + '" class="btn btn-primary">Get Started</a>\n' +
+'            <a href="' + url('education/index.html') + '" class="btn btn-ghost nav-secondary">Explore Programs</a>\n' +
+'            <a href="' + url('enroll/index.html') + '" class="btn btn-primary">Start Learning</a>\n' +
 '            <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">\n' +
 '                <span></span>\n' +
 '                <span></span>\n' +
@@ -229,11 +244,18 @@
 '<div class="mobile-menu" id="mobileMenu">\n' +
 '    <nav class="mobile-menu-content" aria-label="Mobile">\n' +
         NAV.map(function (item) {
-            return '        <a href="' + url(item.href) + '" class="mobile-link"' +
+            var link = '        <a href="' + url(item.href) + '" class="mobile-link"' +
                 (isActive(item) ? ' aria-current="page"' : '') + '>' + item.label + '</a>';
+            if (item.children) {
+                link += '\n' + item.children.map(function (c) {
+                    return '        <a href="' + url(c.href) + '" class="mobile-link mobile-sublink">' + c.label + '</a>';
+                }).join('\n');
+            }
+            return link;
         }).join('\n') + '\n' +
+'        <a href="' + url('education/index.html') + '" class="mobile-link">Explore Programs</a>\n' +
 '        <a href="' + url('contact/index.html') + '" class="mobile-link">Contact</a>\n' +
-'        <a href="' + url('ai-tools/index.html') + '" class="btn btn-primary btn-lg mobile-cta">Get Started</a>\n' +
+'        <a href="' + url('enroll/index.html') + '" class="btn btn-primary btn-lg mobile-cta">Start Learning</a>\n' +
 '    </nav>\n' +
 '</div>';
     }
@@ -245,12 +267,21 @@
     // lost links. This is that superset, rendered everywhere.
     var FOOTER_COLUMNS = [
         {
-            title: 'Services',
+            title: 'Learn',
             links: [
-                { label: 'Education', href: 'education/index.html' },
-                { label: 'Consulting', href: 'consulting/index.html' },
-                { label: 'Learning Paths', href: 'education/paths/index.html' },
-                { label: 'Case Studies', href: 'consulting/case-studies/index.html' }
+                { label: 'Vibe Coding 101', href: 'education/vibe-coding-101/index.html' },
+                { label: 'Pricing', href: 'pricing/index.html' },
+                { label: 'Start Learning', href: 'enroll/index.html' },
+                { label: 'Learning Paths', href: 'education/paths/index.html' }
+            ]
+        },
+        {
+            title: 'Products & Build',
+            links: [
+                { label: 'Trophy Case', href: 'products/trophy-case/index.html' },
+                { label: 'EcoPrompt', href: 'ai-tools/power-tracker/index.html' },
+                { label: 'Custom Builds', href: 'consulting/app-builds/index.html' },
+                { label: 'Free Resources', href: 'resources/index.html' }
             ]
         },
         {
@@ -260,15 +291,6 @@
                 { label: 'Team', href: 'about/team/index.html' },
                 { label: 'Our Approach', href: 'about/approach/index.html' },
                 { label: 'Contact', href: 'contact/index.html' }
-            ]
-        },
-        {
-            title: 'Resources',
-            links: [
-                { label: 'AI Tools', href: 'ai-tools/index.html' },
-                { label: 'Guides', href: 'resources/guides/index.html' },
-                { label: 'Blog', href: 'resources/blog/index.html' },
-                { label: 'Newsletter', href: 'resources/newsletter/index.html' }
             ]
         }
     ];
@@ -294,7 +316,7 @@
 '            <div class="footer-brand">\n' +
 '                <a href="' + url('index.html') + '" class="footer-logo">LearnTAV</a>\n' +
 '                <p class="footer-tagline">\n' +
-'                    A learning platform and lab for building with AI&mdash;practical, honest, and education-first.\n' +
+'                    Learn to build real things with AI. Practical, hands-on, and honest about what it takes.\n' +
 '                </p>\n' +
 '                <p class="footer-motto">&ldquo;Learning Takes a Village&rdquo;</p>\n' +
                  socialLinks({ showName: true, className: 'social-links-footer' }) + '\n' +
@@ -345,6 +367,7 @@
     }
 
     window.LearnTAVLayout = { mount: mount, basePath: basePath, url: url };
+
 
     // Safety net: catches anything the inline calls missed.
     if (document.readyState === 'loading') {

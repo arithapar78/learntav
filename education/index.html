@@ -3,22 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="We teach people to build real apps with AI tools—fast, responsibly, and with a builder mindset. Education is our core business.">
-    <title>Education Programs - LearnTAV</title>
+    <title>Learn | AI Education for Beginners | LearnTAV</title>
+    <meta name="description" content="Hands-on AI education from LearnTAV. Start with Vibe Coding 101: four live one-hour sessions, $99 group or $199 private for the full course.">
+    <link rel="canonical" href="https://learntav.com/education/">
 
-    <!-- Favicon -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://learntav.com/education/">
+    <meta property="og:title" content="Learn | AI Education for Beginners | LearnTAV">
+    <meta property="og:description" content="Hands-on AI education from LearnTAV. Start with Vibe Coding 101: four live one-hour sessions, $99 group or $199 private for the full course.">
+    <meta property="og:image" content="https://learntav.com/assets/images/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Learn | AI Education for Beginners | LearnTAV">
+    <meta name="twitter:description" content="Hands-on AI education from LearnTAV. Start with Vibe Coding 101: four live one-hour sessions, $99 group or $199 private for the full course.">
+
     <link rel="icon" type="image/png" href="../assets/images/favicon.png">
     <link rel="apple-touch-icon" href="../assets/images/favicon.png">
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
     <!-- Shared layout: resolves theme pre-paint, renders header/footer -->
     <script src="../assets/js/layout.js"></script>
-
+    <script src="../assets/js/site-config.js" defer></script>
     <link rel="stylesheet" href="../assets/css/modern.css">
 </head>
 <body>
@@ -28,172 +35,135 @@
 
     <main id="main">
 
-    <!-- Page Header -->
     <section class="page-header">
         <div class="container">
             <div class="page-header-content">
-                <span class="section-tag">Education</span>
-                <h1 class="page-title">Learn to Build with AI</h1>
-                <p class="page-description">
-                    We teach people to build real apps with AI tools—fast, responsibly, and with a builder mindset. Our programs are designed for entrepreneurs, professionals, and career changers. No coding experience required.
-                </p>
+                <span class="section-tag">Learn</span>
+                <h1 class="page-title">Learn to build real things with AI.</h1>
+                <p class="page-description">Practical, hands-on programs for beginners, students, entrepreneurs, professionals and small teams. No coding experience required.</p>
             </div>
         </div>
     </section>
 
-    <!-- Programs Section -->
-    <section class="programs">
+    <section class="section" aria-labelledby="programs-title">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Our Programs</h2>
-                <p class="section-description">Choose the program that fits your goals and learning style</p>
-            </div>
-
-            <div class="services-grid">
-                <!-- Vibe Coding 101 -->
-                <div class="service-card service-card-featured">
-                    <div class="service-icon service-icon-blue">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="5.5" cy="17.5" r="2.5"/>
-                            <circle cx="17.5" cy="15.5" r="2.5"/>
-                            <path d="M8 17V5l12-2v12"/>
-                        </svg>
-                    </div>
-                    <span class="service-tag">Flagship Course</span>
-                    <h3 class="service-title">Vibe Coding 101</h3>
-                    <p class="service-description">
-                        Learn to create apps with AI tools like Anthropic Claude, VS Code, and OpenAI. Perfect for beginners with NO prior coding experience.
-                    </p>
-                    <ul class="service-features">
-                        <li>4 sessions (1 hour each)</li>
-                        <li>No coding experience needed</li>
-                        <li>AI tools mastery</li>
-                        <li>Create real apps</li>
-                        <li>Group ($100) or Private ($200)</li>
+            <h2 class="visually-hidden" id="programs-title">Programs</h2>
+            <div class="flagship reveal">
+                <div class="stack">
+                    <p class="eyebrow">Flagship course</p>
+                    <h3 class="h2">Vibe Coding 101</h3>
+                    <p class="lead" style="color: var(--text-on-dark-muted)">Learn to direct AI tools to build a real project. Four live one-hour sessions, four hours in total.</p>
+                    <ul class="tick-list">
+                        <li>Prompting fundamentals and tools setup</li>
+                        <li>Building with AI and a hands-on project</li>
+                        <li>Debugging and deployment fundamentals</li>
                     </ul>
-                    <a href="vibe-coding-101/index.html" class="service-link">
-                        Learn more & Enroll
-                        <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
+                    <div class="btn-row">
+                        <a class="btn btn-white btn-lg" href="vibe-coding-101/index.html">Course details <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                        <a class="btn btn-outline btn-lg" href="../enroll/index.html">Start Learning</a>
+                    </div>
+                </div>
+                <div class="flagship-price">
+                    <div class="row"><span class="who">Group<span class="sub">per person · full course</span></span><span class="amt" data-cfg="pricing.group.total">$99</span></div>
+                    <div class="row"><span class="who">Private<span class="sub">per person · full course</span></span><span class="amt" data-cfg="pricing.private.total">$199</span></div>
+                    <p class="small" style="color: var(--text-on-dark-muted); margin-top: var(--space-3)">Third-party AI subscriptions, API credits, hosting and domains are not included.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Student Stories -->
-    <section class="features">
+    <section class="section section-sunken" aria-labelledby="curr-title">
         <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Student Stories</span>
-                <h2 class="section-title">What our students build</h2>
-                <p class="section-description">Real projects from people learning to direct AI tools.</p>
-            </div>
+            <div class="section-head reveal"><p class="eyebrow">Curriculum</p><h2 class="h2" id="curr-title">What the four sessions cover.</h2></div>
+            <ol class="curriculum" style="max-width: 860px; margin-inline:auto"><li class="session reveal">
+                    <div class="session-n">Session<strong>1</strong></div>
+                    <div><h3 class="h3">Prompting Fundamentals</h3><p>How to describe what you want so an AI assistant gives you useful results: clear goals, context, and follow-up questions.</p><p class="meta">1 hour · live</p></div>
+                </li>
+                <li class="session reveal">
+                    <div class="session-n">Session<strong>2</strong></div>
+                    <div><h3 class="h3">AI Coding Tools Setup</h3><p>Install and configure an AI coding environment, such as Claude, Cursor or VS Code with an AI assistant, and learn to steer it.</p><p class="meta">1 hour · live</p></div>
+                </li>
+                <li class="session reveal">
+                    <div class="session-n">Session<strong>3</strong></div>
+                    <div><h3 class="h3">Direct AI to Build</h3><p>Guide an AI assistant to build your project, then review, test and refine what it produces.</p><p class="meta">1 hour · live</p></div>
+                </li>
+                <li class="session reveal">
+                    <div class="session-n">Session<strong>4</strong></div>
+                    <div><h3 class="h3">Debug &amp; Deploy</h3><p>Use AI to find and fix problems, and learn the fundamentals of getting a project online.</p><p class="meta">1 hour · live</p></div>
+                </li></ol>
+        </div>
+    </section>
 
-            <div class="services-grid" style="grid-template-columns: 1fr;">
-                <a href="../resources/blog/secondserve-tie-bootcamp/index.html" class="service-card" style="display: block;">
-                    <div class="service-icon service-icon-green">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M3 6h18l-1.5 14a2 2 0 0 1-2 1.8H6.5a2 2 0 0 1-2-1.8z"/>
-                            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                            <path d="M10 11v6M14 11v6"/>
-                        </svg>
-                    </div>
-                    <span class="service-tag">Student Stories</span>
-                    <h3 class="service-title">Fixing Food Waste in a Summer: Building SecondServe at TiE</h3>
-                    <p class="service-description">
-                        Four high school students went to TiE's summer entrepreneurship bootcamp and came
-                        out with SecondServe — a working prototype that turns unsold bakery and restaurant
-                        food into cheap, fresh meals. Built with AI tools, by people with no engineering
-                        background.
-                    </p>
-                    <span class="service-link" style="margin-top: var(--space-5);">
-                        Read the story
-                        <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </span>
+    <section class="section" aria-labelledby="stories-title">
+        <div class="container">
+            <div class="section-head reveal"><p class="eyebrow">Student projects</p><h2 class="h2" id="stories-title">What learners build.</h2></div>
+            <div style="max-width: 860px; margin-inline:auto">
+                <a class="card card-link reveal" href="../resources/blog/secondserve-tie-bootcamp/index.html">
+                    <span class="pill pill-brand" style="align-self:flex-start; margin-bottom: var(--space-4)">Student story</span>
+                    <h3 class="h3">Fixing food waste in a summer: building SecondServe at TiE</h3>
+                    <p>Four high school students went to TiE&rsquo;s summer entrepreneurship bootcamp and came out with a working prototype that turns unsold bakery and restaurant food into cheap, fresh meals. Built with AI tools, by people with no engineering background.</p>
+                    <span class="link-arrow">Read the story <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Why Learn With Us -->
-    <section class="programs">
+    <section class="section section-sunken" aria-labelledby="why-title">
         <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Why Us</span>
-                <h2 class="section-title">Why Learn with LearnTAV?</h2>
-            </div>
-
-            <div class="features-grid">
-                <div class="feature">
-                    <div class="feature-icon">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <polyline points="12 6 12 12 16 14"/>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Day One Results</h3>
-                    <p class="feature-description">Start building real applications from your very first session.</p>
-                </div>
-
-                <div class="feature">
-                    <div class="feature-icon">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Expert Mentors</h3>
-                    <p class="feature-description">Learn from professionals with real-world AI experience.</p>
-                </div>
-
-                <div class="feature">
-                    <div class="feature-icon">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                            <path d="M2 17l10 5 10-5"/>
-                            <path d="M2 12l10 5 10-5"/>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Practical Focus</h3>
-                    <p class="feature-description">No unnecessary theory. Just skills you can use immediately.</p>
-                </div>
-
-                <div class="feature">
-                    <div class="feature-icon">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                            <polyline points="22 4 12 14.01 9 11.01"/>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Proven Results</h3>
-                    <p class="feature-description">95% of our students complete their first app project successfully.</p>
-                </div>
+            <div class="section-head reveal"><p class="eyebrow">Our approach</p><h2 class="h2" id="why-title">Learning takes a village.</h2></div>
+            <div class="grid-4">
+                <div class="card reveal"><h3 class="h3">Build from day one</h3><p>You work on a real project, not slides.</p></div>
+                <div class="card reveal"><h3 class="h3">Beginner first</h3><p>Plain language, no assumed experience.</p></div>
+                <div class="card reveal"><h3 class="h3">Responsible AI</h3><p>We talk honestly about what AI gets wrong and what it costs.</p></div>
+                <div class="card reveal"><h3 class="h3">Real people</h3><p>Live sessions with LearnTAV instructors.</p></div>
             </div>
         </div>
     </section>
 
-    <!-- CTA -->
+    <section class="section" aria-labelledby="price-title">
+        <div class="container">
+            <div class="section-head reveal"><p class="eyebrow">Pricing</p><h2 class="h2" id="price-title">Group or private.</h2></div>
+            <div class="price-grid"><div class="price-card reveal">
+                    <span class="pill price-tag">Group course</span>
+                    <p class="muted">Learn alongside other beginners and share ideas along the way.</p>
+                    <div class="price-amount"><span class="num" data-cfg="pricing.group.total">$99</span><span class="per">per person · full course</span></div>
+                    <p class="price-note">Total for all four live one-hour (60-minute) sessions.</p>
+                    <ul class="tick-list">
+                        <li>4 live one-hour sessions</li>
+                        <li>Setup guidance</li>
+                        <li>Prompting fundamentals</li>
+                        <li>Building with AI</li>
+                        <li>Debugging &amp; deployment fundamentals</li>
+                        <li>A hands-on project</li>
+                        <li><span data-cfg="pricing.group.size">Up to 5 students</span> per group</li>
+                    </ul>
+                    <a class="btn btn-outline btn-lg" href="../enroll/index.html?plan=group">Request a Group spot <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div><div class="price-card featured reveal">
+                    <span class="pill pill-brand price-tag">Private course</span>
+                    <p class="muted">One-on-one pacing and project guidance, built around you.</p>
+                    <div class="price-amount"><span class="num" data-cfg="pricing.private.total">$199</span><span class="per">per person · full course</span></div>
+                    <p class="price-note">Total for all four live one-hour (60-minute) sessions.</p>
+                    <ul class="tick-list">
+                        <li>4 live one-hour sessions</li>
+                        <li>Setup guidance</li>
+                        <li>Prompting fundamentals</li>
+                        <li>Building with AI</li>
+                        <li>Debugging &amp; deployment fundamentals</li>
+                        <li>A hands-on project</li>
+                        <li><strong>Personalized one-on-one pacing</strong></li><li><strong>Project guidance tailored to your goal</strong></li>
+                    </ul>
+                    <a class="btn btn-cta btn-lg" href="../enroll/index.html?plan=private">Request a Private spot <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div></div>
+            <div style="max-width: 920px; margin: var(--space-8) auto 0"><div class="notice warn" role="note"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><p><strong>Not included in the course price:</strong> external AI subscriptions, API credits, hosting, domains and other third-party tools. Some have free tiers and some cost money, and prices are set by those providers. Ask us before you enrol if you'd like help estimating what your project might need.</p></div></div>
+        </div>
+    </section>
+
     <section class="cta">
         <div class="container">
-            <div class="cta-content">
-                <h2 class="cta-title">Ready to start your AI journey?</h2>
-                <p class="cta-description">
-                    Join hundreds of students who have transformed their careers with our programs.
-                </p>
-                <div class="cta-actions">
-                    <a href="../consulting/app-builds/index.html" class="btn btn-white btn-lg">
-                        Build Your First App
-                        <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
+            <div class="cta-content cta-band">
+                <h2 class="cta-title">Ready to start?</h2>
+                <p class="cta-description">Send an enrollment inquiry. We&rsquo;ll follow up with scheduling and payment details. Nothing is charged on this site.</p>
+                <div class="cta-actions"><a class="btn btn-white btn-lg" href="../enroll/index.html">Start Learning <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
             </div>
         </div>
     </section>
@@ -204,6 +174,7 @@
         <noscript>
             <p>
                 <a href="../contact/index.html">Contact</a> &middot;
+                <a href="../pricing/index.html">Pricing</a> &middot;
                 <a href="../legal/privacy/index.html">Privacy</a> &middot;
                 <a href="https://www.instagram.com/learntav_llc/" rel="noopener noreferrer">Instagram (@learntav_llc)</a> &middot;
                 <a href="https://www.facebook.com/profile.php?id=61593091894765" rel="noopener noreferrer">Facebook (LearnTAV)</a> &middot;
@@ -212,7 +183,6 @@
         </noscript>
     </div>
     <script>LearnTAVLayout.mount();</script>
-
 
     <script src="../assets/js/modern.js"></script>
 </body>

@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EcoPrompt for Schools - A student-safe browser extension that builds energy awareness.">
+    <meta name="description" content="EcoPrompt for Schools - A browser extension that builds energy awareness.">
     <meta name="robots" content="noindex, nofollow">
     <title>EcoPrompt for Schools - LearnTAV</title>
+    <link rel="canonical" href="https://learntav.com/power-tracker-school/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://learntav.com/power-tracker-school/">
+    <meta property="og:title" content="EcoPrompt for Schools - LearnTAV">
+    <meta property="og:description" content="EcoPrompt for Schools - A browser extension that builds energy awareness.">
+    <meta property="og:image" content="https://learntav.com/assets/images/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../assets/images/favicon.png">
@@ -54,7 +61,7 @@
     <main id="main">
 
     <!-- Hero Section -->
-    <section class="hero" style="background: linear-gradient(135deg, #047857, #065f46); min-height: auto; padding: calc(72px + var(--space-16)) 0 var(--space-16);">
+    <section class="hero" style="background: var(--brand-fill-gradient); min-height: auto; padding: calc(72px + var(--space-16)) 0 var(--space-16);">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-badge" style="background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); color: #fff;">
@@ -66,11 +73,11 @@
                     <span class="hero-title-gradient" style="background: linear-gradient(135deg, #fff, rgba(255,255,255,0.8)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Build Energy Awareness</span>
                 </h1>
                 <p class="hero-description" style="color: #ffffff;">
-                    A student-safe browser extension that helps students understand digital energy consumption
+                    A browser extension that helps students understand digital energy consumption
                     and develop sustainable technology habits.
                 </p>
                 <div class="hero-actions">
-                    <a href="https://chromewebstore.google.com/detail/power-tracker-%E2%80%93-monitor-y/plmljdpofjiehkgfchbadaidahedooid" target="_blank" rel="noopener noreferrer" class="btn btn-white btn-lg">
+                    <a href="https://chromewebstore.google.com/detail/ecoprompt/plmljdpofjiehkgfchbadaidahedooid" target="_blank" rel="noopener noreferrer" class="btn btn-white btn-lg">
                         Add to Chrome - Free
                         <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -123,7 +130,7 @@
                         </svg>
                     </div>
                     <h3 class="feature-title">Privacy First</h3>
-                    <p class="feature-description">No personal data collected by default - everything stays local.</p>
+                    <p class="feature-description">Energy estimates and history are stored in your browser. See the privacy policy for the anonymous usage records the Prompt Optimizer sends.</p>
                 </div>
 
                 <div class="feature">
@@ -165,7 +172,7 @@
                     </p>
                     <ul class="service-features">
                         <li>Builds digital awareness and responsibility</li>
-                        <li>Supports STEM learning with real data</li>
+                        <li>Supports STEM learning with estimated data</li>
                         <li>Enhances environmental science curriculum</li>
                         <li>Creates opportunities for student projects</li>
                     </ul>
@@ -188,7 +195,7 @@
                     <ul class="service-features">
                         <li>Teaches digital energy awareness</li>
                         <li>Supports school learning initiatives</li>
-                        <li>Provides real data for understanding</li>
+                        <li>Provides estimates for understanding</li>
                         <li>Builds responsible AI usage habits</li>
                     </ul>
                 </div>
@@ -210,7 +217,7 @@
                         <li>Zero setup or maintenance required</li>
                         <li>No server or IT infrastructure needed</li>
                         <li>Students install through Chrome Web Store</li>
-                        <li>Privacy-compliant by design</li>
+                        
                     </ul>
                 </div>
 
@@ -224,13 +231,13 @@
                     <span class="service-tag">Safe</span>
                     <h3 class="service-title">Privacy & Safety</h3>
                     <p class="service-description">
-                        Designed with student privacy and safety as the top priority.
+                        What the extension collects is explained in plain language in its privacy policy.
                     </p>
                     <ul class="service-features">
-                        <li>No ad tracking or third-party scripts</li>
-                        <li>All data stays in the browser locally</li>
+                        
+                        <li>Energy history is stored in the browser</li>
                         <li>No personal information required</li>
-                        <li>Complies with school privacy requirements</li>
+                        <li>Read our privacy policy to check it meets your school's requirements</li>
                     </ul>
                 </div>
             </div>
@@ -252,7 +259,7 @@
                             Will this slow my Chromebook?
                         </p>
                         <p style="color: var(--text-secondary); font-size: var(--font-size-sm);">
-                            No! EcoPrompt is designed to be lightweight and won't affect your browsing experience or device performance.
+                            It is designed to be lightweight, but we haven't published performance measurements, so the effect on your device may vary.
                         </p>
                     </div>
                 </div>
@@ -263,7 +270,7 @@
                             Does it collect my personal info?
                         </p>
                         <p style="color: var(--text-secondary); font-size: var(--font-size-sm);">
-                            Absolutely not. The extension doesn't collect any personal information - it only tracks anonymous energy usage data that stays on your device.
+                            The extension doesn't ask for your name or email, and it doesn't send your prompt text or the pages you visit anywhere. Energy estimates and your history stay in your browser. When the Prompt Optimizer is used, it sends an anonymous usage record (a random ID, a timestamp and token and character counts). See the <a href="../ai-tools/power-tracker/privacy.html">EcoPrompt privacy policy</a> for details.
                         </p>
                     </div>
                 </div>
@@ -300,7 +307,7 @@
                         </svg>
                     </div>
                     <h3 class="feature-title">Installation</h3>
-                    <p class="feature-description">Available through Chrome Web Store - no sideloading required. Follows all Chrome policies.</p>
+                    <p class="feature-description">Available through the Chrome Web Store, so no sideloading is required.</p>
                 </div>
 
                 <div class="feature">
@@ -311,7 +318,7 @@
                         </svg>
                     </div>
                     <h3 class="feature-title">Privacy Compliance</h3>
-                    <p class="feature-description">No PII needed. All data processing happens locally on the student's device.</p>
+                    <p class="feature-description">The extension doesn't ask for names or emails, and energy estimates are computed on the student's device. The Prompt Optimizer sends anonymous usage records; see the privacy policy.</p>
                 </div>
 
                 <div class="feature">
@@ -348,7 +355,7 @@
                     EcoPrompt is free and takes less than a minute to install. Have questions? We're here to help.
                 </p>
                 <div class="cta-actions" style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-                    <a href="https://chromewebstore.google.com/detail/power-tracker-%E2%80%93-monitor-y/plmljdpofjiehkgfchbadaidahedooid" target="_blank" rel="noopener noreferrer" class="btn btn-white btn-lg">
+                    <a href="https://chromewebstore.google.com/detail/ecoprompt/plmljdpofjiehkgfchbadaidahedooid" target="_blank" rel="noopener noreferrer" class="btn btn-white btn-lg">
                         Get EcoPrompt
                         <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"/>

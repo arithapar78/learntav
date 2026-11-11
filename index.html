@@ -3,46 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="LearnTAV - Build with AI. Where learning meets building. Create real apps with hands-on vibe coding and guided workshops.">
-    <meta name="keywords" content="AI education, vibe coding, learn AI, app development, healthcare AI, hands-on learning, builder mindset">
+    <title>LearnTAV | Learn to Build Real Things With AI</title>
+    <meta name="description" content="Hands-on AI education for beginners. Vibe Coding 101 is four live one-hour sessions: $99 group or $199 private for the full course. No coding experience required.">
+    <link rel="canonical" href="https://learntav.com/">
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://learntav.com/">
-    <meta property="og:title" content="LearnTAV - Build with AI">
-    <meta property="og:description" content="Where learning meets building. Create real apps with hands-on vibe coding and guided workshops.">
+    <meta property="og:title" content="LearnTAV | Learn to Build Real Things With AI">
+    <meta property="og:description" content="Hands-on AI education for beginners. Vibe Coding 101 is four live one-hour sessions: $99 group or $199 private for the full course. No coding experience required.">
     <meta property="og:image" content="https://learntav.com/assets/images/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="LearnTAV | Learn to Build Real Things With AI">
+    <meta name="twitter:description" content="Hands-on AI education for beginners. Vibe Coding 101 is four live one-hour sessions: $99 group or $199 private for the full course. No coding experience required.">
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://learntav.com/">
-    <meta property="twitter:title" content="LearnTAV - Build with AI">
-    <meta property="twitter:description" content="Where learning meets building. Create real apps with hands-on vibe coding and guided workshops.">
-
-    <title>LearnTAV - Build with AI</title>
-
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
     <link rel="apple-touch-icon" href="assets/images/favicon.png">
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
     <!-- Shared layout: resolves theme pre-paint, renders header/footer -->
     <script src="assets/js/layout.js"></script>
-
+    <script src="assets/js/site-config.js" defer></script>
     <link rel="stylesheet" href="assets/css/modern.css">
-
-    <!-- Schema.org -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "EducationalOrganization",
       "name": "LearnTAV",
-      "description": "A learning platform and lab for building with AI",
+      "alternateName": "Learning Takes a Village",
+      "description": "Practical, hands-on AI education: learn to build real things with AI.",
       "url": "https://learntav.com",
       "logo": "https://learntav.com/assets/images/logo.png",
       "sameAs": [
@@ -60,323 +51,295 @@
 
     <main id="main">
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-bg">
-            <div class="hero-gradient"></div>
-            <div class="hero-grid"></div>
-        </div>
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <span class="badge-dot"></span>
-                    Learning Takes a Village
+    <section class="hero-split" aria-labelledby="hero-title">
+        <div class="hero-bg"><div class="hero-gradient"></div><div class="hero-grid"></div></div>
+        <div class="container hero-split-grid">
+            <div>
+                <p class="eyebrow">Learning Takes a Village</p>
+                <h1 id="hero-title">Build Something <em>Real</em> With AI.</h1>
+                <p class="lead">Go from an idea to a working application with hands-on AI coding education. No coding experience required.</p>
+                <div class="btn-row">
+                    <a class="btn btn-cta btn-lg" href="education/vibe-coding-101/index.html">Explore Vibe Coding 101 <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                    <a class="btn btn-outline btn-lg" href="#how-it-works">See How It Works</a>
                 </div>
-                <h1 class="hero-title">
-                    Build with AI
-                    <span class="hero-title-gradient">Where Learning Meets Building</span>
-                </h1>
-                <p class="hero-description">
-                    A learning platform and lab for building with AI. Learn through hands-on vibe coding, build real apps from day one, and get practical guidance for responsible AI use.
-                </p>
-                <div class="hero-actions">
-                    <a href="consulting/app-builds/index.html" class="btn btn-primary btn-lg">
-                        Build Your First Tool
-                        <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                    <a href="#services" class="btn btn-outline btn-lg">
-                        Explore Services
-                    </a>
-                </div>
+                <ul class="hero-pills" aria-label="Course at a glance">
+                    <li class="pill pill-brand">4 live one-hour sessions</li>
+                    <li class="pill">From <strong data-cfg="pricing.group.total">$99</strong> for the full course</li>
+                    <li class="pill"><span data-cfg="pricing.group.size">Up to 5 students</span> per group</li>
+                    <li class="pill">Beginner friendly</li>
+                </ul>
             </div>
-        </div>
-    </section>
-
-    <!-- Trusted By Section -->
-    <section class="trusted">
-        <div class="container">
-            <p class="trusted-label">Trusted by professionals from</p>
-            <div class="trusted-logos">
-                <span class="trusted-logo">Healthcare</span>
-                <span class="trusted-logo">Finance</span>
-                <span class="trusted-logo">Education</span>
-                <span class="trusted-logo">Technology</span>
-                <span class="trusted-logo">Startups</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Two Pathways</span>
-                <h2 class="section-title">Learn or Build—We've Got You</h2>
-                <p class="section-description">
-                    Education is our core business. We teach people to build real apps with AI tools—fast, responsibly, and with a builder mindset.
-                </p>
-            </div>
-
-            <div class="services-grid">
-                <!-- Education Card -->
-                <div class="service-card service-card-featured">
-                    <div class="service-icon service-icon-blue">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                            <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/>
-                        </svg>
-                    </div>
-                    <span class="service-tag">Education</span>
-                    <h3 class="service-title">App Development Mastery</h3>
-                    <p class="service-description">
-                        Build real applications from day one using AI-powered tools. No coding experience required.
-                    </p>
-                    <ul class="service-features">
-                        <li>No-code & low-code development</li>
-                        <li>AI-assisted building</li>
-                        <li>Real project portfolio</li>
-                        <li>Venture creation guidance</li>
-                    </ul>
-                    <a href="education/index.html" class="service-link">
-                        Learn more
-                        <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
-
-                <!-- Vibe-Coded Tool Builds Card -->
-                <div class="service-card">
-                    <div class="service-icon service-icon-green">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="16 18 22 12 16 6"/>
-                            <polyline points="8 6 2 12 8 18"/>
-                        </svg>
-                    </div>
-                    <span class="service-tag">Consulting</span>
-                    <h3 class="service-title">Vibe-Coded Tool Builds</h3>
-                    <p class="service-description">
-                        Rapid prototyping using AI-assisted development. We build Chrome extensions, apps, websites, and more.
-                    </p>
-                    <ul class="service-features">
-                        <li>Rapid prototype in days</li>
-                        <li>Clear scope + deliverables</li>
-                        <li>Client owns the code</li>
-                        <li>Focus on iteration</li>
-                    </ul>
-                    <a href="consulting/index.html" class="service-link">
-                        Learn more
-                        <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
-
-                <!-- Healthcare Consulting Card -->
-                <div class="service-card">
-                    <div class="service-icon service-icon-purple">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-                        </svg>
-                    </div>
-                    <span class="service-tag">Consulting</span>
-                    <h3 class="service-title">Healthcare AI</h3>
-                    <p class="service-description">
-                        Education and guidance for responsible AI adoption in healthcare settings.
-                    </p>
-                    <ul class="service-features">
-                        <li>AI workflow education</li>
-                        <li>Staff training programs</li>
-                        <li>Implementation readiness</li>
-                        <li>Responsible AI guidance</li>
-                    </ul>
-                    <a href="consulting/index.html" class="service-link">
-                        Learn more
-                        <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
-
-                <!-- Vibe Coding Card -->
-                <div class="service-card">
-                    <div class="service-icon service-icon-orange">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                            <path d="M2 17l10 5 10-5"/>
-                            <path d="M2 12l10 5 10-5"/>
-                        </svg>
-                    </div>
-                    <span class="service-tag">Education</span>
-                    <h3 class="service-title">Vibe Coding 101</h3>
-                    <p class="service-description">
-                        Learn to create apps with AI tools. No coding experience required - just describe what you want and let AI build it.
-                    </p>
-                    <ul class="service-features">
-                        <li>AI-powered development</li>
-                        <li>No coding experience needed</li>
-                        <li>Create real apps</li>
-                        <li>Beginner-friendly</li>
-                    </ul>
-                    <a href="education/vibe-coding-101/index.html" class="service-link">
-                        Learn more
-                        <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Why LearnTAV</span>
-                <h2 class="section-title">Built for results, not theory</h2>
-            </div>
-
-            <div class="features-grid">
-                <div class="feature">
-                    <div class="feature-icon">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <polyline points="12 6 12 12 16 14"/>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Immediate Value</h3>
-                    <p class="feature-description">Start building real applications from day one. No months of theory.</p>
-                </div>
-
-                <div class="feature">
-                    <div class="feature-icon">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">AI-Native</h3>
-                    <p class="feature-description">Learn with AI tools integrated from the start, not as an afterthought.</p>
-                </div>
-
-                <div class="feature">
-                    <div class="feature-icon">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                            <path d="M2 17l10 5 10-5"/>
-                            <path d="M2 12l10 5 10-5"/>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Responsible</h3>
-                    <p class="feature-description">Thoughtful approach to AI adoption with focus on ethics and best practices.</p>
-                </div>
-
-                <div class="feature">
-                    <div class="feature-icon">
-                        <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Expert Mentors</h3>
-                    <p class="feature-description">Personal guidance from professionals with deep AI expertise.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Success Stories</span>
-                <h2 class="section-title">Real results from real people</h2>
-            </div>
-
-            <div class="testimonials-grid">
-                <div class="testimonial">
-                    <div class="testimonial-content">
-                        <p class="testimonial-quote">
-                            "LearnTAV helped me build my first mobile app in just 3 weeks with no prior coding experience. The AI-assisted approach made complex concepts accessible."
-                        </p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SC</div>
-                        <div class="author-info">
-                            <span class="author-name">Sarah Chen</span>
-                            <span class="author-title">Entrepreneur</span>
+            <figure class="reveal">
+                <div class="studio" role="img" aria-label="Illustration of a conversation where a learner describes an app idea and an AI assistant helps build a simple plant-watering tracker.">
+                    <div class="studio-bar" aria-hidden="true"><span class="studio-dot"></span><span class="studio-dot"></span><span class="studio-dot"></span><span class="studio-title">My first app</span></div>
+                    <div class="studio-body" aria-hidden="true">
+                        <div class="studio-chat">
+                            <div class="bubble bubble-you"><span class="bubble-label">You</span>I want a simple app to track when I water my plants.</div>
+                            <div class="bubble bubble-ai"><span class="bubble-label">AI assistant</span>Let&rsquo;s start small: a plant list, a last-watered date, and a &ldquo;due today&rdquo; view. Want me to build that first?</div>
+                            <div class="bubble bubble-you"><span class="bubble-label">You</span>Yes, and mark overdue ones<span class="caret"></span></div>
+                        </div>
+                        <div class="studio-preview">
+                            <span class="mock-status">Preview</span>
+                            <div class="mock-app">
+                                <h4>My plants</h4>
+                                <div class="mock-row"><span class="mock-check done"></span>Basil · watered today</div>
+                                <div class="mock-row"><span class="mock-check"></span>Fern · due today</div>
+                                <div class="mock-row"><span class="mock-check"></span>Cactus · due in 6 days</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="testimonial-metric">Built first app in 3 weeks</div>
                 </div>
+                <figcaption class="studio-caption">Illustration of the kind of conversation you&rsquo;ll practice. Not a real student project.</figcaption>
+            </figure>
+        </div>
+    </section>
 
-                <div class="testimonial">
-                    <div class="testimonial-content">
-                        <p class="testimonial-quote">
-                            "Our healthcare practice now uses AI tools effectively thanks to LearnTAV's consulting. Patient outcomes improved while maintaining compliance."
-                        </p>
+    <section class="section" aria-labelledby="flagship-title">
+        <div class="container">
+            <div class="flagship reveal">
+                <div class="stack">
+                    <p class="eyebrow">Flagship course</p>
+                    <h2 class="h2" id="flagship-title">Vibe Coding 101</h2>
+                    <p class="lead" style="color: var(--text-on-dark-muted)">Four live one-hour sessions that teach you to direct AI tools to build a real project, even if you&rsquo;ve never written code.</p>
+                    <ul class="tick-list">
+                        <li>Prompting fundamentals and AI coding tools setup</li>
+                        <li>Direct AI to build your project</li>
+                        <li>Debugging and deployment fundamentals</li>
+                    </ul>
+                    <div class="btn-row">
+                        <a class="btn btn-white btn-lg" href="education/vibe-coding-101/index.html">See the course <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                        <a class="btn btn-outline btn-lg" href="enroll/index.html">Start Learning</a>
                     </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">MR</div>
-                        <div class="author-info">
-                            <span class="author-name">Dr. Michael Rodriguez</span>
-                            <span class="author-title">Family Medicine</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-metric">Improved patient outcomes</div>
                 </div>
-
-                <div class="testimonial">
-                    <div class="testimonial-content">
-                        <p class="testimonial-quote">
-                            "We went from idea to working prototype in just one week. The vibe-coded approach let us test our concept without a huge upfront investment."
-                        </p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">KL</div>
-                        <div class="author-info">
-                            <span class="author-name">Kevin Liu</span>
-                            <span class="author-title">Startup Founder</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-metric">Prototype in 1 week</div>
+                <div class="flagship-price">
+                    <div class="row"><span class="who">Group<span class="sub">per person · full course</span></span><span class="amt" data-cfg="pricing.group.total">$99</span></div>
+                    <div class="row"><span class="who">Private<span class="sub">per person · full course</span></span><span class="amt" data-cfg="pricing.private.total">$199</span></div>
+                    <p class="small" style="color: var(--text-on-dark-muted); margin-top: var(--space-3)">Four hours in total. AI subscriptions, API credits, hosting and domains are extra.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
+    <section class="section" aria-labelledby="products-title" id="products">
+        <div class="container">
+            <div class="section-head reveal">
+                <p class="eyebrow">Our products</p>
+                <h2 class="h2" id="products-title">Meet What We&rsquo;ve Built</h2>
+                <p class="section-description">Real products. Real problems. Built with AI.</p>
+            </div>
+            <div class="pcard-grid">
+                <article class="pcard reveal" id="product-trophy-case">
+                    <div class="pcard-visual pcard-visual-phone"><div class="phone phone-sm"><img src="assets/images/trophy-case/timeline.jpg" alt="Screenshot of the Trophy Case timeline showing three saved achievements" width="684" height="900" loading="lazy" decoding="async"></div></div>
+                    <div class="pcard-body">
+                        <span class="pill pill-brand pcard-badge">Live Product</span>
+                        <h3 class="h3">Trophy Case</h3>
+                        <p class="pcard-tagline">Your achievements deserve more than a drawer.</p>
+                        <p>Capture accomplishments, track your progress, and get AI-powered guidance toward your next big goal.</p>
+                        <p class="small muted">Installable web app (PWA) for phones. Not an App Store app.</p>
+                        <div class="btn-row">
+                            <a class="btn btn-primary" href="products/trophy-case/index.html">Explore Trophy Case <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                            <a class="btn btn-outline" href="https://trophy-case-trophy-case.vercel.app" target="_blank" rel="noopener noreferrer">Get the App</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="pcard reveal" id="product-ecoprompt">
+                    <div class="pcard-visual pcard-visual-icon"><img src="assets/images/ecoprompt-icon.png" alt="EcoPrompt extension icon" width="96" height="96" loading="lazy" decoding="async"><ul class="pcard-chips" aria-label="What it includes"><li class="pill">Dashboard</li><li class="pill">Prompt Optimizer</li><li class="pill">Energy history</li></ul></div>
+                    <div class="pcard-body">
+                        <span class="pill pill-brand pcard-badge">Live Product</span>
+                        <h3 class="h3">EcoPrompt</h3>
+                        <p class="pcard-tagline">See what your browsing and AI prompts may cost the planet.</p>
+                        <p>A free Chrome extension that estimates the energy used by the pages you visit and your AI prompts, and helps you write more efficient prompts.</p>
+                        <p class="small muted">Chrome extension. Energy figures are estimates, not measurements.</p>
+                        <div class="btn-row">
+                            <a class="btn btn-primary" href="ai-tools/power-tracker/index.html">Explore EcoPrompt <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                            <a class="btn btn-outline" href="https://chromewebstore.google.com/detail/ecoprompt/plmljdpofjiehkgfchbadaidahedooid" target="_blank" rel="noopener noreferrer">Use EcoPrompt</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-sunken" aria-labelledby="paths-title">
+        <div class="container">
+            <div class="section-head reveal">
+                <p class="eyebrow">Choose your path</p>
+                <h2 class="h2" id="paths-title">Learn it. Build it. Explore the tools.</h2>
+                <p class="section-description">Start with a course, hire us to prototype an idea, or try the free tools we&rsquo;ve built.</p>
+            </div>
+            <div class="grid-3">
+                <a class="card card-link reveal" href="education/index.html">
+                    <div class="card-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></div>
+                    <h3 class="h3">Learn</h3>
+                    <p>Hands-on, beginner-friendly AI education led by real people. Start with Vibe Coding 101.</p>
+                    <span class="link-arrow">Explore programs <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </a>
+                <a class="card card-link reveal" href="consulting/app-builds/index.html">
+                    <div class="card-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+                    <h3 class="h3">Build</h3>
+                    <p>Need a prototype? We build custom AI-assisted prototypes and offer focused consulting. Request a quote.</p>
+                    <span class="link-arrow">Request a quote <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </a>
+                <a class="card card-link reveal" href="ai-tools/index.html">
+                    <div class="card-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg></div>
+                    <h3 class="h3">Explore Tools</h3>
+                    <p>Free tools and guides, including EcoPrompt, our extension for understanding AI energy use.</p>
+                    <span class="link-arrow">Browse tools <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="how-it-works" aria-labelledby="how-title">
+        <div class="container">
+            <div class="section-head reveal">
+                <p class="eyebrow">How it works</p>
+                <h2 class="h2" id="how-title">From idea to something you can show.</h2>
+            </div>
+            <ol class="steps">
+                <li class="step reveal"><div class="step-num" aria-hidden="true">1</div><h3 class="h3">Tell us your idea</h3><p>Send an enrollment inquiry. Pick group or private and tell us what you&rsquo;d like to build. A rough idea is plenty.</p></li>
+                <li class="step reveal"><div class="step-num" aria-hidden="true">2</div><h3 class="h3">We confirm the details</h3><p>We email you to agree on times and share payment details. Nothing is charged through the website.</p></li>
+                <li class="step reveal"><div class="step-num" aria-hidden="true">3</div><h3 class="h3">Build in four live sessions</h3><p>Learn to prompt, set up your tools, direct AI to build, then debug and deploy.</p></li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="section section-sunken" aria-labelledby="curr-title">
+        <div class="container">
+            <div class="section-head reveal">
+                <p class="eyebrow">Curriculum preview</p>
+                <h2 class="h2" id="curr-title">Four sessions. Four hours.</h2>
+                <p class="section-description">Each session is one live hour and builds on the last.</p>
+            </div>
+            <ol class="curriculum" style="max-width: 860px; margin-inline: auto;">
+                <li class="session reveal">
+                    <div class="session-n">Session<strong>1</strong></div>
+                    <div><h3 class="h3">Prompting Fundamentals</h3><p>How to describe what you want so an AI assistant gives you useful results: clear goals, context, and follow-up questions.</p><p class="meta">1 hour · live</p></div>
+                </li>
+                <li class="session reveal">
+                    <div class="session-n">Session<strong>2</strong></div>
+                    <div><h3 class="h3">AI Coding Tools Setup</h3><p>Install and configure an AI coding environment, such as Claude, Cursor or VS Code with an AI assistant, and learn to steer it.</p><p class="meta">1 hour · live</p></div>
+                </li>
+                <li class="session reveal">
+                    <div class="session-n">Session<strong>3</strong></div>
+                    <div><h3 class="h3">Direct AI to Build</h3><p>Guide an AI assistant to build your project, then review, test and refine what it produces.</p><p class="meta">1 hour · live</p></div>
+                </li>
+                <li class="session reveal">
+                    <div class="session-n">Session<strong>4</strong></div>
+                    <div><h3 class="h3">Debug &amp; Deploy</h3><p>Use AI to find and fix problems, and learn the fundamentals of getting a project online.</p><p class="meta">1 hour · live</p></div>
+                </li>
+            </ol>
+            <p class="small muted" style="text-align:center; margin-top: var(--space-6)">Whether you finish a deployed app depends on your project&rsquo;s scope and how your learning progresses. We&rsquo;ll help you choose a project that fits the four hours.</p>
+        </div>
+    </section>
+
+    <section class="section" aria-labelledby="proof-title">
+        <div class="container">
+            <div class="section-head reveal">
+                <p class="eyebrow">Student projects</p>
+                <h2 class="h2" id="proof-title">What learners build.</h2>
+                <p class="section-description">We only publish things we can stand behind. As more learners finish, their projects will appear here with their permission.</p>
+            </div>
+            <div class="proof">
+                <a class="card card-link reveal" href="resources/blog/secondserve-tie-bootcamp/index.html">
+                    <span class="pill pill-brand" style="align-self:flex-start; margin-bottom: var(--space-4)">Student story</span>
+                    <h3 class="h3">SecondServe: a food-waste prototype built at TiE</h3>
+                    <p>Four high school students went to a summer entrepreneurship bootcamp and came out with a working prototype that turns unsold bakery and restaurant food into cheap, fresh meals, built with AI tools by people without an engineering background.</p>
+                    <span class="link-arrow">Read the story <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </a>
+                <div class="card placeholder-card reveal">
+                    <h3 class="h3">Your project could be next</h3>
+                    <p>Vibe Coding 101 ends with a hands-on project of your own. Learners who want to share theirs can have it featured here.</p>
+                    <p class="small muted">No testimonials or results are shown until we have them with permission.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-sunken" aria-labelledby="free-title">
+        <div class="container">
+            <div class="section-head reveal">
+                <p class="eyebrow">Free resources</p>
+                <h2 class="h2" id="free-title">Try it before you commit.</h2>
+            </div>
+            <div class="grid-3">
+                <a class="card card-link reveal" href="ai-tools/power-tracker/index.html"><div class="card-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><h3 class="h3">EcoPrompt</h3><p>A free Chrome extension that helps you see and reduce the energy used by your AI prompts.</p><span class="link-arrow">Learn more <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></a>
+                <a class="card card-link reveal" href="resources/guides/index.html"><div class="card-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></div><h3 class="h3">Free guides</h3><p>Plain-language guides on getting started with AI, prompting and responsible use.</p><span class="link-arrow">Read the guides <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></a>
+                <a class="card card-link reveal" href="resources/tools/index.html"><div class="card-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg></div><h3 class="h3">Tool directory</h3><p>A curated look at AI tools for conversation, building apps, design and content.</p><span class="link-arrow">Browse tools <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" aria-labelledby="price-title">
+        <div class="container">
+            <div class="section-head reveal">
+                <p class="eyebrow">Pricing</p>
+                <h2 class="h2" id="price-title">One course. Two ways to take it.</h2>
+                <p class="section-description">Prices are per person for the full four-session course.</p>
+            </div>
+            <div class="price-grid">
+                <div class="price-card reveal">
+                    <span class="pill price-tag">Group course</span>
+                    <p class="muted">Learn alongside other beginners and share ideas along the way.</p>
+                    <div class="price-amount"><span class="num" data-cfg="pricing.group.total">$99</span><span class="per">per person · full course</span></div>
+                    <p class="price-note">Total for all four live one-hour (60-minute) sessions.</p>
+                    <ul class="tick-list">
+                        <li>4 live one-hour sessions</li>
+                        <li>Setup guidance</li>
+                        <li>Prompting fundamentals</li>
+                        <li>Building with AI</li>
+                        <li>Debugging &amp; deployment fundamentals</li>
+                        <li>A hands-on project</li>
+                        <li><span data-cfg="pricing.group.size">Up to 5 students</span> per group</li>
+                    </ul>
+                    <a class="btn btn-outline btn-lg" href="enroll/index.html?plan=group">Request a Group spot <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div>
+                <div class="price-card featured reveal">
+                    <span class="pill pill-brand price-tag">Private course</span>
+                    <p class="muted">One-on-one pacing and project guidance, built around you.</p>
+                    <div class="price-amount"><span class="num" data-cfg="pricing.private.total">$199</span><span class="per">per person · full course</span></div>
+                    <p class="price-note">Total for all four live one-hour (60-minute) sessions.</p>
+                    <ul class="tick-list">
+                        <li>4 live one-hour sessions</li>
+                        <li>Setup guidance</li>
+                        <li>Prompting fundamentals</li>
+                        <li>Building with AI</li>
+                        <li>Debugging &amp; deployment fundamentals</li>
+                        <li>A hands-on project</li>
+                        <li><strong>Personalized one-on-one pacing</strong></li><li><strong>Project guidance tailored to your goal</strong></li>
+                    </ul>
+                    <a class="btn btn-cta btn-lg" href="enroll/index.html?plan=private">Request a Private spot <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div>
+            </div>
+            <div style="max-width: 920px; margin: var(--space-8) auto 0"><div class="notice warn" role="note"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><p><strong>Not included in the course price:</strong> external AI subscriptions, API credits, hosting, domains and other third-party tools. Some have free tiers and some cost money, and prices are set by those providers. Ask us before you enrol if you'd like help estimating what your project might need.</p></div></div>
+            <p class="small muted" style="text-align:center; margin-top: var(--space-4)"><a class="link-arrow" href="pricing/index.html">Full pricing details <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></p>
+        </div>
+    </section>
+
+    <section class="section section-sunken" aria-labelledby="faq-title">
+        <div class="container">
+            <div class="section-head reveal"><p class="eyebrow">FAQ</p><h2 class="h2" id="faq-title">Questions, answered.</h2></div>
+            <div class="faq">
+                <details><summary>How big are group classes?</summary><div><p>Group classes have a maximum of <strong>5 students</strong>. Private classes are one-on-one.</p></div></details>
+<details><summary>Do I need coding experience?</summary><div><p>No. Vibe Coding 101 is designed for beginners. You learn to describe what you want, review what the AI produces, and guide it toward a working result.</p></div></details>
+<details><summary>How much does it cost?</summary><div><p>The group course is <strong>$99 per person</strong> and the private course is <strong>$199 per person</strong>, each for the full four-session, four-hour course. Third-party AI subscriptions, API credits, hosting and domains are not included.</p></div></details>
+<details><summary>Is enrolling the same as booking?</summary><div><p>No. Submitting the form is an enrollment inquiry. We&rsquo;ll email you to confirm scheduling and share payment details. Nothing is charged through this website.</p></div></details>
+<details><summary>Will I finish a deployed app?</summary><div><p>Whether you finish a deployed app depends on your project&rsquo;s scope and how your learning progresses. We&rsquo;ll help you choose a project that fits the four hours.</p></div></details>
+<details><summary>Can I talk to someone first?</summary><div><p>Yes. We offer a free, optional 15-minute introductory conversation. It&rsquo;s never required to enrol.</p></div></details>
+            </div>
+        </div>
+    </section>
+
     <section class="cta">
         <div class="container">
-            <div class="cta-content">
-                <h2 class="cta-title">Ready to transform your relationship with technology?</h2>
-                <p class="cta-description">
-                    Whether you're looking to build your first app, integrate AI into your workflow, or need healthcare AI guidance, we're here to help.
-                </p>
+            <div class="cta-content cta-band">
+                <h2 class="cta-title">Ready to build something real?</h2>
+                <p class="cta-description">Send an enrollment inquiry in about two minutes. We&rsquo;ll follow up by email with scheduling and payment details.</p>
                 <div class="cta-actions">
-                    <a href="consulting/app-builds/index.html" class="btn btn-white btn-lg">
-                        Build Your First Tool
-                        <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
+                    <a class="btn btn-white btn-lg" href="enroll/index.html">Start Learning <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                    <a class="btn btn-outline btn-lg" href="education/vibe-coding-101/index.html">Explore Vibe Coding 101</a>
                 </div>
-                <p class="cta-email">Or email us at <a href="mailto:hello@learntav.com">hello@learntav.com</a></p>
-
-                <!-- Follow us — rendered from the shared icon map -->
-                <div class="cta-social">
-                    <span class="cta-social-label">Follow us</span>
-                    <div id="social-home"></div>
-                </div>
-                <script>
-                    document.getElementById('social-home').innerHTML =
-                        LearnTAVSocialLinks({});
-                </script>
+                <p class="cta-email">Questions first? Email <a href="mailto:hello@learntav.com">hello@learntav.com</a>. A free 15-minute intro conversation is available.</p>
             </div>
         </div>
     </section>
@@ -387,6 +350,7 @@
         <noscript>
             <p>
                 <a href="contact/index.html">Contact</a> &middot;
+                <a href="pricing/index.html">Pricing</a> &middot;
                 <a href="legal/privacy/index.html">Privacy</a> &middot;
                 <a href="https://www.instagram.com/learntav_llc/" rel="noopener noreferrer">Instagram (@learntav_llc)</a> &middot;
                 <a href="https://www.facebook.com/profile.php?id=61593091894765" rel="noopener noreferrer">Facebook (LearnTAV)</a> &middot;
@@ -395,7 +359,6 @@
         </noscript>
     </div>
     <script>LearnTAVLayout.mount();</script>
-
 
     <script src="assets/js/modern.js"></script>
 </body>
