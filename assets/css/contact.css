@@ -26,7 +26,7 @@
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 20% 80%, rgba(255, 179, 71, 0.3) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
   animation: headerFlow 8s ease-in-out infinite alternate;
 }
@@ -199,7 +199,7 @@
   left: -20px;
   right: -20px;
   bottom: -20px;
-  background: linear-gradient(45deg, transparent, rgba(37, 99, 235, 0.05), transparent);
+  background: linear-gradient(45deg, transparent, rgba(226, 59, 36, 0.05), transparent);
   border-radius: var(--radius-2xl);
   z-index: -1;
   opacity: 0;
@@ -299,7 +299,7 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.05) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(226, 59, 36, 0.05) 0%, transparent 70%);
   animation: formAura 8s ease-in-out infinite alternate;
   pointer-events: none;
 }
@@ -379,8 +379,8 @@
   outline: none;
   border-color: var(--primary);
   box-shadow:
-    0 0 0 3px rgba(37, 99, 235, 0.1),
-    0 4px 12px rgba(37, 99, 235, 0.15),
+    0 0 0 3px rgba(226, 59, 36, 0.1),
+    0 4px 12px rgba(226, 59, 36, 0.15),
     inset 0 1px 3px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
   background: rgba(255, 255, 255, 0.95);
@@ -520,7 +520,7 @@
   top: 0;
   width: 0;
   height: 100%;
-  background: linear-gradient(90deg, rgba(37, 99, 235, 0.1), transparent);
+  background: linear-gradient(90deg, rgba(226, 59, 36, 0.1), transparent);
   transition: width var(--transition-normal);
 }
 
@@ -759,8 +759,8 @@
   right: 0;
   bottom: 0;
   background-image: 
-    radial-gradient(circle at 25% 25%, rgba(37, 99, 235, 0.1) 2px, transparent 2px),
-    radial-gradient(circle at 75% 75%, rgba(16, 185, 129, 0.1) 1px, transparent 1px);
+    radial-gradient(circle at 25% 25%, rgba(226, 59, 36, 0.1) 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, rgba(255, 122, 26, 0.1) 1px, transparent 1px);
   background-size: 60px 60px, 40px 40px;
   animation: particleFloat 20s linear infinite;
   pointer-events: none;
@@ -798,7 +798,7 @@
 .learntav-btn--primary:hover {
   transform: translateY(-2px) scale(1.05);
   box-shadow: 
-    0 8px 25px rgba(37, 99, 235, 0.3),
+    0 8px 25px rgba(226, 59, 36, 0.3),
     0 4px 12px rgba(0, 0, 0, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
@@ -960,7 +960,7 @@
 .learntav-form__select:valid,
 .learntav-form__textarea:valid {
   border-color: var(--success);
-  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
+  box-shadow: 0 0 0 2px rgba(255, 122, 26, 0.1);
 }
 
 .learntav-form__input:valid::after,

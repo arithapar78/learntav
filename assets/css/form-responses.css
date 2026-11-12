@@ -212,7 +212,7 @@
 }
 
 .toast.toast-info {
-  border-left: 4px solid #007bff;
+  border-left: 4px solid #C62A1B;
 }
 
 .toast-icon {
@@ -239,7 +239,7 @@
 }
 
 .toast-close:hover {
-  background-color: #f5f5f5;
+  background-color: #FFF1D9;
 }
 
 /* Scroll Reveal Animation */

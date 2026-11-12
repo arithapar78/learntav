@@ -448,3 +448,64 @@ fieldset { border: 0; min-inline-size: 0; }
 @media (prefers-reduced-motion: reduce) {
     .pcard:hover { transform: none; }
 }
+
+/* ========================================
+   Bright & warm personality layer
+   Cream paper, serif display type, marker-pen highlights and a
+   red / orange / yellow rainbow of accents. Purely visual: no
+   markup or behaviour depends on anything below.
+   ======================================== */
+
+h1, h2, h3, .h2, .h3, .article-body h2, .article-body h3 {
+    font-family: var(--font-display);
+}
+h4, h5, h6 { font-family: var(--font-family); }
+
+/* Marker-pen highlight on emphasised headline words. */
+h1 em, h2 em, h3 em, .highlight {
+    font-style: normal;
+    background: linear-gradient(transparent 58%, var(--highlight-fill) 58%, var(--highlight-fill) 92%, transparent 92%);
+    padding: 0 0.12em;
+    border-radius: 2px;
+}
+.hero-dark h1 em {
+    background: none;
+    color: var(--sun-300);
+    text-decoration-color: var(--sun-500);
+}
+
+/* A red-orange-yellow stripe along the bottom of the fixed header. */
+.header {
+    border-bottom: 4px solid transparent;
+    border-image: linear-gradient(90deg, var(--brand-700) 0 33.3%, var(--accent-500) 33.3% 66.6%, var(--sun-500) 66.6% 100%) 1;
+}
+
+/* Cards: warm border, coloured top edge that cycles red / orange / yellow. */
+.card, .feature-card, .product-card, .pricing-card, .path-card {
+    border-top: 4px solid var(--brand-600);
+    border-radius: var(--radius-xl);
+}
+:is(.card, .feature-card, .product-card, .pricing-card, .path-card):nth-child(3n+2) { border-top-color: var(--accent-500); }
+:is(.card, .feature-card, .product-card, .pricing-card, .path-card):nth-child(3n+3) { border-top-color: var(--sun-500); }
+
+/* Buttons get a chunky, friendly offset shadow. */
+.btn-cta, .learntav-btn--primary, .btn-primary {
+    box-shadow: 0 3px 0 var(--accent-800);
+}
+.btn-cta:active, .learntav-btn--primary:active, .btn-primary:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+[data-theme="dark"] .btn-cta { box-shadow: 0 3px 0 var(--accent-600); }
+
+/* Eyebrow tags and pills pick up the sunshine yellow. */
+.eyebrow { color: var(--brand-700); }
+[data-theme="dark"] .eyebrow { color: var(--sun-400); }
+.pill-brand { background: var(--sun-100); border-color: var(--sun-500); color: var(--brand-800); }
+[data-theme="dark"] .pill-brand { background: #3A2A08; color: var(--sun-300); }
+
+/* Tinted text selection. */
+::selection { background: var(--sun-300); color: #2B1710; }
+
+/* Hero background glow gets a warm sunrise wash. */
+.hero-grid { opacity: 0.35; }

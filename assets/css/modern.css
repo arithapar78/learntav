@@ -343,7 +343,7 @@ ul, ol {
     width: 100%;
     max-width: 1400px;
     height: 600px;
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(27, 77, 143, 0.16), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255, 122, 26, 0.28), transparent);
 }
 
 .hero-grid {
@@ -1464,7 +1464,7 @@ ul, ol {
 }
 
 [data-theme="dark"] .hero-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(74, 135, 208, 0.20), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255, 122, 26, 0.22), transparent);
 }
 
 /* Toggle icon swap. */

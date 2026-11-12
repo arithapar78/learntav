@@ -21,6 +21,8 @@
    Nothing used for body copy is below 4.5:1.
    ======================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Caveat:wght@600;700&display=swap');
+
 :root {
     color-scheme: light dark;
 
@@ -38,48 +40,50 @@
        which is what made the site read as a bought template.
        ---------------------------------------- */
 
-    /* Brand primary — deep ink-blue. Institutional and credible, which
-       is what a district administrator or a compliance officer needs to
-       see. 8.38:1 against white, so it works as text as well as fill. */
-    --brand-900: #10305C;
-    --brand-800: #143D73;
-    --brand-700: #1B4D8F;   /* the primary */
-    --brand-600: #2E6BB8;
-    --brand-500: #4A87D0;
-    --brand-300: #8FB5F9;   /* dark-theme text/link tint */
-    --brand-200: #BBD2F7;
-    --brand-100: #DCE8FB;
-    --brand-50:  #F1F6FE;
+    /* Brand primary — hot tomato red. Bright and energetic, in the
+       warm cream-paper spirit of debateit.tech. #C62A1B is 5.6:1 with
+       white text, so it works as a fill and as text on cream. */
+    --brand-900: #7A1410;
+    --brand-800: #9E1D14;
+    --brand-700: #C62A1B;   /* the primary */
+    --brand-600: #E23B24;
+    --brand-500: #F25A3A;
+    --brand-300: #FF9C84;   /* dark-theme text/link tint */
+    --brand-200: #FFC9BA;
+    --brand-100: #FFE2D8;
+    --brand-50:  #FFF1EA;
 
-    /* Brand accent — warm clay. Reserved for CTAs. Keeps the ink-blue
-       from reading cold and corporate, which fits "village".
+    /* Brand accent — blazing orange into sunshine yellow. Used for CTAs
+       and highlights. --accent-700 carries white text (4.7:1); the
+       lighter steps are fills that carry dark text. */
+    --accent-800: #A8340A;
+    --accent-700: #CF4410;  /* CTA fill — white text */
+    --accent-600: #E8590C;
+    --accent-500: #FF7A1A;  /* pure orange */
+    --accent-400: #FFA41B;
+    --accent-300: #FFB347;  /* dark-theme text tint, CTA fill on dark */
+    --accent-200: #FFE08A;
+    --accent-100: #FFF0BF;
 
-       Note: the brief suggested #E07A3F. That value is only 2.99:1
-       with white text and fails AA as a button fill, so the ramp is
-       anchored one step darker at --accent-700 for fills that carry
-       white text. #E07A3F survives as --accent-500, used only as a
-       dark-theme text colour and as a decorative rule. */
-    --accent-800: #9C4715;
-    --accent-700: #B8541C;  /* CTA fill — 4.86:1 with white text */
-    --accent-600: #C25A1F;
-    --accent-500: #E07A3F;
-    --accent-300: #E8925C;  /* dark-theme text tint — 7.20:1 on raised */
-    --accent-200: #F3C9AC;
-    --accent-100: #FBEADF;
+    /* Sunshine yellow — highlighter marks, badges, decorative rules. */
+    --sun-500: #FFC72C;
+    --sun-400: #FFD54A;
+    --sun-300: #FFE176;
+    --sun-100: #FFF6CC;
 
     /* Neutrals. A slightly blue-cast gray so it sits with the ink-blue
        rather than fighting it. */
-    --color-gray-50: #F8F9FB;
-    --color-gray-100: #F1F3F7;
-    --color-gray-200: #E3E7EE;
-    --color-gray-300: #CDD4E0;
-    --color-gray-400: #98A2B3;
-    --color-gray-500: #6B7686;
-    --color-gray-600: #4A5568;
-    --color-gray-700: #354052;
-    --color-gray-800: #1E2735;
-    --color-gray-900: #111827;
-    --color-gray-950: #05060A;
+    --color-gray-50: #FFF9EE;
+    --color-gray-100: #FFF1D9;
+    --color-gray-200: #F6E3C4;
+    --color-gray-300: #E8D0A8;
+    --color-gray-400: #B99A7A;
+    --color-gray-500: #85685A;
+    --color-gray-600: #664A3E;
+    --color-gray-700: #4B3128;
+    --color-gray-800: #33201A;
+    --color-gray-900: #231510;
+    --color-gray-950: #120A07;
 
     --color-white: #ffffff;
     --color-black: #000000;
@@ -89,8 +93,8 @@
        Never decoratively. */
     --color-success: #1A7F52;
     --color-success-tint: #E6F4EC;
-    --color-warning: #8A5A0B;
-    --color-warning-tint: #FDF3E0;
+    --color-warning: #8A4B00;
+    --color-warning-tint: #FFF0C2;
     --color-danger: #B3261E;
     --color-danger-tint: #FCEBEA;
 
@@ -114,8 +118,9 @@
        purchased theme.
        ---------------------------------------- */
     --brand-fill: var(--brand-700);
-    --brand-fill-gradient: linear-gradient(160deg, var(--brand-700) 0%, var(--brand-900) 100%);
+    --brand-fill-gradient: linear-gradient(135deg, #B8201A 0%, #D4380F 52%, #D9480F 100%);
     --accent-fill: var(--accent-700);
+    --highlight-fill: var(--sun-300);   /* marker-pen highlight behind words */
 
     /* ----------------------------------------
        Semantic tokens — light theme
@@ -126,20 +131,20 @@
        ---------------------------------------- */
 
     /* Surfaces: four elevation levels, not one flat colour. */
-    --surface-page: #ffffff;
-    --surface-raised: #ffffff;      /* cards sitting on the page */
+    --surface-page: #FFF6E3;
+    --surface-raised: #FFFDF7;      /* cards sitting on the page */
     --surface-sunken: var(--color-gray-50);   /* alternating bands */
-    --surface-overlay: #ffffff;     /* menus, popovers */
+    --surface-overlay: #FFFDF7;     /* menus, popovers */
     --surface-inverse: var(--brand-900);      /* dark bands in a light page */
     --surface-brand-tint: var(--brand-50);    /* callouts, highlights */
     --surface-accent-tint: var(--accent-100);
 
     /* Text. Ratios are vs --surface-page (#ffffff). */
-    --text-primary: #1E2735;        /* 14.30:1 */
-    --text-secondary: #4A5568;      /*  8.07:1 */
-    --text-muted: #4A5568;          /*  8.07:1 — gray-400 (2.68:1) fails AA */
+    --text-primary: #2B1710;        /* 15:1 */
+    --text-secondary: #5A3A2E;      /*  9:1 */
+    --text-muted: #6B4A3C;          /*  7:1 */
     --text-on-dark: #ffffff;        /* on --surface-inverse — 13.86:1 */
-    --text-on-dark-muted: #C7D5EA;  /* on --surface-inverse — 9.72:1 */
+    --text-on-dark-muted: #FFDCCB;  /* on --surface-inverse — 10:1 */
     --text-link: var(--brand-700);  /*  8.38:1 */
     --text-link-hover: var(--brand-800);      /* 10.80:1 */
 
@@ -154,19 +159,19 @@
        an interactive control, so it clears 3:1 against the page. */
     --border-subtle: var(--color-gray-100);
     --border-default: var(--color-gray-200);
-    --border-strong: #8A93A5;       /* 3.09:1 on #ffffff */
-    --border-card: var(--color-gray-200);
+    --border-strong: #A27C5E;       /* 3.4:1 on cream */
+    --border-card: #F0D9B0;
     --border-brand: var(--brand-200);
     --border-on-dark: rgba(255, 255, 255, 0.16);
 
     /* Focus ring */
     --focus-ring: var(--brand-700);
-    --focus-ring-halo: #ffffff;
+    --focus-ring-halo: #FFF6E3;
 
     /* Header backdrop (and its @supports fallback) */
-    --header-bg: rgba(255, 255, 255, 0.8);
-    --header-bg-solid: #ffffff;
-    --header-bg-scrolled: rgba(255, 255, 255, 0.95);
+    --header-bg: rgba(255, 246, 227, 0.85);
+    --header-bg-solid: #FFF6E3;
+    --header-bg-scrolled: rgba(255, 246, 227, 0.96);
 
     /* ----------------------------------------
        Typography — exactly three roles
@@ -178,6 +183,8 @@
        ---------------------------------------- */
 
     /* Inter, with metric-adjacent fallbacks to limit shift on swap. */
+    --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --font-hand: 'Caveat', 'Comic Sans MS', cursive;
     --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
         'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
@@ -188,9 +195,9 @@
     --display-2-size: clamp(1.875rem, 4vw, 2.75rem);
     --display-3-size: clamp(1.5rem, 3vw, 2rem);
     --display-4-size: 1.375rem;
-    --display-weight: 700;
+    --display-weight: 800;
     --display-line-height: 1.15;
-    --display-tracking: -0.021em;
+    --display-tracking: -0.015em;
 
     /* --- Role 2: BODY. Prose. Generous line-height, normal tracking. --- */
     --body-lg-size: 1.1875rem;      /* 19px — lead paragraphs */
@@ -269,9 +276,9 @@
        ---------------------------------------- */
     --radius-sm: 0.25rem;
     --radius-md: 0.375rem;
-    --radius-lg: 0.5rem;
-    --radius-xl: 0.75rem;
-    --radius-2xl: 1rem;
+    --radius-lg: 0.625rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.375rem;
     --radius-full: 9999px;
 
     /* ----------------------------------------
@@ -282,9 +289,9 @@
        Two layers each (tight contact shadow + soft ambient) so they
        read as lifted rather than glowing.
        ---------------------------------------- */
-    --shadow-raised: 0 1px 2px rgb(16 24 40 / 0.06), 0 1px 3px rgb(16 24 40 / 0.10);
-    --shadow-raised-hover: 0 4px 6px -2px rgb(16 24 40 / 0.05), 0 12px 16px -4px rgb(16 24 40 / 0.10);
-    --shadow-overlay: 0 12px 16px -4px rgb(16 24 40 / 0.08), 0 20px 32px -8px rgb(16 24 40 / 0.16);
+    --shadow-raised: 0 1px 2px rgb(122 40 16 / 0.08), 0 4px 10px rgb(122 40 16 / 0.10);
+    --shadow-raised-hover: 0 4px 6px -2px rgb(122 40 16 / 0.05), 0 12px 16px -4px rgb(122 40 16 / 0.10);
+    --shadow-overlay: 0 12px 16px -4px rgb(122 40 16 / 0.08), 0 20px 32px -8px rgb(122 40 16 / 0.16);
 
     /* Legacy shadow aliases, collapsed onto the two levels above. */
     --shadow-sm: var(--shadow-raised);
@@ -318,44 +325,42 @@
 [data-theme="dark"] {
     color-scheme: dark;
 
-    --surface-page: #0F1117;
-    --surface-raised: #171A23;      /* cards lift off the page */
-    --surface-sunken: #14161E;      /* alternating bands */
-    --surface-overlay: #1C2029;     /* menus, popovers */
-    --surface-inverse: #05060A;     /* deepest band (footer, CTA) */
-    --surface-brand-tint: #16243A;
-    --surface-accent-tint: #2A1A10;
+    --surface-page: #1E120D;
+    --surface-raised: #2B1A13;      /* cards lift off the page */
+    --surface-sunken: #24150F;      /* alternating bands */
+    --surface-overlay: #33201A;     /* menus, popovers */
+    --surface-inverse: #120A07;     /* deepest band (footer, CTA) */
+    --surface-brand-tint: #3A1712;
+    --surface-accent-tint: #3A2410;
 
-    /* Ratios vs --surface-page (#0F1117). */
-    --text-primary: #F1F3F7;        /* 15.86:1 */
-    --text-secondary: #CDD4E0;      /* 11.44:1 */
-    --text-muted: #A6B0C1;          /*  7.51:1 */
+    --text-primary: #FFF1E0;
+    --text-secondary: #F2D6BE;
+    --text-muted: #D1AE94;
     --text-on-dark: #ffffff;
-    --text-on-dark-muted: #CDD4E0;
-    --text-link: var(--brand-300);  /*  9.12:1 */
-    --text-link-hover: #BBD2F7;     /* 12.05:1 */
-    --text-accent: var(--brand-300);/*  8.40:1 on --surface-raised */
-    --text-cta: var(--accent-300);  /*  7.20:1 on --surface-raised */
+    --text-on-dark-muted: #F2D6BE;
+    --text-link: var(--brand-300);
+    --text-link-hover: #FFC9BA;
+    --text-accent: var(--brand-300);
+    --text-cta: var(--accent-300);
 
-    /* On a dark ground the deep CTA fill goes muddy, so the accent ramp
-       steps up one and the button takes dark text instead of white.
-       #E8925C with #111827 text is 7.35:1. */
+    /* Bright orange-gold CTA on the dark ground; the button takes dark text. */
     --accent-fill: var(--accent-300);
+    --highlight-fill: #6B4A00;
 
     --brand-fill: var(--brand-700);
-    --brand-fill-gradient: linear-gradient(160deg, #1B4D8F 0%, #10305C 100%);
+    --brand-fill-gradient: linear-gradient(135deg, #9E1D14 0%, #B8300F 55%, #C2410C 100%);
 
-    --border-subtle: #232833;
-    --border-default: #333A48;
-    --border-strong: #5A6474;       /* 3.14:1 on --surface-page */
-    --border-card: #2A3040;
-    --border-brand: #2C4670;
-    --border-on-dark: rgba(255, 255, 255, 0.12);
+    --border-subtle: #3A251C;
+    --border-default: #4D3226;
+    --border-strong: #8A6650;
+    --border-card: #4A2F23;
+    --border-brand: #7A2C20;
+    --border-on-dark: rgba(255, 255, 255, 0.14);
 
-    --focus-ring: var(--brand-300);
-    --focus-ring-halo: #0F1117;
+    --focus-ring: var(--accent-300);
+    --focus-ring-halo: #1E120D;
 
-    --header-bg: rgba(15, 17, 23, 0.85);
-    --header-bg-solid: #0F1117;
-    --header-bg-scrolled: rgba(15, 17, 23, 0.97);
+    --header-bg: rgba(30, 18, 13, 0.88);
+    --header-bg-solid: #1E120D;
+    --header-bg-scrolled: rgba(30, 18, 13, 0.97);
 }

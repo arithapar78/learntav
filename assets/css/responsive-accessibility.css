@@ -66,7 +66,7 @@
     top: 0;
     background: white;
     z-index: 10;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #F6E3C4;
   }
   
   .auth-modal__title {
@@ -216,7 +216,7 @@
 
 /* Focus Management */
 *:focus {
-  outline: 2px solid var(--primary, #007bff);
+  outline: 2px solid var(--primary, #C62A1B);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -224,18 +224,18 @@
 /* Custom focus styles for interactive elements */
 .learntav-btn:focus,
 .auth-form__button:focus {
-  outline: 2px solid var(--primary, #007bff);
+  outline: 2px solid var(--primary, #C62A1B);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 4px rgba(226, 59, 36, 0.25);
 }
 
 .learntav-form__input:focus,
 .learntav-form__select:focus,
 .learntav-form__textarea:focus,
 .auth-form__input:focus {
-  outline: 2px solid var(--primary, #007bff);
-  border-color: var(--primary, #007bff);
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  outline: 2px solid var(--primary, #C62A1B);
+  border-color: var(--primary, #C62A1B);
+  box-shadow: 0 0 0 3px rgba(226, 59, 36, 0.1);
 }
 
 /* Skip Links */
@@ -243,7 +243,7 @@
   position: absolute;
   top: -40px;
   left: 6px;
-  background: var(--primary, #007bff);
+  background: var(--primary, #C62A1B);
   color: white;
   padding: 8px 16px;
   text-decoration: none;
@@ -372,7 +372,7 @@
     --bg-primary: #1a202c;
     --bg-secondary: #2d3748;
     --text-primary: #f7fafc;
-    --text-secondary: #e2e8f0;
+    --text-secondary: #F6E3C4;
     --border-color: #4a5568;
   }
   

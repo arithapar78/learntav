@@ -35,16 +35,16 @@ body.authenticated [data-auth-state="unauthenticated"] {
     gap: 0.5rem;
     padding: 0.5rem 1rem;
     background: white;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #F6E3C4;
     border-radius: 0.5rem;
     cursor: pointer;
     transition: all 0.2s ease;
     font-size: 0.875rem;
-    color: #374151;
+    color: #4B3128;
 }
 
 .user-profile-button:hover {
-    background: #f9fafb;
+    background: #FFF9EE;
     border-color: #d1d5db;
 }
 
@@ -52,7 +52,7 @@ body.authenticated [data-auth-state="unauthenticated"] {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    background: linear-gradient(135deg, #C62A1B, #E8590C);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,7 +67,7 @@ body.authenticated [data-auth-state="unauthenticated"] {
 
 .dropdown-arrow {
     transition: transform 0.2s ease;
-    color: #6b7280;
+    color: #85685A;
 }
 
 .user-profile-dropdown.open .dropdown-arrow {
@@ -79,7 +79,7 @@ body.authenticated [data-auth-state="unauthenticated"] {
     top: 100%;
     right: 0;
     background: white;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #F6E3C4;
     border-radius: 0.5rem;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     min-width: 200px;
@@ -99,7 +99,7 @@ body.authenticated [data-auth-state="unauthenticated"] {
 .user-profile-menu-item {
     display: block;
     padding: 0.75rem 1rem;
-    color: #374151;
+    color: #4B3128;
     text-decoration: none;
     font-size: 0.875rem;
     border: none;
@@ -111,13 +111,13 @@ body.authenticated [data-auth-state="unauthenticated"] {
 }
 
 .user-profile-menu-item:hover {
-    background: #f3f4f6;
-    color: #2563eb;
+    background: #FFF1D9;
+    color: #C62A1B;
 }
 
 .user-profile-menu-divider {
     height: 1px;
-    background: #e5e7eb;
+    background: #F6E3C4;
     margin: 0.25rem 0;
 }
 
@@ -150,8 +150,8 @@ body.authenticated [data-auth-state="unauthenticated"] {
     display: inline-block;
     width: 16px;
     height: 16px;
-    border: 2px solid #e5e7eb;
-    border-top-color: #2563eb;
+    border: 2px solid #F6E3C4;
+    border-top-color: #C62A1B;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin-left: 0.5rem;
