@@ -363,3 +363,9 @@ This progress tracking provides clear visibility into project status, upcoming p
 
 **🎉 PROJECT STATUS: FULLY COMPLETE WITH ADVANCED FEATURES**
 **Quality Delivered: ⭐⭐⭐⭐⭐ EXCEPTIONAL WITH INNOVATION**
+
+---
+
+### 2026-11-26: EcoPrompt Desktop page
+- Added the desktop download page and the main-page download section; QA suites pass (34 pages), Lighthouse 100/100/100. Downloads stay on "Coming soon" until the first desktop release is published.
+

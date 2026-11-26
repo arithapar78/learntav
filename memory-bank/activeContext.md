@@ -322,3 +322,10 @@
 5. Form validation testing
 
 This active context provides clear direction for continued development while maintaining focus on the core objectives of creating a professional, effective website for LearnTAV's business needs.
+
+---
+
+### Update 2026-11-26: EcoPrompt Desktop download
+- New page `ai-tools/power-tracker/desktop/index.html` and a "Desktop app" download section on the main EcoPrompt page (`ai-tools/power-tracker/index.html`).
+- Both use shared `assets/js/ecoprompt-download.js` and `assets/css/ecoprompt-download.css`. One switch, `COMING_SOON` (top of the JS file), shows "Coming soon" (no network) or the real download buttons. Flip it to `false` only after the first `desktop-v*` release is published on GitHub (`arithapar78/ecoprompt`).
+
