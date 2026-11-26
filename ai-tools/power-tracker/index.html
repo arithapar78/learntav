@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EcoPrompt Chrome Extension - Chrome extension that estimates the energy used by your browsing and AI prompts, with a prompt optimizer.">
+    <meta name="description" content="EcoPrompt - a Chrome extension and a Mac and Windows desktop app that estimate the energy used by your browsing, apps and AI prompts, with a prompt optimizer.">
     <title>EcoPrompt - LearnTAV</title>
     <link rel="canonical" href="https://learntav.com/ai-tools/power-tracker/">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://learntav.com/ai-tools/power-tracker/">
     <meta property="og:title" content="EcoPrompt - LearnTAV">
-    <meta property="og:description" content="EcoPrompt Chrome Extension - Chrome extension that estimates the energy used by your browsing and AI prompts, with a prompt optimizer.">
+    <meta property="og:description" content="EcoPrompt - a Chrome extension and a Mac and Windows desktop app that estimate the energy used by your browsing, apps and AI prompts, with a prompt optimizer.">
     <meta property="og:image" content="https://learntav.com/assets/images/og-image.jpg">
     <meta name="twitter:card" content="summary_large_image">
 
@@ -27,6 +27,7 @@
     <script src="../../assets/js/layout.js"></script>
 
     <link rel="stylesheet" href="../../assets/css/modern.css">
+    <link rel="stylesheet" href="../../assets/css/ecoprompt-download.css">
 </head>
 <body>
     <!-- Header + mobile menu injected by assets/js/layout.js -->
@@ -41,7 +42,7 @@
             <div class="hero-content">
                 <div class="hero-badge" style="background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3);">
                     <span class="badge-dot" style="background: #fff;"></span>
-                    Chrome Extension
+                    Chrome extension &middot; Mac &amp; Windows app
                 </div>
                 <h1 class="hero-title" style="color: #fff;">
                     EcoPrompt
@@ -49,7 +50,7 @@
                 </h1>
                 <p class="hero-description" style="color: #ffffff;">
                     See estimates of the energy used by the pages you visit. Optimize AI prompts for efficiency. Figures are estimates from a model, not hardware measurements.
-                    Understand your AI energy usage patterns.
+                    Use it in Chrome, or get the desktop app for Mac and Windows.
                 </p>
                 <div class="hero-actions">
                     <a href="https://chromewebstore.google.com/detail/ecoprompt/plmljdpofjiehkgfchbadaidahedooid" target="_blank" rel="noopener noreferrer" class="btn btn-white btn-lg">
@@ -58,7 +59,7 @@
                             <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
                     </a>
-                    <a href="desktop/index.html" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.5); color: #fff;">
+                    <a href="#download" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.5); color: #fff;">
                         Get the desktop app
                     </a>
                     <a href="#features" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.5); color: #fff;">
@@ -69,12 +70,57 @@
         </div>
     </section>
 
+    <!-- Desktop app download. Behaviour (coming soon / live / OS detection) is controlled by
+         assets/js/ecoprompt-download.js. Real links here so it works without JavaScript. -->
+    <section class="programs" id="download">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Desktop app</span>
+                <h2 class="section-title">EcoPrompt for Mac and Windows</h2>
+                <p class="section-description" id="dl-lead">Optimize prompts in any app with a hotkey, and see an estimate of your computer&rsquo;s energy use, app by app. No account, no tracking. Your data stays on your computer.</p>
+            </div>
+
+            <div class="dl-soon" id="dl-soon" hidden>
+                <h3>Coming soon</h3>
+                <p>The first version of EcoPrompt Desktop is almost ready. Until then, you can use the EcoPrompt Chrome extension, which has the same prompt optimizer.</p>
+                <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/ecoprompt/plmljdpofjiehkgfchbadaidahedooid" target="_blank" rel="noopener noreferrer">Add the Chrome extension</a>
+            </div>
+
+            <div id="dl-live">
+                <div class="dl-grid" id="dl-grid">
+                    <div class="dl-card" data-os="mac">
+                        <h3>Mac</h3>
+                        <p class="dl-detail">Apple Silicon and Intel, macOS 10.13 or later</p>
+                        <a class="btn btn-primary btn-lg" data-dl="dmg" href="https://github.com/arithapar78/ecoprompt/releases">Download for Mac</a>
+                        <p class="dl-meta" data-meta>Latest release on GitHub</p>
+                        <details class="dl-sha" data-sha hidden>
+                            <summary>Checksum (SHA-256)</summary>
+                            <code data-sha-value></code>
+                        </details>
+                    </div>
+                    <div class="dl-card" data-os="windows">
+                        <h3>Windows</h3>
+                        <p class="dl-detail">Windows 10 or 11, 64-bit</p>
+                        <a class="btn btn-primary btn-lg" data-dl="exe" href="https://github.com/arithapar78/ecoprompt/releases">Download for Windows</a>
+                        <p class="dl-meta" data-meta>Latest release on GitHub</p>
+                        <details class="dl-sha" data-sha hidden>
+                            <summary>Checksum (SHA-256)</summary>
+                            <code data-sha-value></code>
+                        </details>
+                    </div>
+                </div>
+                <p class="dl-note">These builds are not code-signed yet, so your computer shows a warning the first time you open the app. <a href="desktop/index.html#install">See the install steps</a>.</p>
+            </div>
+            <p class="dl-note"><a href="desktop/index.html">More about the desktop app</a>: features, requirements and privacy.</p>
+        </div>
+    </section>
+
     <!-- Features Section -->
     <section class="features" id="features">
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Features</span>
-                <h2 class="section-title">Everything you need to track AI energy</h2>
+                <h2 class="section-title">Chrome extension: everything you need to track AI energy</h2>
             </div>
 
             <div class="features-grid">
@@ -129,7 +175,7 @@
     <section class="features">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">How It Works</span>
+                <span class="section-tag">Chrome extension setup</span>
                 <h2 class="section-title">Get started in minutes</h2>
             </div>
 
@@ -172,8 +218,8 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Transparency</span>
-                <h2 class="section-title">What EcoPrompt does with your data</h2>
-                <p class="section-description">Based on the extension&rsquo;s source code (version 10.1.2). Read the <a href="privacy.html">full EcoPrompt privacy policy</a>.</p>
+                <h2 class="section-title">What the Chrome extension does with your data</h2>
+                <p class="section-description">Based on the extension&rsquo;s source code (version 10.1.2). Read the <a href="privacy.html">full EcoPrompt privacy policy</a>. The desktop app is different: it makes no network connections and keeps everything on your computer.</p>
             </div>
             <div class="features-grid">
                 <div class="feature">
@@ -215,7 +261,7 @@
                             <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
                     </a>
-                    <a href="desktop/index.html" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.5); color: #fff;">
+                    <a href="#download" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.5); color: #fff;">
                         Get the desktop app
                     </a>
                 </div>
@@ -239,6 +285,7 @@
     <script>LearnTAVLayout.mount();</script>
 
 
+    <script src="../../assets/js/ecoprompt-download.js"></script>
     <script src="../../assets/js/modern.js"></script>
 </body>
 </html>

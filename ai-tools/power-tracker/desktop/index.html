@@ -27,34 +27,13 @@
     <script src="../../../assets/js/layout.js"></script>
 
     <link rel="stylesheet" href="../../../assets/css/modern.css">
+    <link rel="stylesheet" href="../../../assets/css/ecoprompt-download.css">
     <style>
         /* Page-only styles. Colors come from the shared theme tokens, so light and dark both work. */
         .dl-features { grid-template-columns: repeat(3, 1fr); }
         .dl-features .feature { text-align: left; }
         .dl-features .feature-icon { margin-left: 0; }
         .dl-features kbd { font: inherit; font-weight: 600; padding: 0 var(--space-1); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); white-space: nowrap; }
-
-        .dl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); max-width: 820px; margin: 0 auto; }
-        .dl-card { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-6); background: var(--surface-raised); border: 1px solid var(--border-card); border-radius: var(--radius-xl); box-shadow: var(--shadow-card); }
-        .dl-card h3 { margin: 0; font-size: var(--font-size-xl); color: var(--text-primary); }
-        .dl-card p { margin: 0; color: var(--text-secondary); }
-        .dl-card .btn { width: 100%; justify-content: center; }
-        .dl-meta { font-size: var(--font-size-sm); color: var(--text-muted); }
-        .dl-sha { font-size: var(--font-size-sm); color: var(--text-secondary); }
-        .dl-sha summary { cursor: pointer; }
-        .dl-sha code { display: block; margin-top: var(--space-2); word-break: break-all; font-size: var(--font-size-xs); color: var(--text-primary); }
-
-        /* Once the visitor's OS is known: matching card on top and larger, the other smaller underneath. */
-        .dl-grid.has-featured { grid-template-columns: 1fr; max-width: 520px; }
-        .dl-card.is-featured { order: 0; border-color: var(--border-brand); }
-        .dl-card.is-secondary { order: 1; padding: var(--space-4); }
-        .dl-card.is-secondary h3 { font-size: var(--font-size-base); }
-        .dl-card.is-secondary .dl-detail { display: none; }
-
-        .dl-soon { max-width: 640px; margin: 0 auto; text-align: center; padding: var(--space-8); background: var(--surface-raised); border: 1px solid var(--border-card); border-radius: var(--radius-xl); }
-        .dl-soon h3 { margin: 0 0 var(--space-3); font-size: var(--font-size-2xl); color: var(--text-primary); }
-        .dl-soon p { margin: 0 0 var(--space-3); color: var(--text-secondary); }
-        .dl-note { max-width: 820px; margin: var(--space-6) auto 0; text-align: center; font-size: var(--font-size-sm); color: var(--text-muted); }
 
         .dl-steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-8); max-width: 920px; margin: 0 auto; }
         .dl-steps h3 { margin: 0 0 var(--space-3); color: var(--text-primary); }
@@ -68,7 +47,7 @@
         .dl-reqs strong { color: var(--text-primary); }
 
         @media (max-width: 800px) {
-            .dl-features, .dl-grid, .dl-steps { grid-template-columns: 1fr; }
+            .dl-features, .dl-steps { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -292,113 +271,7 @@
     </div>
     <script>LearnTAVLayout.mount();</script>
 
-    <script>
-    (function () {
-        'use strict';
-
-        // ── Edit here ───────────────────────────────────────────────────────
-        // true  = show "Coming soon" and make NO network request.
-        // false = show download buttons, upgraded from the latest published release.
-        // Flip to false only after the first desktop release is PUBLISHED (not a draft).
-        var COMING_SOON = true;
-        var REPO = 'arithapar78/ecoprompt';
-        var TAG_PREFIX = 'desktop-v';   // release tags look like desktop-v0.1.0
-        // ────────────────────────────────────────────────────────────────────
-
-        var $ = function (sel, root) { return (root || document).querySelector(sel); };
-
-        function detectOS() {
-            var p = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.userAgent || '';
-            if (/iphone|ipad|ipod|android|cros|linux/i.test(navigator.userAgent || '')) return null;
-            if (/mac/i.test(p)) return 'mac';
-            if (/win/i.test(p)) return 'windows';
-            return null;
-        }
-
-        function fmtSize(bytes) {
-            return (bytes / 1048576).toFixed(1) + ' MB';
-        }
-
-        // 1. Soon, or live.
-        if (COMING_SOON) {
-            $('#dl-live').hidden = true;
-            $('#dl-soon').hidden = false;
-            $('#dl-lead').textContent = 'Mac and Windows installers are on the way.';
-            return;
-        }
-
-        // 2. Feature the visitor's OS. The other one stays, smaller, underneath.
-        var os = detectOS();
-        if (os) {
-            $('#dl-grid').classList.add('has-featured');
-            document.querySelectorAll('.dl-card').forEach(function (card) {
-                var mine = card.getAttribute('data-os') === os;
-                card.classList.add(mine ? 'is-featured' : 'is-secondary');
-            });
-        }
-
-        // 3. Upgrade the fallback links to direct downloads. Any failure leaves the
-        //    working "Latest release on GitHub" links in place.
-        var ctl = typeof AbortController === 'function' ? new AbortController() : null;
-        var timer = ctl ? setTimeout(function () { ctl.abort(); }, 8000) : null;
-
-        function api(path, accept) {
-            return fetch('https://api.github.com/repos/' + REPO + path, {
-                headers: { 'Accept': accept || 'application/vnd.github+json' },
-                signal: ctl ? ctl.signal : undefined
-            });
-        }
-
-        // List releases rather than /releases/latest: this repo also hosts the Chrome
-        // extension, and "latest" could point at a non-desktop release.
-        api('/releases?per_page=20')
-            .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-            .then(function (list) {
-                var rel = list.filter(function (x) {
-                    return !x.draft && !x.prerelease && String(x.tag_name).indexOf(TAG_PREFIX) === 0;
-                })[0];
-                if (!rel) throw new Error('no published desktop release');
-
-                var version = String(rel.tag_name).slice(TAG_PREFIX.length);
-                var assets = { dmg: null, exe: null, sums: null };
-                rel.assets.forEach(function (a) {
-                    if (/\.dmg$/i.test(a.name)) assets.dmg = assets.dmg || a;
-                    else if (/-setup\.exe$/i.test(a.name)) assets.exe = assets.exe || a;
-                    else if (a.name === 'SHA256SUMS.txt') assets.sums = a;
-                });
-
-                document.querySelectorAll('.dl-card').forEach(function (card) {
-                    var btn = $('[data-dl]', card);
-                    var asset = assets[btn.getAttribute('data-dl')];
-                    if (!asset) return;                       // keep the fallback link
-                    btn.href = asset.browser_download_url;
-                    $('[data-meta]', card).textContent = 'Version ' + version + ' · ' + fmtSize(asset.size);
-                    card.__asset = asset;
-                });
-
-                // SHA-256 values are optional extras: if this fails, downloads still work.
-                if (!assets.sums) return;
-                return api('/releases/assets/' + assets.sums.id, 'application/octet-stream')
-                    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
-                    .then(function (text) {
-                        var sums = {};
-                        text.split(/\r?\n/).forEach(function (line) {
-                            var m = line.match(/^([0-9a-f]{64})\s+\*?(.+)$/i);
-                            if (m) sums[m[2].trim()] = m[1].toLowerCase();
-                        });
-                        document.querySelectorAll('.dl-card').forEach(function (card) {
-                            var a = card.__asset;
-                            if (!a || !sums[a.name]) return;
-                            $('[data-sha-value]', card).textContent = sums[a.name];
-                            $('[data-sha]', card).hidden = false;
-                        });
-                    })
-                    .catch(function () { /* checksums are optional */ });
-            })
-            .catch(function () { /* keep fallback links: "Latest release on GitHub" */ })
-            .then(function () { if (timer) clearTimeout(timer); });
-    })();
-    </script>
+    <script src="../../../assets/js/ecoprompt-download.js"></script>
 
     <script src="../../../assets/js/modern.js"></script>
 </body>
