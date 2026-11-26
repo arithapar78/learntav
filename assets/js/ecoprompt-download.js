@@ -11,7 +11,7 @@
     // true  = show "Coming soon" and make NO network request.
     // false = show download buttons, upgraded from the latest published release.
     // Flip to false only after the first desktop release is PUBLISHED (not a draft).
-    var COMING_SOON = true;
+    var COMING_SOON = false;
     var REPO = 'arithapar78/ecoprompt';
     var TAG_PREFIX = 'desktop-v';   // release tags look like desktop-v0.1.0
     // ────────────────────────────────────────────────────────────────────
@@ -71,11 +71,10 @@
             if (!rel) throw new Error('no published desktop release');
 
             var version = String(rel.tag_name).slice(TAG_PREFIX.length);
-            var assets = { dmg: null, exe: null, sums: null };
+            var assets = { dmg: null, exe: null };
             rel.assets.forEach(function (a) {
                 if (/\.dmg$/i.test(a.name)) assets.dmg = assets.dmg || a;
                 else if (/-setup\.exe$/i.test(a.name)) assets.exe = assets.exe || a;
-                else if (a.name === 'SHA256SUMS.txt') assets.sums = a;
             });
 
             document.querySelectorAll('.dl-card').forEach(function (card) {
@@ -83,28 +82,17 @@
                 var asset = assets[btn.getAttribute('data-dl')];
                 if (!asset) return;                       // keep the fallback link
                 btn.href = asset.browser_download_url;
-                $('[data-meta]', card).textContent = 'Version ' + version + ' · ' + fmtSize(asset.size);
-                card.__asset = asset;
-            });
+                $('[data-meta]', card).textContent = 'Version ' + version + ' \u00b7 ' + fmtSize(asset.size);
 
-            // SHA-256 values are optional extras: if this fails, downloads still work.
-            if (!assets.sums) return;
-            return api('/releases/assets/' + assets.sums.id, 'application/octet-stream')
-                .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
-                .then(function (text) {
-                    var sums = {};
-                    text.split(/\r?\n/).forEach(function (line) {
-                        var m = line.match(/^([0-9a-f]{64})\s+\*?(.+)$/i);
-                        if (m) sums[m[2].trim()] = m[1].toLowerCase();
-                    });
-                    document.querySelectorAll('.dl-card').forEach(function (card) {
-                        var a = card.__asset;
-                        if (!a || !sums[a.name]) return;
-                        $('[data-sha-value]', card).textContent = sums[a.name];
-                        $('[data-sha]', card).hidden = false;
-                    });
-                })
-                .catch(function () { /* checksums are optional */ });
+                // GitHub reports each asset's SHA-256 in the release JSON ("sha256:<hex>"),
+                // the same value as SHA256SUMS.txt. (Fetching SHA256SUMS.txt from a browser
+                // fails: GitHub redirects it to a host without CORS headers.)
+                var m = /^sha256:([0-9a-f]{64})$/i.exec(asset.digest || '');
+                if (m) {
+                    $('[data-sha-value]', card).textContent = m[1].toLowerCase();
+                    $('[data-sha]', card).hidden = false;
+                }
+            });
         })
         .catch(function () { /* keep fallback links: "Latest release on GitHub" */ })
         .then(function () { if (timer) clearTimeout(timer); });
