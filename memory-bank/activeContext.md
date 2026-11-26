@@ -327,5 +327,5 @@ This active context provides clear direction for continued development while mai
 
 ### Update 2026-11-26: EcoPrompt Desktop download
 - New page `ai-tools/power-tracker/desktop/index.html` and a "Desktop app" download section on the main EcoPrompt page (`ai-tools/power-tracker/index.html`).
-- Both use shared `assets/js/ecoprompt-download.js` and `assets/css/ecoprompt-download.css`. One switch, `COMING_SOON` (top of the JS file), shows "Coming soon" (no network) or the real download buttons. Flip it to `false` only after the first `desktop-v*` release is published on GitHub (`arithapar78/ecoprompt`).
+- Both use shared `assets/js/ecoprompt-download.js` and `assets/css/ecoprompt-download.css`. One switch, `COMING_SOON` (top of the JS file), shows "Coming soon" (no network) or the real download buttons. It is now `false`: release `desktop-v0.1.0` is published on GitHub (`arithapar78/ecoprompt`) and the download buttons are live. SHA-256 comes from each release asset's `digest` field (SHA256SUMS.txt can't be read cross-origin from the browser).
 

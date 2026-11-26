@@ -367,5 +367,5 @@ This progress tracking provides clear visibility into project status, upcoming p
 ---
 
 ### 2026-11-26: EcoPrompt Desktop page
-- Added the desktop download page and the main-page download section; QA suites pass (34 pages), Lighthouse 100/100/100. Downloads stay on "Coming soon" until the first desktop release is published.
+- Added the desktop download page and the main-page download section; QA suites pass (34 pages), Lighthouse 100/100/100. Downloads went live 2026-11-26 with release desktop-v0.1.0.
 
