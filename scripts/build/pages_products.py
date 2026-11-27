@@ -234,7 +234,7 @@ def trophy_case():
 def products_index():
     up = '../'
     h = head('Products | Trophy Case and EcoPrompt | LearnTAV',
-             'LearnTAV\'s two live products: Trophy Case, an AI-powered achievement tracker for students, and EcoPrompt, a Chrome extension for AI energy awareness.',
+             'LearnTAV\'s two live products: Trophy Case, an AI-powered achievement tracker for students, and EcoPrompt, a Chrome extension and Mac and Windows app for AI energy awareness.',
              'products/', 1)
     h += f'''
     <section class="page-header">

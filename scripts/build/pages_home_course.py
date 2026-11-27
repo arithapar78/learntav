@@ -155,7 +155,7 @@ home += f'''
                 <a class="card card-link reveal" href="ai-tools/index.html">
                     <div class="card-icon">{ICON['tool']}</div>
                     <h3 class="h3">Explore Tools</h3>
-                    <p>Free tools and guides, including EcoPrompt, our extension for understanding AI energy use.</p>
+                    <p>Free tools and guides, including EcoPrompt, our Chrome extension and desktop app for understanding AI energy use.</p>
                     <span class="link-arrow">Browse tools {ICON['arrow']}</span>
                 </a>
             </div>
@@ -220,7 +220,7 @@ home += f'''
                 <h2 class="h2" id="free-title">Try it before you commit.</h2>
             </div>
             <div class="grid-3">
-                <a class="card card-link reveal" href="ai-tools/power-tracker/index.html"><div class="card-icon">{ICON['bolt']}</div><h3 class="h3">EcoPrompt</h3><p>A free Chrome extension that helps you see and reduce the energy used by your AI prompts.</p><span class="link-arrow">Learn more {ICON['arrow']}</span></a>
+                <a class="card card-link reveal" href="ai-tools/power-tracker/index.html"><div class="card-icon">{ICON['bolt']}</div><h3 class="h3">EcoPrompt</h3><p>A free Chrome extension, and a desktop app for Mac and Windows, that help you see and reduce the energy used by your AI prompts.</p><span class="link-arrow">Learn more {ICON['arrow']}</span></a>
                 <a class="card card-link reveal" href="resources/guides/index.html"><div class="card-icon">{ICON['book']}</div><h3 class="h3">Free guides</h3><p>Plain-language guides on getting started with AI, prompting and responsible use.</p><span class="link-arrow">Read the guides {ICON['arrow']}</span></a>
                 <a class="card card-link reveal" href="resources/tools/index.html"><div class="card-icon">{ICON['tool']}</div><h3 class="h3">Tool directory</h3><p>A curated look at AI tools for conversation, building apps, design and content.</p><span class="link-arrow">Browse tools {ICON['arrow']}</span></a>
             </div>

@@ -27,7 +27,7 @@
     "name": "EcoPrompt",
     "badge": "Live Product",
     "tagline": "See what your browsing and AI prompts may cost the planet.",
-    "description": "A free Chrome extension that estimates the energy used by the pages you visit and your AI prompts, and helps you write more efficient prompts.",
+    "description": "A free Chrome extension that estimates the energy used by the pages you visit and your AI prompts, and helps you write more efficient prompts. Also available as a desktop app for Mac and Windows.",
     "detailPath": "ai-tools/power-tracker/",
     "primaryCta": "Explore EcoPrompt",
     "secondaryCta": {
@@ -47,6 +47,6 @@
         "Energy history"
       ]
     },
-    "meta": "Chrome extension. Energy figures are estimates, not measurements."
+    "meta": "Chrome extension, plus a desktop app for Mac and Windows. Energy figures are estimates, not measurements."
   }
 ]

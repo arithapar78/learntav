@@ -148,7 +148,8 @@
         { label: 'Products', href: 'products/index.html', match: /^(products|ai-tools|power-tracker-school)\//,
           children: [
               { label: 'Trophy Case', desc: 'Achievement tracker and AI coach', href: 'products/trophy-case/index.html' },
-              { label: 'EcoPrompt', desc: 'Chrome extension for AI energy awareness', href: 'ai-tools/power-tracker/index.html' }
+              { label: 'EcoPrompt', desc: 'Chrome extension for AI energy awareness', href: 'ai-tools/power-tracker/index.html' },
+              { label: 'EcoPrompt Desktop', desc: 'Mac and Windows app: download', href: 'ai-tools/power-tracker/desktop/index.html' }
           ] },
         { label: 'About', href: 'about/index.html', match: /^about\// },
         { label: 'Pricing', href: 'pricing/index.html', match: /^pricing\// }
@@ -280,6 +281,7 @@
             links: [
                 { label: 'Trophy Case', href: 'products/trophy-case/index.html' },
                 { label: 'EcoPrompt', href: 'ai-tools/power-tracker/index.html' },
+                { label: 'EcoPrompt Desktop', href: 'ai-tools/power-tracker/desktop/index.html' },
                 { label: 'Custom Builds', href: 'consulting/app-builds/index.html' },
                 { label: 'Free Resources', href: 'resources/index.html' }
             ]
